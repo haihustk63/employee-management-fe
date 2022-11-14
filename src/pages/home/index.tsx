@@ -1,9 +1,16 @@
-import React from 'react'
+import CheckInOutList from "@/components/pages/home/CheckInOutList";
+import CheckInOut from "@/components/pages/home/CheckInOut";
+import { Typography } from "antd";
+
+const { Title } = Typography;
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <div className="home-page">
+      <CheckInOut />
+      <CheckInOutList />
+    </div>
+  );
+};
 
-export default Home
+export default Home;

@@ -1,5 +1,6 @@
 import { Fragment, ReactNode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import { APP_ROUTES } from "./constants/routes";
 
@@ -10,9 +11,11 @@ const createRouter = (routes: any): { path: string; element: ReactNode }[] => {
     return {
       path: route?.path,
       element: (
-        <Layout>
-          <Element />
-        </Layout>
+        <ProtectedRoute route={route}>
+          <Layout>
+            <Element />
+          </Layout>
+        </ProtectedRoute>
       ),
     };
   };
@@ -27,7 +30,6 @@ const createRouter = (routes: any): { path: string; element: ReactNode }[] => {
   });
 };
 
-console.log(createRouter(APP_ROUTES));
 const router = createBrowserRouter(createRouter(APP_ROUTES));
 
 function App() {

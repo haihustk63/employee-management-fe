@@ -1,0 +1,40 @@
+.auth-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  > .main {
+    flex-grow: 1;
+    background-color: getColor("white", "basic_white");
+  }
+}
+
+.auth-layout-header {
+  background-color: black;
+  padding: 2rem;
+  > .list {
+    display: flex;
+    margin-bottom: 0;
+
+    > .left,
+    > .right {
+      display: flex;
+      gap: 2rem;
+    }
+
+    > .right {
+      margin-left: auto;
+    }
+  }
+}
+
+.auth-layout-footer {
+  display: flex;
+  justify-content: center;
+  background-color: getColor("purple", "basic_purple");
+  padding: 2rem;
+
+  .ant-typography {
+    color: getColor("white", "basic_white");
+  }
+}

@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
+import { Layout, Typography } from "antd";
 
-const Footer = () => {
+const { Footer } = Layout;
+
+const { Text } = Typography;
+
+const CommonFooter = () => {
   return (
-    <div>Footer</div>
-  )
-}
+    <Footer className="common-footer">
+      <Text>
+        Copyright © 2021 HarryCorp. All rights reserved. Privacy Policy | Terms
+        of Service
+      </Text>
+    </Footer>
+  );
+};
 
-export default Footer
+export default CommonFooter;

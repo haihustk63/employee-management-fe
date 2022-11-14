@@ -4,9 +4,9 @@ import Header from "./Header";
 
 const AuthLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div>
+    <div className="auth-layout">
       <Header />
-      <main>{children}</main>
+      <main className="main">{children}</main>
       <Footer />
     </div>
   );

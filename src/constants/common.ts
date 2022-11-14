@@ -1,6 +1,0 @@
-export enum ROLES {
-  EMPLOYEE,
-  DIVISION_MANAGER,
-  ADMIN,
-  SUPER_ADMIN,
-}

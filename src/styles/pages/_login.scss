@@ -1,0 +1,31 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  > .select {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    > .option {
+      background-color: burlywood;
+      padding: 3rem;
+      border-radius: 0.5rem;
+    }
+  }
+
+  > .select > .option {
+    .ant-typography {
+      text-align: center;
+      display: block;
+    }
+  }
+}
+
+.login-page-form {
+  width: 30%;
+  margin: 10rem auto;
+  padding: 3rem;
+  box-shadow: var(--common-box-shadow);
+}

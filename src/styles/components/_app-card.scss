@@ -1,0 +1,16 @@
+.app-primary-card {
+  padding: 2.4rem;
+  border-radius: var(--app-card-border-radius);
+  cursor: pointer;;
+
+  > .ant-typography {
+    display: block;
+    // font-size: --bs-body-font-size;
+    // font-weight: --bs-body-font-weight;
+    // line-height: --bs-body-line-height;
+  }
+
+  > .title {
+    margin-bottom: 0.875rem;
+  }
+}

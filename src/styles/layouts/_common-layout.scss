@@ -1,0 +1,20 @@
+.common-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.common-header {
+  display: flex;
+
+  > .logo {
+    color: var(--bs-white);
+  }
+
+  > .menu {
+    flex-grow: 1;
+  }
+}
+
+.common-sider {
+  background-color: var(--bs-white);
+}

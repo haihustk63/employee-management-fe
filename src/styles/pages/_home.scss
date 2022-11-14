@@ -1,0 +1,30 @@
+.home-page {
+  display: flex;
+}
+
+.home-check-in-out {
+  width: 55%;
+  background-color: var(--bs-white);
+  padding: 2.4rem;
+  border-radius: var(--common-border-radius);
+
+  > .cards {
+    display: flex;
+    margin-top: 4rem;
+    justify-content: space-between;
+
+    > .app-primary-card {
+      flex: 0 0 45%;
+    }
+  }
+
+  > .function {
+    display: flex;
+    margin-top: 4rem;
+  }
+}
+
+.home-check-in-out-list {
+  flex-grow: 1;
+  margin-left: 3rem;
+}
