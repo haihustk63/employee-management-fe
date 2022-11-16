@@ -1,11 +1,16 @@
-import { Table } from "antd";
+import { Table, Typography } from "antd";
 import { FC } from "react";
+import AppBackPage from "../AppBackPage";
 
 import { IAppTableProps } from "./interface";
+
+const { Title } = Typography;
 
 const AppTable: FC<IAppTableProps> = ({
   columns,
   dataSource,
+  title,
+  tableName,
   bordered,
   sortDirections,
   loading,
@@ -13,8 +18,17 @@ const AppTable: FC<IAppTableProps> = ({
   pagination,
   scroll,
   sticky,
+  onGoBack,
 }) => {
-  return <Table columns={columns} dataSource={dataSource} />;
+  return (
+    <div className="app-table">
+      <div className="title">
+        {onGoBack && <AppBackPage onBack={onGoBack} />}
+        <Title level={3}>{tableName}</Title>
+      </div>
+      <Table columns={columns} dataSource={dataSource} />
+    </div>
+  );
 };
 
 export default AppTable;

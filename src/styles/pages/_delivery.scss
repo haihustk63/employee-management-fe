@@ -1,0 +1,16 @@
+.delivery-management {
+  display: flex;
+
+  > .add-new-delivery {
+    width: 40%;
+  }
+
+  > .delivery-list {
+    flex-grow: 1;
+    margin-left: 2rem;
+  }
+}
+
+.delivery-list {
+
+}

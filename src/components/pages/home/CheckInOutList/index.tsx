@@ -38,7 +38,11 @@ const dataSource = [
 const CheckInOutList = () => {
   return (
     <div className="home-check-in-out-list">
-      <AppTable columns={columns} dataSource={dataSource} />
+      <AppTable
+        columns={columns}
+        dataSource={dataSource}
+        tableName="Check in/out List"
+      />
     </div>
   );
 };

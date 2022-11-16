@@ -1,0 +1,11 @@
+.app-table {
+  > .title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    > .app-back-page {
+      margin-right: 1rem;
+    }
+  }
+}

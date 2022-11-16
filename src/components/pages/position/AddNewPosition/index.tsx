@@ -1,19 +1,18 @@
 
 import AppForm from "@/components/AppForm";
 import FormFields from "./FormFields";
-import { IAddNewDeliveryProps } from "./interface";
+import { IAddNewPositionProps } from "./interface";
 
-const initialValues: IAddNewDeliveryProps = {
+const initialValues: IAddNewPositionProps = {
   name: "",
   description: "",
-  managerId: undefined,
 };
 
-const AddNewDelivery = () => {
+const AddNewPosition = () => {
   const handleSubmitForm = () => {};
   return (
     <div className="add-new-delivery">
-      <AppForm<IAddNewDeliveryProps>
+      <AppForm<IAddNewPositionProps>
         title="Add New Delivery"
         initialValues={initialValues}
         handleSubmitForm={handleSubmitForm}
@@ -24,4 +23,4 @@ const AddNewDelivery = () => {
   );
 };
 
-export default AddNewDelivery;
+export default AddNewPosition;

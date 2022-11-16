@@ -21,6 +21,7 @@ import CandidateAccountManagement from "@/pages/candidate/account";
 import CandidateProfileManagement from "@/pages/candidate/profile";
 import AddRequest from "@/pages/request/add-request";
 import RequestList from "@/pages/request/request-list";
+import PositionManagement from "@/pages/position";
 
 export const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
@@ -41,6 +42,7 @@ export const APP_PAGE_NAME_ROUTES = {
   POSITION: "/positions",
   PROPERTY: "/property",
   RECRUIMENT_NEWS: "/recruiment-news",
+  REQUEST: "/requests",
   REQUEST_ADD: "/requests/add",
   REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
@@ -153,6 +155,13 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.DELIVERY,
     path: APP_PAGE_NAME_ROUTES.DELIVERY,
     element: DeliveryManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.POSITION,
+    path: APP_PAGE_NAME_ROUTES.POSITION,
+    element: PositionManagement,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
