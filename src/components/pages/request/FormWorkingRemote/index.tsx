@@ -1,5 +1,6 @@
 import { FC } from "react";
-import FormCommon from "../FormCommon";
+
+import FormCommon from "@/components/AppForm";
 import FormFields from "./FormFields";
 import { IFormWorkingRemoteProps } from "./interface";
 

@@ -91,6 +91,11 @@ export const SIDER_ITEMS = [
     icon: <StarFilled />,
   },
   {
+    key: "/deliveries",
+    label: "Delivery",
+    icon: <StarFilled />,
+  },
+  {
     key: "/recruiment-news",
     label: "Recruiment News",
     icon: <StarFilled />,

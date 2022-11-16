@@ -38,6 +38,7 @@ export const APP_PAGE_NAME_ROUTES = {
   PERSONAL_INFO: "/personal-info",
   PERSONAL_INFO_DETAIL: "/personal-info/detail",
   PERSONAL_INFO_ACCOUNT: "/personal-info/account",
+  POSITION: "/positions",
   PROPERTY: "/property",
   RECRUIMENT_NEWS: "/recruiment-news",
   REQUEST_ADD: "/requests/add",

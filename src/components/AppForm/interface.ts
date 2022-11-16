@@ -1,4 +1,4 @@
-export interface IFormCommonProps<T> {
+export interface IAppFormProps<T> {
   initialValues?: T;
   handleSubmitForm?: any;
   title?: string;

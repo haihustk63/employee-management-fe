@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-import FormCommon from "../FormCommon";
+import { FC } from "react";
+
+import FormCommon from "@/components/AppForm";
 import FormFields from "./FormFields";
 import { IFormLateEarlyOTProps } from "./interface";
 
