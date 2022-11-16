@@ -9,6 +9,10 @@ const ProtectedRoute: FC<{ route: any; children: any }> = ({
 }) => {
   const currentUser = useRecoilValue(currentUserAtom);
 
+  // if (currentUser?.role === -1) {
+  //   return <Navigate to="/login" replace />;
+  // }
+
   if (route?.role > currentUser.role) {
     return <Navigate to="/" replace />;
   }

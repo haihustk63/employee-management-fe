@@ -1,0 +1,8 @@
+.form-item {
+  display: flex;
+  flex-direction: column;
+
+  > .textarea {
+    min-height: 20rem;
+  }
+}

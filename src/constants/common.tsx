@@ -45,6 +45,18 @@ export const SIDER_ITEMS = [
     key: "/requests",
     label: "Request",
     icon: <StarFilled />,
+    children: [
+      {
+        key: "/requests/add",
+        label: "Add Request",
+        icon: <StarFilled />,
+      },
+      {
+        key: "/requests/list",
+        label: "Requests List",
+        icon: <StarFilled />,
+      },
+    ],
   },
   {
     key: "/education-programs",

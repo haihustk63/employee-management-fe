@@ -6,21 +6,20 @@ import { FC } from "react";
 
 const { Text } = Typography;
 
-const RequestList: FC<{ next?: Function }> = ({ next }) => {
-  const handleClickRequestCard = () => {
-    if (next) {
-      next();
-    }
+const RequestList: FC<{ setType: Function }> = ({ setType }) => {
+  const handleClickRequestCard = (type: string) => () => {
+    setType(type);
   };
 
   return (
     <div className="request-page-list">
-      {REQUEST_LIST.map(({ title, typeGroup, description }) => {
+      {REQUEST_LIST.map(({ type, description }, index: number) => {
         return (
           <AppPrimaryCard
             hasBoxShadow
-            title={title}
-            onClick={handleClickRequestCard}
+            title={type}
+            onClick={handleClickRequestCard(type)}
+            key={index}
           >
             <Text>{description}</Text>
           </AppPrimaryCard>

@@ -1,11 +1,10 @@
 import { Layout, Menu } from "antd";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { SIDER_ITEMS } from "@/constants/common";
-import { useSetRecoilState } from "recoil";
 import { breadCrumbAtom } from "@/modules/breadcrumb";
-import { useNavigate } from "react-router-dom";
-import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 
 const { Sider } = Layout;
 
@@ -13,6 +12,8 @@ const CommonSider = () => {
   const setBreadCrumb = useSetRecoilState(breadCrumbAtom);
 
   const navigate = useNavigate();
+
+  const { pathname } = useLocation();
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -37,7 +38,8 @@ const CommonSider = () => {
     >
       <Menu
         mode="inline"
-        defaultSelectedKeys={["dashboard"]}
+        defaultSelectedKeys={["/dashboard"]}
+        selectedKeys={[pathname]}
         items={SIDER_ITEMS}
         onClick={handleClickSiderItem}
       />

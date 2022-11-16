@@ -1,14 +1,15 @@
 import { FC } from "react";
 import FormCommon from "../FormCommon";
-import FormFields from "./FormFields";
-import { IFormLeaveProps } from "./interface";
 
-const FormLeave: FC<IFormLeaveProps> = ({ initialValues }) => {
+import FormFields from "./FormFields";
+import { iFormCheckInOutProps } from "./interface";
+
+const FormCheckInOut: FC<iFormCheckInOutProps> = ({ initialValues }) => {
   const handleSubmitForm = () => {};
 
   return (
     <FormCommon<typeof initialValues>
-      title="Leave Application"
+      title="Check In, Out"
       handleSubmitForm={handleSubmitForm}
       initialValues={initialValues}
     >
@@ -17,4 +18,4 @@ const FormLeave: FC<IFormLeaveProps> = ({ initialValues }) => {
   );
 };
 
-export default FormLeave;
+export default FormCheckInOut;

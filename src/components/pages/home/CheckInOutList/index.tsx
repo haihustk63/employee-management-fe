@@ -22,11 +22,13 @@ const columns = [
 
 const dataSource = [
   {
+    key: 0,
     name: "Harry Pham",
     checkIn: "8:00AM",
     checkOut: "17:00PM",
   },
   {
+    key: 1,
     name: "Daniel Thai",
     checkIn: "7:55AM",
     checkOut: "17:30PM",

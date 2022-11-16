@@ -1,14 +1,14 @@
 import { FC } from "react";
 import FormCommon from "../FormCommon";
 import FormFields from "./FormFields";
-import { IFormLeaveProps } from "./interface";
+import { IFormWorkingRemoteProps } from "./interface";
 
-const FormLeave: FC<IFormLeaveProps> = ({ initialValues }) => {
+const FormWorkingRemote: FC<IFormWorkingRemoteProps> = ({ initialValues }) => {
   const handleSubmitForm = () => {};
 
   return (
     <FormCommon<typeof initialValues>
-      title="Leave Application"
+      title="Working Remote"
       handleSubmitForm={handleSubmitForm}
       initialValues={initialValues}
     >
@@ -17,4 +17,4 @@ const FormLeave: FC<IFormLeaveProps> = ({ initialValues }) => {
   );
 };
 
-export default FormLeave;
+export default FormWorkingRemote;

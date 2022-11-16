@@ -6,7 +6,6 @@ import AuthLayout from "@/components/Layouts/AuthLayout";
 import PersonalInfo from "@/pages/personal-info";
 import PersonalInfoAccount from "@/pages/personal-info/account";
 import PersonalInfoDetail from "@/pages/personal-info/detail";
-import Request from "@/pages/request";
 import LoginCandidate from "@/pages/login/candidate";
 import LoginEmployee from "@/pages/login/employee";
 import CandidateSkillTest from "@/pages/skill-test";
@@ -20,6 +19,8 @@ import PropertyManagement from "@/pages/property";
 import RecruitmentNewsManagement from "@/pages/recruiment-news";
 import CandidateAccountManagement from "@/pages/candidate/account";
 import CandidateProfileManagement from "@/pages/candidate/profile";
+import AddRequest from "@/pages/request/add-request";
+import RequestList from "@/pages/request/request-list";
 
 export const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
@@ -39,7 +40,8 @@ export const APP_PAGE_NAME_ROUTES = {
   PERSONAL_INFO_ACCOUNT: "/personal-info/account",
   PROPERTY: "/property",
   RECRUIMENT_NEWS: "/recruiment-news",
-  REQUEST: "/requests",
+  REQUEST_ADD: "/requests/add",
+  REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
 };
 
@@ -91,9 +93,16 @@ export const APP_ROUTES = [
     ],
   },
   {
-    name: APP_PAGE_NAME_ROUTES.REQUEST,
-    path: APP_PAGE_NAME_ROUTES.REQUEST,
-    element: Request,
+    name: APP_PAGE_NAME_ROUTES.REQUEST_ADD,
+    path: APP_PAGE_NAME_ROUTES.REQUEST_ADD,
+    element: AddRequest,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.REQUEST_LIST,
+    path: APP_PAGE_NAME_ROUTES.REQUEST_LIST,
+    element: RequestList,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
@@ -109,62 +118,62 @@ export const APP_ROUTES = [
     path: APP_PAGE_NAME_ROUTES.DASHBOARD,
     element: AdminDashboard,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.CANDIDATE,
     path: APP_PAGE_NAME_ROUTES.CANDIDATE,
     element: CandidateManagement,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.CANDIDATE_ACCOUNT,
     path: APP_PAGE_NAME_ROUTES.CANDIDATE_ACCOUNT,
     element: CandidateAccountManagement,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.CANDIDATE_PROFILE,
     path: APP_PAGE_NAME_ROUTES.CANDIDATE_PROFILE,
     element: CandidateProfileManagement,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.EMPLOYEE,
     path: APP_PAGE_NAME_ROUTES.EMPLOYEE,
     element: EmployeeManagement,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.DELIVERY,
     path: APP_PAGE_NAME_ROUTES.DELIVERY,
     element: DeliveryManagement,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS,
     path: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS,
     element: EducationManagement,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.PROPERTY,
     path: APP_PAGE_NAME_ROUTES.PROPERTY,
     element: PropertyManagement,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS,
     path: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS,
     element: RecruitmentNewsManagement,
     layout: CommonLayout,
-    role: ROLES.ADMIN,
+    role: ROLES.EMPLOYEE,
   },
 ];
