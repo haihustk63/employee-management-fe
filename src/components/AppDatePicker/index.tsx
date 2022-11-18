@@ -15,6 +15,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
   placement = "bottomRight",
   showToday = true,
   value,
+  pickerLabel,
 }) => {
   const handleOnChangeDatePicker = (date: any) => {
     onChange(date);
@@ -22,7 +23,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
 
   return (
     <div className="app-date-picker">
-      <label>Date</label>
+      {pickerLabel && <label>{pickerLabel}</label>}
       <DatePicker
         allowClear={allowClear}
         bordered={bordered}

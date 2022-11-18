@@ -38,6 +38,9 @@ const APP_PAGE_NAME_ROUTES = {
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
   EMPLOYEE: "/employees",
+  EMPLOYEE_LIST: "/employees/list",
+  EMPLOYEE_CREATE: "/employees/create",
+  EMPLOYEE_UPDATE: "/employees/update/:employeeId",
   HIRING_NEWS: "/hiring-news",
   HOME: "/",
   LOGIN: "/login",
@@ -49,8 +52,10 @@ const APP_PAGE_NAME_ROUTES = {
   POSITION: "/positions",
   PROPERTY: "/property",
   RECRUIMENT_NEWS: "/recruiment-news",
+  RECRUIMENT_NEWS_LIST: "/recruiment-news/list",
+  RECRUIMENT_NEWS_CREATE: "/recruiment-news/create",
   REQUEST: "/requests",
-  REQUEST_ADD: "/requests/add",
+  REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
 };
@@ -66,13 +71,13 @@ export const SIDER_ITEMS = [
     icon: <StarFilled />,
   },
   {
-    key:APP_PAGE_NAME_ROUTES.REQUEST,
+    key: APP_PAGE_NAME_ROUTES.REQUEST,
     label: "Request",
     icon: <StarFilled />,
     children: [
       {
-        key: APP_PAGE_NAME_ROUTES.REQUEST_ADD,
-        label: "Add Request",
+        key: APP_PAGE_NAME_ROUTES.REQUEST_CREATE,
+        label: "Create Request",
         icon: <StarFilled />,
       },
       {
@@ -113,6 +118,18 @@ export const SIDER_ITEMS = [
     key: APP_PAGE_NAME_ROUTES.EMPLOYEE,
     label: "Employee",
     icon: <StarFilled />,
+    children: [
+      {
+        key: APP_PAGE_NAME_ROUTES.EMPLOYEE_CREATE,
+        label: "Create Employee",
+        icon: <StarFilled />,
+      },
+      {
+        key: APP_PAGE_NAME_ROUTES.EMPLOYEE_LIST,
+        label: "Employee List",
+        icon: <StarFilled />,
+      },
+    ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.DELIVERY,
@@ -128,6 +145,19 @@ export const SIDER_ITEMS = [
     key: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS,
     label: "Recruiment News",
     icon: <StarFilled />,
+    children: [
+      {
+        key: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_CREATE,
+        label: "Create Recruiment News",
+        icon: <StarFilled />,
+      },
+      {
+        key: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_LIST,
+        label: "Recruiment News List",
+        icon: <StarFilled />,
+      },
+      
+    ],
   },
 ];
 

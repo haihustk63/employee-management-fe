@@ -1,5 +1,6 @@
 export interface IAppDatePickerProps {
   allowClear?: boolean;
+  pickerLabel?: string;
   bordered?: boolean;
   className?: string;
   picker?: "date" | "week" | "month" | "quarter" | "year";

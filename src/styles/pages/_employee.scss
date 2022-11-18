@@ -1,0 +1,10 @@
+.employee-management {
+  background-color: var(--bs-white);
+  padding: 2rem;
+  height: 100%;
+  border-radius: var(--common-border-radius);
+
+  > .employee-list {
+    margin-top: 2rem;
+  }
+}

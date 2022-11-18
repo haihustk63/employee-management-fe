@@ -3,4 +3,5 @@ export interface IAppFormProps<T> {
   handleSubmitForm?: any;
   title?: string;
   children?: any;
+  innerRef?: any;
 }

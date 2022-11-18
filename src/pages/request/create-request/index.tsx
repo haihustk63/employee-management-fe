@@ -43,7 +43,7 @@ const {
 
 export const RequestContext = createContext({});
 
-const AddRequest = () => {
+const CreateRequest = () => {
   const [step, setStep] = useState(CHOOSE_TYPE);
   const [type, setType] = useState("");
 
@@ -139,4 +139,4 @@ const AddRequest = () => {
   );
 };
 
-export default AddRequest;
+export default CreateRequest;

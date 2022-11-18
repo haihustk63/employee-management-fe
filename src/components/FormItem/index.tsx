@@ -46,7 +46,7 @@ const FormItem: FC<IFormItemProps> = ({ name, type, label, ...props }) => {
   const renderComponent = renderFormItemComponent(type);
   return (
     <div className="form-item">
-      <label htmlFor={name}>{label}</label>
+      {label && <label htmlFor={name}>{label}</label>}
       <Field name={name} type={type} {...props} component={renderComponent} />
     </div>
   );

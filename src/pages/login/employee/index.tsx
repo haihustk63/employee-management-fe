@@ -1,4 +1,3 @@
-import React from "react";
 import { Typography } from "antd";
 
 import FormLogin from "@/components/pages/login/FormLogin";

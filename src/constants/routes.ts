@@ -19,9 +19,12 @@ import PropertyManagement from "@/pages/property";
 import RecruitmentNewsManagement from "@/pages/recruiment-news";
 import CandidateAccountManagement from "@/pages/candidate/account";
 import CandidateProfileManagement from "@/pages/candidate/profile";
-import AddRequest from "@/pages/request/add-request";
-import RequestList from "@/pages/request/request-list";
+import CreateRequest from "@/pages/request/create-request";
+import RequestList from "@/pages/request";
 import PositionManagement from "@/pages/position";
+import CreateNewEmployee from "@/pages/employee/create-new";
+import UpdateEmployee from "@/pages/employee/update";
+import CreateNewRecruimentNews from "@/pages/recruiment-news/create-new";
 
 export const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
@@ -31,6 +34,9 @@ export const APP_PAGE_NAME_ROUTES = {
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
   EMPLOYEE: "/employees",
+  EMPLOYEE_LIST: "/employees/list",
+  EMPLOYEE_CREATE: "/employees/create",
+  EMPLOYEE_UPDATE: "/employees/update/:employeeId",
   HIRING_NEWS: "/hiring-news",
   HOME: "/",
   LOGIN: "/login",
@@ -42,10 +48,16 @@ export const APP_PAGE_NAME_ROUTES = {
   POSITION: "/positions",
   PROPERTY: "/property",
   RECRUIMENT_NEWS: "/recruiment-news",
+  RECRUIMENT_NEWS_LIST: "/recruiment-news/list",
+  RECRUIMENT_NEWS_CREATE: "/recruiment-news/create",
   REQUEST: "/requests",
-  REQUEST_ADD: "/requests/add",
+  REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
+};
+
+export const DYNAMIC_APP_PAGE_ROUTES = {
+  EMPLOYEE_UPDATE: (employeeId: any) => `/employees/update/${employeeId}`,
 };
 
 export const APP_ROUTES = [
@@ -96,9 +108,9 @@ export const APP_ROUTES = [
     ],
   },
   {
-    name: APP_PAGE_NAME_ROUTES.REQUEST_ADD,
-    path: APP_PAGE_NAME_ROUTES.REQUEST_ADD,
-    element: AddRequest,
+    name: APP_PAGE_NAME_ROUTES.REQUEST_CREATE,
+    path: APP_PAGE_NAME_ROUTES.REQUEST_CREATE,
+    element: CreateRequest,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
@@ -145,9 +157,23 @@ export const APP_ROUTES = [
     role: ROLES.EMPLOYEE,
   },
   {
-    name: APP_PAGE_NAME_ROUTES.EMPLOYEE,
-    path: APP_PAGE_NAME_ROUTES.EMPLOYEE,
+    name: APP_PAGE_NAME_ROUTES.EMPLOYEE_LIST,
+    path: APP_PAGE_NAME_ROUTES.EMPLOYEE_LIST,
     element: EmployeeManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.EMPLOYEE_CREATE,
+    path: APP_PAGE_NAME_ROUTES.EMPLOYEE_CREATE,
+    element: CreateNewEmployee,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.EMPLOYEE_UPDATE,
+    path: APP_PAGE_NAME_ROUTES.EMPLOYEE_UPDATE,
+    element: UpdateEmployee,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
@@ -183,6 +209,20 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS,
     path: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS,
     element: RecruitmentNewsManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_LIST,
+    path: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_LIST,
+    element: RecruitmentNewsManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_CREATE,
+    path: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_CREATE,
+    element: CreateNewRecruimentNews,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
