@@ -1,18 +1,19 @@
 .app-text-editor {
-}
+  > .editor {
+    background-color: var(--bs-white);
+    .ql-editor {
+      min-height: 45rem;
+    }
 
-.editor-content-style {
-  background-color: var(--bs-white);
-  border-radius: var(--common-border-radius);
-  min-height: 45rem;
-  padding: 1rem;
-}
-
-.editor-wrapper-style {
-//   border-radius: var(--common-border-radius);
-}
-
-.editor-toolbar-style {
-  border-radius: var(--common-border-radius);
-  padding: 2rem;
+    > .quill {
+      .ql-toolbar.ql-snow {
+        border-top-left-radius: var(--common-border-radius);
+        border-top-right-radius: var(--common-border-radius);
+      }
+      .ql-container.ql-snow {
+        border-bottom-left-radius: var(--common-border-radius);
+        border-bottom-right-radius: var(--common-border-radius);
+      }
+    }
+  }
 }

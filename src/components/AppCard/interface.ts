@@ -10,8 +10,18 @@ export interface IAppCardPrimaryProps {
   title?: string;
   borderColor?: AppColor;
   backgroundColor?: AppColor;
-  hasBorder?: boolean;
   hasBoxShadow?: boolean;
   children?: any;
+  onClick?: () => void;
+}
+
+export interface IAppCardWithCoverProps {
+  imageUrl?: string;
+  title?: string;
+  excerpt?: string;
+  backgroundColor?: AppColor;
+  borderColor?: AppColor;
+  hasBoxShadow?: boolean;
+  horizontal?: boolean;
   onClick?: () => void;
 }

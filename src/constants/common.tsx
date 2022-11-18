@@ -51,9 +51,10 @@ const APP_PAGE_NAME_ROUTES = {
   PERSONAL_INFO_ACCOUNT: "/personal-info/account",
   POSITION: "/positions",
   PROPERTY: "/property",
-  RECRUIMENT_NEWS: "/recruiment-news",
-  RECRUIMENT_NEWS_LIST: "/recruiment-news/list",
-  RECRUIMENT_NEWS_CREATE: "/recruiment-news/create",
+  RECRUITMENT_NEWS: "/recruitment-news",
+  RECRUITMENT_NEWS_LIST: "/recruitment-news/list",
+  RECRUITMENT_NEWS_CREATE: "/recruitment-news/create",
+  RECRUITMENT_NEWS_UPDATE: "/recruitment-news/update/:newsId",
   REQUEST: "/requests",
   REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
@@ -142,18 +143,18 @@ export const SIDER_ITEMS = [
     icon: <StarFilled />,
   },
   {
-    key: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS,
-    label: "Recruiment News",
+    key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS,
+    label: "Recruitment News",
     icon: <StarFilled />,
     children: [
       {
-        key: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_CREATE,
-        label: "Create Recruiment News",
+        key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_CREATE,
+        label: "Create Recruitment News",
         icon: <StarFilled />,
       },
       {
-        key: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_LIST,
-        label: "Recruiment News List",
+        key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_LIST,
+        label: "Recruitment News List",
         icon: <StarFilled />,
       },
       

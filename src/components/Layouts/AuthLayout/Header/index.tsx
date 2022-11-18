@@ -14,7 +14,7 @@ const Header = () => {
             <Link to={APP_PAGE_NAME_ROUTES.LOGIN}>Home</Link>
           </li>
           <li>
-            <a href="https://youtube.com">Recruiment Page</a>
+            <a href="https://youtube.com">Recruitment Page</a>
           </li>
         </div>
         <div className="right">

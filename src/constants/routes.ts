@@ -16,7 +16,7 @@ import EmployeeManagement from "@/pages/employee";
 import DeliveryManagement from "@/pages/delivery";
 import EducationManagement from "@/pages/education";
 import PropertyManagement from "@/pages/property";
-import RecruitmentNewsManagement from "@/pages/recruiment-news";
+import RecruitmentNewsManagement from "@/pages/recruitment-news";
 import CandidateAccountManagement from "@/pages/candidate/account";
 import CandidateProfileManagement from "@/pages/candidate/profile";
 import CreateRequest from "@/pages/request/create-request";
@@ -24,7 +24,8 @@ import RequestList from "@/pages/request";
 import PositionManagement from "@/pages/position";
 import CreateNewEmployee from "@/pages/employee/create-new";
 import UpdateEmployee from "@/pages/employee/update";
-import CreateNewRecruimentNews from "@/pages/recruiment-news/create-new";
+import CreateNewRecruitmentNews from "@/pages/recruitment-news/create-new";
+import UpdateRecruitmentNews from "@/pages/recruitment-news/update";
 
 export const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
@@ -47,9 +48,10 @@ export const APP_PAGE_NAME_ROUTES = {
   PERSONAL_INFO_ACCOUNT: "/personal-info/account",
   POSITION: "/positions",
   PROPERTY: "/property",
-  RECRUIMENT_NEWS: "/recruiment-news",
-  RECRUIMENT_NEWS_LIST: "/recruiment-news/list",
-  RECRUIMENT_NEWS_CREATE: "/recruiment-news/create",
+  RECRUITMENT_NEWS: "/recruitment-news",
+  RECRUITMENT_NEWS_LIST: "/recruitment-news/list",
+  RECRUITMENT_NEWS_CREATE: "/recruitment-news/create",
+  RECRUITMENT_NEWS_UPDATE: "/recruitment-news/update/:newsId",
   REQUEST: "/requests",
   REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
@@ -58,6 +60,7 @@ export const APP_PAGE_NAME_ROUTES = {
 
 export const DYNAMIC_APP_PAGE_ROUTES = {
   EMPLOYEE_UPDATE: (employeeId: any) => `/employees/update/${employeeId}`,
+  RECRUITMENT_NEWS_UPDATE: (newsId: any) => `/recruitment-news/update/${newsId}`,
 };
 
 export const APP_ROUTES = [
@@ -206,23 +209,30 @@ export const APP_ROUTES = [
     role: ROLES.EMPLOYEE,
   },
   {
-    name: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS,
-    path: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS,
+    name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS,
+    path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS,
     element: RecruitmentNewsManagement,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
   {
-    name: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_LIST,
-    path: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_LIST,
+    name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_LIST,
+    path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_LIST,
     element: RecruitmentNewsManagement,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
   {
-    name: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_CREATE,
-    path: APP_PAGE_NAME_ROUTES.RECRUIMENT_NEWS_CREATE,
-    element: CreateNewRecruimentNews,
+    name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_CREATE,
+    path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_CREATE,
+    element: CreateNewRecruitmentNews,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_UPDATE,
+    path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_UPDATE,
+    element: UpdateRecruitmentNews,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },

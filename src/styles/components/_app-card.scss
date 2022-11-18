@@ -1,7 +1,8 @@
-.app-primary-card {
+.app-primary-card,
+.app-with-cover-card {
   padding: 2.4rem;
   border-radius: var(--app-card-border-radius);
-  cursor: pointer;;
+  cursor: pointer;
 
   > .ant-typography {
     display: block;
@@ -12,5 +13,14 @@
 
   > .title {
     margin-bottom: 0.875rem;
+  }
+}
+
+.app-with-cover-card {
+  width: fit-content;
+  padding: 0;
+
+  > .content {
+    padding: 2.4rem;
   }
 }
