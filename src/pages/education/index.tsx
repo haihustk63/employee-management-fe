@@ -1,7 +1,61 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Typography } from "antd";
 
-const EducationManagement = () => {
-  return <div>EducationManagement</div>;
+import AppWithCoverCard from "@/components/AppCard/WithCover";
+import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
+
+const { Title } = Typography;
+
+const news = [
+  {
+    title: "<h1>Hello 1</h1>",
+    excerpt: "<p>fefnjdsfsehrefwfh9ew</p>",
+    id: 1,
+  },
+  {
+    title: "<h1>Hello 2</h1>",
+    excerpt: "<p>dfjweifjiewfiew</p>",
+    id: 2,
+  },
+  {
+    title: "<h1>Hello 3</h1>",
+    excerpt: "<p>fefnjdsfsehrefwfh9ew</p>",
+    id: 3,
+  },
+  {
+    title: "<h1>Hello 4</h1>",
+    excerpt: "<p>dfjweifjiewfiew</p>",
+    id: 4,
+  },
+];
+
+const EducationProgramManagement = () => {
+  const navigate = useNavigate();
+
+  const handleClickCard = (id: number) => () => {
+    navigate(DYNAMIC_APP_PAGE_ROUTES.RECRUITMENT_NEWS_UPDATE(id));
+  };
+
+  return (
+    <div className="recruitment-news-management">
+      <Title level={3}>Education Program</Title>
+      <div className="list">
+        {news.map((item, key) => {
+          return (
+            <AppWithCoverCard
+              horizontal
+              key={key}
+              title={item.title}
+              excerpt={item.excerpt}
+              imageUrl="https://demos.themeselection.com/sneat-bootstrap-html-admin-template-free/assets/img/elements/18.jpg"
+              onClick={handleClickCard(item.id)}
+              hasBoxShadow
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
-export default EducationManagement;
+export default EducationProgramManagement;

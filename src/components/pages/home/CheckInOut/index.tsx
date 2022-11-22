@@ -17,7 +17,7 @@ const CheckInOut = () => {
   const { name } = currentUser;
 
   const handleNavigateRequest = () => {
-    navigate(APP_PAGE_NAME_ROUTES.REQUEST);
+    navigate(APP_PAGE_NAME_ROUTES.REQUEST_CREATE);
   };
 
   return (

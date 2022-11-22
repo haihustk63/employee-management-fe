@@ -26,6 +26,8 @@ import CreateNewEmployee from "@/pages/employee/create-new";
 import UpdateEmployee from "@/pages/employee/update";
 import CreateNewRecruitmentNews from "@/pages/recruitment-news/create-new";
 import UpdateRecruitmentNews from "@/pages/recruitment-news/update";
+import CreateNewEducationProgram from "@/pages/education/create-new";
+import UpdateEducationProgram from "@/pages/education/update";
 
 export const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
@@ -34,6 +36,9 @@ export const APP_PAGE_NAME_ROUTES = {
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
+  EDUCATION_PROGRAMS_LIST: "/education-programs/list",
+  EDUCATION_PROGRAMS_CREATE: "/education-programs/create",
+  EDUCATION_PROGRAMS_UPDATE: "/education-programs/update/:programId",
   EMPLOYEE: "/employees",
   EMPLOYEE_LIST: "/employees/list",
   EMPLOYEE_CREATE: "/employees/create",
@@ -60,7 +65,10 @@ export const APP_PAGE_NAME_ROUTES = {
 
 export const DYNAMIC_APP_PAGE_ROUTES = {
   EMPLOYEE_UPDATE: (employeeId: any) => `/employees/update/${employeeId}`,
-  RECRUITMENT_NEWS_UPDATE: (newsId: any) => `/recruitment-news/update/${newsId}`,
+  RECRUITMENT_NEWS_UPDATE: (newsId: any) =>
+    `/recruitment-news/update/${newsId}`,
+  EDUCATION_PROGRAM_UPDATE: (programId: any) =>
+    `/education-programs/update/${programId}`,
 };
 
 export const APP_ROUTES = [
@@ -198,6 +206,27 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS,
     path: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS,
     element: EducationManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_LIST,
+    path: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_LIST,
+    element: EducationManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_CREATE,
+    path: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_CREATE,
+    element: CreateNewEducationProgram,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_UPDATE,
+    path: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_UPDATE,
+    element: UpdateEducationProgram,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },

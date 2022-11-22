@@ -1,4 +1,18 @@
-import { StarFilled } from "@ant-design/icons";
+import {
+  HomeOutlined,
+  SendOutlined,
+  PlusCircleOutlined,
+  TableOutlined,
+  BookOutlined,
+  GoldOutlined,
+  TeamOutlined,
+  SolutionOutlined,
+  SmileOutlined,
+  UsergroupAddOutlined,
+  BlockOutlined,
+  SoundOutlined,
+  AimOutlined,
+} from "@ant-design/icons";
 
 export enum ROLES {
   EMPLOYEE = -1,
@@ -37,6 +51,9 @@ const APP_PAGE_NAME_ROUTES = {
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
+  EDUCATION_PROGRAMS_LIST: "/education-programs/list",
+  EDUCATION_PROGRAMS_CREATE: "/education-programs/create",
+  EDUCATION_PROGRAMS_UPDATE: "/education-programs/update/:programId",
   EMPLOYEE: "/employees",
   EMPLOYEE_LIST: "/employees/list",
   EMPLOYEE_CREATE: "/employees/create",
@@ -64,100 +81,111 @@ export const SIDER_ITEMS = [
   {
     key: APP_PAGE_NAME_ROUTES.DASHBOARD,
     label: "Dashboard",
-    icon: <StarFilled />,
+    icon: <HomeOutlined />,
   },
   {
     key: APP_PAGE_NAME_ROUTES.HOME,
     label: "Home",
-    icon: <StarFilled />,
+    icon: <HomeOutlined />,
   },
   {
     key: APP_PAGE_NAME_ROUTES.REQUEST,
     label: "Request",
-    icon: <StarFilled />,
+    icon: <SendOutlined />,
     children: [
       {
         key: APP_PAGE_NAME_ROUTES.REQUEST_CREATE,
         label: "Create Request",
-        icon: <StarFilled />,
+        icon: <PlusCircleOutlined />,
       },
       {
         key: APP_PAGE_NAME_ROUTES.REQUEST_LIST,
         label: "Requests List",
-        icon: <StarFilled />,
+        icon: <TableOutlined />,
       },
     ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS,
     label: "Education",
-    icon: <StarFilled />,
+    icon: <BookOutlined />,
+    children: [
+      {
+        key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_CREATE,
+        label: "Create Education Program",
+        icon: <SmileOutlined />,
+      },
+      {
+        key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_LIST,
+        label: "List Education Programs",
+        icon: <SolutionOutlined />,
+      },
+    ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.PROPERTY,
     label: "Property",
-    icon: <StarFilled />,
+    icon: <GoldOutlined />,
   },
   {
     key: APP_PAGE_NAME_ROUTES.CANDIDATE,
     label: "Candidate",
-    icon: <StarFilled />,
+    icon: <TeamOutlined />,
     children: [
       {
         key: APP_PAGE_NAME_ROUTES.CANDIDATE_ACCOUNT,
         label: "Account Management",
-        icon: <StarFilled />,
+        icon: <SmileOutlined />,
       },
       {
         key: APP_PAGE_NAME_ROUTES.CANDIDATE_PROFILE,
         label: "Profile Management",
-        icon: <StarFilled />,
+        icon: <SolutionOutlined />,
       },
     ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.EMPLOYEE,
     label: "Employee",
-    icon: <StarFilled />,
+    icon: <UsergroupAddOutlined />,
     children: [
       {
         key: APP_PAGE_NAME_ROUTES.EMPLOYEE_CREATE,
         label: "Create Employee",
-        icon: <StarFilled />,
+        icon: <PlusCircleOutlined />,
       },
       {
         key: APP_PAGE_NAME_ROUTES.EMPLOYEE_LIST,
         label: "Employee List",
-        icon: <StarFilled />,
+        icon: <TableOutlined />,
       },
     ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.DELIVERY,
     label: "Delivery",
-    icon: <StarFilled />,
+    icon: <BlockOutlined />,
   },
   {
     key: APP_PAGE_NAME_ROUTES.POSITION,
     label: "Position",
-    icon: <StarFilled />,
+    icon: <AimOutlined />,
   },
   {
     key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS,
     label: "Recruitment News",
-    icon: <StarFilled />,
+    icon: <SoundOutlined />,
     children: [
       {
         key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_CREATE,
         label: "Create Recruitment News",
-        icon: <StarFilled />,
+        icon: <PlusCircleOutlined />,
       },
       {
         key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_LIST,
         label: "Recruitment News List",
-        icon: <StarFilled />,
+        icon: <TableOutlined />,
       },
-      
     ],
   },
 ];

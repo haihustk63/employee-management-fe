@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@types/dompurify": "^2.4.0",
-    "antd": "^4.24.1",
+    "antd": "^5.0.0",
     "date-fns": "^2.29.3",
     "dompurify": "^2.4.1",
     "formik": "^2.2.9",

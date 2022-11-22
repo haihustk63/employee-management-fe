@@ -1,6 +1,10 @@
+import { useNavigate } from "react-router-dom";
+import { Typography } from "antd";
+
 import AppWithCoverCard from "@/components/AppCard/WithCover";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
-import { useNavigate } from "react-router-dom";
+
+const { Title } = Typography;
 
 const news = [
   {
@@ -34,6 +38,7 @@ const RecruitmentNewsManagement = () => {
 
   return (
     <div className="recruitment-news-management">
+      <Title level={3}>Recruitment News</Title>
       <div className="list">
         {news.map((item, key) => {
           return (
