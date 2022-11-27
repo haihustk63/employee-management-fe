@@ -15,7 +15,7 @@ const AppTable: FC<IAppTableProps> = ({
   sortDirections,
   loading,
   onChange,
-  pagination,
+  pagination = false,
   scroll,
   sticky,
   onGoBack,
@@ -26,7 +26,18 @@ const AppTable: FC<IAppTableProps> = ({
         {onGoBack && <AppBackPage onBack={onGoBack} />}
         <Title level={3}>{tableName}</Title>
       </div>
-      <Table columns={columns} dataSource={dataSource} />
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        loading={loading}
+        title={title}
+        pagination={pagination}
+        onChange={onChange}
+        bordered={bordered}
+        sortDirections={sortDirections}
+        scroll={scroll ? scroll : { x: true }}
+        sticky={sticky}
+      />
     </div>
   );
 };

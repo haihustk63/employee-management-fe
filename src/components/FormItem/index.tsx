@@ -19,7 +19,12 @@ const TextAreaField = ({ field, form, ...props }: IFieldProps) => {
 };
 
 const SelectField = ({ field, form, ...props }: IFieldProps) => {
-  return <Select {...field} {...props} className="select" />;
+  const handleChange = (value: any) => {
+    form.setFieldValue(field.name, value);
+  };
+  return (
+    <Select {...field} {...props} onChange={handleChange} className="select" />
+  );
 };
 
 const renderFormItemComponent = (type: any) => {

@@ -1,5 +1,9 @@
 import { Fragment, ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import { APP_ROUTES } from "./constants/routes";
@@ -32,8 +36,20 @@ const createRouter = (routes: any): { path: string; element: ReactNode }[] => {
 
 const router = createBrowserRouter(createRouter(APP_ROUTES));
 
+const queryClient = new QueryClient();
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ErrorBoundary
+      FallbackComponent={() => <div>Something wrong</div>}
+      onError={(error) => console.log(error)}
+    >
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ErrorBoundary>
+  );
 }
 
 export default App;

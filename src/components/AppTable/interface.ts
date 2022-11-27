@@ -1,18 +1,19 @@
-import { ColumnsType } from "antd/lib/table";
+import { TablePaginationConfig } from "antd";
+import { SortOrder } from "antd/es/table/interface";
 
 export interface IAppTableProps {
   bordered?: boolean;
   columns?: any;
   dataSource?: object[];
-  title?: string;
+  title?: any;
   tableName?: string;
   loading?: boolean;
-  pagination?: object;
+  pagination?: false | TablePaginationConfig | undefined;
   rowKey?: any;
   scroll?: object;
   showSorterTooltip?: boolean;
   size?: "default" | "middle" | "small";
-  sortDirections?: string[];
+  sortDirections?: SortOrder[] | undefined;
   sticky?: boolean;
   onGoBack?: () => void;
   onChange?: () => void;

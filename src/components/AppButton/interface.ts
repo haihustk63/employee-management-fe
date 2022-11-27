@@ -1,5 +1,5 @@
 export interface IAppButton {
   buttonTitle: string;
-  onClick?: () => void;
+  onClick?: any;
   htmlType?: "button" | "submit" | "reset" | undefined;
 }
