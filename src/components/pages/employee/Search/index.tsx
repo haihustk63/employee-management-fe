@@ -4,7 +4,7 @@ import { FC, useContext, useEffect, useRef } from "react";
 import AppForm from "@/components/AppForm";
 import FormFields from "./FormFields";
 import { ISearchEmployeeProps } from "./interface";
-import { EmployeeManagementContext } from "@/pages/employee";
+import { EmployeeManagementContext } from "@/pages/employee/profile";
 
 const initialValues: ISearchEmployeeProps = {
   keyword: "",

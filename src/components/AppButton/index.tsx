@@ -3,9 +3,20 @@ import { FC } from "react";
 
 import { IAppButton } from "./interface";
 
-const AppButton: FC<IAppButton> = ({ buttonTitle, onClick, htmlType }) => {
+const AppButton: FC<IAppButton> = ({
+  buttonTitle,
+  onClick,
+  htmlType,
+  className,
+  size,
+}) => {
   return (
-    <Button onClick={onClick} htmlType={htmlType}>
+    <Button
+      onClick={onClick}
+      htmlType={htmlType}
+      className={`app-button ${className}`}
+      size={size}
+    >
       {buttonTitle}
     </Button>
   );

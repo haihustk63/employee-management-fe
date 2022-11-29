@@ -12,6 +12,7 @@ import {
   BlockOutlined,
   SoundOutlined,
   AimOutlined,
+  CalculatorOutlined,
 } from "@ant-design/icons";
 
 export enum ROLES {
@@ -76,6 +77,9 @@ const APP_PAGE_NAME_ROUTES = {
   REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
+  TEST_TOPIC: "/test-topics",
+  TEST_TOPIC_CREATE: "/test-topics/create",
+  TEST_TOPIC_UPDATE: "/test-topics/update/:topicId",
 };
 export const SIDER_ITEMS = [
   {
@@ -187,6 +191,11 @@ export const SIDER_ITEMS = [
         icon: <TableOutlined />,
       },
     ],
+  },
+  {
+    key: APP_PAGE_NAME_ROUTES.TEST_TOPIC,
+    label: "Test Topics",
+    icon: <CalculatorOutlined />,
   },
 ];
 

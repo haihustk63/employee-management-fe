@@ -1,10 +1,10 @@
 import { FC, useMemo } from "react";
 
 import AppTable from "@/components/AppTable";
-import { ICandidateProfileTableProps } from "./interface";
 import { candidateProfileTableColumns } from "@/constants/columns";
+import { ITableDataProps } from "@/constants/interface";
 
-const ProfileTable: FC<ICandidateProfileTableProps> = ({
+const ProfileTable: FC<ITableDataProps> = ({
   dataSource,
   loading,
   currentPage = 0,

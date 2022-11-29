@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import AppTable from "@/components/AppTable";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
-import { IEmployeeListProps } from "./interface";
 import { employeeListColumns } from "@/constants/columns";
+import { ITableDataProps } from "@/constants/interface";
 
-const EmployeeList: FC<IEmployeeListProps> = ({
-  employeeList,
+const EmployeeList: FC<ITableDataProps> = ({
+  dataSource,
   loading,
   currentPage = 0,
 }) => {
@@ -21,7 +21,7 @@ const EmployeeList: FC<IEmployeeListProps> = ({
     <div className="employee-list">
       <AppTable
         columns={employeeListColumns(handleClickButtonViewDetail, currentPage)}
-        dataSource={employeeList}
+        dataSource={dataSource}
         tableName="List Employee"
         loading={loading}
       />

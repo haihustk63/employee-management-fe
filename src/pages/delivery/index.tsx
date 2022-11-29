@@ -8,7 +8,7 @@ const DeliveryManagement = () => {
   return (
     <div className="delivery-management">
       <AddNewDelivery />
-      <DeliveryList deliveryList={data} loading={isFetching || isLoading} />
+      <DeliveryList dataSource={data} loading={isFetching || isLoading} />
     </div>
   );
 };

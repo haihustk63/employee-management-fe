@@ -1,12 +1,18 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const API_ROUTES = {
-  //candidates
+  // candidates
   CANDIDATE_PROFILE: `${API_URL}/candidates/apply`,
 
-  //delivery
+  // delivery
   DELIVERY: `${API_URL}/deliveries`,
 
   // employee
   EMPLOYEE_PROFILE: `${API_URL}/employees/profile`,
+
+  // test-questions
+  TEST_QUESTIONS: `${API_URL}/test-questions`,
+
+  // test-topics
+  TEST_TOPICS: `${API_URL}/test-topics`,
 };

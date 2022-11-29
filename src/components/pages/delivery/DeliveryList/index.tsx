@@ -1,12 +1,12 @@
 import AppTable from "@/components/AppTable";
 import { deliveryListColumns } from "@/constants/columns";
+import { ITableDataProps } from "@/constants/interface";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { IDeliveryListProps } from "./interface";
 
-const DeliveryList: FC<IDeliveryListProps> = ({
-  deliveryList,
+const DeliveryList: FC<ITableDataProps> = ({
+  dataSource,
   loading,
   currentPage = 0,
 }) => {
@@ -23,7 +23,7 @@ const DeliveryList: FC<IDeliveryListProps> = ({
           handleToggleShowListEmployees,
           currentPage
         )}
-        dataSource={deliveryList}
+        dataSource={dataSource}
         tableName="List Deliveries"
         loading={loading}
       />

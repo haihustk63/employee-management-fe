@@ -12,7 +12,7 @@ import CandidateSkillTest from "@/pages/skill-test";
 import SkillTestLayout from "@/components/Layouts/SkillTestLayout";
 import AdminDashboard from "@/pages/dashboard";
 import CandidateManagement from "@/pages/candidate";
-import EmployeeManagement from "@/pages/employee";
+import EmployeeManagement from "@/pages/employee/profile";
 import DeliveryManagement from "@/pages/delivery";
 import EducationManagement from "@/pages/education";
 import PropertyManagement from "@/pages/property";
@@ -22,12 +22,15 @@ import CandidateProfileManagement from "@/pages/candidate/profile";
 import CreateRequest from "@/pages/request/create-request";
 import RequestList from "@/pages/request";
 import PositionManagement from "@/pages/position";
-import CreateNewEmployee from "@/pages/employee/create-new";
-import UpdateEmployee from "@/pages/employee/update";
+import CreateNewEmployee from "@/pages/employee/profile/create-new";
+import UpdateEmployee from "@/pages/employee/profile/update";
 import CreateNewRecruitmentNews from "@/pages/recruitment-news/create-new";
 import UpdateRecruitmentNews from "@/pages/recruitment-news/update";
 import CreateNewEducationProgram from "@/pages/education/create-new";
 import UpdateEducationProgram from "@/pages/education/update";
+import ListTestTopic from "@/pages/test-topics";
+import CreateTestTopic from "@/pages/test-topics/create-new";
+import UpdateTestTopic from "@/pages/test-topics/update";
 
 export const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
@@ -61,6 +64,9 @@ export const APP_PAGE_NAME_ROUTES = {
   REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
+  TEST_TOPIC: "/test-topics",
+  TEST_TOPIC_CREATE: "/test-topics/create",
+  TEST_TOPIC_UPDATE: "/test-topics/update/:topicId",
 };
 
 export const DYNAMIC_APP_PAGE_ROUTES = {
@@ -69,6 +75,8 @@ export const DYNAMIC_APP_PAGE_ROUTES = {
     `/recruitment-news/update/${newsId}`,
   EDUCATION_PROGRAM_UPDATE: (programId: any) =>
     `/education-programs/update/${programId}`,
+  TEST_QUESTION_BY_TOPIC: (topicId: any) =>
+    `/test-questions?topicId=${topicId}`,
 };
 
 export const APP_ROUTES = [
@@ -262,6 +270,27 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_UPDATE,
     path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_UPDATE,
     element: UpdateRecruitmentNews,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TEST_TOPIC,
+    path: APP_PAGE_NAME_ROUTES.TEST_TOPIC,
+    element: ListTestTopic,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TEST_TOPIC_CREATE,
+    path: APP_PAGE_NAME_ROUTES.TEST_TOPIC_CREATE,
+    element: CreateTestTopic,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TEST_TOPIC_UPDATE,
+    path: APP_PAGE_NAME_ROUTES.TEST_TOPIC_UPDATE,
+    element: UpdateTestTopic,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },

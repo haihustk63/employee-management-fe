@@ -29,7 +29,7 @@ const AppPrimaryCard: FC<IAppCardPrimaryProps> = ({
       <Title level={3} className="title">
         {title}
       </Title>
-      {children}
+      <div className="content">{children}</div>
     </div>
   );
 };
