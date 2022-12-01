@@ -80,6 +80,10 @@ const APP_PAGE_NAME_ROUTES = {
   TEST_TOPIC: "/test-topics",
   TEST_TOPIC_CREATE: "/test-topics/create",
   TEST_TOPIC_UPDATE: "/test-topics/update/:topicId",
+  TEST_QUESTION: "/test-questions",
+  TEST_QUESTION_LIST: "/test-questions/list",
+  TEST_QUESTION_CREATE: "/test-questions/create",
+  TEST_QUESTION_UPDATE: "/test-questions/update/:questionId",
 };
 export const SIDER_ITEMS = [
   {
@@ -196,6 +200,23 @@ export const SIDER_ITEMS = [
     key: APP_PAGE_NAME_ROUTES.TEST_TOPIC,
     label: "Test Topics",
     icon: <CalculatorOutlined />,
+  },
+  {
+    key: APP_PAGE_NAME_ROUTES.TEST_QUESTION,
+    label: "Test Questions",
+    icon: <SoundOutlined />,
+    children: [
+      {
+        key: APP_PAGE_NAME_ROUTES.TEST_QUESTION_CREATE,
+        label: "Create Test Questions",
+        icon: <PlusCircleOutlined />,
+      },
+      {
+        key: APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST,
+        label: "Test Questions List",
+        icon: <TableOutlined />,
+      },
+    ],
   },
 ];
 

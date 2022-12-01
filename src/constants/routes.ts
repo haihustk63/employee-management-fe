@@ -28,9 +28,12 @@ import CreateNewRecruitmentNews from "@/pages/recruitment-news/create-new";
 import UpdateRecruitmentNews from "@/pages/recruitment-news/update";
 import CreateNewEducationProgram from "@/pages/education/create-new";
 import UpdateEducationProgram from "@/pages/education/update";
-import ListTestTopic from "@/pages/test-topics";
+import TestTopicManagement from "@/pages/test-topics";
 import CreateTestTopic from "@/pages/test-topics/create-new";
 import UpdateTestTopic from "@/pages/test-topics/update";
+import TestQuestionManagement from "@/pages/test-questions";
+import CreateTestQuestion from "@/pages/test-questions/create-new";
+import UpdateTestQuestion from "@/pages/test-questions/update";
 
 export const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
@@ -67,6 +70,10 @@ export const APP_PAGE_NAME_ROUTES = {
   TEST_TOPIC: "/test-topics",
   TEST_TOPIC_CREATE: "/test-topics/create",
   TEST_TOPIC_UPDATE: "/test-topics/update/:topicId",
+  TEST_QUESTION: "/test-questions",
+  TEST_QUESTION_CREATE: "/test-questions/create",
+  TEST_QUESTION_LIST: "/test-questions/list",
+  TEST_QUESTION_UPDATE: "/test-questions/update/:questionId",
 };
 
 export const DYNAMIC_APP_PAGE_ROUTES = {
@@ -276,7 +283,7 @@ export const APP_ROUTES = [
   {
     name: APP_PAGE_NAME_ROUTES.TEST_TOPIC,
     path: APP_PAGE_NAME_ROUTES.TEST_TOPIC,
-    element: ListTestTopic,
+    element: TestTopicManagement,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
@@ -291,6 +298,34 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.TEST_TOPIC_UPDATE,
     path: APP_PAGE_NAME_ROUTES.TEST_TOPIC_UPDATE,
     element: UpdateTestTopic,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TEST_QUESTION,
+    path: APP_PAGE_NAME_ROUTES.TEST_QUESTION,
+    element: TestQuestionManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST,
+    path: APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST,
+    element: TestQuestionManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TEST_QUESTION_CREATE,
+    path: APP_PAGE_NAME_ROUTES.TEST_QUESTION_CREATE,
+    element: CreateTestQuestion,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TEST_QUESTION_UPDATE,
+    path: APP_PAGE_NAME_ROUTES.TEST_QUESTION_UPDATE,
+    element: UpdateTestQuestion,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },

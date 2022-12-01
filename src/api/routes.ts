@@ -15,4 +15,8 @@ export const API_ROUTES = {
 
   // test-topics
   TEST_TOPICS: `${API_URL}/test-topics`,
+
+  // constant test-questions
+  CONSTANT_TEST_QUESTIONS: `${API_URL}/constants/test-questions`,
+
 };

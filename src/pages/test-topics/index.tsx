@@ -1,14 +1,14 @@
 import { Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import AppPrimaryCard from "@/components/AppCard/Primary";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
 import AppButton from "@/components/AppButton";
-import { useNavigate } from "react-router-dom";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 
 const { Text, Title } = Typography;
 
-const ListTestTopic = () => {
+const TestTopicManagement = () => {
   const { data, isLoading, isFetching } = useGetAllTestTopics();
 
   const navigate = useNavigate();
@@ -40,4 +40,4 @@ const ListTestTopic = () => {
   );
 };
 
-export default ListTestTopic;
+export default TestTopicManagement;

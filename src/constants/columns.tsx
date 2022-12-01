@@ -4,6 +4,7 @@ import moment from "moment";
 
 import AppButton from "@/components/AppButton";
 import { ICandidateProfile } from "@/hooks/candidate/interface";
+import AppTag from "@/components/AppTag";
 
 const indexColumn = (currentPage: number) => ({
   key: "#",
@@ -209,3 +210,69 @@ export const employeeListColumns = (
 
 // test topics
 
+// test questions
+export const testQuestionListColumns = ({
+  onClickButtonViewDetail,
+  currentPage,
+  testQuestionLevelsContants,
+  testQuestionTypesContants,
+  t,
+}: any) => {
+  return [
+    indexColumn(currentPage),
+    {
+      key: "questionText",
+      dataIndex: ["questionText"],
+      title: "Question",
+      fixed: true,
+      width: "40%",
+    },
+    {
+      key: "type",
+      dataIndex: ["type"],
+      title: "Type",
+      render: (value: any) => {
+        if (testQuestionTypesContants) {
+          return (
+            <AppTag color={testQuestionTypesContants[value].value}>
+              {testQuestionTypesContants[value].text}
+            </AppTag>
+          );
+        }
+      },
+    },
+    {
+      key: "level",
+      dataIndex: ["level"],
+      title: "Level",
+      render: (value: any) => {
+        if (testQuestionLevelsContants) {
+          return (
+            <AppTag color={testQuestionLevelsContants[value].value}>
+              {testQuestionLevelsContants[value].text}
+            </AppTag>
+          );
+        }
+      },
+    },
+    {
+      key: "topic",
+      dataIndex: ["topic", "name"],
+      title: "Topic",
+    },
+    {
+      key: "action",
+      dataIndex: "action",
+      title: "Action",
+      render: (_: any, record: any) => {
+        return (
+          <AppButton
+            buttonTitle="View Detail"
+            htmlType="button"
+            onClick={onClickButtonViewDetail(record.id)}
+          />
+        );
+      },
+    },
+  ];
+};
