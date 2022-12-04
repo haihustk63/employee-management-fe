@@ -1,16 +1,35 @@
 .delivery-management {
   display: flex;
 
-  > .add-new-delivery {
-    width: 40%;
-  }
-
   > .delivery-list {
     flex-grow: 1;
     margin-left: 2rem;
   }
 }
 
-.delivery-list {
+.add-new-delivery {
+  > .app-form {
+    padding: 0;
+  }
+}
 
+.delivery-list {
+  > .list {
+    display: flex;
+    flex-wrap: wrap;
+
+    > .app-primary-card {
+      width: calc((100% - 6.4rem) / 4);
+      margin: 0.8rem;
+    }
+  }
+
+  > .title {
+    display: flex;
+    align-items: center;
+
+    > .app-button {
+      margin-left: 1rem;
+    }
+  }
 }

@@ -234,8 +234,8 @@ export const testQuestionListColumns = ({
       render: (value: any) => {
         if (testQuestionTypesContants) {
           return (
-            <AppTag color={testQuestionTypesContants[value].value}>
-              {testQuestionTypesContants[value].text}
+            <AppTag color={testQuestionTypesContants[value].color}>
+              {testQuestionTypesContants[value].label}
             </AppTag>
           );
         }
@@ -248,8 +248,8 @@ export const testQuestionListColumns = ({
       render: (value: any) => {
         if (testQuestionLevelsContants) {
           return (
-            <AppTag color={testQuestionLevelsContants[value].value}>
-              {testQuestionLevelsContants[value].text}
+            <AppTag color={testQuestionLevelsContants[value].color}>
+              {testQuestionLevelsContants[value].label}
             </AppTag>
           );
         }

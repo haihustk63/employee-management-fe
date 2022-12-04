@@ -6,6 +6,7 @@ export const API_ROUTES = {
 
   // delivery
   DELIVERY: `${API_URL}/deliveries`,
+  // DELIVERY_ID: `${API_URL}/deliveries/`,
 
   // employee
   EMPLOYEE_PROFILE: `${API_URL}/employees/profile`,

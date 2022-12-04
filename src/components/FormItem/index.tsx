@@ -1,14 +1,13 @@
 import { FC } from "react";
-import { Field } from "formik";
-import { Input, Select } from "antd";
+import { ErrorMessage, Field } from "formik";
+import { Input, Select, Typography } from "antd";
 
 import { IFieldProps, IFormItemProps } from "./interface";
-
 import { FORM_ITEM_TYPES } from "@/constants/common";
 
 const { TEXT, TEXTAREA, SELECT } = FORM_ITEM_TYPES;
-
 const { TextArea } = Input;
+const { Text } = Typography;
 
 const InputField = ({ field, form, ...props }: IFieldProps) => {
   return <Input {...field} {...props} className="input" />;
@@ -22,8 +21,16 @@ const SelectField = ({ field, form, ...props }: IFieldProps) => {
   const handleChange = (value: any) => {
     form.setFieldValue(field.name, value);
   };
+
+  const { onChange: handleChangeProp } = props as any;
+
   return (
-    <Select {...field} {...props} onChange={handleChange} className="select" />
+    <Select
+      {...field}
+      {...props}
+      onChange={handleChangeProp || handleChange}
+      className="select"
+    />
   );
 };
 
@@ -47,12 +54,17 @@ const renderFormItemComponent = (type: any) => {
   }
 };
 
+const renderErrorMessage = (message: string) => {
+  return <Text className="form-field-error-message">{message}</Text>;
+};
+
 const FormItem: FC<IFormItemProps> = ({ name, type, label, ...props }) => {
   const renderComponent = renderFormItemComponent(type);
   return (
     <div className="form-item">
       {label && <label htmlFor={name}>{label}</label>}
       <Field name={name} type={type} {...props} component={renderComponent} />
+      <ErrorMessage render={renderErrorMessage} name={name} />
     </div>
   );
 };

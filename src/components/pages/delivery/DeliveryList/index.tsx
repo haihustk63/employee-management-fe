@@ -1,32 +1,44 @@
-import AppTable from "@/components/AppTable";
-import { deliveryListColumns } from "@/constants/columns";
-import { ITableDataProps } from "@/constants/interface";
-import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
-import { FC } from "react";
 import { useNavigate } from "react-router-dom";
+import { FC } from "react";
+import { Typography } from "antd";
 
-const DeliveryList: FC<ITableDataProps> = ({
-  dataSource,
-  loading,
-  currentPage = 0,
-}) => {
+import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
+import AppButton from "@/components/AppButton";
+import AppPrimaryCard from "@/components/AppCard/Primary";
+import { IDeliveryListProps } from "./interface";
+
+const { Text, Title } = Typography;
+
+const DeliveryList: FC<IDeliveryListProps> = ({ data, onToggleModal }) => {
   const navigate = useNavigate();
 
-  const handleToggleShowListEmployees = (deliveryId: any) => () => {
+  const handleClickDeliveryCard = (deliveryId: any) => () => {
     navigate(`${APP_PAGE_NAME_ROUTES.EMPLOYEE_LIST}?delivery=${deliveryId}`);
   };
 
   return (
     <div className="delivery-list">
-      <AppTable
-        columns={deliveryListColumns(
-          handleToggleShowListEmployees,
-          currentPage
-        )}
-        dataSource={dataSource}
-        tableName="List Deliveries"
-        loading={loading}
-      />
+      <div className="title">
+        <Title level={3}>Deliveries</Title>
+        <AppButton
+          buttonTitle="Add delivery"
+          size="small"
+          onClick={onToggleModal}
+        />
+      </div>
+      <div className="list">
+        {data?.map((delivery: any, index: number) => {
+          return (
+            <AppPrimaryCard key={index} title={delivery.name}>
+              <Text>{delivery.name}</Text>
+              <AppButton
+                buttonTitle="View Delivery List"
+                onClick={handleClickDeliveryCard(delivery.id)}
+              />
+            </AppPrimaryCard>
+          );
+        })}
+      </div>
     </div>
   );
 };

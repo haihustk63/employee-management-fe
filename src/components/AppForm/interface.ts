@@ -4,4 +4,5 @@ export interface IAppFormProps<T> {
   title?: string;
   children?: any;
   innerRef?: any;
+  validationSchema?: any;
 }

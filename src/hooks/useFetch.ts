@@ -14,7 +14,7 @@ export interface IUseFetchManyProps<T> {
 }
 
 const useFetch = <T>({ url, params, config }: IUseFetchProps<T>) => {
-  return useQuery<T>([url!, params], fetcher<T>, {
+  return useQuery<T>([url!, ], fetcher<T>, {
     enabled: !!url,
     ...config,
   });

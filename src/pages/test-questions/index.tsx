@@ -1,21 +1,36 @@
-import { Typography } from "antd";
-import { useNavigate } from "react-router-dom";
-
-import AppPrimaryCard from "@/components/AppCard/Primary";
-import AppButton from "@/components/AppButton";
-import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 import { useGetAllTestQuestions } from "@/hooks/test-question";
 import TestQuestionList from "@/components/pages/test-questions/TestQuestionList";
+import Search from "@/components/pages/test-questions/Search";
+import { createContext, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
-const { Text, Title } = Typography;
+export const TestQuestionConText = createContext({}) as any;
 
 const TestQuestionManagement = () => {
-  const { data, isLoading, isFetching } = useGetAllTestQuestions();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const params = useMemo(() => {
+    return {
+      keyword: searchParams.get("keyword"),
+      topic: searchParams.get("topic"),
+      level: searchParams.get("level"),
+      type: searchParams.get("type"),
+    };
+  }, [searchParams]); 
+  
+  const { data, isLoading, isFetching } = useGetAllTestQuestions({
+    params,
+  });
+  
   return (
-    <div className="list-test-topic">
-      <TestQuestionList dataSource={data} loading={isLoading || isFetching} />
-    </div>
+    <TestQuestionConText.Provider
+      value={{ params, setSearchParams, searchParams }}
+    >
+      <div className="list-test-topic">
+        <Search />
+        <TestQuestionList dataSource={data} loading={isLoading || isFetching} />
+      </div>
+    </TestQuestionConText.Provider>
   );
 };
 

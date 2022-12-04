@@ -33,7 +33,6 @@ const FormFields = () => {
         value={values.managerId}
         type={SELECT}
         options={MANAGER_EXAMPLE}
-        onChange={handleChange}
         placeholder="Select manager"
       />
       <AppButton buttonTitle="Add" htmlType="submit" />

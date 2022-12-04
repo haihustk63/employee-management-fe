@@ -12,9 +12,9 @@ const addKeyToData = (data: any[] = []) => {
 
 const dataToOptions = (data: any[] = []) => {
   return data.map((item: any) => ({
-    key: item.id,
-    value: item.id,
-    label: item.name,
+    key: item.key || item.id,
+    value: item.value || item.id,
+    label: item.label || item.name,
   }));
 };
 

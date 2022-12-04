@@ -1,21 +1,25 @@
 import { Typography } from "antd";
 import { Formik } from "formik";
-import { useContext } from "react";
 
-import { RequestContext } from "@/pages/request/create-request";
 import { IAppFormProps } from "./interface";
 
 const { Title } = Typography;
 
 const AppForm = <T,>(props: IAppFormProps<T>) => {
-  const { handleToShowResult } = useContext(RequestContext) as any;
-  const { children, handleSubmitForm, initialValues, title, innerRef } =
-    props as any;
+  // const { handleToShowResult } = useContext(RequestContext) as any;
+  const {
+    children,
+    handleSubmitForm,
+    initialValues,
+    title,
+    innerRef,
+    validationSchema,
+  } = props as any;
 
-  const handleSubmitAppForm = () => {
-    handleSubmitForm();
-    handleToShowResult();
-  };
+  // const handleSubmitAppForm = () => {
+  //   handleSubmitForm();
+  //   // handleToShowResult();
+  // };
 
   return (
     <div className="app-form">
@@ -26,8 +30,9 @@ const AppForm = <T,>(props: IAppFormProps<T>) => {
       )}
       <Formik
         initialValues={initialValues}
-        onSubmit={handleSubmitAppForm}
+        onSubmit={handleSubmitForm}
         innerRef={innerRef}
+        validationSchema={validationSchema}
       >
         {children}
       </Formik>
