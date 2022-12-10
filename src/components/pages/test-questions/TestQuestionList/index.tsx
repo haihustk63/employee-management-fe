@@ -1,18 +1,25 @@
+import { FC, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+
 import AppTable from "@/components/AppTable";
 import { testQuestionListColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
+import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 import { useGetConstantTestQuestion } from "@/hooks/constant";
-import React, { FC, useMemo } from "react";
 
 const TestQuestionList: FC<ITableDataProps> = ({
   dataSource,
   loading,
   currentPage = 0,
 }) => {
+  const navigate = useNavigate();
+
   const [testQuestionTypesContants, testQuestionLevelsContants] =
     useGetConstantTestQuestion() as any;
 
-  const handleClickViewDetail = () => {};
+  const handleClickViewDetail = (recordId: number) => () => {
+    navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_UPDATE(recordId));
+  };
 
   const columns = useMemo(() => {
     return testQuestionListColumns({

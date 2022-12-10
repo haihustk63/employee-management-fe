@@ -27,6 +27,7 @@
   --bs-teal: #20c997;
   --bs-cyan: #03c3ec;
   --bs-white: #fff;
+  --bs-black: #000;
   --bs-gray: rgba(67, 89, 113, 0.6);
   --bs-gray-dark: rgba(67, 89, 113, 0.8);
   --bs-gray-25: rgba(67, 89, 113, 0.025);
@@ -79,10 +80,10 @@
 
   /* box-shadow */
   --common-box-shadow: 0 2px 6px 0 rgb(67 89 113 / 12%);
-  --common-border-radius: .5rem;
+  --common-border-radius: 0.5rem;
 }
 
-* {
+*, pre {
   margin: 0;
   padding: 0;
 }
@@ -107,7 +108,15 @@ h1 {
   line-height: 1.1;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+pre {
   color: #000;
 }
 

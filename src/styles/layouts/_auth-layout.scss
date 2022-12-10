@@ -5,7 +5,7 @@
 
   > .main {
     flex-grow: 1;
-    background-color: getColor("white", "basic_white");
+    background-color: var(--bs-white);
   }
 }
 

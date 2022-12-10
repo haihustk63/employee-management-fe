@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { ErrorMessage, Field } from "formik";
 import { Input, Select, Typography } from "antd";
 
@@ -28,6 +28,7 @@ const SelectField = ({ field, form, ...props }: IFieldProps) => {
     <Select
       {...field}
       {...props}
+      allowClear
       onChange={handleChangeProp || handleChange}
       className="select"
     />
@@ -58,8 +59,14 @@ const renderErrorMessage = (message: string) => {
   return <Text className="form-field-error-message">{message}</Text>;
 };
 
-const FormItem: FC<IFormItemProps> = ({ name, type, label, ...props }) => {
+const FormItem: FC<IFormItemProps> = ({
+  name,
+  type,
+  label,
+  ...props
+}) => {
   const renderComponent = renderFormItemComponent(type);
+
   return (
     <div className="form-item">
       {label && <label htmlFor={name}>{label}</label>}

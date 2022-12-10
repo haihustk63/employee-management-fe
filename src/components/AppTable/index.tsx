@@ -20,6 +20,7 @@ const AppTable: FC<IAppTableProps> = ({
   sticky,
   onGoBack,
 }) => {
+  console.log(loading)
   return (
     <div className="app-table">
       <div className="title">

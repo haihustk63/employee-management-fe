@@ -1,51 +1,66 @@
 import { Form, useFormikContext } from "formik";
-import { useCallback, useContext, useEffect } from "react";
-import { debounce } from "lodash";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useMemo, useState } from "react";
+import debounce from "lodash/debounce";
 
 import FormItem from "@/components/FormItem";
-import { FORM_ITEM_TYPES, MANAGER_EXAMPLE } from "@/constants/common";
-import { dataToOptions } from "@/utils";
+import { FORM_ITEM_TYPES } from "@/constants/common";
+import { dataToOptions, makeCleanObject } from "@/utils";
 import { TestQuestionConText } from "@/pages/test-questions";
-import { useGetConstantTestQuestion } from "@/hooks/constant";
+import { useGetConstantTestQuestionValue } from "@/hooks/constant";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
 
 const { TEXT, SELECT } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
-  const [types, levels] = useGetConstantTestQuestion() as any;
+  const [{ data: types = [] }, { data: levels = [] }] =
+    useGetConstantTestQuestionValue() as any;
   const { data: testTopics = [] } = useGetAllTestTopics();
 
-  const { setSearchParams, searchParams } = useContext(
+  const { setQueryParams, queryParams } = useContext(
     TestQuestionConText
   ) as any;
 
   const { values, handleSubmit, handleChange, setFieldValue } =
     useFormikContext() as any;
 
-  const setKeywordParams = (value: string) => {
-    if (!value) {
-      searchParams?.delete("keyword");
-    } else {
-      searchParams?.set("keyword", value);
-    }
-    setSearchParams(searchParams);
+  const [isKeywordChange, setIsKeywordChange] = useState(false);
+
+  const handleSetSearchParams = (field: string) => (value: any) => {
+    const params = { ...queryParams, [field]: value };
+    const pureParams = makeCleanObject(params);
+    setQueryParams(pureParams);
   };
 
-  const debounceSetKeywordParams = useCallback(
-    debounce(setKeywordParams, 500),
+  useEffect(() => {
+    if (isKeywordChange) {
+      handleSetSearchParams("keyword")(values.keyword);
+      setIsKeywordChange(false);
+    }
+  }, [isKeywordChange]);
+
+  const handleSetKeywordChange = () => {
+    setIsKeywordChange(true);
+  };
+
+  const debounceSetKeywordParams = useMemo(
+    () => debounce(handleSetKeywordChange, 500),
     []
   );
 
+  useEffect(() => {
+    return () => {
+      debounceSetKeywordParams.cancel();
+    };
+  }, []);
+
   const handleChangeKeyword = (e: any) => {
     handleChange(e);
-    debounceSetKeywordParams(e.target.value as string);
+    debounceSetKeywordParams();
   };
 
   const handleChangeOtherValue = (field: string) => (value: string) => {
     setFieldValue(field, value);
-    searchParams?.set(field, value);
-    setSearchParams(searchParams);
+    handleSetSearchParams(field)(value);
   };
 
   if (types.isLoading || levels.isLoading) return null;
@@ -54,7 +69,6 @@ const FormFields = () => {
     <Form onSubmit={handleSubmit} className="form">
       <FormItem
         name="keyword"
-        value={values.keyword}
         type={TEXT}
         onChange={handleChangeKeyword}
         placeholder="Keywords"
@@ -71,7 +85,7 @@ const FormFields = () => {
         name="type"
         value={values.type}
         type={SELECT}
-        options={dataToOptions(Object.values(types.data.types))}
+        options={dataToOptions(types)}
         placeholder="Select type"
         onChange={handleChangeOtherValue("type")}
       />
@@ -79,7 +93,7 @@ const FormFields = () => {
         name="level"
         value={values.level}
         type={SELECT}
-        options={dataToOptions(Object.values(levels.data.levels))}
+        options={dataToOptions(levels)}
         onChange={handleChangeOtherValue("level")}
         placeholder="Select level"
       />

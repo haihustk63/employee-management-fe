@@ -4,4 +4,5 @@ export interface IAppButton {
   htmlType?: "button" | "submit" | "reset" | undefined;
   className?: string;
   size?: "large" | "middle" | "small";
+  disabled?: boolean;
 }

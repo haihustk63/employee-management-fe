@@ -8,13 +8,13 @@ export interface IUseFetchProps<T> {
 }
 
 export interface IUseFetchManyProps<T> {
-  urlArray: string[];
+  urlArray: { url: string; select?: any }[];
   paramsArray?: any[];
   // config?: UseQueryOptions<T>;
 }
 
 const useFetch = <T>({ url, params, config }: IUseFetchProps<T>) => {
-  return useQuery<T>([url!, ], fetcher<T>, {
+  return useQuery<T>([url!, params], fetcher<T>, {
     enabled: !!url,
     ...config,
   });
@@ -24,10 +24,13 @@ export const useFetchMany = <T>({
   urlArray,
   paramsArray,
 }: IUseFetchManyProps<T>) => {
-  const queries = urlArray?.map((url: string, index: number) => ({
-    queryKey: [url!, paramsArray?.[index]],
-    queryFn: fetcher,
-  }));
+  const queries: UseQueryOptions[] = urlArray?.map(
+    ({ url, select }, index: number) => ({
+      queryKey: [url!, paramsArray?.[index]],
+      queryFn: fetcher,
+      select,
+    })
+  );
   return useQueries(queries);
 };
 

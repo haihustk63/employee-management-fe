@@ -6,17 +6,17 @@ type IMethods = "create" | "update" | "delete";
 interface IAppMutationHookProps {
   method?: IMethods;
   url: string;
+  itemId?: number;
   params?: object;
   updater?: any;
 }
 
-const getApiFunc = (method: IMethods, url: string) => {
+const getApiFunc = (method: IMethods, url: string, itemId?: number) => {
   let apiFunc: Function;
   switch (method) {
     case "create":
       apiFunc = api.post;
       break;
-
     case "update":
       apiFunc = api.patch;
       break;
@@ -27,8 +27,10 @@ const getApiFunc = (method: IMethods, url: string) => {
       apiFunc = api.get;
   }
 
-  return (data: any) => {
-    return apiFunc({ url, data });
+  const urlForApi = itemId ? `${url}/${itemId}` : url;
+
+  return (data?: any) => {
+    return apiFunc({ url: urlForApi, data });
   };
 };
 
@@ -36,12 +38,13 @@ const useAppMutation = ({
   method = "create",
   updater,
   url,
+  itemId,
   params,
 }: IAppMutationHookProps): UseMutationResult => {
   const queryClient = useQueryClient();
-  const apiFunc = getApiFunc(method, url);
+  const apiFunc = getApiFunc(method, url, itemId);
   return useMutation(apiFunc, {
-    onMutate(data: any) {
+    onMutate(data?: any) {
       queryClient.cancelQueries([url!, params]);
       const previousData = queryClient.getQueryData([url!, params]);
       queryClient.setQueryData([url!, params], (oldData: any) => {

@@ -6,7 +6,6 @@ import { IAppFormProps } from "./interface";
 const { Title } = Typography;
 
 const AppForm = <T,>(props: IAppFormProps<T>) => {
-  // const { handleToShowResult } = useContext(RequestContext) as any;
   const {
     children,
     handleSubmitForm,
@@ -15,11 +14,6 @@ const AppForm = <T,>(props: IAppFormProps<T>) => {
     innerRef,
     validationSchema,
   } = props as any;
-
-  // const handleSubmitAppForm = () => {
-  //   handleSubmitForm();
-  //   // handleToShowResult();
-  // };
 
   return (
     <div className="app-form">

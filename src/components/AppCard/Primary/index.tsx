@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Typography } from "antd";
+import { CloseCircleFilled, EditFilled } from "@ant-design/icons";
 import { IAppCardPrimaryProps } from "../interface";
 
 const { Text, Title } = Typography;
@@ -11,6 +12,7 @@ const AppPrimaryCard: FC<IAppCardPrimaryProps> = ({
   hasBoxShadow,
   children,
   onClick,
+  onDelete,
 }) => {
   return (
     <div
@@ -26,6 +28,7 @@ const AppPrimaryCard: FC<IAppCardPrimaryProps> = ({
       }
       onClick={onClick}
     >
+      {onDelete && <CloseCircleFilled onClick={onDelete} />}
       <Title level={3} className="title">
         {title}
       </Title>

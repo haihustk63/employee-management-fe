@@ -2,8 +2,9 @@ import { FieldInputProps } from "formik";
 import { ReactNode } from "react";
 
 export interface IFormItemProps {
-  name: string;
+  name?: string;
   label?: string;
+  mode?: "multiple" | "tags";
   placeholder?: string;
   value?: string;
   type?: string;
@@ -23,6 +24,7 @@ export interface IFormItemProps {
   loading?: boolean;
   onPopupScroll?: any;
   onSelect?: any;
+  ref?: any;
 }
 
 export interface IFieldProps {

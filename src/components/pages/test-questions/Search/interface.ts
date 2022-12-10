@@ -1,6 +1,6 @@
 import { Moment } from "moment";
 
-export interface ISearchEmployeeProps {
+export interface ISearchQuestionProps {
   keyword?: string;
   level?: string;
   type?: string;

@@ -1,20 +1,13 @@
-import { useNavigate } from "react-router-dom";
-import { FC } from "react";
 import { Typography } from "antd";
+import { FC } from "react";
 
-import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import AppButton from "@/components/AppButton";
-import AppPrimaryCard from "@/components/AppCard/Primary";
+import DeliveryCard from "./DeliveryCard";
 import { IDeliveryListProps } from "./interface";
 
 const { Text, Title } = Typography;
 
 const DeliveryList: FC<IDeliveryListProps> = ({ data, onToggleModal }) => {
-  const navigate = useNavigate();
-
-  const handleClickDeliveryCard = (deliveryId: any) => () => {
-    navigate(`${APP_PAGE_NAME_ROUTES.EMPLOYEE_LIST}?delivery=${deliveryId}`);
-  };
 
   return (
     <div className="delivery-list">
@@ -28,15 +21,7 @@ const DeliveryList: FC<IDeliveryListProps> = ({ data, onToggleModal }) => {
       </div>
       <div className="list">
         {data?.map((delivery: any, index: number) => {
-          return (
-            <AppPrimaryCard key={index} title={delivery.name}>
-              <Text>{delivery.name}</Text>
-              <AppButton
-                buttonTitle="View Delivery List"
-                onClick={handleClickDeliveryCard(delivery.id)}
-              />
-            </AppPrimaryCard>
-          );
+          return <DeliveryCard delivery={delivery} key={index} />;
         })}
       </div>
     </div>

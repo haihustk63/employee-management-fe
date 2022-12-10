@@ -3,9 +3,9 @@ const purityContent = (content: string) => {
   return purity.sanitize(content);
 };
 
-const addKeyToData = (data: any[] = []) => {
+const addKeyToData = (data: any[] = [], createKey?: any) => {
   return data.map((item) => ({
-    key: item?.id || Math.random().toString(),
+    key: item?.id || createKey?.(item) || Math.random().toString(),
     ...item,
   }));
 };
@@ -18,4 +18,12 @@ const dataToOptions = (data: any[] = []) => {
   }));
 };
 
-export { purityContent, addKeyToData, dataToOptions };
+const makeCleanObject = (obj: object = {}) => {
+  return Object.fromEntries(
+    Object.entries(obj).filter(
+      (p: any) => ![undefined, null, ""].includes(p[1])
+    )
+  );
+};
+
+export { purityContent, addKeyToData, dataToOptions, makeCleanObject };

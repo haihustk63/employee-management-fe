@@ -1,0 +1,20 @@
+.form-add-question {
+  display: flex;
+
+  > .app-form {
+    width: 50%;
+    margin-right: 1rem;
+  }
+
+  > .app-form > .form > .app-code-block {
+    margin: 1rem 0;
+  }
+
+  > .app-form > .form > .form-item > .textarea {
+    min-height: 10rem;
+  }
+
+  > .app-code-editor {
+    flex-grow: 1;
+  }
+}

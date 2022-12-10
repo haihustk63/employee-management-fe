@@ -1,5 +1,6 @@
 .app-primary-card,
 .app-with-cover-card {
+  position: relative;
   padding: 2.4rem;
   border-radius: var(--app-card-border-radius);
   cursor: pointer;
@@ -13,6 +14,15 @@
 
   > .title {
     margin-bottom: 0.875rem;
+  }
+
+  > .anticon.anticon-close-circle {
+    color: var(--bs-black);
+    position: absolute;
+    font-size: 2rem;
+    top: 0;
+    right : 0;
+    transform: translate(50%, -50%);
   }
 }
 

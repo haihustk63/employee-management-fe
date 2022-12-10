@@ -84,6 +84,7 @@ export const DYNAMIC_APP_PAGE_ROUTES = {
     `/education-programs/update/${programId}`,
   TEST_QUESTION_BY_TOPIC: (topicId: any) =>
     `/test-questions?topicId=${topicId}`,
+  TEST_QUESTION_UPDATE: (questionId: any) => `/test-questions/update/${questionId}`,
 };
 
 export const APP_ROUTES = [

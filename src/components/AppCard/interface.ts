@@ -13,6 +13,7 @@ export interface IAppCardPrimaryProps {
   hasBoxShadow?: boolean;
   children?: any;
   onClick?: () => void;
+  onDelete?: any;
 }
 
 export interface IAppCardWithCoverProps {

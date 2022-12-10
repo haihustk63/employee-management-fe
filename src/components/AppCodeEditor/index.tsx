@@ -1,7 +1,8 @@
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import CodeEditor from "@monaco-editor/react";
 import { Select } from "antd";
 import AppButton from "../AppButton";
+import { IAppCodeEditorProps } from "./interface";
 
 const languages = [
   {
@@ -18,17 +19,43 @@ const languages = [
   },
 ];
 
-const AppCodeEditor: FC = () => {
+const AppCodeEditor: FC<IAppCodeEditorProps> = ({
+  onSubmitCodeBlock,
+  currentLanguage: languageProp,
+  currentSource: sourceProp,
+}) => {
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
+  const [value, setValue] = useState("");
 
-  const codeEditorRef = useRef(null) as any;
+  useEffect(() => {
+    if (languageProp) {
+      setCurrentLanguage(languageProp);
+    }
+  }, [languageProp]);
+
+  useEffect(() => {
+    if (sourceProp) {
+      setValue(sourceProp);
+    }
+  }, [sourceProp]);
 
   const handleChange = (value: string) => {
     setCurrentLanguage(value);
   };
 
-  const handleCodeEditorMount = (editor: any, monaco: any) => {
-    codeEditorRef.current = editor;
+  const handleSourceChange = (value: any) => {
+    setValue(value);
+  };
+
+  const handleAddCodeBlock = () => {
+    onSubmitCodeBlock({
+      type: currentLanguage,
+      content: value,
+    });
+  };
+
+  const handleClear = () => {
+    setValue("");
   };
 
   return (
@@ -41,15 +68,12 @@ const AppCodeEditor: FC = () => {
       />
       <CodeEditor
         language={currentLanguage}
+        value={value}
+        onChange={handleSourceChange}
         height={500}
-        onMount={handleCodeEditorMount}
       />
-      <AppButton
-        buttonTitle="Submit"
-        onClick={() => {
-          console.log(codeEditorRef.current.getValue());
-        }}
-      />
+      <AppButton buttonTitle="Submit" onClick={handleAddCodeBlock} />
+      <AppButton buttonTitle="Clear" onClick={handleClear} />
     </div>
   );
 };

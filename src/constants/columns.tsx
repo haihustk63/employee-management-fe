@@ -222,14 +222,14 @@ export const testQuestionListColumns = ({
     indexColumn(currentPage),
     {
       key: "questionText",
-      dataIndex: ["questionText"],
+      dataIndex: ["question", "questionText"],
       title: "Question",
       fixed: true,
       width: "40%",
     },
     {
       key: "type",
-      dataIndex: ["type"],
+      dataIndex: ["question", "type"],
       title: "Type",
       render: (value: any) => {
         if (testQuestionTypesContants) {
@@ -243,7 +243,7 @@ export const testQuestionListColumns = ({
     },
     {
       key: "level",
-      dataIndex: ["level"],
+      dataIndex: ["question", "level"],
       title: "Level",
       render: (value: any) => {
         if (testQuestionLevelsContants) {
@@ -269,7 +269,7 @@ export const testQuestionListColumns = ({
           <AppButton
             buttonTitle="View Detail"
             htmlType="button"
-            onClick={onClickButtonViewDetail(record.id)}
+            onClick={onClickButtonViewDetail(record.questionId)}
           />
         );
       },

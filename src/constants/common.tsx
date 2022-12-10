@@ -232,3 +232,8 @@ export const MANAGER_EXAMPLE = [
     label: "Manager 2",
   },
 ];
+
+export const COMMON_TYPE_QUESTION = {
+  ONE_CHOICE: "ONE_CHOICE",
+  MULTIPLE_CHOICE: "MULTIPLE_CHOICE",
+};
