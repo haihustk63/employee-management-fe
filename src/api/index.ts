@@ -1,5 +1,16 @@
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+// axios.interceptors.response.use(
+//   function (response) {
+//     console.log(response.headers);
+//     return response;
+//   },
+//   function (error) {
+//     return Promise.reject(error);
+//   }
+// );
+
 export const api = {
   get<T>({ url, params }: any): Promise<T> {
     return axios.get<any, T>(url, { params });

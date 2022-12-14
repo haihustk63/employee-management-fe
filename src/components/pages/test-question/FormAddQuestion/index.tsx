@@ -20,7 +20,7 @@ const initialValues: IFormAddQuestionProps = {
   questionText: "",
   level: undefined,
   type: undefined,
-  topics: [],
+  topic: undefined,
   options: [],
   answer: [],
 };
@@ -41,7 +41,7 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
   useEffect(() => {
     if (Object.keys(data).length > 0) {
       const {
-        testTopicQuestion: topics,
+        topic,
         level,
         type,
         questionText,
@@ -50,7 +50,7 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
         questionSource: sources,
       } = data;
 
-      formRef.current.setFieldValue("topics", topics);
+      formRef.current.setFieldValue("topic", topic);
       formRef.current.setFieldValue("level", level);
       formRef.current.setFieldValue("type", type);
       formRef.current.setFieldValue("options", options);
@@ -75,7 +75,7 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
       answer = [rawAnswer];
     }
     console.log({ ...values, answer, questionSource });
-    // mutate({ ...values, questionSource });
+    mutate({ ...values, answer, questionSource });
   };
 
   const handleAddCodeBlock = (newBlock: TypeQuestionSourceBlock) => {

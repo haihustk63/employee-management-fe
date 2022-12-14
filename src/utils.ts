@@ -1,11 +1,12 @@
 import purity from "dompurify";
+import { createUniqueId } from "./helpers";
 const purityContent = (content: string) => {
   return purity.sanitize(content);
 };
 
 const addKeyToData = (data: any[] = [], createKey?: any) => {
   return data.map((item) => ({
-    key: item?.id || createKey?.(item) || Math.random().toString(),
+    key: item?.id || createKey?.(item) || createUniqueId(),
     ...item,
   }));
 };

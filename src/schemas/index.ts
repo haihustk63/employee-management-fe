@@ -8,7 +8,7 @@ export const addDeliveryValidateSchema = object({
 export const addTestQuestionValidateSchema = object({
   type: string().required("Please choose type"),
   level: string().required("Please choose level"),
-  topics: array().min(1, "Choose at least one topic"),
+  topic: string().required("Please choose topic"),
   questionText: string().required("Please enter question"),
 });
 
@@ -22,4 +22,10 @@ export const loginAsEmployee = object({
     .required("Email is required")
     .email("Please input a valid email"),
   password: string().required(),
+});
+
+export const createTestSchema = object({
+  topicId: number().required("Type is required"),
+  level: string().required("Level is required"),
+  amount: number().min(1, "Minimum is 1").required("Amount is required"),
 });

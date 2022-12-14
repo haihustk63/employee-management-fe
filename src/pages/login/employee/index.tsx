@@ -1,8 +1,9 @@
 import { Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import FormLogin from "@/components/pages/login/FormLogin";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
-import { useNavigate } from "react-router-dom";
+import { loginAsEmployee } from "@/schemas";
 
 const { Title } = Typography;
 
@@ -25,6 +26,7 @@ const LoginEmployee = () => {
       <FormLogin
         actor="employee"
         initialValue={initialValueForm}
+        validationSchema={loginAsEmployee}
         onSubmit={handleLogin}
       />
     </div>

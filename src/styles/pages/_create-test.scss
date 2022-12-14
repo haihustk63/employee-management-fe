@@ -1,0 +1,17 @@
+.create-test-page {
+  
+}
+
+.show-test {
+  background-color: var(--bs-white);
+  border-radius: var(--common-border-radius);
+  padding: 2rem;
+  margin-top: 1.6rem;
+}
+
+.input-question-info {
+  > .app-primary-card {
+    padding: 1rem;
+    margin: 1.6rem 0;
+  }
+}

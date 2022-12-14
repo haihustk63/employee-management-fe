@@ -5,7 +5,6 @@ import AppButton from "@/components/AppButton";
 import FormItem from "@/components/FormItem";
 import { FORM_ITEM_TYPES, MANAGER_EXAMPLE } from "@/constants/common";
 import AppCodeBlock from "@/components/AppCodeBlock";
-import { TypeQuestionSource } from "../interface";
 import { useGetConstantTestQuestionValue } from "@/hooks/constant";
 import { addKeyToData, dataToOptions } from "@/utils";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
@@ -66,11 +65,10 @@ const FormFields = () => {
   return (
     <Form onSubmit={handleSubmit} className="form">
       <FormItem
-        name="topics"
+        name="topic"
         label="Topic"
-        value={values.topics}
+        value={values.topic}
         type={SELECT}
-        mode="multiple"
         options={dataToOptions(testTopics)}
         placeholder="Select topic"
       />

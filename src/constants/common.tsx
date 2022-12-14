@@ -15,16 +15,33 @@ import {
   CalculatorOutlined,
 } from "@ant-design/icons";
 
-export enum ROLES {
-  EMPLOYEE = -1,
-  DIVISION_MANAGER,
-  ADMIN,
-  SUPER_ADMIN,
-  CANDIDATE,
-}
+export const ROLES: { [key: string]: { [key: string]: string | number } } = {
+  CANDIDATE: {
+    roleName: "CANDIDATE",
+    priority: 0,
+  },
+  EMPLOYEE: {
+    roleName: "EMPLOYEE",
+    priority: 1,
+  },
+  DIVISION_MANAGER: {
+    roleName: "DIVISION_MANAGER",
+    priority: 2,
+  },
+  ADMIN: {
+    roleName: "ADMIN",
+    priority: 3,
+  },
+  SUPER_ADMIN: {
+    roleName: "SUPER_ADMIN",
+    priority: 4,
+  },
+};
 
 export const FORM_ITEM_TYPES = {
   TEXT: "text",
+  INPUT_NUMBER: "input-number",
+  PASSWORD: "password",
   TEXTAREA: "textarea",
   SELECT: "select",
 };
@@ -49,6 +66,7 @@ const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
   CANDIDATE_PROFILE: "/candidate/profiles",
   CANDIDATE_ACCOUNT: "/candidate/accounts",
+  CREATE_TEST: "/tests/create",
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
@@ -217,6 +235,11 @@ export const SIDER_ITEMS = [
         icon: <TableOutlined />,
       },
     ],
+  },
+  {
+    key: APP_PAGE_NAME_ROUTES.CREATE_TEST,
+    label: "Create Test",
+    icon: <TableOutlined />,
   },
 ];
 

@@ -1,3 +1,4 @@
+import { ROLES } from "@/constants/common";
 import { currentUserAtom } from "@/modules/currentUser";
 import React, { FC } from "react";
 import { Navigate } from "react-router-dom";
@@ -9,13 +10,29 @@ const ProtectedRoute: FC<{ route: any; children: any }> = ({
 }) => {
   const currentUser = useRecoilValue(currentUserAtom);
 
-  // if (currentUser?.role === -1) {
-  //   return <Navigate to="/login" replace />;
+  // if (Object.keys(currentUser).length === 0) {
+  //   if (!/^\/login/g.test(route.path)) {
+  //     return <Navigate to="/login" replace />;
+  //   }
+  // } else {
+  //   if (route.path === "/login" && !currentUser.role) {
+  //     return <Navigate to="/skill-test" replace />;
+  //   }
+  //   if (route.path === "/login" && currentUser.role) {
+  //     return <Navigate to="/" replace />;
+  //   }
   // }
 
-  if (route?.role > currentUser.role) {
-    return <Navigate to="/" replace />;
-  }
+  // if (!currentUser.role && route.role && route.role.priority > 0) {
+  //   return <Navigate to="/skill-test" replace />;
+  // }
+
+  // if (currentUser.role && route.role) {
+  //   const currentPriority = ROLES[currentUser.role].priority;
+  //   if (currentPriority < route.role.priority || route.role.priority === 0) {
+  //     return <Navigate to="/" replace />;
+  //   }
+  // }
 
   return children;
 };

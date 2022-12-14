@@ -26,6 +26,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.4.3",
     "recoil": "^0.7.6",
+    "recoil-persist": "^4.2.0",
     "uuid": "^9.0.0",
     "yup": "^0.32.11"
   },

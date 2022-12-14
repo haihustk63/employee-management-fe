@@ -1,5 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
-import FormAddQuestion from "@/components/pages/test-questions/FormAddQuestion";
+import FormAddQuestion from "@/components/pages/test-question/FormAddQuestion";
 
 const UpdateTestQuestion = () => {
   const { questionId } = useParams();

@@ -20,7 +20,7 @@ const TestQuestionList: FC<ITableDataProps> = ({
   const handleClickViewDetail = (recordId: number) => () => {
     navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_UPDATE(recordId));
   };
-
+  
   const columns = useMemo(() => {
     return testQuestionListColumns({
       onClickButtonViewDetail: handleClickViewDetail,

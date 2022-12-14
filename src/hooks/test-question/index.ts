@@ -17,6 +17,12 @@ export const useGetAllTestQuestions = (params: any) => {
   });
 };
 
+export const useClassifiedQuestion = () => {
+  return useFetch({
+    url: API_ROUTES.TEST_QUESTIONS_CLASSIFIED,
+  });
+};
+
 export const useGetOneTestQuestions = (questionId: string) => {
   return useFetch({
     url: API_ROUTES.TEST_QUESTIONS_ID(questionId),
@@ -28,7 +34,7 @@ export const useGetOneTestQuestions = (questionId: string) => {
 
 export const useCreateTestQuestion = () => {
   return useAppMutation({
-    method: "create",
+    method: "post",
     url: API_ROUTES.TEST_QUESTIONS,
   });
 };

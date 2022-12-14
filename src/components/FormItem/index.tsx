@@ -1,16 +1,34 @@
 import { FC, ReactNode } from "react";
 import { ErrorMessage, Field } from "formik";
-import { Input, Select, Typography } from "antd";
+import { Input, InputNumber, Select, Typography } from "antd";
 
 import { IFieldProps, IFormItemProps } from "./interface";
 import { FORM_ITEM_TYPES } from "@/constants/common";
 
-const { TEXT, TEXTAREA, SELECT } = FORM_ITEM_TYPES;
-const { TextArea } = Input;
+const { TEXT, TEXTAREA, SELECT, PASSWORD, INPUT_NUMBER } = FORM_ITEM_TYPES;
+const { TextArea, Password } = Input;
 const { Text } = Typography;
 
 const InputField = ({ field, form, ...props }: IFieldProps) => {
   return <Input {...field} {...props} className="input" />;
+};
+
+const InputNumberField = ({ field, form, ...props }: IFieldProps) => {
+  const handleChange = (value: number) => {
+    form.setFieldValue(field.name, value);
+  };
+  return (
+    <InputNumber
+      {...field}
+      {...props}
+      onChange={handleChange}
+      className="input"
+    />
+  );
+};
+
+const InputPasswordField = ({ field, form, ...props }: IFieldProps) => {
+  return <Password {...field} {...props} className="input" />;
 };
 
 const TextAreaField = ({ field, form, ...props }: IFieldProps) => {
@@ -41,6 +59,14 @@ const renderFormItemComponent = (type: any) => {
       return InputField;
     }
 
+    case INPUT_NUMBER: {
+      return InputNumberField;
+    }
+
+    case PASSWORD: {
+      return InputPasswordField;
+    }
+
     case SELECT: {
       return SelectField;
     }
@@ -59,19 +85,14 @@ const renderErrorMessage = (message: string) => {
   return <Text className="form-field-error-message">{message}</Text>;
 };
 
-const FormItem: FC<IFormItemProps> = ({
-  name,
-  type,
-  label,
-  ...props
-}) => {
+const FormItem: FC<IFormItemProps> = ({ name, type, label, ...props }) => {
   const renderComponent = renderFormItemComponent(type);
 
   return (
     <div className="form-item">
       {label && <label htmlFor={name}>{label}</label>}
       <Field name={name} type={type} {...props} component={renderComponent} />
-      <ErrorMessage render={renderErrorMessage} name={name} />
+      <ErrorMessage render={renderErrorMessage} name={name as string} />
     </div>
   );
 };

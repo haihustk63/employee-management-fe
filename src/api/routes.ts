@@ -13,6 +13,7 @@ export const API_ROUTES = {
 
   // test-questions
   TEST_QUESTIONS: `${API_URL}/test-questions`,
+  TEST_QUESTIONS_CLASSIFIED: `${API_URL}/classified/test-questions`,
   TEST_QUESTIONS_ID: (questionId: string) =>
     `${API_URL}/test-questions/${questionId}`,
 
@@ -21,4 +22,11 @@ export const API_ROUTES = {
 
   // constant test-questions
   CONSTANT_TEST_QUESTIONS: `${API_URL}/constants/test-questions`,
+
+  // login
+  LOGIN_CANDIDATE: `${API_URL}/login/candidate`,
+  LOGIN_EMPLOYEE: `${API_URL}/login/employee`,
+
+  // tests
+  CREATE_TEST: `${API_URL}/tests/create`
 };

@@ -8,10 +8,11 @@ const AppTag: FC<IAppTagProps> = ({
   color = "success",
   icon,
   onClose,
+  onClick,
   children,
 }) => {
   return (
-    <div className="app-tag">
+    <div className="app-tag" onClick={onClick}>
       <Tag
         closable={closable}
         closeIcon={closeIcon}

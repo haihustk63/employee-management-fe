@@ -2,8 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useGetAllTestQuestions } from "@/hooks/test-question";
-import TestQuestionList from "@/components/pages/test-questions/TestQuestionList";
-import Search from "@/components/pages/test-questions/Search";
+import TestQuestionList from "@/components/pages/test-question/TestQuestionList";
+import Search from "@/components/pages/test-question/Search";
 
 export const TestQuestionConText = createContext({}) as any;
 

@@ -34,11 +34,13 @@ import UpdateTestTopic from "@/pages/test-topics/update";
 import TestQuestionManagement from "@/pages/test-questions";
 import CreateTestQuestion from "@/pages/test-questions/create-new";
 import UpdateTestQuestion from "@/pages/test-questions/update";
+import CreateTestPage from "@/pages/create-test";
 
 export const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",
   CANDIDATE_PROFILE: "/candidate/profiles",
   CANDIDATE_ACCOUNT: "/candidate/accounts",
+  CREATE_TEST: "/tests/create",
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
@@ -84,7 +86,8 @@ export const DYNAMIC_APP_PAGE_ROUTES = {
     `/education-programs/update/${programId}`,
   TEST_QUESTION_BY_TOPIC: (topicId: any) =>
     `/test-questions?topicId=${topicId}`,
-  TEST_QUESTION_UPDATE: (questionId: any) => `/test-questions/update/${questionId}`,
+  TEST_QUESTION_UPDATE: (questionId: any) =>
+    `/test-questions/update/${questionId}`,
 };
 
 export const APP_ROUTES = [
@@ -314,7 +317,7 @@ export const APP_ROUTES = [
     path: APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST,
     element: TestQuestionManagement,
     layout: CommonLayout,
-    role: ROLES.EMPLOYEE,
+    role: ROLES.CANDIDATE,
   },
   {
     name: APP_PAGE_NAME_ROUTES.TEST_QUESTION_CREATE,
@@ -327,6 +330,13 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.TEST_QUESTION_UPDATE,
     path: APP_PAGE_NAME_ROUTES.TEST_QUESTION_UPDATE,
     element: UpdateTestQuestion,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.CREATE_TEST,
+    path: APP_PAGE_NAME_ROUTES.CREATE_TEST,
+    element: CreateTestPage,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },

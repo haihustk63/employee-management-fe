@@ -1,7 +1,7 @@
 import { api } from "@/api";
 import { useMutation, UseMutationResult, useQueryClient } from "react-query";
 
-type IMethods = "create" | "update" | "delete";
+type IMethods = "post" | "patch" | "delete";
 
 interface IAppMutationHookProps {
   method?: IMethods;
@@ -14,10 +14,10 @@ interface IAppMutationHookProps {
 const getApiFunc = (method: IMethods, url: string, itemId?: number) => {
   let apiFunc: Function;
   switch (method) {
-    case "create":
+    case "post":
       apiFunc = api.post;
       break;
-    case "update":
+    case "patch":
       apiFunc = api.patch;
       break;
     case "delete":
@@ -35,7 +35,7 @@ const getApiFunc = (method: IMethods, url: string, itemId?: number) => {
 };
 
 const useAppMutation = ({
-  method = "create",
+  method = "post",
   updater,
   url,
   itemId,

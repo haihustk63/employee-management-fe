@@ -1,11 +1,8 @@
 import { atom } from "recoil";
+import persistAtom from "./persist";
 
 export const currentUserAtom = atom({
   key: "current-user",
-  default: {
-    email: "haipham@example.com",
-    name: "Harry Pham",
-    delivery: "Developer",
-    role: 0,
-  },
+  default: {},
+  effects_UNSTABLE: [persistAtom],
 });

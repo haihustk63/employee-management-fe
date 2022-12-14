@@ -6,5 +6,6 @@ export interface IAppTagProps {
   color?: string;
   icon?: ReactNode;
   onClose?: (e: any) => void;
+  onClick?: (e: any) => void;
   children?: any;
 }

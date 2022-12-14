@@ -5,6 +5,9 @@ import moment from "moment";
 import AppButton from "@/components/AppButton";
 import { ICandidateProfile } from "@/hooks/candidate/interface";
 import AppTag from "@/components/AppTag";
+import { Space } from "antd";
+import { FC } from "react";
+import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
 
 const indexColumn = (currentPage: number) => ({
   key: "#",
@@ -229,7 +232,7 @@ export const testQuestionListColumns = ({
     },
     {
       key: "type",
-      dataIndex: ["question", "type"],
+      dataIndex: ["type"],
       title: "Type",
       render: (value: any) => {
         if (testQuestionTypesContants) {
@@ -243,7 +246,7 @@ export const testQuestionListColumns = ({
     },
     {
       key: "level",
-      dataIndex: ["question", "level"],
+      dataIndex: ["level"],
       title: "Level",
       render: (value: any) => {
         if (testQuestionLevelsContants) {
@@ -273,6 +276,88 @@ export const testQuestionListColumns = ({
           />
         );
       },
+    },
+  ];
+};
+
+const getMaxConfig = (
+  classifiedData: any,
+  record: any,
+  level: "EASY" | "MEDIUM" | "HARD"
+) => {
+  const topicId = record.id;
+  let max = 0;
+
+  if (classifiedData) {
+    const findTopicInClassified = classifiedData.find(
+      (item: any) => item.topicId === topicId && item.level === level
+    );
+    if (findTopicInClassified) {
+      max = findTopicInClassified._count._all;
+    }
+  }
+
+  return max;
+};
+
+export const createTestColumns = ({
+  currentPage = 0,
+  t,
+  onSubmitQuestionInfo,
+  classifiedData,
+}: any) => {
+  return [
+    indexColumn(currentPage),
+    {
+      key: "name",
+      dataIndex: ["name"],
+      title: "Name",
+      fixed: true,
+      width: "40%",
+    },
+    {
+      key: "easy",
+      title: "Easy",
+      render: (_: any, record: any) => {
+        const max = getMaxConfig(classifiedData, record, "EASY");
+        return (
+          <RenderAction
+            max={max}
+            onSubmitQuestionInfo={onSubmitQuestionInfo?.(record.id, "EASY")}
+          />
+        );
+      },
+      width: "20%",
+    },
+    {
+      key: "medium",
+      title: "Medium",
+      render: (_: any, record: any) => {
+        const max = getMaxConfig(classifiedData, record, "MEDIUM");
+        return (
+          <RenderAction
+            color="warning"
+            max={max}
+            onSubmitQuestionInfo={onSubmitQuestionInfo?.(record.id, "MEDIUM")}
+          />
+        );
+      },
+      width: "20%",
+    },
+    {
+      key: "hard",
+      title: "Hard",
+      render: (_: any, record: any) => {
+        const max = getMaxConfig(classifiedData, record, "HARD");
+        return (
+          <RenderAction
+            color="error"
+            max={max}
+            onSubmitQuestionInfo={onSubmitQuestionInfo?.(record.id, "HARD")}
+          />
+        );
+      },
+      width: "20%",
     },
   ];
 };

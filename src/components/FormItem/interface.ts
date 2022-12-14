@@ -25,6 +25,19 @@ export interface IFormItemProps {
   onPopupScroll?: any;
   onSelect?: any;
   ref?: any;
+  min?: number;
+  max?: number;
+  formatter?: (
+    value: number | string,
+    info: { userTyping: boolean; input: string }
+  ) => string;
+  precision?: number;
+  readOnly?: boolean;
+  step?: number;
+  onStep?: (
+    value: number,
+    info: { offset: number; type: "up" | "down" }
+  ) => void;
 }
 
 export interface IFieldProps {
