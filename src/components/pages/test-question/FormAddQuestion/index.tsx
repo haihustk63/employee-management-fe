@@ -1,4 +1,6 @@
 import { createContext, FC, useEffect, useRef, useState } from "react";
+import { Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import AppForm from "@/components/AppForm";
 import FormFields from "./FormFields";
@@ -15,6 +17,9 @@ import {
 } from "@/hooks/test-question";
 import { createUniqueId } from "@/helpers";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
+import appNotification from "@/components/AppNotification";
+import AppButton from "@/components/AppButton";
+import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 
 const initialValues: IFormAddQuestionProps = {
   questionText: "",
@@ -25,12 +30,15 @@ const initialValues: IFormAddQuestionProps = {
   answer: [],
 };
 
+const { Text } = Typography;
+
 export const FormAddQuestionContext = createContext(null) as any;
 
 const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
   const [questionSource, setQuestionSource] = useState<TypeQuestionSource[]>(
     []
   );
+  const navigate = useNavigate();
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
   const [currentSource, setCurrentSource] = useState("");
 
@@ -66,16 +74,61 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
     }
   }, [data]);
 
-  const { mutate } = useCreateTestQuestion();
+  const { mutate, isSuccess, isError } = useCreateTestQuestion();
+
+  const handleNavigateToQuestionList = () => {
+    navigate(APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST);
+  };
+
+  const renderNotificationDescription = (status: "success" | "error") => {
+    switch (status) {
+      case "success":
+        return (
+          <div>
+            <Text>New question is added!</Text>
+            <AppButton
+              buttonTitle="Show question list"
+              onClick={handleNavigateToQuestionList}
+            />
+          </div>
+        );
+      case "error":
+        return <Text>Something went wrong, please try again!</Text>;
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      appNotification({
+        message: "Success",
+        description: renderNotificationDescription("success"),
+        type: "success",
+      });
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      appNotification({
+        message: "Error",
+        description: renderNotificationDescription("error"),
+        type: "error",
+      });
+    }
+  }, [isError]);
 
   const handleSubmitForm = (values: any) => {
-    const { answer: rawAnswer } = values;
+    const { answer: rawAnswer, type } = values;
     let answer = rawAnswer;
     if (typeof rawAnswer === "string") {
       answer = [rawAnswer];
     }
-    console.log({ ...values, answer, questionSource });
-    mutate({ ...values, answer, questionSource });
+    const sendData: any = { ...values, answer, questionSource };
+    if (type === "ESSAYS") {
+      sendData.answer = "";
+      sendData.options = "";
+    }
+    mutate(sendData);
   };
 
   const handleAddCodeBlock = (newBlock: TypeQuestionSourceBlock) => {

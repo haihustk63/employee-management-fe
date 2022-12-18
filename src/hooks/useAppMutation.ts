@@ -9,6 +9,7 @@ interface IAppMutationHookProps {
   itemId?: number;
   params?: object;
   updater?: any;
+  extraQueryKey?: string | string[];
 }
 
 const getApiFunc = (method: IMethods, url: string, itemId?: number) => {
@@ -40,6 +41,7 @@ const useAppMutation = ({
   url,
   itemId,
   params,
+  extraQueryKey,
 }: IAppMutationHookProps): UseMutationResult => {
   const queryClient = useQueryClient();
   const apiFunc = getApiFunc(method, url, itemId);
@@ -60,6 +62,9 @@ const useAppMutation = ({
 
     onSettled(data, _e, _v, context) {
       queryClient.invalidateQueries([url!, params]);
+      if (extraQueryKey) {
+        queryClient.invalidateQueries(extraQueryKey);
+      }
     },
   });
 };

@@ -9,7 +9,8 @@ const AppButton: FC<IAppButton> = ({
   htmlType,
   className,
   size,
-  disabled
+  disabled,
+  id,
 }) => {
   return (
     <Button
@@ -18,6 +19,7 @@ const AppButton: FC<IAppButton> = ({
       className={`app-button ${className}`}
       size={size}
       disabled={disabled}
+      id={id}
     >
       {buttonTitle}
     </Button>

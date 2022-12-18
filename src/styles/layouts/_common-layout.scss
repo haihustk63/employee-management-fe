@@ -1,10 +1,23 @@
 .common-layout {
   display: flex;
   min-height: 100vh;
+
+  > .ant-layout {
+    margin-top: 6.3rem;
+  }
+
+  > .ant-layout > .ant-layout {
+    margin-left: 30rem;
+  }
 }
 
 .common-header {
   display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 6.3rem;
+  z-index: 99;
 
   > .logo {
     color: var(--bs-white);
@@ -17,4 +30,10 @@
 
 .common-sider {
   background-color: var(--bs-white) !important;
+  position: fixed !important;
+  height: calc(100vh - 6.3rem);
+
+  > .ant-layout-sider-children {
+    overflow-y: scroll;
+  }
 }

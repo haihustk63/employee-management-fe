@@ -9,7 +9,7 @@ import PersonalInfoDetail from "@/pages/personal-info/detail";
 import LoginCandidate from "@/pages/login/candidate";
 import LoginEmployee from "@/pages/login/employee";
 import CandidateSkillTest from "@/pages/skill-test";
-import SkillTestLayout from "@/components/Layouts/SkillTestLayout";
+import CandidateLayout from "@/components/Layouts/CandidateLayout";
 import AdminDashboard from "@/pages/dashboard";
 import CandidateManagement from "@/pages/candidate";
 import EmployeeManagement from "@/pages/employee/profile";
@@ -155,7 +155,7 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.SKILL_TEST,
     path: APP_PAGE_NAME_ROUTES.SKILL_TEST,
     element: CandidateSkillTest,
-    layout: SkillTestLayout,
+    layout: CandidateLayout,
     role: ROLES.CANDIDATE,
   },
   {

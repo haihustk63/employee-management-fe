@@ -5,4 +5,5 @@ export interface IAppButton {
   className?: string;
   size?: "large" | "middle" | "small";
   disabled?: boolean;
+  id?: string;
 }

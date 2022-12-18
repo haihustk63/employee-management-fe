@@ -12,7 +12,7 @@ const CommonHeader = () => {
 
   const navigate = useNavigate();
 
-  const handleClickSiderItem = ({ keyPath, key }: any) => {
+  const handleClickHeaderItem = ({ keyPath, key }: any) => {
     const newBreadCrumb = keyPath
       ?.map((item: string) => {
         if (item === "/") return "HOME";
@@ -31,7 +31,7 @@ const CommonHeader = () => {
         mode="horizontal"
         className="menu"
         items={HEADER_ITEMS}
-        onClick={handleClickSiderItem}
+        onClick={handleClickHeaderItem}
       />
     </Header>
   );

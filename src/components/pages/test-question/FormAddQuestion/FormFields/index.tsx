@@ -1,5 +1,5 @@
 import { Form, useFormikContext } from "formik";
-import { FC, useContext, useMemo } from "react";
+import { FC, useContext, useEffect, useMemo } from "react";
 
 import AppButton from "@/components/AppButton";
 import FormItem from "@/components/FormItem";
@@ -30,7 +30,9 @@ const FormFields = () => {
   const { data: testTopics = [] } = useGetAllTestTopics();
 
   const AddChoiceQuestionComponent = useMemo(() => {
-    if (!values.type || values.type === "ESSAYS") return null;
+    if (!values.type || values.type === "ESSAYS") {
+      return null;
+    }
     return <FormAddChoices questionType={values.type} />;
   }, [values.type]);
 

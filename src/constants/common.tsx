@@ -61,6 +61,17 @@ export const HEADER_ITEMS = [
   },
 ];
 
+export const HEADER_CANDIDATE_ITEMS = (candidateId: number) => [
+  {
+    key: "/skill-test",
+    label: "Your skill test",
+  },
+  {
+    key: `/candidate-cv/${candidateId}`,
+    label: "Your CV",
+  },
+];
+
 // Translation
 const APP_PAGE_NAME_ROUTES = {
   CANDIDATE: "/candidates",

@@ -14,8 +14,14 @@ const ShowTest = () => {
       {randomTest.length === 0 && (
         <Text>The random test will be displayed here</Text>
       )}
-      {randomTest.map((question: any) => (
-        <ShowQuestion key={question.id} question={question} />
+      {randomTest.map(({ answer, ...restOfQuestion }: any, index: number) => (
+        <ShowQuestion
+          key={restOfQuestion.id}
+          idx={index + 1}
+          question={restOfQuestion}
+          answer={answer}
+          disableInput
+        />
       ))}
     </div>
   );

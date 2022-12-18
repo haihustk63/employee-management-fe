@@ -29,6 +29,7 @@ const AppInputTextArea: FC<IFormItemProps> = ({
   onChange,
   placeholder,
   allowClear,
+  disabled,
 }) => {
   return (
     <Input.TextArea
@@ -37,6 +38,7 @@ const AppInputTextArea: FC<IFormItemProps> = ({
       onChange={onChange}
       placeholder={placeholder}
       allowClear={allowClear}
+      disabled={disabled}
     />
   );
 };
@@ -55,6 +57,7 @@ const AppSelect: FC<IFormItemProps> = ({
       placeholder={placeholder}
       options={options}
       allowClear={allowClear}
+      className="app-select"
     />
   );
 };
@@ -65,6 +68,9 @@ const AppRadioGroup: FC<IAppRadioGroup> = ({
   onChange,
   onDeleteOption,
 }) => {
+  if (typeof value === "object") {
+    value = value[0];
+  }
   return (
     <Radio.Group value={value} onChange={onChange}>
       {options.map((option: any, index: number) => (

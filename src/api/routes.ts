@@ -28,5 +28,10 @@ export const API_ROUTES = {
   LOGIN_EMPLOYEE: `${API_URL}/login/employee`,
 
   // tests
-  CREATE_TEST: `${API_URL}/tests/create`
+  CREATE_TEST: `${API_URL}/tests/create`,
+  SAVE_TEST: `${API_URL}/tests/save`,
+  GET_TEST: (testId: number) => `${API_URL}/tests/${testId}`,
+
+  // check-in-out
+  CHECK_IN_OUT: `${API_URL}/check-in-out`,
 };

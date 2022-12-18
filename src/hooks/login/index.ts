@@ -8,4 +8,11 @@ const useLoginCandidate = () => {
   });
 };
 
-export { useLoginCandidate };
+const useLoginEmployee = () => {
+  return useAppMutation({
+    method: "post",
+    url: API_ROUTES.LOGIN_EMPLOYEE,
+  });
+};
+
+export { useLoginCandidate, useLoginEmployee };

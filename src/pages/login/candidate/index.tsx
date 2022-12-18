@@ -8,6 +8,7 @@ import { useLoginCandidate } from "@/hooks/login";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { currentUserAtom } from "@/modules/currentUser";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 
 const { Title } = Typography;
 
@@ -20,26 +21,22 @@ const initialValueForm = {
 
 const LoginCandidate = () => {
   const navigate = useNavigate();
+  
   const {
     mutate: login,
     data,
     isError,
     isSuccess,
   } = useLoginCandidate() as any;
+
   const setCurrentUser = useSetRecoilState(currentUserAtom);
 
-  useEffect(() => {
-    if (isSuccess) {
-      setCurrentUser(data.data.userInfo);
-      navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
-    }
-  }, [isSuccess]);
+  const afterSuccessLogin = () => {
+    setCurrentUser(data.data.userInfo);
+    navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
+  };
 
-  useEffect(() => {
-    if (isError) {
-      console.log("error");
-    }
-  }, [isError]);
+  useTriggerNoti({ isError, isSuccess, callbackSuccess: afterSuccessLogin });
 
   const handleLogin = (values: any) => {
     login(values);

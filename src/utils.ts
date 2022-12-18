@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import purity from "dompurify";
 import { createUniqueId } from "./helpers";
 const purityContent = (content: string) => {
@@ -27,4 +28,21 @@ const makeCleanObject = (obj: object = {}) => {
   );
 };
 
-export { purityContent, addKeyToData, dataToOptions, makeCleanObject };
+const getTime = (date: string) => {
+  if (!date) return "";
+  const dateObj = new Date(date);
+  return format(dateObj, "HH:mm");
+};
+
+const getDateNow = () => {
+  return format(new Date(), "dd/MM/yyyy");
+};
+
+export {
+  purityContent,
+  addKeyToData,
+  dataToOptions,
+  makeCleanObject,
+  getTime,
+  getDateNow,
+};

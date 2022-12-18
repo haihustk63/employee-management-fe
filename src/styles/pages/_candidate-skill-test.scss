@@ -1,0 +1,8 @@
+.candidate-skill-test {
+  display: flex;
+
+  > .content {
+    flex-grow: 1;
+    margin-left: 3rem;
+  }
+}

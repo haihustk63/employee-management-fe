@@ -7,8 +7,11 @@ import AppPrimaryCard from "@/components/AppCard/Primary";
 import DateTime from "@/components/DateTime";
 import { currentUserAtom } from "@/modules/currentUser";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
+import { useCheckInOut, useGetCheckInOutInfo } from "@/hooks/check-in-out";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { getTime } from "@/utils";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const CheckInOut = () => {
   const navigate = useNavigate();
@@ -16,9 +19,44 @@ const CheckInOut = () => {
   const currentUser = useRecoilValue(currentUserAtom);
   const { name } = currentUser;
 
+  const {
+    mutate: onCheckIn,
+    isError: checkInError,
+    isSuccess: checkInSuccess,
+  } = useCheckInOut(0);
+  const {
+    mutate: onCheckOut,
+    isError: checkOutError,
+    isSuccess: checkOutSuccess,
+  } = useCheckInOut(1);
+
+  const { data: checkedIn = {} } = useGetCheckInOutInfo(0) as any;
+  const { data: checkedOut = {} } = useGetCheckInOutInfo(1) as any;
+
+  useTriggerNoti({
+    isSuccess: checkInSuccess,
+    isError: checkInError,
+    messageSuccess: "You have been checked in successfully",
+  });
+
+  useTriggerNoti({
+    isSuccess: checkOutSuccess,
+    isError: checkOutError,
+    messageSuccess: "You have been checked out successfully",
+  });
+
   const handleNavigateRequest = () => {
     navigate(APP_PAGE_NAME_ROUTES.REQUEST_CREATE);
   };
+
+  const handleCheckIn = () => {
+    onCheckIn({ type: 0 });
+  };
+
+  const handleCheckOut = () => {
+    onCheckOut({ type: 1 });
+  };
+  console.log(checkedOut.time);
 
   return (
     <div className="home-check-in-out">
@@ -27,14 +65,32 @@ const CheckInOut = () => {
         <DateTime />
       </div>
       <div className="cards">
-        <AppPrimaryCard title="Check in:" hasBoxShadow backgroundColor="info">
-          <Title>8:00 AM</Title>
+        <AppPrimaryCard title="Check in" hasBoxShadow backgroundColor="info">
+          {!!checkedIn.time ? (
+            <Title>{getTime(checkedIn.time)}</Title>
+          ) : (
+            <Text>You have not checked in</Text>
+          )}
         </AppPrimaryCard>
-        <AppPrimaryCard title="Check out:" hasBoxShadow backgroundColor="info">
-          <Title>17:00 PM</Title>
+        <AppPrimaryCard title="Check out" hasBoxShadow backgroundColor="info">
+          {checkedOut.time ? (
+            <Title>{getTime(checkedOut.time)}</Title>
+          ) : (
+            <Text>You have not checked out</Text>
+          )}
         </AppPrimaryCard>
       </div>
       <div className="function">
+        <AppButton
+          buttonTitle="Checkin"
+          onClick={handleCheckIn}
+          disabled={checkedIn?.isChecked}
+        />
+        <AppButton
+          buttonTitle="Checkout"
+          onClick={handleCheckOut}
+          disabled={checkedOut?.isChecked}
+        />
         <AppButton
           buttonTitle="Add new request"
           onClick={handleNavigateRequest}

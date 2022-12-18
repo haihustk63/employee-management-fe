@@ -1,7 +1,13 @@
+import AppButton from "@/components/AppButton";
+import { AppSelect } from "@/components/AppFormField";
+import appNotification from "@/components/AppNotification";
 import InputQuestionInfo from "@/components/pages/create-test/InputQuestionInfo";
 import ListQuestionInfo from "@/components/pages/create-test/ListQuestionInfo";
 import ShowTest from "@/components/pages/create-test/ShowTest";
-import { createContext, useState } from "react";
+import { useGetCandidateProfile } from "@/hooks/candidate";
+import { useSaveTest } from "@/hooks/tests";
+import { dataToOptions } from "@/utils";
+import { createContext, useEffect, useState } from "react";
 
 export const CreateTestContext = createContext({}) as any;
 
@@ -13,9 +19,32 @@ export interface IQuestionInfo {
 }
 
 const CreateTestPage = () => {
-  // check 2 same info
   const [questionInfo, setQuestionInfo] = useState<IQuestionInfo[]>([]);
   const [randomTest, setRandomTest] = useState([]);
+  const [chooseCandidate, setChooseCandidate] = useState("");
+
+  const { data: candidate = [] } = useGetCandidateProfile();
+  const { mutate: onSaveTest, isError, isSuccess } = useSaveTest();
+
+  useEffect(() => {
+    if (isSuccess) {
+      appNotification({
+        message: "Congratulations!",
+        description: "A new test was saved",
+        type: "success",
+      });
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      appNotification({
+        message: "Opps!!!",
+        description: "Something went wrong, please try again",
+        type: "error",
+      });
+    }
+  }, [isError]);
 
   const handleSubmitQuestionInfo =
     (topicId: number, level: "EASY" | "MEDIUM" | "HARD") =>
@@ -51,6 +80,15 @@ const CreateTestPage = () => {
       }
     };
 
+  const handleChangeSelect = (value: string) => {
+    setChooseCandidate(value);
+  };
+
+  const handleSaveTest = () => {
+    const questionIds = randomTest.map((question: any) => question.id);
+    onSaveTest({ questionIds, candidateId: chooseCandidate });
+  };
+
   return (
     <CreateTestContext.Provider
       value={{
@@ -64,6 +102,12 @@ const CreateTestPage = () => {
         <InputQuestionInfo />
         <ListQuestionInfo />
         <ShowTest />
+        <AppSelect
+          options={dataToOptions(candidate)}
+          placeholder="Assign to candidate"
+          onChange={handleChangeSelect}
+        />
+        <AppButton buttonTitle="Save test" onClick={handleSaveTest} />
       </div>
     </CreateTestContext.Provider>
   );
