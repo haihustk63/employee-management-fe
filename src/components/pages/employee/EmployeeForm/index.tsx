@@ -1,9 +1,10 @@
 import moment from "moment";
 import { FC, useEffect, useRef } from "react";
 
+import AppForm from "@/components/AppForm";
 import FormFields from "./FormFields";
 import { IEmployeeFormProps } from "./interface";
-import AppForm from "@/components/AppForm";
+import { createEmployeeProfileSchema } from "@/schemas";
 
 const initialValues: IEmployeeFormProps = {
   firstName: "",
@@ -11,11 +12,18 @@ const initialValues: IEmployeeFormProps = {
   lastName: "",
   phoneNumber: "",
   dateOfBirth: moment(Date.now()),
-  position: undefined,
+  positionId: undefined,
+  deliveryId: undefined,
+  workingStatus: "OFFICIAL",
   role: undefined,
+  joinDate: moment(Date.now()),
+  paidLeaveCount: 0,
 };
 
-const EmployeeForm: FC<{ employeeId?: any }> = ({ employeeId }) => {
+const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
+  employeeId,
+  onSubmit,
+}) => {
   const formRef = useRef() as any;
 
   useEffect(() => {
@@ -35,9 +43,10 @@ const EmployeeForm: FC<{ employeeId?: any }> = ({ employeeId }) => {
     <div className="employee-form">
       <AppForm<IEmployeeFormProps>
         title="Employee Form"
-        handleSubmitForm={null}
+        handleSubmitForm={onSubmit}
         initialValues={initialValues}
         innerRef={formRef}
+        validationSchema={createEmployeeProfileSchema}
       >
         <FormFields />
       </AppForm>

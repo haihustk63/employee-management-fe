@@ -5,9 +5,10 @@ import moment from "moment";
 import AppButton from "@/components/AppButton";
 import { ICandidateProfile } from "@/hooks/candidate/interface";
 import AppTag from "@/components/AppTag";
-import { Space } from "antd";
+import { Button, Space } from "antd";
 import { FC } from "react";
 import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
+import { useDeleteCandidateAccount } from "@/hooks/candidate";
 
 const indexColumn = (currentPage: number) => ({
   key: "#",
@@ -74,6 +75,35 @@ export const candidateProfileTableColumns = (
         if (!value) {
           return "Not assigned yet";
         } else return value;
+      },
+    },
+  ];
+};
+
+const ButtonDeleteAccount: FC<{ username: string }> = ({ username }) => {
+  const { mutate } = useDeleteCandidateAccount(username) as any;
+  return <AppButton buttonTitle="Delete" onClick={mutate} />;
+};
+
+export const candidateAccountTableColumns = (currentPage: number, t?: any) => {
+  return [
+    indexColumn(currentPage),
+    {
+      key: "username",
+      title: "Username",
+      fixed: true,
+      dataIndex: ["username"],
+    },
+    {
+      key: "name",
+      title: "Name",
+      dataIndex: ["candidate", "name"],
+    },
+    {
+      key: "action",
+      title: "Action",
+      render: (_value: any, record: any) => {
+        return <ButtonDeleteAccount username={record?.username} />;
       },
     },
   ];
@@ -225,7 +255,7 @@ export const testQuestionListColumns = ({
     indexColumn(currentPage),
     {
       key: "questionText",
-      dataIndex: ["question", "questionText"],
+      dataIndex: ["questionText"],
       title: "Question",
       fixed: true,
       width: "40%",

@@ -19,6 +19,7 @@ const AppTable: FC<IAppTableProps> = ({
   scroll,
   sticky,
   onGoBack,
+  rowSelection,
 }) => {
   return (
     <div className="app-table">
@@ -35,8 +36,9 @@ const AppTable: FC<IAppTableProps> = ({
         onChange={onChange}
         bordered={bordered}
         sortDirections={sortDirections}
-        scroll={scroll ? scroll : { x: true }}
+        scroll={scroll ? scroll : { x: true, y: 400 }}
         sticky={sticky}
+        rowSelection={rowSelection}
       />
     </div>
   );

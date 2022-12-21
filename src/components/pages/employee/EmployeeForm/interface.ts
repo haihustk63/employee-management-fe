@@ -5,6 +5,10 @@ export interface IEmployeeFormProps {
   lastName?: string;
   phoneNumber?: string;
   dateOfBirth?: Moment;
-  position?: string;
+  positionId?: number;
+  deliveryId?: number;
   role?: string;
+  joinDate?: Moment;
+  paidLeaveCount?: number;
+  workingStatus: "OFFICIAL" | "PROBATIONARY" | "TEMPORARY_LAYOFFS";
 }

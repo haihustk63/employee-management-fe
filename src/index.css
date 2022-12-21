@@ -81,9 +81,17 @@
   /* box-shadow */
   --common-box-shadow: 0 2px 6px 0 rgb(67 89 113 / 12%);
   --common-border-radius: 0.5rem;
+
+  --color-primary-red: #c70c00;
+  --color-secondary-red: #f7dbda;
+  --color-primary-blue: #1e5ac7;
+  --color-secondary-blue: #d9e1f7;
+  --color-primary-grey: #8c8f8c;
+  --color-secondary-grey: #e6e6e6;
 }
 
-*, pre {
+*,
+pre {
   margin: 0;
   padding: 0;
 }

@@ -3,7 +3,7 @@ import { addKeyToData } from "@/utils";
 import useAppMutation from "../useAppMutation";
 import useFetch from "../useFetch";
 
-export const useGetAllTestQuestions = (params: any) => {
+export const useGetAllTestQuestions = (params?: any) => {
   return useFetch({
     url: API_ROUTES.TEST_QUESTIONS,
     params,

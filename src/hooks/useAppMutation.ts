@@ -6,13 +6,17 @@ type IMethods = "post" | "patch" | "delete";
 interface IAppMutationHookProps {
   method?: IMethods;
   url: string;
-  itemId?: number;
+  itemId?: number | string;
   params?: object;
   updater?: any;
   extraQueryKey?: string | string[];
 }
 
-const getApiFunc = (method: IMethods, url: string, itemId?: number) => {
+const getApiFunc = (
+  method: IMethods,
+  url: string,
+  itemId?: number | string
+) => {
   let apiFunc: Function;
   switch (method) {
     case "post":

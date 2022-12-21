@@ -15,6 +15,7 @@ export interface IAppTableProps {
   size?: "default" | "middle" | "small";
   sortDirections?: SortOrder[] | undefined;
   sticky?: boolean;
+  rowSelection?: object;
   onGoBack?: () => void;
   onChange?: () => void;
   onHeaderRow?: () => void;

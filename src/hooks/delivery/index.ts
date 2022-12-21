@@ -17,7 +17,7 @@ export const useGetAllDeliveries = () => {
 };
 
 export const useCreateDelivery = () => {
-  return useAppMutation({ method: "create", url: DELIVERY });
+  return useAppMutation({ method: "post", url: DELIVERY });
 };
 
 export const useDeleteDelivery = (deliveryId: number) => {

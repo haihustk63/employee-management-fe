@@ -267,6 +267,37 @@ export const MANAGER_EXAMPLE = [
   },
 ];
 
+export const BASIC_ROLES = [
+  {
+    key: 1,
+    value: 0,
+    label: "Employee",
+  },
+  {
+    key: 2,
+    value: 1,
+    label: "Division Manager",
+  },
+];
+
+export const WORKING_STATUS = [
+  {
+    key: 1,
+    value: "OFFICIAL",
+    label: "Official",
+  },
+  {
+    key: 2,
+    value: "PROBATIONARY",
+    label: "Probationary",
+  },
+  {
+    key: 3,
+    value: "TEMPORARY_LAYOFFS",
+    label: "Temporary Layoffs",
+  },
+];
+
 export const COMMON_TYPE_QUESTION = {
   ONE_CHOICE: "ONE_CHOICE",
   MULTIPLE_CHOICE: "MULTIPLE_CHOICE",

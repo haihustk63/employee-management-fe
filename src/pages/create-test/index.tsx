@@ -1,13 +1,16 @@
 import AppButton from "@/components/AppButton";
 import { AppSelect } from "@/components/AppFormField";
 import appNotification from "@/components/AppNotification";
+import InputQuestionInfoManual from "@/components/pages/create-test/InputQuestionInfoManual";
 import InputQuestionInfo from "@/components/pages/create-test/InputQuestionInfo";
 import ListQuestionInfo from "@/components/pages/create-test/ListQuestionInfo";
 import ShowTest from "@/components/pages/create-test/ShowTest";
 import { useGetCandidateProfile } from "@/hooks/candidate";
 import { useSaveTest } from "@/hooks/tests";
 import { dataToOptions } from "@/utils";
-import { createContext, useEffect, useState } from "react";
+import { Switch } from "antd";
+import { createContext, useEffect, useMemo, useState } from "react";
+import ListQuestionInfoManual from "@/components/pages/create-test/ListQuestionInfoManual";
 
 export const CreateTestContext = createContext({}) as any;
 
@@ -18,8 +21,20 @@ export interface IQuestionInfo {
   HARD: number;
 }
 
+export interface IQuestionInfoManual {
+  quesionId: number;
+  questionText: string;
+  topic: string;
+  level: string;
+  type: string;
+}
+
 const CreateTestPage = () => {
+  const [mode, setMode] = useState<"random" | "manual">("random");
   const [questionInfo, setQuestionInfo] = useState<IQuestionInfo[]>([]);
+  const [questionInfoManual, setQuestionInfoManual] = useState<
+    IQuestionInfoManual[]
+  >([]);
   const [randomTest, setRandomTest] = useState([]);
   const [chooseCandidate, setChooseCandidate] = useState("");
 
@@ -45,6 +60,24 @@ const CreateTestPage = () => {
       });
     }
   }, [isError]);
+
+  const renderModeContent = useMemo(() => {
+    if (mode === "random") {
+      return (
+        <>
+          <InputQuestionInfo />
+          <ListQuestionInfo />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <InputQuestionInfoManual />
+          <ListQuestionInfoManual />
+        </>
+      );
+    }
+  }, [mode]);
 
   const handleSubmitQuestionInfo =
     (topicId: number, level: "EASY" | "MEDIUM" | "HARD") =>
@@ -89,6 +122,14 @@ const CreateTestPage = () => {
     onSaveTest({ questionIds, candidateId: chooseCandidate });
   };
 
+  const handleChangeSwitch = (checked: boolean) => {
+    if (checked) {
+      setMode("random");
+    } else {
+      setMode("manual");
+    }
+  };
+
   return (
     <CreateTestContext.Provider
       value={{
@@ -96,11 +137,17 @@ const CreateTestPage = () => {
         onSubmitQuestionInfo: handleSubmitQuestionInfo,
         randomTest,
         setRandomTest,
+        questionInfoManual,
+        setQuestionInfoManual,
       }}
     >
       <div className="create-test-page">
-        <InputQuestionInfo />
-        <ListQuestionInfo />
+        <Switch
+          defaultChecked={mode === "random"}
+          onChange={handleChangeSwitch}
+          className="switch"
+        />
+        {renderModeContent}
         <ShowTest />
         <AppSelect
           options={dataToOptions(candidate)}

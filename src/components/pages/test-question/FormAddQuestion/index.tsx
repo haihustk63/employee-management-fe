@@ -1,5 +1,5 @@
 import { createContext, FC, useEffect, useRef, useState } from "react";
-import { Typography } from "antd";
+import { Switch, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 import AppForm from "@/components/AppForm";
@@ -35,12 +35,14 @@ const { Text } = Typography;
 export const FormAddQuestionContext = createContext(null) as any;
 
 const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
+  const navigate = useNavigate();
+
   const [questionSource, setQuestionSource] = useState<TypeQuestionSource[]>(
     []
   );
-  const navigate = useNavigate();
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
   const [currentSource, setCurrentSource] = useState("");
+  const [isDisplayCodeEditor, setIsDisplayCodeEditor] = useState(true);
 
   const { data = {} } = useGetOneTestQuestions(questionId) as any;
 
@@ -138,6 +140,10 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
     ]);
   };
 
+  const handleChangeSwitch = (checked: boolean) => {
+    setIsDisplayCodeEditor(checked);
+  };
+
   return (
     <FormAddQuestionContext.Provider
       value={{
@@ -150,6 +156,11 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
       }}
     >
       <div className="form-add-question">
+        <Switch
+          onChange={handleChangeSwitch}
+          className="switch"
+          defaultChecked
+        />
         <AppForm<IFormAddQuestionProps>
           title={questionId ? "Update Question" : "Add New Question"}
           initialValues={initialValues}
@@ -159,11 +170,13 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
         >
           <FormFields />
         </AppForm>
-        <AppCodeEditor
-          onSubmitCodeBlock={handleAddCodeBlock}
-          currentLanguage={currentLanguage}
-          currentSource={currentSource}
-        />
+        {isDisplayCodeEditor && (
+          <AppCodeEditor
+            onSubmitCodeBlock={handleAddCodeBlock}
+            currentLanguage={currentLanguage}
+            currentSource={currentSource}
+          />
+        )}
       </div>
     </FormAddQuestionContext.Provider>
   );

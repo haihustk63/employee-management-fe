@@ -11,6 +11,7 @@ const TestQuestionList: FC<ITableDataProps> = ({
   dataSource,
   loading,
   currentPage = 0,
+  rowSelection,
 }) => {
   const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ const TestQuestionList: FC<ITableDataProps> = ({
   const handleClickViewDetail = (recordId: number) => () => {
     navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_UPDATE(recordId));
   };
-  
+
   const columns = useMemo(() => {
     return testQuestionListColumns({
       onClickButtonViewDetail: handleClickViewDetail,
@@ -32,7 +33,12 @@ const TestQuestionList: FC<ITableDataProps> = ({
 
   return (
     <div className="test-question-list">
-      <AppTable dataSource={dataSource} loading={loading} columns={columns} />
+      <AppTable
+        dataSource={dataSource}
+        loading={loading}
+        columns={columns}
+        rowSelection={rowSelection}
+      />
     </div>
   );
 };

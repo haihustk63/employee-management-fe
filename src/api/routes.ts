@@ -1,8 +1,14 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const API_ROUTES = {
+  // positions
+  POSITION: `${API_URL}/positions/`,
+
   // candidates
   CANDIDATE_PROFILE: `${API_URL}/candidates/apply`,
+  CANDIDATE_ACCOUNT: `${API_URL}/candidates/accounts`,
+  CANDIDATE_ACCOUNT_USERNAME: (username: string) =>
+    `${API_URL}/candidates/accounts/${username}`,
 
   // delivery
   DELIVERY: `${API_URL}/deliveries`,
@@ -28,6 +34,7 @@ export const API_ROUTES = {
   LOGIN_EMPLOYEE: `${API_URL}/login/employee`,
 
   // tests
+  CREATE_TEST_RANDOM: `${API_URL}/tests/create-random`,
   CREATE_TEST: `${API_URL}/tests/create`,
   SAVE_TEST: `${API_URL}/tests/save`,
   GET_TEST: (testId: number) => `${API_URL}/tests/${testId}`,
