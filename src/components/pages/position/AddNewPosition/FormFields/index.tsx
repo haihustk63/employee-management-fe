@@ -3,12 +3,25 @@ import { Form, useFormikContext } from "formik";
 import AppButton from "@/components/AppButton";
 import FormItem from "@/components/FormItem";
 import { FORM_ITEM_TYPES, MANAGER_EXAMPLE } from "@/constants/common";
+import { useContext, useMemo } from "react";
+import { PositionManagementContext } from "@/pages/position";
 
 const { TEXT, TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
   const { values, handleSubmit, handleChange, setFieldValue } =
     useFormikContext() as any;
+
+  const { positionUpdateId } = useContext(PositionManagementContext) as any;
+
+  const buttonTitle = useMemo(() => {
+    if (positionUpdateId !== undefined) {
+      return "Update";
+    } else {
+      return "Create";
+    }
+  }, [positionUpdateId]);
+
   return (
     <Form onSubmit={handleSubmit} className="form">
       <FormItem
@@ -27,7 +40,7 @@ const FormFields = () => {
         onChange={handleChange}
         placeholder="Your description here"
       />
-      <AppButton buttonTitle="Add" htmlType="submit" />
+      <AppButton buttonTitle={buttonTitle} htmlType="submit" />
     </Form>
   );
 };

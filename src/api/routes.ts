@@ -3,6 +3,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const API_ROUTES = {
   // positions
   POSITION: `${API_URL}/positions/`,
+  POSITION_ID: (positionId: string) => `${API_URL}/positions/${positionId}`,
 
   // candidates
   CANDIDATE_PROFILE: `${API_URL}/candidates/apply`,

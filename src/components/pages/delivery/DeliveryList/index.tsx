@@ -21,7 +21,7 @@ const DeliveryList: FC<IDeliveryListProps> = ({ data, onToggleModal }) => {
       </div>
       <div className="list">
         {data?.map((delivery: any, index: number) => {
-          return <DeliveryCard delivery={delivery} key={index} />;
+          return <DeliveryCard delivery={delivery} key={delivery.id} />;
         })}
       </div>
     </div>

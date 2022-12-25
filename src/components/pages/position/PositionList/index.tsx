@@ -1,99 +1,32 @@
+import { Typography } from "antd";
+import { FC, useContext } from "react";
+
 import AppButton from "@/components/AppButton";
-import AppTable from "@/components/AppTable";
-import { useState } from "react";
+import PositionCard from "./PositionCard";
+import { PositionManagementContext } from "@/pages/position";
 
-const columns = (onClickButtonViewEmployees: any) => [
-  {
-    key: "name",
-    dataIndex: "name",
-    title: "Name",
-  },
-  {
-    key: "description",
-    dataIndex: "description",
-    title: "Description",
-  },
-  {
-    key: "action",
-    dataIndex: "action",
-    title: "Action",
-    width: "20%",
-    render: () => {
-      return (
-        <AppButton
-          buttonTitle="View Employees"
-          htmlType="button"
-          onClick={onClickButtonViewEmployees}
-        />
-      );
-    },
-  },
-];
+const { Text, Title } = Typography;
 
-const dataSource = [
-  {
-    key: 0,
-    name: "Example 1",
-    description: "Something",
-    manager: "Example manager",
-  },
-  {
-    key: 1,
-    name: "Example 2",
-    description: "Something",
-    manager: "Example manager",
-  },
-];
-
-const columns2 = [
-  {
-    key: "name",
-    dataIndex: "name",
-    title: "Name",
-  },
-  {
-    key: "email",
-    dataIndex: "email",
-    title: "Email",
-  },
-];
-
-const dataSource2 = [
-  {
-    key: 0,
-    name: "Example 1",
-    email: "Something",
-  },
-  {
-    key: 1,
-    name: "Example 2",
-    email: "Something",
-  },
-];
-
-const PositionList = () => {
-  const [showListEmployees, setShowListEmployees] = useState(false);
-
-  const handleToggleShowListEmployees = () => {
-    setShowListEmployees(!showListEmployees);
-  };
+const PositionList: FC = () => {
+  const { data = [], handleToggleModal } = useContext(
+    PositionManagementContext
+  ) as any;
 
   return (
-    <div className="delivery-list">
-      {showListEmployees ? (
-        <AppTable
-          columns={columns2}
-          dataSource={dataSource2}
-          tableName="List Employees"
-          onGoBack={handleToggleShowListEmployees}
+    <div className="position-list">
+      <div className="title">
+        <Title level={3}>Positions</Title>
+        <AppButton
+          buttonTitle="Add position"
+          size="small"
+          onClick={handleToggleModal}
         />
-      ) : (
-        <AppTable
-          columns={columns(handleToggleShowListEmployees)}
-          dataSource={dataSource}
-          tableName="List Positions"
-        />
-      )}
+      </div>
+      <div className="list">
+        {data?.map((position: any, index: number) => {
+          return <PositionCard position={position} key={index} />;
+        })}
+      </div>
     </div>
   );
 };

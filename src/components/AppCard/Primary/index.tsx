@@ -14,6 +14,11 @@ const AppPrimaryCard: FC<IAppCardPrimaryProps> = ({
   onClick,
   onDelete,
 }) => {
+  const handleOnDelete = (e: any) => {
+    e.stopPropagation();
+    onDelete();
+  };
+  
   return (
     <div
       className="app-primary-card"
@@ -28,7 +33,7 @@ const AppPrimaryCard: FC<IAppCardPrimaryProps> = ({
       }
       onClick={onClick}
     >
-      {onDelete && <CloseCircleFilled onClick={onDelete} />}
+      {onDelete && <CloseCircleFilled onClick={handleOnDelete} />}
       {!!title && (
         <Title level={3} className="title">
           {title}

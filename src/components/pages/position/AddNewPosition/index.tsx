@@ -1,5 +1,14 @@
-
 import AppForm from "@/components/AppForm";
+import AppModal from "@/components/AppModal";
+import { IModalControlProps } from "@/constants/interface";
+import {
+  useCreatePosition,
+  useGetAllPositions,
+  useUpdatePosition,
+} from "@/hooks/position";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { PositionManagementContext } from "@/pages/position";
+import { FC, useContext, useEffect, useMemo, useRef } from "react";
 import FormFields from "./FormFields";
 import { IAddNewPositionProps } from "./interface";
 
@@ -8,19 +17,77 @@ const initialValues: IAddNewPositionProps = {
   description: "",
 };
 
-const AddNewPosition = () => {
-  const handleSubmitForm = () => {};
+const AddNewPositionModal: FC = () => {
+  const { showModal, handleToggleModal, positionUpdateId } = useContext(
+    PositionManagementContext
+  ) as any;
+
+  const { mutate: onCreatePosition, isError, isSuccess } = useCreatePosition();
+  const {
+    mutate: onUpdatePosition,
+    isError: updateErorr,
+    isSuccess: updateSuccess,
+  } = useUpdatePosition(positionUpdateId);
+  const { data: positions = [] } = useGetAllPositions();
+
+  const formRef = useRef(null) as any;
+
+  useTriggerNoti({
+    isError,
+    isSuccess,
+    messageSuccess: "Position was successfully created",
+  });
+
+  useTriggerNoti({
+    isError: updateErorr,
+    isSuccess: updateSuccess,
+    messageSuccess: "Position was successfully updated",
+  });
+
+  useEffect(() => {
+    if (positionUpdateId !== undefined) {
+      const position: any = positions?.find(
+        (position: any) => position.id === positionUpdateId
+      );
+      if (position) {
+        formRef.current?.setFieldValue("name", position.name);
+        formRef.current?.setFieldValue("description", position.description);
+      }
+    } else {
+      formRef.current?.resetForm();
+    }
+  }, [positionUpdateId]);
+
+  const appFormTitle = useMemo(() => {
+    if (positionUpdateId !== undefined) {
+      return "Update Position";
+    } else {
+      return "Create Position";
+    }
+  }, [positionUpdateId]);
+
+  const handleSubmitForm = (values: any) => {
+    if (positionUpdateId) {
+      onUpdatePosition(values);
+    } else {
+      onCreatePosition(values);
+    }
+  };
+
   return (
-    <div className="add-new-delivery">
-      <AppForm<IAddNewPositionProps>
-        title="Add New Delivery"
-        initialValues={initialValues}
-        handleSubmitForm={handleSubmitForm}
-      >
-        <FormFields />
-      </AppForm>
-    </div>
+    <AppModal open={showModal} onCancel={handleToggleModal}>
+      <div className="add-new-delivery">
+        <AppForm<IAddNewPositionProps>
+          title={appFormTitle}
+          initialValues={initialValues}
+          handleSubmitForm={handleSubmitForm}
+          innerRef={formRef}
+        >
+          <FormFields />
+        </AppForm>
+      </div>
+    </AppModal>
   );
 };
 
-export default AddNewPosition;
+export default AddNewPositionModal;
