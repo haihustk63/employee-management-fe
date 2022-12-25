@@ -1,4 +1,4 @@
-import { Checkbox, Input, Radio, Select } from "antd";
+import { Checkbox, DatePicker, Input, Radio, Select } from "antd";
 import { FC } from "react";
 import AppButton from "../AppButton";
 
@@ -49,7 +49,11 @@ const AppSelect: FC<IFormItemProps> = ({
   placeholder,
   options,
   allowClear,
+  showSearch,
 }) => {
+  const filterOption = (input: string, option: any) =>
+    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+
   return (
     <Select
       value={value}
@@ -58,6 +62,9 @@ const AppSelect: FC<IFormItemProps> = ({
       options={options}
       allowClear={allowClear}
       className="app-select"
+      showSearch={showSearch}
+      optionFilterProp="label"
+      filterOption={filterOption}
     />
   );
 };

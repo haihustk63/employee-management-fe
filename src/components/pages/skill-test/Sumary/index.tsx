@@ -1,21 +1,14 @@
 import AppButton from "@/components/AppButton";
-import { useGetTest } from "@/hooks/tests";
-import { currentUserAtom } from "@/modules/currentUser";
 import { CandidateSkillTestContext } from "@/pages/skill-test";
 import { useContext } from "react";
-import { useRecoilValue } from "recoil";
 
 const Sumary = () => {
-  const { candidate } = useRecoilValue(currentUserAtom);
   const {
-    data = [],
-    isLoading,
-    isFetching,
-  } = useGetTest(candidate?.skillTest?.id);
-
-  const { answers, handleEnableTour, handleStart } = useContext(
-    CandidateSkillTestContext
-  ) as any;
+    answers,
+    handleEnableTour,
+    handleStart,
+    test = [],
+  } = useContext(CandidateSkillTestContext) as any;
 
   const setBackgroundColor = (index: number) => {
     if (
@@ -31,7 +24,7 @@ const Sumary = () => {
   return (
     <div className="skill-test-sumary">
       <div className="sumary">
-        {data.map((_item: any, index: number) => {
+        {test?.map((_item: any, index: number) => {
           return (
             <div
               key={index + 1}

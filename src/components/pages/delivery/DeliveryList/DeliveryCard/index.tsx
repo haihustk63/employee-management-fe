@@ -6,6 +6,7 @@ import AppButton from "@/components/AppButton";
 import AppPrimaryCard from "@/components/AppCard/Primary";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useDeleteDelivery } from "@/hooks/delivery";
+import { mergeName } from "@/utils";
 
 const { Text } = Typography;
 
@@ -23,7 +24,7 @@ const DeliveryCard: FC<{ delivery: any }> = ({ delivery }) => {
       onDelete={mutateDeleteDelivery}
       onClick={handleClickDeliveryCard(delivery.id)}
     >
-      <Text>{delivery.name}</Text>
+      <Text>{mergeName(delivery?.deliveryEmployee?.[0]?.employee)}</Text>
       <AppButton buttonTitle="Update" onClick={null} />
     </AppPrimaryCard>
   );

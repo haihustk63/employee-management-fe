@@ -1,13 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import AppButton from "../AppButton";
 
-const TextEditor: FC<{ onClickSave?: any; initialValue?: string }> = ({
-  onClickSave,
+const AppTextEditor: FC<{ onChange?: any; initialValue?: string }> = ({
+  onChange,
   initialValue,
 }) => {
-  const [content, setContent] = useState(initialValue || "");
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     if (initialValue) {
@@ -16,7 +15,12 @@ const TextEditor: FC<{ onClickSave?: any; initialValue?: string }> = ({
   }, [initialValue]);
 
   const handleContentChange = (newContent: any) => {
+    if (content === "<p></br></p>") {
+      setContent("");
+      return;
+    }
     setContent(newContent);
+    onChange(newContent);
   };
 
   return (
@@ -49,13 +53,13 @@ const TextEditor: FC<{ onClickSave?: any; initialValue?: string }> = ({
           // className="react-quill-editor"
         />
       </div>
-      <AppButton
+      {/* <AppButton
         buttonTitle="Save"
         htmlType="button"
         onClick={onClickSave(content)}
-      />
+      /> */}
     </div>
   );
 };
 
-export default TextEditor;
+export default AppTextEditor;

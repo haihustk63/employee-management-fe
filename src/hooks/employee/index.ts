@@ -1,8 +1,9 @@
 import { API_ROUTES } from "@/api/routes";
 import { addKeyToData } from "@/utils";
+import useAppMutation from "../useAppMutation";
 import useFetch from "../useFetch";
 
-export const useGetEmployees = (params: object) => {
+export const useGetEmployees = (params?: object) => {
   return useFetch({
     url: API_ROUTES.EMPLOYEE_PROFILE,
     params,
@@ -11,5 +12,24 @@ export const useGetEmployees = (params: object) => {
         return addKeyToData(data?.allEmployeeProfile);
       },
     },
+  });
+};
+
+export const useGetEmployeeById = (employeeId: string) => {
+  return useFetch({
+    url: API_ROUTES.EMPLOYEE_PROFILE_ID(employeeId),
+    config: {
+      enabled: !!employeeId,
+      select: (data: any) => {
+        return data?.employeeProfile;
+      },
+    },
+  });
+};
+
+export const useCreateEmployeeProfile = () => {
+  return useAppMutation({
+    url: API_ROUTES.EMPLOYEE_PROFILE,
+    method: "post",
   });
 };

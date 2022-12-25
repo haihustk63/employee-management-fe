@@ -20,6 +20,7 @@ export interface IFormItemProps {
   defaultValue?: string | string[];
   popupClassName?: string;
   dropdownMatchSelectWidth?: boolean | number;
+  showSearch?: boolean;
   dropdownRender?: (originNode: ReactNode) => ReactNode;
   loading?: boolean;
   onPopupScroll?: any;

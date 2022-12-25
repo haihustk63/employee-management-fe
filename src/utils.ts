@@ -1,7 +1,8 @@
 import { format } from "date-fns";
 import purity from "dompurify";
 import { createUniqueId } from "./helpers";
-const purityContent = (content: string) => {
+const purityContent = (content?: string) => {
+  if (!content) return "";
   return purity.sanitize(content);
 };
 
@@ -14,9 +15,9 @@ const addKeyToData = (data: any[] = [], createKey?: any) => {
 
 const dataToOptions = (data: any[] = []) => {
   return data.map((item: any) => ({
-    key: item.key || item.id,
-    value: item.value || item.id,
-    label: item.label || item.name,
+    key: item.key ?? item.id,
+    value: item.value ?? item.id,
+    label: item.label ?? item.name,
   }));
 };
 
@@ -38,6 +39,11 @@ const getDateNow = () => {
   return format(new Date(), "dd/MM/yyyy");
 };
 
+const mergeName = (value: any) => {
+  const { firstName = "", middleName = "", lastName = "" } = value || {};
+  return lastName + " " + middleName + " " + firstName;
+};
+
 export {
   purityContent,
   addKeyToData,
@@ -45,4 +51,5 @@ export {
   makeCleanObject,
   getTime,
   getDateNow,
+  mergeName,
 };

@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
 import { ColumnsType } from "antd/es/table";
 import moment from "moment";
+import { Typography } from "antd";
 
 import AppButton from "@/components/AppButton";
-import { ICandidateProfile } from "@/hooks/candidate/interface";
 import AppTag from "@/components/AppTag";
-import { Button, Space } from "antd";
-import { FC } from "react";
 import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
 import { useDeleteCandidateAccount } from "@/hooks/candidate";
+import { ICandidateProfile } from "@/hooks/candidate/interface";
+import { FC } from "react";
+import { ASSESSMENT, JOB_LEVELS, JOB_TYPES, TEST_STATUS } from "./common";
+import JobListAction from "@/components/pages/job/JobListAction";
+import GroupButton from "@/components/pages/candidate/profile/ProfileTable/GroupButton";
+import { mergeName } from "@/utils";
+
+const { Text } = Typography;
 
 const indexColumn = (currentPage: number) => ({
   key: "#",
@@ -38,9 +43,9 @@ export const candidateProfileTableColumns = (
       dataIndex: ["email"],
     },
     {
-      key: "position",
-      title: "Position",
-      dataIndex: ["position", "name"],
+      key: "job",
+      title: "Job",
+      dataIndex: ["job", "title"],
     },
     {
       key: "cvLink",
@@ -56,16 +61,22 @@ export const candidateProfileTableColumns = (
       dataIndex: ["interviewer"],
       render: (value) => {
         if (!value) {
-          return (
-            <AppButton
-              buttonTitle="Assign Interviewer"
-              onClick={() => console.log("here")}
-            />
-          );
-        } else {
-          <Link to="/">{value}</Link>;
+          return "No info";
         }
+        return mergeName(value);
       },
+      // render: (value) => {
+      //   if (!value) {
+      //     return (
+      //       <AppButton
+      //         buttonTitle="Assign Interviewer"
+      //         onClick={() => console.log("here")}
+      //       />
+      //     );
+      //   } else {
+      //     <Link to="/">{value}</Link>;
+      //   }
+      // },
     },
     {
       key: "appointmentTime",
@@ -73,8 +84,31 @@ export const candidateProfileTableColumns = (
       dataIndex: ["appointmentTime"],
       render: (value) => {
         if (!value) {
-          return "Not assigned yet";
-        } else return value;
+          return "No info";
+        }
+        return moment(value).format("DD/MM/yyyy");
+      },
+    },
+    {
+      key: "assessment",
+      title: "Assessment",
+      dataIndex: ["assessment"],
+      render: (value) => {
+        if (value === undefined) {
+          return "No info";
+        }
+        return (
+          <AppTag color={ASSESSMENT[value].color as string}>
+            {ASSESSMENT[value].label}
+          </AppTag>
+        );
+      },
+    },
+    {
+      key: "action",
+      title: "Action",
+      render: (_value: any, record: any) => {
+        return <GroupButton record={record} />;
       },
     },
   ];
@@ -185,6 +219,7 @@ export const employeeListColumns = (
       key: "dateOfBirth",
       dataIndex: ["dateOfBirth"],
       title: "Date Of Birth",
+      width: "10%",
       render: (value: any) => {
         if (value) {
           return moment(value).format("DD/MM/YYYY");
@@ -388,6 +423,119 @@ export const createTestColumns = ({
         );
       },
       width: "20%",
+    },
+  ];
+};
+
+// job
+
+export const jobsTableColumns = (
+  currentPage: number,
+  t?: any
+): ColumnsType<ICandidateProfile> => {
+  return [
+    indexColumn(currentPage),
+
+    {
+      key: "title",
+      title: "Job title",
+      fixed: true,
+      dataIndex: ["title"],
+    },
+    {
+      key: "typeOfJob",
+      title: "Job type",
+      dataIndex: ["typeOfJob"],
+      render: (value: any, _record: any) => {
+        const type = JOB_TYPES[value];
+        const label = type?.label;
+        const color = type?.color as string;
+        return <AppTag color={color}>{label}</AppTag>;
+      },
+    },
+    {
+      key: "upTo",
+      title: "Upto",
+      dataIndex: ["upTo"],
+    },
+    {
+      key: "level",
+      title: "Level",
+      dataIndex: ["level"],
+      render: (value: any) => {
+        const level = JOB_LEVELS[value];
+        const label = level?.label;
+        const color = level?.color as string;
+        return <AppTag color={color}>{label}</AppTag>;
+      },
+    },
+    {
+      key: "position",
+      title: "Position",
+      dataIndex: ["positionName"],
+    },
+    {
+      key: "actions",
+      title: "Actions",
+      render: (_value: any, record: any) => {
+        return <JobListAction jobId={record.id} jobTitle={record.title} />;
+      },
+    },
+  ];
+};
+
+export const testsTableColumns = (
+  currentPage: number,
+  t?: any
+): ColumnsType<ICandidateProfile> => {
+  return [
+    indexColumn(currentPage),
+    {
+      key: "candidateName",
+      title: "Candidate",
+      dataIndex: ["candidate", "name"],
+      fixed: true,
+      render: (value: any) => {
+        if (!value) {
+          return <AppTag color="warning">Not assigned yet</AppTag>;
+        }
+        return value;
+      },
+    },
+    {
+      key: "score",
+      title: "Score",
+      dataIndex: ["score"],
+      render: (value: any, record: any) => {
+        if (!value) {
+          return <AppTag color="warning">Wait for attemp</AppTag>;
+        }
+        return (
+          <Text>
+            {value}/{record.countQuestion}
+          </Text>
+        );
+      },
+    },
+    {
+      key: "isSubmitted",
+      title: "Status",
+      dataIndex: ["isSubmitted"],
+      render: (value: any) => {
+        const renderIndex = value ? 1 : 0;
+        return (
+          <AppTag color={TEST_STATUS[renderIndex].color}>
+            {TEST_STATUS[renderIndex].label}
+          </AppTag>
+        );
+      },
+    },
+    {
+      key: "actions",
+      title: "Actions",
+      render: (_value: any, record: any) => {
+        return <JobListAction jobId={record.id} jobTitle={record.title} />;
+      },
     },
   ];
 };

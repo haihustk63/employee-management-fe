@@ -70,7 +70,7 @@ const FormFields: FC = () => {
         onChange={handleDateOfBirthChange}
       />
       <FormItem
-        name="delivery"
+        name="deliveryId"
         label="Delivery"
         value={values.deliveryId}
         type={SELECT}
@@ -78,7 +78,7 @@ const FormFields: FC = () => {
         placeholder="Choose delivery"
       />
       <FormItem
-        name="position"
+        name="positionId"
         label="Position"
         value={values.positionId}
         type={SELECT}

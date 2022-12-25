@@ -14,6 +14,7 @@ import {
   AimOutlined,
   CalculatorOutlined,
 } from "@ant-design/icons";
+import { Step } from "intro.js-react";
 
 export const ROLES: { [key: string]: { [key: string]: string | number } } = {
   CANDIDATE: {
@@ -90,6 +91,10 @@ const APP_PAGE_NAME_ROUTES = {
   EMPLOYEE_UPDATE: "/employees/update/:employeeId",
   HIRING_NEWS: "/hiring-news",
   HOME: "/",
+  JOB: "/jobs",
+  JOB_CREATE: "/jobs/create",
+  JOB_LIST: "/jobs/list",
+  JOB_UPDATE: "/jobs/update/:jobId",
   LOGIN: "/login",
   LOGIN_CANDIDATE: "/login/candidate",
   LOGIN_EMPLOYEE: "/login/employee",
@@ -113,6 +118,10 @@ const APP_PAGE_NAME_ROUTES = {
   TEST_QUESTION_LIST: "/test-questions/list",
   TEST_QUESTION_CREATE: "/test-questions/create",
   TEST_QUESTION_UPDATE: "/test-questions/update/:questionId",
+  TESTS: "/tests",
+  TESTS_CREATE: "/tests/create",
+  TESTS_LIST: "/tests/list",
+  TESTS_UPDATE: "/tests/update/:testId",
 };
 export const SIDER_ITEMS = [
   {
@@ -248,9 +257,38 @@ export const SIDER_ITEMS = [
     ],
   },
   {
-    key: APP_PAGE_NAME_ROUTES.CREATE_TEST,
-    label: "Create Test",
-    icon: <TableOutlined />,
+    key: APP_PAGE_NAME_ROUTES.JOB,
+    label: "Jobs",
+    icon: <SoundOutlined />,
+    children: [
+      {
+        key: APP_PAGE_NAME_ROUTES.JOB_CREATE,
+        label: "Create Jobs",
+        icon: <PlusCircleOutlined />,
+      },
+      {
+        key: APP_PAGE_NAME_ROUTES.JOB_LIST,
+        label: "Jobs List",
+        icon: <TableOutlined />,
+      },
+    ],
+  },
+  {
+    key: APP_PAGE_NAME_ROUTES.TESTS,
+    label: "Tests",
+    icon: <SoundOutlined />,
+    children: [
+      {
+        key: APP_PAGE_NAME_ROUTES.TESTS_CREATE,
+        label: "Create Tests",
+        icon: <PlusCircleOutlined />,
+      },
+      {
+        key: APP_PAGE_NAME_ROUTES.TESTS_LIST,
+        label: "Tests List",
+        icon: <TableOutlined />,
+      },
+    ],
   },
 ];
 
@@ -302,3 +340,134 @@ export const COMMON_TYPE_QUESTION = {
   ONE_CHOICE: "ONE_CHOICE",
   MULTIPLE_CHOICE: "MULTIPLE_CHOICE",
 };
+
+export const SKILL_TEST_INTRO_STEPS: Step[] = [
+  {
+    title: "Sumary",
+    intro:
+      "You can see your progress here and you can click on each item to see the corrensponding question.",
+    element: ".skill-test-sumary",
+  },
+  {
+    title: "Time",
+    intro: "Your time left is shown here.",
+    element: ".skill-test-session-info #count-down",
+  },
+  {
+    title: "Previous button",
+    intro: "Click this button to go back to the previous question.",
+    element: ".skill-test-btn-group #previous-btn",
+  },
+  {
+    title: "Next question",
+    intro: "Click this button to move to the next question.",
+    element: ".skill-test-btn-group #next-btn",
+  },
+  {
+    title: "Submit",
+    intro: "Click this button to submit the test.",
+    element: ".skill-test-btn-group #submit-btn",
+  },
+  {
+    title: "Start to attempt",
+    intro:
+      "Click this button to start the test. You can only attempt one time.",
+    element: "#attempt-btn",
+  },
+];
+
+export const JOB_TYPES: { [key: string]: string | number }[] = [
+  {
+    key: 0,
+    label: "Parttime",
+    value: 0,
+    color: "warning",
+  },
+  {
+    key: 1,
+    label: "Fulltime",
+    value: 1,
+    color: "success",
+  },
+];
+
+export const JOB_LEVELS: { [key: string]: string | number }[] = [
+  {
+    key: 0,
+    value: 0,
+    label: "Intern",
+    color: "black",
+  },
+  {
+    key: 1,
+    value: 1,
+    label: "Fresher",
+    color: "blue",
+  },
+  {
+    key: 2,
+    value: 2,
+    label: "Junior",
+    color: "success",
+  },
+  {
+    key: 3,
+    value: 3,
+    label: "Middle",
+    color: "warning",
+  },
+  {
+    key: 4,
+    value: 4,
+    label: "Senior",
+    color: "error",
+  },
+];
+
+export const ASSESSMENT: { [key: string]: string | number }[] = [
+  {
+    key: 0,
+    value: 0,
+    label: "Failed",
+    color: "black",
+  },
+  {
+    key: 1,
+    value: 1,
+    label: "Not good",
+    color: "blue",
+  },
+  {
+    key: 2,
+    value: 2,
+    label: "Considering",
+    color: "success",
+  },
+  {
+    key: 3,
+    value: 3,
+    label: "Good",
+    color: "warning",
+  },
+  {
+    key: 4,
+    value: 4,
+    label: "Passed",
+    color: "error",
+  },
+];
+
+export const TEST_STATUS = [
+  {
+    key: 0,
+    value: 0,
+    label: "Not done yet",
+    color: "error",
+  },
+  {
+    key: 1,
+    value: 1,
+    label: "Submitted",
+    color: "success",
+  },
+];

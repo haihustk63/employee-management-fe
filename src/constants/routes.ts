@@ -11,7 +11,6 @@ import LoginEmployee from "@/pages/login/employee";
 import CandidateSkillTest from "@/pages/skill-test";
 import CandidateLayout from "@/components/Layouts/CandidateLayout";
 import AdminDashboard from "@/pages/dashboard";
-import CandidateManagement from "@/pages/candidate";
 import EmployeeManagement from "@/pages/employee/profile";
 import DeliveryManagement from "@/pages/delivery";
 import EducationManagement from "@/pages/education";
@@ -34,13 +33,18 @@ import UpdateTestTopic from "@/pages/test-topics/update";
 import TestQuestionManagement from "@/pages/test-questions";
 import CreateTestQuestion from "@/pages/test-questions/create-new";
 import UpdateTestQuestion from "@/pages/test-questions/update";
-import CreateTestPage from "@/pages/create-test";
+import CreateTestPage from "@/pages/tests/create-test";
+import ApplyProcess from "@/pages/apply-process";
+import CreateJob from "@/pages/jobs/create";
+import UpdateJob from "@/pages/jobs/update";
+import JobManagement from "@/pages/jobs";
+import TestsManagement from "@/pages/tests";
 
 export const APP_PAGE_NAME_ROUTES = {
+  APPLY_PROCESS: "/apply-process",
   CANDIDATE: "/candidates",
   CANDIDATE_PROFILE: "/candidate/profiles",
   CANDIDATE_ACCOUNT: "/candidate/accounts",
-  CREATE_TEST: "/tests/create",
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
@@ -53,6 +57,10 @@ export const APP_PAGE_NAME_ROUTES = {
   EMPLOYEE_UPDATE: "/employees/update/:employeeId",
   HIRING_NEWS: "/hiring-news",
   HOME: "/",
+  JOB: "/jobs",
+  JOB_CREATE: "/jobs/create",
+  JOB_LIST: "/jobs/list",
+  JOB_UPDATE: "/jobs/update/:jobId",
   LOGIN: "/login",
   LOGIN_CANDIDATE: "/login/candidate",
   LOGIN_EMPLOYEE: "/login/employee",
@@ -76,6 +84,10 @@ export const APP_PAGE_NAME_ROUTES = {
   TEST_QUESTION_CREATE: "/test-questions/create",
   TEST_QUESTION_LIST: "/test-questions/list",
   TEST_QUESTION_UPDATE: "/test-questions/update/:questionId",
+  TESTS: "/tests",
+  TESTS_CREATE: "/tests/create",
+  TESTS_LIST: "/tests/list",
+  TESTS_UPDATE: "/tests/update/:testId",
 };
 
 export const DYNAMIC_APP_PAGE_ROUTES = {
@@ -88,9 +100,17 @@ export const DYNAMIC_APP_PAGE_ROUTES = {
     `/test-questions?topicId=${topicId}`,
   TEST_QUESTION_UPDATE: (questionId: any) =>
     `/test-questions/update/${questionId}`,
+  JOB_UPDATE: (jobId: any) => `/jobs/update/${jobId}`,
 };
 
 export const APP_ROUTES = [
+  {
+    name: APP_PAGE_NAME_ROUTES.APPLY_PROCESS,
+    path: APP_PAGE_NAME_ROUTES.APPLY_PROCESS,
+    element: ApplyProcess,
+    layout: CandidateLayout,
+    role: ROLES.CANDIDATE,
+  },
   {
     name: APP_PAGE_NAME_ROUTES.HOME,
     path: APP_PAGE_NAME_ROUTES.HOME,
@@ -168,7 +188,7 @@ export const APP_ROUTES = [
   {
     name: APP_PAGE_NAME_ROUTES.CANDIDATE,
     path: APP_PAGE_NAME_ROUTES.CANDIDATE,
-    element: CandidateManagement,
+    element: CandidateProfileManagement,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
@@ -334,9 +354,58 @@ export const APP_ROUTES = [
     role: ROLES.EMPLOYEE,
   },
   {
-    name: APP_PAGE_NAME_ROUTES.CREATE_TEST,
-    path: APP_PAGE_NAME_ROUTES.CREATE_TEST,
+    name: APP_PAGE_NAME_ROUTES.TESTS_CREATE,
+    path: APP_PAGE_NAME_ROUTES.TESTS_CREATE,
     element: CreateTestPage,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TESTS,
+    path: APP_PAGE_NAME_ROUTES.TESTS,
+    element: CreateTestPage,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TESTS_LIST,
+    path: APP_PAGE_NAME_ROUTES.TESTS_LIST,
+    element: TestsManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TESTS_UPDATE,
+    path: APP_PAGE_NAME_ROUTES.TESTS_UPDATE,
+    element: CreateTestPage,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.JOB_CREATE,
+    path: APP_PAGE_NAME_ROUTES.JOB_CREATE,
+    element: CreateJob,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.JOB_UPDATE,
+    path: APP_PAGE_NAME_ROUTES.JOB_UPDATE,
+    element: UpdateJob,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.JOB_LIST,
+    path: APP_PAGE_NAME_ROUTES.JOB_LIST,
+    element: JobManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.JOB,
+    path: APP_PAGE_NAME_ROUTES.JOB,
+    element: JobManagement,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },

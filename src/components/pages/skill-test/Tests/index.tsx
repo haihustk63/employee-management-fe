@@ -1,24 +1,30 @@
-import { useRecoilValue } from "recoil";
-import { useContext, useEffect, useState } from "react";
 import { Typography } from "antd";
+import { useContext, useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 
-import { useGetTest } from "@/hooks/tests";
+import { useSubmitAnswer } from "@/hooks/tests";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { currentUserAtom } from "@/modules/currentUser";
+import { CandidateSkillTestContext } from "@/pages/skill-test";
 import ShowQuestion from "../../create-test/ShowTest/ShowQuestion";
 import ButtonGroup from "./ButtonGroup";
-import { CandidateSkillTestContext } from "@/pages/skill-test";
 
 const { Text } = Typography;
 
 const SkillTestContent = () => {
   const { candidate } = useRecoilValue(currentUserAtom);
-  const {
-    data = [],
-    isLoading,
-    isFetching,
-  } = useGetTest(candidate?.skillTest?.id);
 
-  const { answers, setAnswers } = useContext(CandidateSkillTestContext) as any;
+  const {
+    mutate: onSubmitAnswer,
+    isError,
+    isSuccess,
+  } = useSubmitAnswer(candidate?.skillTest?.id);
+
+  const {
+    answers = [],
+    setAnswers,
+    test = [],
+  } = useContext(CandidateSkillTestContext) as any;
 
   const [error, setError] = useState(false);
 
@@ -27,9 +33,9 @@ const SkillTestContent = () => {
   }, [answers]);
 
   useEffect(() => {
-    if (data.length) {
+    if (test.length) {
       const newAnswers: (string | string[])[] = [];
-      data.map((q: any) => {
+      test.map((q: any) => {
         const { question } = q;
         if (question.type === "ONE_CHOICE" || question.type === "ESSAYS") {
           newAnswers.push("");
@@ -40,7 +46,13 @@ const SkillTestContent = () => {
 
       setAnswers?.(newAnswers);
     }
-  }, [data]);
+  }, [test]);
+
+  useTriggerNoti({
+    isError,
+    isSuccess,
+    messageSuccess: "The test is submited successfully",
+  });
 
   const handleChangeAnswer = (index: number) => (e: any) => {
     const newAnswer = [...answers];
@@ -65,14 +77,20 @@ const SkillTestContent = () => {
       }
     });
     if (notCompleted) {
-      console.log("fdjsjnf");
       setError(true);
+      return;
     }
+    const sendAnswer = answers?.map((answer: any, index: number) => ({
+      questionId: test?.[index]?.questionId,
+      answer: typeof answer === "string" ? [answer] : answer,
+    }));
+
+    onSubmitAnswer(sendAnswer);
   };
 
   return (
     <div className="skill-test-content">
-      {data.map((question: any, index: number) => (
+      {test?.map((question: any, index: number) => (
         <ShowQuestion
           key={question.questionId}
           idx={index + 1}

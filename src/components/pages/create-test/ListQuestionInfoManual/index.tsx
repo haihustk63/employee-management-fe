@@ -3,7 +3,7 @@ import { Space, Typography } from "antd";
 
 import AppPrimaryCard from "@/components/AppCard/Primary";
 import { createUniqueId } from "@/helpers";
-import { CreateTestContext } from "@/pages/create-test";
+import { CreateTestContext } from "@/pages/tests/create-test";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
 import AppTag from "@/components/AppTag";
 import AppButton from "@/components/AppButton";

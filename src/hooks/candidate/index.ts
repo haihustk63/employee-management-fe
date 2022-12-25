@@ -4,6 +4,7 @@ import useFetch from "../useFetch";
 import { addKeyToData } from "@/utils";
 import useAppMutation from "../useAppMutation";
 
+//profile
 export const useGetCandidateProfile = () => {
   return useFetch<ICandidateProfile[]>({
     url: API_ROUTES.CANDIDATE_PROFILE,
@@ -15,6 +16,23 @@ export const useGetCandidateProfile = () => {
   });
 };
 
+export const useUpdateCandidateProfile = (candidateId: string) => {
+  return useAppMutation({
+    url: API_ROUTES.CANDIDATE_PROFILE_ID(candidateId),
+    method: "patch",
+    extraQueryKey: API_ROUTES.CANDIDATE_PROFILE,
+  });
+};
+
+export const useDeleteCandidateProfile = (candidateId: string) => {
+  return useAppMutation({
+    url: API_ROUTES.CANDIDATE_PROFILE_ID(candidateId),
+    method: "delete",
+    extraQueryKey: API_ROUTES.CANDIDATE_PROFILE,
+  });
+};
+
+//account
 export const useGetCandidateAccount = () => {
   return useFetch({
     url: API_ROUTES.CANDIDATE_ACCOUNT,

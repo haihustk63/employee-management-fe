@@ -16,12 +16,12 @@ export interface IAppModalProps {
   maskClosable?: boolean;
   maskStyle?: CSSProperties;
   okText?: ReactNode;
-  okType?: string;
+  okType?: any;
   title?: string;
   open?: boolean;
   wrapClassName?: string;
   zIndex?: number;
-  onCancel?: () => void;
-  onOk?: () => void;
+  onCancel?: any;
+  onOk?: any;
   children?: ReactNode;
 }

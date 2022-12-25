@@ -63,40 +63,42 @@ const FormFields = () => {
     handleSetSearchParams(field)(value);
   };
 
-  if (types.isLoading || levels.isLoading) return null;
-
   return (
     <Form onSubmit={handleSubmit} className="form">
-      <FormItem
-        name="keyword"
-        type={TEXT}
-        onChange={handleChangeKeyword}
-        placeholder="Keywords"
-      />
-      <FormItem
-        name="topic"
-        value={values.topic}
-        type={SELECT}
-        options={dataToOptions(testTopics)}
-        onChange={handleChangeOtherValue("topic")}
-        placeholder="Select topic"
-      />
-      <FormItem
-        name="type"
-        value={values.type}
-        type={SELECT}
-        options={dataToOptions(types)}
-        placeholder="Select type"
-        onChange={handleChangeOtherValue("type")}
-      />
-      <FormItem
-        name="level"
-        value={values.level}
-        type={SELECT}
-        options={dataToOptions(levels)}
-        onChange={handleChangeOtherValue("level")}
-        placeholder="Select level"
-      />
+      {!types.isLoading && !levels.isLoading && (
+        <>
+          <FormItem
+            name="keyword"
+            type={TEXT}
+            onChange={handleChangeKeyword}
+            placeholder="Keywords"
+          />
+          <FormItem
+            name="topic"
+            value={values.topic}
+            type={SELECT}
+            options={dataToOptions(testTopics)}
+            onChange={handleChangeOtherValue("topic")}
+            placeholder="Select topic"
+          />
+          <FormItem
+            name="type"
+            value={values.type}
+            type={SELECT}
+            options={dataToOptions(types)}
+            placeholder="Select type"
+            onChange={handleChangeOtherValue("type")}
+          />
+          <FormItem
+            name="level"
+            value={values.level}
+            type={SELECT}
+            options={dataToOptions(levels)}
+            onChange={handleChangeOtherValue("level")}
+            placeholder="Select level"
+          />
+        </>
+      )}
     </Form>
   );
 };

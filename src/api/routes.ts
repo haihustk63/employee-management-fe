@@ -6,6 +6,8 @@ export const API_ROUTES = {
 
   // candidates
   CANDIDATE_PROFILE: `${API_URL}/candidates/apply`,
+  CANDIDATE_PROFILE_ID: (candidateId: string) =>
+    `${API_URL}/candidates/apply/${candidateId}`,
   CANDIDATE_ACCOUNT: `${API_URL}/candidates/accounts`,
   CANDIDATE_ACCOUNT_USERNAME: (username: string) =>
     `${API_URL}/candidates/accounts/${username}`,
@@ -16,6 +18,8 @@ export const API_ROUTES = {
 
   // employee
   EMPLOYEE_PROFILE: `${API_URL}/employees/profile`,
+  EMPLOYEE_PROFILE_ID: (employeeId: string) =>
+    `${API_URL}/employees/profile/${employeeId}`,
 
   // test-questions
   TEST_QUESTIONS: `${API_URL}/test-questions`,
@@ -34,11 +38,17 @@ export const API_ROUTES = {
   LOGIN_EMPLOYEE: `${API_URL}/login/employee`,
 
   // tests
-  CREATE_TEST_RANDOM: `${API_URL}/tests/create-random`,
-  CREATE_TEST: `${API_URL}/tests/create`,
-  SAVE_TEST: `${API_URL}/tests/save`,
-  GET_TEST: (testId: number) => `${API_URL}/tests/${testId}`,
+  CREATE_TEST_RANDOM: `${API_URL}/tests/create/random`,
+  CREATE_TEST: `${API_URL}/tests/create/manual`,
+  SAVE_TEST: `${API_URL}/tests`,
+  TEST: `${API_URL}/tests`,
+  TEST_ID: (testId: number) => `${API_URL}/tests/${testId}`,
+  TEST_STATUS: (testId: number) => `${API_URL}/tests/status/${testId}`,
 
   // check-in-out
   CHECK_IN_OUT: `${API_URL}/check-in-out`,
+
+  // jobs
+  JOBS: `${API_URL}/jobs`,
+  JOB_ID: (jobId: string) => `${API_URL}/jobs/${jobId}`,
 };

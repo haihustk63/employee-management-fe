@@ -3,7 +3,7 @@ import { useGetAllTestTopics } from "@/hooks/test-topic";
 import { FC, useContext } from "react";
 
 import TestQuestionList from "@/components/pages/test-question/TestQuestionList";
-import { CreateTestContext } from "@/pages/create-test";
+import { CreateTestContext } from "@/pages/tests/create-test";
 
 const InputQuestionInfoManual: FC = () => {
   const { setQuestionInfoManual } = useContext(CreateTestContext) as any;

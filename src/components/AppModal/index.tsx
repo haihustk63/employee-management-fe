@@ -3,28 +3,20 @@ import { FC } from "react";
 import { IAppModalProps } from "./interface";
 
 const AppModal: FC<IAppModalProps> = ({
-  afterClose,
-  bodyStyle,
   cancelText = "Cancel",
   centered = false,
   closable = true,
   maskClosable = true,
-  closeIcon,
-  confirmLoading,
-  destroyOnClose,
-  footer,
   keyboard = true,
   mask = true,
-  maskStyle,
   okText,
-  okType,
   onCancel,
   onOk,
   open,
   title,
   wrapClassName,
-  zIndex,
   children,
+  ...props
 }) => {
   return (
     <Modal
@@ -38,8 +30,9 @@ const AppModal: FC<IAppModalProps> = ({
       cancelText={cancelText}
       mask={mask}
       maskClosable={maskClosable}
-      wrapClassName="app-modal"
+      wrapClassName={`app-modal ${wrapClassName}`}
       open={open}
+      {...props}
     >
       {children}
     </Modal>

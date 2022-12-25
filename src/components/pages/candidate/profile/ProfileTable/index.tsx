@@ -1,8 +1,9 @@
-import { FC, useMemo } from "react";
+import { FC, useContext, useMemo } from "react";
 
 import AppTable from "@/components/AppTable";
 import { candidateProfileTableColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
+import { CandidateProfileContext } from "@/pages/candidate/profile";
 
 const ProfileTable: FC<ITableDataProps> = ({
   dataSource,

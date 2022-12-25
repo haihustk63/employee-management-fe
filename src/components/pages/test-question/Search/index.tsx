@@ -21,7 +21,7 @@ const Search: FC = () => {
   const formRef = useRef() as any;
 
   useEffect(() => {
-    if (searchParams.toString()) {
+    if (searchParams.toString() && !isInit) {
       const keyword = searchParams.get("keyword");
       const type = searchParams.get("type");
       const level = searchParams.get("level");
@@ -30,7 +30,7 @@ const Search: FC = () => {
       formRef?.current?.setFieldValue("keyword", keyword);
       formRef?.current?.setFieldValue("type", type);
       formRef?.current?.setFieldValue("level", level);
-      if (topic) {
+      if (topic !== null && topic !== undefined) {
         formRef?.current?.setFieldValue("topic", Number(topic));
       }
 

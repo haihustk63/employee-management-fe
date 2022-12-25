@@ -4,7 +4,7 @@ import AppTable from "@/components/AppTable";
 import { createTestColumns } from "@/constants/columns";
 import { useClassifiedQuestion } from "@/hooks/test-question";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
-import { CreateTestContext } from "@/pages/create-test";
+import { CreateTestContext } from "@/pages/tests/create-test";
 
 const InputQuestionInfo: FC = () => {
   const { onSubmitQuestionInfo } = useContext(CreateTestContext) as any;

@@ -4,6 +4,7 @@ import { Input, InputNumber, Select, Typography } from "antd";
 
 import { IFieldProps, IFormItemProps } from "./interface";
 import { FORM_ITEM_TYPES } from "@/constants/common";
+import AppFormErrorMessage from "../AppFormErrorMessage";
 
 const { TEXT, TEXTAREA, SELECT, PASSWORD, INPUT_NUMBER } = FORM_ITEM_TYPES;
 const { TextArea, Password } = Input;
@@ -42,12 +43,17 @@ const SelectField = ({ field, form, ...props }: IFieldProps) => {
 
   const { onChange: handleChangeProp } = props as any;
 
+  const filterOption = (input: string, option: any) =>
+    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+
   return (
     <Select
       {...field}
       {...props}
       allowClear
       onChange={handleChangeProp || handleChange}
+      filterOption={filterOption}
+      optionFilterProp="label"
       className="select"
     />
   );
@@ -82,7 +88,7 @@ const renderFormItemComponent = (type: any) => {
 };
 
 const renderErrorMessage = (message: string) => {
-  return <Text className="form-field-error-message">{message}</Text>;
+  return <AppFormErrorMessage message={message} />;
 };
 
 const FormItem: FC<IFormItemProps> = ({ name, type, label, ...props }) => {
