@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export interface IAppDatePickerProps {
   allowClear?: boolean;
   pickerLabel?: string;
@@ -6,7 +8,7 @@ export interface IAppDatePickerProps {
   picker?: "date" | "week" | "month" | "quarter" | "year";
   open?: boolean;
   placement?: "bottomLeft" | "bottomRight" | "topLeft" | "topRight";
-  value?: any;
+  value?: Dayjs;
   showToday?: boolean;
   onOpenChange?: () => void;
   onChange?: any;

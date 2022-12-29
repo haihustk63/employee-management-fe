@@ -1,40 +1,62 @@
-import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
 import { Typography } from "antd";
-import AppPrimaryCard from "@/components/AppCard/Primary";
+import { useNavigate } from "react-router-dom";
+
+import FormLogin from "@/components/pages/login/FormLogin";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
+import { loginSchema } from "@/schemas";
+import { useSetRecoilState } from "recoil";
+import { currentUserAtom } from "@/modules/currentUser";
+import { useLoginEmployee } from "@/hooks/login";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 
-const { Title, Text } = Typography;
+const initialValueForm = {
+  email: "",
+  password: "",
+};
 
-//localize
+// localize
 
-const Login = () => {
+const LoginEmployee = () => {
   const navigate = useNavigate();
 
-  const handleToLoginForm = (actor: string) => () => {
-    navigate(`/login/${actor}`);
+  const { mutate: login, data, isError, isSuccess } = useLoginEmployee() as any;
+
+  const setCurrentUser = useSetRecoilState(currentUserAtom);
+
+  const afterSuccessLogin = () => {
+    const userInfo = data?.data?.userInfo;
+    if (userInfo) {
+      setCurrentUser(userInfo);
+      const employeeId = userInfo?.employeeId;
+      if (employeeId) {
+        navigate(APP_PAGE_NAME_ROUTES.HOME);
+      } else {
+        navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
+      }
+    }
+  };
+
+  useTriggerNoti({
+    isError,
+    isSuccess,
+    callbackSuccess: afterSuccessLogin,
+    messageSuccess: "You logged in successfully",
+  });
+
+  const handleLogin = (values: any) => {
+    login(values);
   };
 
   return (
     <div className="login-page">
-      <div className="select">
-        <AppPrimaryCard
-          title="Candidate Login"
-          hasBoxShadow
-          onClick={handleToLoginForm("candidate")}
-        >
-          <Text>Click here to login as a candidate</Text>
-        </AppPrimaryCard>
-        <AppPrimaryCard
-          title="Employee Login"
-          hasBoxShadow
-          onClick={handleToLoginForm("employee")}
-        >
-          <Text>Click here to login as a employee</Text>
-        </AppPrimaryCard>
-      </div>
+      <FormLogin
+        actor="employee"
+        initialValue={initialValueForm}
+        validationSchema={loginSchema}
+        onSubmit={handleLogin}
+      />
     </div>
   );
 };
 
-export default Login;
+export default LoginEmployee;

@@ -74,6 +74,9 @@ const AppRadioGroup: FC<IAppRadioGroup> = ({
   value,
   onChange,
   onDeleteOption,
+  isEditable,
+  nameInput,
+  onChangeInput,
 }) => {
   if (typeof value === "object") {
     value = value[0];
@@ -82,7 +85,18 @@ const AppRadioGroup: FC<IAppRadioGroup> = ({
     <Radio.Group value={value} onChange={onChange}>
       {options.map((option: any, index: number) => (
         <div key={option.id}>
-          <Radio value={option.id}>{option.choice}</Radio>
+          {isEditable ? (
+            <Radio value={option.id}>
+              <AppInput
+                name={nameInput}
+                value={option.choice}
+                onChange={onChangeInput(option.id)}
+                placeholder={`Enter answer ${index + 1}`}
+              />
+            </Radio>
+          ) : (
+            option.choice
+          )}
           {onDeleteOption && (
             <AppButton onClick={onDeleteOption(option.id)} buttonTitle="Del" />
           )}
@@ -97,12 +111,30 @@ const AppCheckboxGroup: FC<IAppCheckboxGroup> = ({
   value,
   onChange,
   onDeleteOption,
+  nameInput,
+  onChangeInput,
+  isEditable,
 }) => {
   return (
-    <Checkbox.Group value={value} onChange={onChange}>
+    <Checkbox.Group
+      value={value}
+      onChange={onChange}
+      className="app-checkbox-gr"
+    >
       {options.map((option: any, index: number) => (
         <div key={option.id}>
-          <Checkbox value={option.id}>{option.choice}</Checkbox>
+          <Checkbox value={option.id}>
+            {isEditable ? (
+              <AppInput
+                name={nameInput}
+                value={option.choice}
+                onChange={onChangeInput(option.id)}
+                placeholder={`Enter answer ${index + 1}`}
+              />
+            ) : (
+              option.choice
+            )}
+          </Checkbox>
           {onDeleteOption && (
             <AppButton onClick={onDeleteOption(option.id)} buttonTitle="Del" />
           )}

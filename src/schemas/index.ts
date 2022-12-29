@@ -8,20 +8,15 @@ export const addDeliveryValidateSchema = object({
 export const addTestQuestionValidateSchema = object({
   type: string().required("Please choose type"),
   level: string().required("Please choose level"),
-  topic: string().required("Please choose topic"),
+  topicId: string().required("Please choose topic"),
   questionText: string().required("Please enter question"),
 });
 
-export const loginAsCandidate = object({
-  username: string().required("Username is required"),
-  password: string().required(),
-});
-
-export const loginAsEmployee = object({
+export const loginSchema = object({
   email: string()
     .required("Email is required")
     .email("Please input a valid email"),
-  password: string().required(),
+  password: string().required("Password is required"),
 });
 
 export const createTestSchema = object({
@@ -30,14 +25,11 @@ export const createTestSchema = object({
   amount: number().min(1, "Minimum is 1").required("Amount is required"),
 });
 
-export const createCandidateAccountSchema = object({
-  username: string().required("Username is required"),
+export const createAccountSchema = object({
+  email: string().required("Username is required").email("Email is invalid"),
   password: string()
     .min(6, "Password contains at least 6 characters")
     .required("Password is required"),
-  candidateId: number().required(
-    "You have to assign this account to a candidate"
-  ),
 });
 
 export const createEmployeeProfileSchema = object({
@@ -76,4 +68,38 @@ export const createJobSchema = object({
   level: number().required("Job level is required").oneOf([0, 1, 2, 3, 4]),
   jobDetail: string().required("Job detail is required"),
   positionId: number().required("Position is required"),
+});
+
+export const addCommonRequestSchema = object({
+  type: number().required("Type is required"),
+  date: date().typeError("Invalid date").required("Date is required"),
+});
+
+export const addLeaveAndRemoteRequestSchema = object({
+  type: number().required("Type is required"),
+  date: date().typeError("Invalid date").required("Date is required"),
+  leavingTime: string().required("Leaving time is required"),
+});
+
+export const addOvertimeRequestSchema = object({
+  type: number().required("Type is required"),
+  date: date().typeError("Invalid date").required("Date is required"),
+  startTime: date()
+    .typeError("Invalid date")
+    .required("Start time is required"),
+  endTime: date().typeError("Invalid date").required("End time is required"),
+});
+
+export const addCheckInRequestSchema = object({
+  type: number().required("Type is required"),
+  date: date().typeError("Invalid date").required("Date is required"),
+  startTime: date()
+    .typeError("Invalid date")
+    .required("Start time is required"),
+});
+
+export const addCheckOutRequestSchema = object({
+  type: number().required("Type is required"),
+  date: date().typeError("Invalid date").required("Date is required"),
+  endTime: date().typeError("Invalid date").required("End time is required"),
 });

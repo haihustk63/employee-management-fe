@@ -7,15 +7,13 @@ import { IAppDatePickerProps } from "./interface";
 const AppDatePicker: FC<IAppDatePickerProps> = ({
   allowClear = true,
   bordered = true,
-  onOpenChange,
-  open,
-  picker,
   onChange,
   onOk,
   placement = "bottomRight",
   showToday = true,
   value,
   pickerLabel,
+  ...props
 }) => {
   const handleOnChangeDatePicker = (date: any) => {
     onChange(date);
@@ -32,6 +30,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
         showToday={showToday}
         placement={placement}
         value={value}
+        {...props}
       />
     </div>
   );

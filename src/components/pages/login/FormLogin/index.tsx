@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Typography } from "antd";
 
 import AppForm from "@/components/AppForm";
 import FormFields from "./FormFields";
@@ -13,13 +14,16 @@ const FormLogin: FC<IFormLoginProps> = ({
   validationSchema,
 }) => {
   return (
-    <AppForm<typeof initialValue>
-      handleSubmitForm={onSubmit}
-      initialValues={initialValue}
-      validationSchema={validationSchema}
-    >
-      <FormFields actor={actor} />
-    </AppForm>
+    <div className="form-login">
+      <Typography.Title level={1}>Login</Typography.Title>
+      <AppForm<typeof initialValue>
+        handleSubmitForm={onSubmit}
+        initialValues={initialValue}
+        validationSchema={validationSchema}
+      >
+        <FormFields actor={actor} />
+      </AppForm>
+    </div>
   );
 };
 

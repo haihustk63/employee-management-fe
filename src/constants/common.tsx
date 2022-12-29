@@ -75,10 +75,9 @@ export const HEADER_CANDIDATE_ITEMS = (candidateId: number) => [
 
 // Translation
 const APP_PAGE_NAME_ROUTES = {
+  ACCOUNT: "/accounts",
+  APPLY_PROCESS: "/apply-process",
   CANDIDATE: "/candidates",
-  CANDIDATE_PROFILE: "/candidate/profiles",
-  CANDIDATE_ACCOUNT: "/candidate/accounts",
-  CREATE_TEST: "/tests/create",
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
@@ -96,8 +95,6 @@ const APP_PAGE_NAME_ROUTES = {
   JOB_LIST: "/jobs/list",
   JOB_UPDATE: "/jobs/update/:jobId",
   LOGIN: "/login",
-  LOGIN_CANDIDATE: "/login/candidate",
-  LOGIN_EMPLOYEE: "/login/employee",
   PERSONAL_INFO: "/personal-info",
   PERSONAL_INFO_DETAIL: "/personal-info/detail",
   PERSONAL_INFO_ACCOUNT: "/personal-info/account",
@@ -115,8 +112,8 @@ const APP_PAGE_NAME_ROUTES = {
   TEST_TOPIC_CREATE: "/test-topics/create",
   TEST_TOPIC_UPDATE: "/test-topics/update/:topicId",
   TEST_QUESTION: "/test-questions",
-  TEST_QUESTION_LIST: "/test-questions/list",
   TEST_QUESTION_CREATE: "/test-questions/create",
+  TEST_QUESTION_LIST: "/test-questions/list",
   TEST_QUESTION_UPDATE: "/test-questions/update/:questionId",
   TESTS: "/tests",
   TESTS_CREATE: "/tests/create",
@@ -174,21 +171,14 @@ export const SIDER_ITEMS = [
     icon: <GoldOutlined />,
   },
   {
+    key: APP_PAGE_NAME_ROUTES.ACCOUNT,
+    label: "Account",
+    icon: <TeamOutlined />,
+  },
+  {
     key: APP_PAGE_NAME_ROUTES.CANDIDATE,
     label: "Candidate",
     icon: <TeamOutlined />,
-    children: [
-      {
-        key: APP_PAGE_NAME_ROUTES.CANDIDATE_ACCOUNT,
-        label: "Account Management",
-        icon: <SmileOutlined />,
-      },
-      {
-        key: APP_PAGE_NAME_ROUTES.CANDIDATE_PROFILE,
-        label: "Profile Management",
-        icon: <SolutionOutlined />,
-      },
-    ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.EMPLOYEE,
@@ -339,6 +329,7 @@ export const WORKING_STATUS = [
 export const COMMON_TYPE_QUESTION = {
   ONE_CHOICE: "ONE_CHOICE",
   MULTIPLE_CHOICE: "MULTIPLE_CHOICE",
+  ESSAYS: "ESSAYS",
 };
 
 export const SKILL_TEST_INTRO_STEPS: Step[] = [

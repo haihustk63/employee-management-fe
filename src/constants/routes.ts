@@ -2,27 +2,24 @@ import { ROLES } from "./common";
 import Home from "@/pages/home";
 import CommonLayout from "@/components/Layouts/CommonLayout";
 import Login from "@/pages/login";
-import AuthLayout from "@/components/Layouts/AuthLayout";
 import PersonalInfo from "@/pages/personal-info";
 import PersonalInfoAccount from "@/pages/personal-info/account";
 import PersonalInfoDetail from "@/pages/personal-info/detail";
-import LoginCandidate from "@/pages/login/candidate";
-import LoginEmployee from "@/pages/login/employee";
+import LoginEmployee from "@/pages/login";
 import CandidateSkillTest from "@/pages/skill-test";
 import CandidateLayout from "@/components/Layouts/CandidateLayout";
 import AdminDashboard from "@/pages/dashboard";
-import EmployeeManagement from "@/pages/employee/profile";
+import EmployeeManagement from "@/pages/employee";
 import DeliveryManagement from "@/pages/delivery";
 import EducationManagement from "@/pages/education";
 import PropertyManagement from "@/pages/property";
 import RecruitmentNewsManagement from "@/pages/recruitment-news";
-import CandidateAccountManagement from "@/pages/candidate/account";
-import CandidateProfileManagement from "@/pages/candidate/profile";
+import CandidateProfileManagement from "@/pages/candidate";
 import CreateRequest from "@/pages/request/create-request";
-import RequestList from "@/pages/request";
+import RequestManagement from "@/pages/request";
 import PositionManagement from "@/pages/position";
-import CreateNewEmployee from "@/pages/employee/profile/create-new";
-import UpdateEmployee from "@/pages/employee/profile/update";
+import CreateNewEmployee from "@/pages/employee/create-new";
+import UpdateEmployee from "@/pages/employee/update";
 import CreateNewRecruitmentNews from "@/pages/recruitment-news/create-new";
 import UpdateRecruitmentNews from "@/pages/recruitment-news/update";
 import CreateNewEducationProgram from "@/pages/education/create-new";
@@ -39,12 +36,12 @@ import CreateJob from "@/pages/jobs/create";
 import UpdateJob from "@/pages/jobs/update";
 import JobManagement from "@/pages/jobs";
 import TestsManagement from "@/pages/tests";
+import AccountManagement from "@/pages/account";
 
 export const APP_PAGE_NAME_ROUTES = {
+  ACCOUNT: "/accounts",
   APPLY_PROCESS: "/apply-process",
   CANDIDATE: "/candidates",
-  CANDIDATE_PROFILE: "/candidate/profiles",
-  CANDIDATE_ACCOUNT: "/candidate/accounts",
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
@@ -62,8 +59,6 @@ export const APP_PAGE_NAME_ROUTES = {
   JOB_LIST: "/jobs/list",
   JOB_UPDATE: "/jobs/update/:jobId",
   LOGIN: "/login",
-  LOGIN_CANDIDATE: "/login/candidate",
-  LOGIN_EMPLOYEE: "/login/employee",
   PERSONAL_INFO: "/personal-info",
   PERSONAL_INFO_DETAIL: "/personal-info/detail",
   PERSONAL_INFO_ACCOUNT: "/personal-info/account",
@@ -101,9 +96,17 @@ export const DYNAMIC_APP_PAGE_ROUTES = {
   TEST_QUESTION_UPDATE: (questionId: any) =>
     `/test-questions/update/${questionId}`,
   JOB_UPDATE: (jobId: any) => `/jobs/update/${jobId}`,
+  TEST_UPDATE: (testId: any) => `/tests/update/${testId}`,
 };
 
 export const APP_ROUTES = [
+  {
+    name: APP_PAGE_NAME_ROUTES.ACCOUNT,
+    path: APP_PAGE_NAME_ROUTES.ACCOUNT,
+    element: AccountManagement,
+    layout: CommonLayout,
+    role: ROLES.CANDIDATE,
+  },
   {
     name: APP_PAGE_NAME_ROUTES.APPLY_PROCESS,
     path: APP_PAGE_NAME_ROUTES.APPLY_PROCESS,
@@ -122,19 +125,11 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.LOGIN,
     path: APP_PAGE_NAME_ROUTES.LOGIN,
     element: Login,
-    layout: AuthLayout,
   },
   {
-    name: APP_PAGE_NAME_ROUTES.LOGIN_CANDIDATE,
-    path: APP_PAGE_NAME_ROUTES.LOGIN_CANDIDATE,
-    element: LoginCandidate,
-    layout: AuthLayout,
-  },
-  {
-    name: APP_PAGE_NAME_ROUTES.LOGIN_EMPLOYEE,
-    path: APP_PAGE_NAME_ROUTES.LOGIN_EMPLOYEE,
+    name: APP_PAGE_NAME_ROUTES.LOGIN,
+    path: APP_PAGE_NAME_ROUTES.LOGIN,
     element: LoginEmployee,
-    layout: AuthLayout,
   },
   {
     name: APP_PAGE_NAME_ROUTES.PERSONAL_INFO,
@@ -167,7 +162,7 @@ export const APP_ROUTES = [
   {
     name: APP_PAGE_NAME_ROUTES.REQUEST_LIST,
     path: APP_PAGE_NAME_ROUTES.REQUEST_LIST,
-    element: RequestList,
+    element: RequestManagement,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },
@@ -188,20 +183,6 @@ export const APP_ROUTES = [
   {
     name: APP_PAGE_NAME_ROUTES.CANDIDATE,
     path: APP_PAGE_NAME_ROUTES.CANDIDATE,
-    element: CandidateProfileManagement,
-    layout: CommonLayout,
-    role: ROLES.EMPLOYEE,
-  },
-  {
-    name: APP_PAGE_NAME_ROUTES.CANDIDATE_ACCOUNT,
-    path: APP_PAGE_NAME_ROUTES.CANDIDATE_ACCOUNT,
-    element: CandidateAccountManagement,
-    layout: CommonLayout,
-    role: ROLES.EMPLOYEE,
-  },
-  {
-    name: APP_PAGE_NAME_ROUTES.CANDIDATE_PROFILE,
-    path: APP_PAGE_NAME_ROUTES.CANDIDATE_PROFILE,
     element: CandidateProfileManagement,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,

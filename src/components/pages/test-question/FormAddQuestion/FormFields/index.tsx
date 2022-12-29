@@ -1,15 +1,16 @@
 import { Form, useFormikContext } from "formik";
-import { FC, useContext, useEffect, useMemo } from "react";
+import { useContext, useMemo } from "react";
 
 import AppButton from "@/components/AppButton";
-import FormItem from "@/components/FormItem";
-import { FORM_ITEM_TYPES, MANAGER_EXAMPLE } from "@/constants/common";
 import AppCodeBlock from "@/components/AppCodeBlock";
+import FormItem from "@/components/FormItem";
+import { COMMON_TYPE_QUESTION, FORM_ITEM_TYPES } from "@/constants/common";
 import { useGetConstantTestQuestionValue } from "@/hooks/constant";
-import { addKeyToData, dataToOptions } from "@/utils";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
-import FormAddChoices from "../FormAddChoices";
+import { addKeyToData, dataToOptions } from "@/utils";
 import { FormAddQuestionContext } from "..";
+import FormAddChoices from "../FormAddChoices";
+import GroupButtonChooseType from "../GroupButtonChooseType";
 
 const { TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 
@@ -30,10 +31,10 @@ const FormFields = () => {
   const { data: testTopics = [] } = useGetAllTestTopics();
 
   const AddChoiceQuestionComponent = useMemo(() => {
-    if (!values.type || values.type === "ESSAYS") {
+    if (!values.type || values.type === COMMON_TYPE_QUESTION.ESSAYS) {
       return null;
     }
-    return <FormAddChoices questionType={values.type} />;
+    return <FormAddChoices />;
   }, [values.type]);
 
   const handleDeleteCodeBlock = (codeBlockId: string) => () => {
@@ -64,15 +65,20 @@ const FormFields = () => {
     setQuestionSource([]);
   };
 
+  const handleChangeType = (type: string) => () => {
+    setFieldValue("type", type);
+  };
+
   return (
     <Form onSubmit={handleSubmit} className="form">
       <FormItem
-        name="topic"
+        name="topicId"
         label="Topic"
-        value={values.topic}
+        value={values.topicId}
         type={SELECT}
         options={dataToOptions(testTopics)}
         placeholder="Select topic"
+        showSearch
       />
 
       <FormItem
@@ -85,17 +91,6 @@ const FormFields = () => {
       />
 
       <FormItem
-        name="type"
-        label="Type"
-        value={values.type}
-        type={SELECT}
-        options={addKeyToData(types)}
-        placeholder="Select type"
-      />
-
-      {AddChoiceQuestionComponent && AddChoiceQuestionComponent}
-
-      <FormItem
         name="questionText"
         label="Question"
         value={values.questionText}
@@ -103,6 +98,11 @@ const FormFields = () => {
         onChange={handleChange}
         placeholder="Enter question text"
       />
+
+      <GroupButtonChooseType handleChangeType={handleChangeType} />
+
+      {AddChoiceQuestionComponent && AddChoiceQuestionComponent}
+
       {questionSource?.map(({ id, source }: any) => {
         return (
           <AppCodeBlock

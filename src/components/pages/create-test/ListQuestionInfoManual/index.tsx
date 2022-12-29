@@ -12,10 +12,11 @@ import { useCreateTest } from "@/hooks/tests";
 const { Text } = Typography;
 
 const ListQuestionInfoManual: FC = () => {
-  const { questionInfoManual = [], setRandomTest } = useContext(
-    CreateTestContext
-  ) as any;
-  const { data: topics = [] } = useGetAllTestTopics();
+  const {
+    questionInfoManual = [],
+    setRandomTest,
+    testId,
+  } = useContext(CreateTestContext) as any;
   const { mutate: createTest, data, isSuccess } = useCreateTest() as any;
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const ListQuestionInfoManual: FC = () => {
         );
       })}
       <AppButton
-        buttonTitle="Create random test"
+        buttonTitle="Create test"
         onClick={handleCreateTest}
         disabled={!questionInfoManual?.length}
       />

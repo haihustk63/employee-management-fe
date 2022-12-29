@@ -31,11 +31,11 @@ export const useSubmitAnswer = (testId: number) => {
   });
 };
 
-export const useGetTest = (testId: number, enabled: boolean) => {
+export const useGetTest = (testId: number | string, enabled: boolean) => {
   return useFetch({
     url: API_ROUTES.TEST_ID(testId),
     config: {
-      enabled: typeof testId === "number" && enabled,
+      enabled,
       select: (data: any) => {
         return data.test;
       },
@@ -60,5 +60,12 @@ export const useGetAllTests = () => {
         return addKeyToData(data?.tests);
       },
     },
+  });
+};
+
+export const useUpdateTest = (testId: number | string) => {
+  return useAppMutation({
+    url: API_ROUTES.TEST_ID(testId),
+    method: "patch",
   });
 };

@@ -3,6 +3,9 @@ export interface IAppRadioGroup {
   value?: string;
   onChange?: any;
   onDeleteOption?: any;
+  nameInput?: string;
+  onChangeInput?: any;
+  isEditable?: boolean;
 }
 
 export interface IAppCheckboxGroup {
@@ -10,4 +13,7 @@ export interface IAppCheckboxGroup {
   value?: string[];
   onChange?: any;
   onDeleteOption?: any;
+  nameInput?: string;
+  onChangeInput?: any;
+  isEditable?: boolean;
 }

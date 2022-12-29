@@ -6,18 +6,19 @@ import FormFields from "./FormFields";
 import { IEmployeeFormProps } from "./interface";
 import { createEmployeeProfileSchema } from "@/schemas";
 import { useGetEmployeeById } from "@/hooks/employee";
+import dayjs from "dayjs";
 
 const initialValues: IEmployeeFormProps = {
   firstName: "",
   middleName: "",
   lastName: "",
   phoneNumber: "",
-  dateOfBirth: moment(Date.now()),
+  dateOfBirth: dayjs(Date.now()),
   positionId: undefined,
   deliveryId: undefined,
   workingStatus: "OFFICIAL",
   role: undefined,
-  joinDate: moment(Date.now()),
+  joinDate: dayjs(Date.now()),
   paidLeaveCount: 0,
 };
 

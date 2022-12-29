@@ -9,38 +9,23 @@ import {
   AppRadioGroup,
 } from "@/components/AppFormField";
 import { createUniqueId } from "@/helpers";
+import { COMMON_TYPE_QUESTION } from "@/constants/common";
 
 const { Text } = Typography;
 
-const FormAddChoices: FC<{
-  questionType: "ONE_CHOICE" | "MULTIPLE_CHOICE";
-}> = ({ questionType }) => {
+const FormAddChoices: FC = () => {
   const { setFieldValue, values } = useFormikContext() as any;
-  const [choice, setChoice] = useState("");
 
-  const Choices = useMemo(() => {
-    switch (questionType) {
-      case "ONE_CHOICE":
+  const ShowChoices = useMemo(() => {
+    switch (values.type) {
+      case COMMON_TYPE_QUESTION.MULTIPLE_CHOICE:
+        return AppCheckboxGroup;
+      case COMMON_TYPE_QUESTION.ONE_CHOICE:
         return AppRadioGroup;
-      case "MULTIPLE_CHOICE":
+      default:
         return AppCheckboxGroup;
     }
-  }, [questionType]);
-
-  const handleAddChoice = () => {
-    setFieldValue("options", [
-      ...values.options,
-      {
-        id: createUniqueId(),
-        choice,
-      },
-    ]);
-    setChoice("");
-  };
-
-  const handleChangeTextChoice = (e: any) => {
-    setChoice(e.target.value);
-  };
+  }, [values.type]);
 
   const handleChangeAnswer = (e: any) => {
     if (e.target) {
@@ -50,41 +35,45 @@ const FormAddChoices: FC<{
     }
   };
 
-  const handleDeleteChoice = (optionId: number) => () => {
-    const newOptions = values.options.filter(
+  const handleDeleteAnswer = (optionId: number) => () => {
+    const newOptions = values?.options?.filter(
       (option: any) => option.id !== optionId
     );
-
-    if (typeof values.answer === "object") {
-      const newAnswers = values.answer.filter(
-        (answer: any) => answer !== optionId
-      );
-      setFieldValue("answer", newAnswers);
-    }
-
     setFieldValue("options", newOptions);
   };
 
+  const handleChangeAnswerInput = (optionId: number) => (e: any) => {
+    const newOptions = [...values?.options];
+    let optionIndex = newOptions.findIndex(
+      (option: any) => option.id === optionId
+    );
+    if (optionIndex >= 0) {
+      newOptions[optionIndex].choice = e.target.value;
+      console.log(newOptions);
+      setFieldValue("options", newOptions);
+    }
+  };
+
+  const handleAddChoice = () => {
+    const newOption = {
+      id: createUniqueId(),
+      choice: "",
+    };
+    setFieldValue("options", [...values?.options, newOption]);
+  };
+
   return (
-    <div className="form-add-one-choice-question">
-      <AppInput
-        placeholder="Enter choice"
-        value={choice}
-        onChange={handleChangeTextChoice}
+    <div className="form-add-choice">
+      <ShowChoices
+        isEditable
+        nameInput="choice"
+        onChange={handleChangeAnswer}
+        options={values.options}
+        value={values.answer}
+        onChangeInput={handleChangeAnswerInput}
+        onDeleteOption={handleDeleteAnswer}
       />
-      <AppButton
-        buttonTitle="Add choice"
-        onClick={handleAddChoice}
-        disabled={!choice}
-      />
-      <div className="options">
-        <Choices
-          options={values.options}
-          onChange={handleChangeAnswer}
-          value={values.answer}
-          onDeleteOption={handleDeleteChoice}
-        />
-      </div>
+      <AppButton buttonTitle="Add choice" onClick={handleAddChoice} />
     </div>
   );
 };

@@ -6,11 +6,18 @@ import InputQuestionInfo from "@/components/pages/create-test/InputQuestionInfo"
 import ListQuestionInfo from "@/components/pages/create-test/ListQuestionInfo";
 import ShowTest from "@/components/pages/create-test/ShowTest";
 import { useGetCandidateProfile } from "@/hooks/candidate";
-import { useSaveTest } from "@/hooks/tests";
+import {
+  useSaveTest,
+  useGetTest,
+  useCreateTest,
+  useUpdateTest,
+} from "@/hooks/tests";
 import { dataToOptions } from "@/utils";
 import { Switch } from "antd";
-import { createContext, useEffect, useMemo, useState } from "react";
+import { createContext, FC, useEffect, useMemo, useState } from "react";
 import ListQuestionInfoManual from "@/components/pages/create-test/ListQuestionInfoManual";
+import { useParams } from "react-router-dom";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 
 export const CreateTestContext = createContext({}) as any;
 
@@ -22,15 +29,16 @@ export interface IQuestionInfo {
 }
 
 export interface IQuestionInfoManual {
-  quesionId: number;
+  questionId: number;
   questionText: string;
   topic: string;
   level: string;
   type: string;
 }
 
-const CreateTestPage = () => {
-  const [mode, setMode] = useState<"random" | "manual">("random");
+const CreateTestPage: FC = () => {
+  const { testId = "" } = useParams();
+  const [mode, setMode] = useState<"random" | "manual">("manual");
   const [questionInfo, setQuestionInfo] = useState<IQuestionInfo[]>([]);
   const [questionInfoManual, setQuestionInfoManual] = useState<
     IQuestionInfoManual[]
@@ -40,26 +48,39 @@ const CreateTestPage = () => {
 
   const { data: candidate = [] } = useGetCandidateProfile();
   const { mutate: onSaveTest, isError, isSuccess } = useSaveTest();
+  const { data: currentTest = [] } = useGetTest(testId as string, true);
+  const {
+    mutate: onUpdateTest,
+    isError: updateError,
+    isSuccess: updateSuccess,
+  } = useUpdateTest(testId);
 
   useEffect(() => {
-    if (isSuccess) {
-      appNotification({
-        message: "Congratulations!",
-        description: "A new test was saved",
-        type: "success",
-      });
+    if (currentTest?.length) {
+      const newQuestionManual = currentTest.map(
+        ({ question, questionId }: any) => ({
+          questionId: questionId,
+          questionText: question.questionText,
+          topic: question.topic.name,
+          level: question.level,
+          type: question.type,
+        })
+      );
+      setQuestionInfoManual(newQuestionManual);
     }
-  }, [isSuccess]);
+  }, [currentTest]);
 
-  useEffect(() => {
-    if (isError) {
-      appNotification({
-        message: "Opps!!!",
-        description: "Something went wrong, please try again",
-        type: "error",
-      });
-    }
-  }, [isError]);
+  useTriggerNoti({
+    isError,
+    isSuccess,
+    messageSuccess: "A new test was saved",
+  });
+
+  useTriggerNoti({
+    isError: updateError,
+    isSuccess: updateSuccess,
+    messageSuccess: "Update test successfully",
+  });
 
   const renderModeContent = useMemo(() => {
     if (mode === "random") {
@@ -118,8 +139,16 @@ const CreateTestPage = () => {
   };
 
   const handleSaveTest = () => {
-    const questionIds = randomTest.map((question: any) => question.id);
-    onSaveTest({ questionIds, candidateId: chooseCandidate });
+    let questionIds;
+    if (testId) {
+      questionIds = questionInfoManual.map(
+        (question: any) => question.questionId
+      );
+      onUpdateTest({ questionIds, testId: Number(testId) });
+    } else {
+      questionIds = randomTest.map((question: any) => question.id);
+      onSaveTest({ questionIds, candidateId: chooseCandidate });
+    }
   };
 
   const handleChangeSwitch = (checked: boolean) => {
@@ -139,6 +168,8 @@ const CreateTestPage = () => {
         setRandomTest,
         questionInfoManual,
         setQuestionInfoManual,
+        testId,
+        currentTest,
       }}
     >
       <div className="create-test-page">
@@ -154,7 +185,11 @@ const CreateTestPage = () => {
           placeholder="Assign to candidate"
           onChange={handleChangeSelect}
         />
-        <AppButton buttonTitle="Save test" onClick={handleSaveTest} />
+        <AppButton
+          buttonTitle="Save test"
+          onClick={handleSaveTest}
+          disabled={currentTest?.[0]?.test?.isSubmitted}
+        />
       </div>
     </CreateTestContext.Provider>
   );

@@ -16,7 +16,7 @@ export interface IFormAddQuestionProps {
   questionSource?: TypeQuestionSource[];
   type: string | undefined;
   level: string | undefined;
-  topic: string | undefined;
+  topicId?: string | number;
   options?: any[];
-  answer?: any[];
+  answer?: any[] | string;
 }

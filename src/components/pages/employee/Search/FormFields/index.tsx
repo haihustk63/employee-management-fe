@@ -7,7 +7,7 @@ import FormItem from "@/components/FormItem";
 import { FORM_ITEM_TYPES, MANAGER_EXAMPLE } from "@/constants/common";
 import { useGetAllDeliveries } from "@/hooks/delivery";
 import { dataToOptions } from "@/utils";
-import { EmployeeManagementContext } from "@/pages/employee/profile";
+import { EmployeeManagementContext } from "@/pages/employee";
 import { useNavigate } from "react-router-dom";
 
 const { TEXT, SELECT } = FORM_ITEM_TYPES;

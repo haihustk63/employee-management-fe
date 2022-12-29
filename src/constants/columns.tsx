@@ -5,15 +5,39 @@ import { Typography } from "antd";
 import AppButton from "@/components/AppButton";
 import AppTag from "@/components/AppTag";
 import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
-import { useDeleteCandidateAccount } from "@/hooks/candidate";
 import { ICandidateProfile } from "@/hooks/candidate/interface";
 import { FC } from "react";
 import { ASSESSMENT, JOB_LEVELS, JOB_TYPES, TEST_STATUS } from "./common";
 import JobListAction from "@/components/pages/job/JobListAction";
-import GroupButton from "@/components/pages/candidate/profile/ProfileTable/GroupButton";
-import { mergeName } from "@/utils";
+import GroupButton from "@/components/pages/candidate/ProfileTable/GroupButton";
+import { getDateFormat, mergeName } from "@/utils";
+import TestListAction from "@/components/pages/test/TestListAction";
+import ButtonDeleteAccount from "@/components/pages/account/ButtonDeleteAccount";
+import {
+  REQUEST_STATUS,
+  REQUEST_TYPES,
+  REQUEST_TYPES_OPTIONS,
+  WORKING_TIME,
+  LEAVING_TIME,
+  REQUEST_STATUS_OPTIONS,
+} from "./request";
+import ListRequestButtons from "@/components/pages/request/List/GroupButton";
 
 const { Text } = Typography;
+
+const {
+  ANNUAL_LEAVE,
+  MODIFY_CHECKIN,
+  MODIFY_CHECKOUT,
+  OVER_TIME,
+  REMOTE,
+  UNPAID_LEAVE,
+} = REQUEST_TYPES;
+
+const { AFTERNOON_END, AFTERNOON_START, MORNING_END, MORNING_START } =
+  WORKING_TIME;
+
+const { AFTERNOON, ALLDAY, MORNING } = LEAVING_TIME;
 
 const indexColumn = (currentPage: number) => ({
   key: "#",
@@ -109,35 +133,6 @@ export const candidateProfileTableColumns = (
       title: "Action",
       render: (_value: any, record: any) => {
         return <GroupButton record={record} />;
-      },
-    },
-  ];
-};
-
-const ButtonDeleteAccount: FC<{ username: string }> = ({ username }) => {
-  const { mutate } = useDeleteCandidateAccount(username) as any;
-  return <AppButton buttonTitle="Delete" onClick={mutate} />;
-};
-
-export const candidateAccountTableColumns = (currentPage: number, t?: any) => {
-  return [
-    indexColumn(currentPage),
-    {
-      key: "username",
-      title: "Username",
-      fixed: true,
-      dataIndex: ["username"],
-    },
-    {
-      key: "name",
-      title: "Name",
-      dataIndex: ["candidate", "name"],
-    },
-    {
-      key: "action",
-      title: "Action",
-      render: (_value: any, record: any) => {
-        return <ButtonDeleteAccount username={record?.username} />;
       },
     },
   ];
@@ -276,6 +271,33 @@ export const employeeListColumns = (
   ];
 };
 
+export const accountTableColumns = (currentPage: number, t?: any) => {
+  return [
+    indexColumn(currentPage),
+    {
+      key: "email",
+      title: "Email",
+      fixed: true,
+      dataIndex: ["email"],
+    },
+    {
+      key: "name",
+      title: "Name",
+      dataIndex: ["employee"],
+      render: (value: any) => {
+        return mergeName(value);
+      },
+    },
+    {
+      key: "action",
+      title: "Action",
+      render: (_value: any, record: any) => {
+        return <ButtonDeleteAccount email={record?.email} />;
+      },
+    },
+  ];
+};
+
 // test topics
 
 // test questions
@@ -333,11 +355,12 @@ export const testQuestionListColumns = ({
       dataIndex: "action",
       title: "Action",
       render: (_: any, record: any) => {
+        console.log(record);
         return (
           <AppButton
             buttonTitle="View Detail"
             htmlType="button"
-            onClick={onClickButtonViewDetail(record.questionId)}
+            onClick={onClickButtonViewDetail(record.id)}
           />
         );
       },
@@ -534,7 +557,133 @@ export const testsTableColumns = (
       key: "actions",
       title: "Actions",
       render: (_value: any, record: any) => {
-        return <JobListAction jobId={record.id} jobTitle={record.title} />;
+        return <TestListAction record={record} />;
+      },
+    },
+  ];
+};
+
+const splitDuration = (duration: string) => {
+  if (!duration)
+    return {
+      startTime: 0,
+      endTime: 0,
+    };
+  const [startTime, endTime] = duration.split("-");
+  return { startTime, endTime };
+};
+
+export const requestsTableColumns = (
+  currentPage: number,
+  t?: any
+): ColumnsType<ICandidateProfile> => {
+  return [
+    indexColumn(currentPage),
+    {
+      key: "employeeName",
+      title: "Employee Name",
+      dataIndex: ["employee"],
+      fixed: true,
+      width: "15%",
+      render: (value: any) => {
+        return mergeName(value);
+      },
+    },
+    {
+      key: "date",
+      title: "Date",
+      dataIndex: ["date"],
+      render: (value: any) => {
+        return getDateFormat(value);
+      },
+    },
+    {
+      key: "duration",
+      title: "Duration",
+      dataIndex: ["duration"],
+      render: (value: any, record: any) => {
+        const { startTime, endTime } = splitDuration(value);
+        let showContent;
+        const { type } = record;
+        switch (type) {
+          case MODIFY_CHECKIN: {
+            showContent = startTime;
+            break;
+          }
+
+          case MODIFY_CHECKOUT: {
+            showContent = endTime;
+            break;
+          }
+
+          case OVER_TIME: {
+            showContent = value;
+            break;
+          }
+
+          case UNPAID_LEAVE:
+          case ANNUAL_LEAVE:
+          case REMOTE:
+            if (startTime === MORNING_START && endTime === MORNING_END) {
+              showContent = MORNING;
+            } else if (
+              startTime === AFTERNOON_START &&
+              endTime === AFTERNOON_END
+            ) {
+              showContent = AFTERNOON;
+            } else {
+              showContent = ALLDAY;
+            }
+            break;
+          default:
+            showContent = "";
+        }
+        return <AppTag color="blue">{showContent}</AppTag>;
+      },
+    },
+    {
+      key: "type",
+      title: "Type",
+      dataIndex: ["type"],
+      render: (value: number) => {
+        return (
+          <AppTag color="warning">
+            {REQUEST_TYPES_OPTIONS[value - 1].label}
+          </AppTag>
+        );
+      },
+    },
+    {
+      key: "reason",
+      title: "Reason",
+      dataIndex: ["reason"],
+      width: "20%",
+    },
+    {
+      key: "status",
+      title: "Status",
+      dataIndex: ["status"],
+      render: (value: number) => {
+        const status = REQUEST_STATUS_OPTIONS[value];
+        return <AppTag color={status.color}>{status.label}</AppTag>;
+      },
+    },
+    {
+      key: "isCancelled",
+      title: "Cancel",
+      dataIndex: ["isCancelled"],
+      render: (value: number) => {
+        const tag = value
+          ? { label: "Cancelled", color: "green" }
+          : { label: "Not cancelled", color: "warning" };
+        return <AppTag color={tag.color}>{tag.label}</AppTag>;
+      },
+    },
+    {
+      key: "actions",
+      title: "Actions",
+      render: (_value: any, record: any) => {
+        return <ListRequestButtons record={record} />;
       },
     },
   ];

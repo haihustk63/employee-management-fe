@@ -14,19 +14,36 @@ import { addTestQuestionValidateSchema } from "@/schemas";
 import {
   useCreateTestQuestion,
   useGetOneTestQuestions,
+  useUpdateTestQuestion,
 } from "@/hooks/test-question";
 import { createUniqueId } from "@/helpers";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
-import appNotification from "@/components/AppNotification";
-import AppButton from "@/components/AppButton";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 
 const initialValues: IFormAddQuestionProps = {
   questionText: "",
   level: undefined,
   type: undefined,
-  topic: undefined,
-  options: [],
+  topicId: undefined,
+  options: [
+    {
+      id: createUniqueId(),
+      choice: "",
+    },
+    {
+      id: createUniqueId(),
+      choice: "",
+    },
+    {
+      id: createUniqueId(),
+      choice: "",
+    },
+    {
+      id: createUniqueId(),
+      choice: "",
+    },
+  ],
   answer: [],
 };
 
@@ -42,7 +59,8 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
   );
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
   const [currentSource, setCurrentSource] = useState("");
-  const [isDisplayCodeEditor, setIsDisplayCodeEditor] = useState(true);
+  const [isDisplayCodeEditor, setIsDisplayCodeEditor] = useState(false);
+  const [error, setError] = useState("");
 
   const { data = {} } = useGetOneTestQuestions(questionId) as any;
 
@@ -60,7 +78,7 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
         questionSource: sources,
       } = data;
 
-      formRef.current.setFieldValue("topic", topic);
+      formRef.current.setFieldValue("topicId", topic?.id);
       formRef.current.setFieldValue("level", level);
       formRef.current.setFieldValue("type", type);
       formRef.current.setFieldValue("options", options);
@@ -76,61 +94,69 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
     }
   }, [data]);
 
-  const { mutate, isSuccess, isError } = useCreateTestQuestion();
+  const { mutate: onCreate, isSuccess, isError } = useCreateTestQuestion();
+  const {
+    mutate: onUpdate,
+    isError: updateError,
+    isSuccess: updateSuccess,
+  } = useUpdateTestQuestion(questionId);
+
+  useTriggerNoti({
+    isError,
+    isSuccess,
+    messageSuccess: "Question created successfully",
+  });
+
+  useTriggerNoti({
+    isError: updateError,
+    isSuccess: updateSuccess,
+    messageSuccess: "Question updated successfully",
+  });
 
   const handleNavigateToQuestionList = () => {
     navigate(APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST);
   };
 
-  const renderNotificationDescription = (status: "success" | "error") => {
-    switch (status) {
-      case "success":
-        return (
-          <div>
-            <Text>New question is added!</Text>
-            <AppButton
-              buttonTitle="Show question list"
-              onClick={handleNavigateToQuestionList}
-            />
-          </div>
-        );
-      case "error":
-        return <Text>Something went wrong, please try again!</Text>;
-    }
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      appNotification({
-        message: "Success",
-        description: renderNotificationDescription("success"),
-        type: "success",
-      });
-    }
-  }, [isSuccess]);
-
-  useEffect(() => {
-    if (isError) {
-      appNotification({
-        message: "Error",
-        description: renderNotificationDescription("error"),
-        type: "error",
-      });
-    }
-  }, [isError]);
-
   const handleSubmitForm = (values: any) => {
-    const { answer: rawAnswer, type } = values;
+    const { answer: rawAnswer, type, options } = values;
+    if (type !== COMMON_TYPE_QUESTION.ESSAYS) {
+      if (!options?.length) {
+        setError("At least one choice");
+        return;
+      } else {
+        const emptyOption = options?.some((option: any) => !option.choice);
+        if (emptyOption) {
+          setError("Choice is empty");
+          return;
+        }
+      }
+    }
+
     let answer = rawAnswer;
+    if (typeof rawAnswer === "object" && !rawAnswer?.length) {
+      setError("At least one answer");
+      return;
+    }
     if (typeof rawAnswer === "string") {
+      if (!rawAnswer) {
+        setError("Please choose an answer");
+        return;
+      }
       answer = [rawAnswer];
     }
+
     const sendData: any = { ...values, answer, questionSource };
     if (type === "ESSAYS") {
       sendData.answer = "";
       sendData.options = "";
     }
-    mutate(sendData);
+
+    console.log(sendData)
+    if (questionId !== undefined) {
+      onUpdate(sendData);
+    } else {
+      onCreate(sendData);
+    }
   };
 
   const handleAddCodeBlock = (newBlock: TypeQuestionSourceBlock) => {
@@ -159,8 +185,9 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
         <Switch
           onChange={handleChangeSwitch}
           className="switch"
-          defaultChecked
+          defaultChecked={isDisplayCodeEditor}
         />
+
         <AppForm<IFormAddQuestionProps>
           title={questionId ? "Update Question" : "Add New Question"}
           initialValues={initialValues}
@@ -168,7 +195,10 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
           validationSchema={addTestQuestionValidateSchema}
           innerRef={formRef}
         >
-          <FormFields />
+          <>
+            <FormFields />
+            {!!error && <Text>{error}</Text>}
+          </>
         </AppForm>
         {isDisplayCodeEditor && (
           <AppCodeEditor

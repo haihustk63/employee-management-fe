@@ -18,8 +18,8 @@ const TestQuestionList: FC<ITableDataProps> = ({
   const [testQuestionTypesContants, testQuestionLevelsContants] =
     useGetConstantTestQuestion() as any;
 
-  const handleClickViewDetail = (recordId: number) => () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_UPDATE(recordId));
+  const handleClickViewDetail = (testId: number) => () => {
+    navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_UPDATE(testId));
   };
 
   const columns = useMemo(() => {

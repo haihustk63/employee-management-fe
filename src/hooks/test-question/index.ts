@@ -38,3 +38,11 @@ export const useCreateTestQuestion = () => {
     url: API_ROUTES.TEST_QUESTIONS,
   });
 };
+
+export const useUpdateTestQuestion = (testId: string | number) => {
+  return useAppMutation({
+    method: "patch",
+    url: API_ROUTES.TEST_QUESTIONS_ID(testId),
+    extraQueryKey: API_ROUTES.TEST_QUESTIONS,
+  });
+};

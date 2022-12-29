@@ -17,7 +17,7 @@ const dataToOptions = (data: any[] = []) => {
   return data.map((item: any) => ({
     key: item.key ?? item.id,
     value: item.value ?? item.id,
-    label: item.label ?? item.name,
+    label: item.label ?? item.name ?? mergeName(item),
   }));
 };
 
@@ -39,6 +39,10 @@ const getDateNow = () => {
   return format(new Date(), "dd/MM/yyyy");
 };
 
+const getDateFormat = (date: string) => {
+  return format(new Date(date), "dd/MM/yyyy");
+};
+
 const mergeName = (value: any) => {
   const { firstName = "", middleName = "", lastName = "" } = value || {};
   return lastName + " " + middleName + " " + firstName;
@@ -52,4 +56,5 @@ export {
   getTime,
   getDateNow,
   mergeName,
+  getDateFormat,
 };

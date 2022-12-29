@@ -1,10 +1,10 @@
-import { Moment } from "moment";
+import { Dayjs } from "dayjs";
 
 export interface IFormLeaveProps {
-  initialValues: {
-    leavingTime: string;
-    leavingType: string;
-    reason: string;
-    date?: Moment;
-  };
+  date: Dayjs;
+  reason?: string;
+  type: number | undefined;
+  leavingTime?: number;
+  startTime?: Dayjs | undefined;
+  endTime?: Dayjs | undefined;
 }
