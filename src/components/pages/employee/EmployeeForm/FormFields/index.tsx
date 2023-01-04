@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Form, useFormikContext } from "formik";
 
 import AppButton from "@/components/AppButton";
@@ -12,15 +12,26 @@ import {
   FORM_ITEM_TYPES,
   WORKING_STATUS,
 } from "@/constants/common";
+import { useParams } from "react-router-dom";
 
 const { TEXT, SELECT, INPUT_NUMBER } = FORM_ITEM_TYPES;
 
 const FormFields: FC = () => {
-  const { values, handleSubmit, handleChange, setFieldValue } =
+  const { values, handleSubmit, handleChange, setFieldValue, errors } =
     useFormikContext() as any;
+
+  const { employeeId } = useParams();
 
   const { data: positions = [] } = useGetAllPositions();
   const { data: deliveries = [] } = useGetAllDeliveries();
+
+  const buttonTitle = useMemo(() => {
+    if (employeeId !== undefined || employeeId !== null) {
+      return "Update";
+    } else {
+      return "Create";
+    }
+  }, [employeeId]);
 
   const handleDateOfBirthChange = (newDate: any) => {
     setFieldValue("dateOfBirth", newDate);
@@ -115,7 +126,7 @@ const FormFields: FC = () => {
         max={12}
         placeholder="Enter paid leave count"
       />
-      <AppButton buttonTitle="Add" htmlType="submit" />
+      <AppButton buttonTitle={buttonTitle} htmlType="submit" />
     </Form>
   );
 };

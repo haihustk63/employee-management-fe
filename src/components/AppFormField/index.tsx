@@ -1,4 +1,4 @@
-import { Checkbox, DatePicker, Input, Radio, Select } from "antd";
+import { Checkbox, Input, InputNumber, Radio, Select } from "antd";
 import { FC } from "react";
 import AppButton from "../AppButton";
 
@@ -19,6 +19,26 @@ const AppInput: FC<IFormItemProps> = ({
       onChange={onChange}
       placeholder={placeholder}
       allowClear={allowClear}
+    />
+  );
+};
+
+const AppInputNumber: FC<IFormItemProps> = ({
+  name,
+  value,
+  onChange,
+  placeholder,
+  min,
+  max
+}) => {
+  return (
+    <InputNumber
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      min={min}
+      max={max}
     />
   );
 };
@@ -146,6 +166,7 @@ const AppCheckboxGroup: FC<IAppCheckboxGroup> = ({
 
 export {
   AppInput,
+  AppInputNumber,
   AppInputTextArea,
   AppSelect,
   AppRadioGroup,

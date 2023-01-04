@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AppTable from "@/components/AppTable";
@@ -17,10 +17,14 @@ const EmployeeList: FC<ITableDataProps> = ({
     navigate(DYNAMIC_APP_PAGE_ROUTES.EMPLOYEE_UPDATE(id));
   };
 
+  const columns = useMemo(() => {
+    return employeeListColumns(handleClickButtonViewDetail, currentPage);
+  }, [currentPage]);
+
   return (
     <div className="employee-list">
       <AppTable
-        columns={employeeListColumns(handleClickButtonViewDetail, currentPage)}
+        columns={columns}
         dataSource={dataSource}
         tableName="List Employee"
         loading={loading}

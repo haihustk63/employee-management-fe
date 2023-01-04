@@ -3,28 +3,28 @@ import { FC, useContext } from "react";
 import AppForm from "@/components/AppForm";
 import { LEAVING_TIME, REQUEST_TYPES, WORKING_TIME } from "@/constants/request";
 import { dayjs } from "@/dayjs-config";
+import { useCreateRequest } from "@/hooks/request";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { currentUserAtom } from "@/modules/currentUser";
 import { CreateRequestContext } from "@/pages/request/create-request";
-import { addCommonRequestSchema } from "@/schemas";
 import { useRecoilValue } from "recoil";
 import FormFields from "./FormFields";
 import { IFormLeaveProps } from "./interface";
-import { useCreateRequest } from "@/hooks/request";
-import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 
 const {
-  ANNUAL_LEAVE,
   MODIFY_CHECKIN,
   MODIFY_CHECKOUT,
-  OVER_TIME,
-  REMOTE,
-  UNPAID_LEAVE,
+  OVERTIME,
+  // ANNUAL_LEAVE,
+  // ANNUAL_AFTERNOON_LEAVE,
+  // ANNUAL_MORNING_LEAVE,
+  // REMOTE,
+  // REMOTE_AFTERNOON,
+  // REMOTE_MORNING,
+  // UNPAID_LEAVE,
+  // UNPAID_AFTERNOON_LEAVE,
+  // UNPAID_MORNING_LEAVE,
 } = REQUEST_TYPES;
-
-const { MORNING, AFTERNOON, ALLDAY } = LEAVING_TIME;
-
-const { AFTERNOON_END, AFTERNOON_START, MORNING_END, MORNING_START } =
-  WORKING_TIME;
 
 const initialValues: IFormLeaveProps = {
   date: dayjs(Date.now()),
@@ -50,31 +50,21 @@ const FormLeave: FC = () => {
     const { type } = values;
 
     switch (type) {
-      case MODIFY_CHECKIN: {
+      case MODIFY_CHECKIN.value: {
         const { startTime } = values;
         return `${startTime?.format("HH:mm")}-X`;
       }
 
-      case MODIFY_CHECKOUT: {
+      case MODIFY_CHECKOUT.value: {
         const { endTime } = values;
         return `X-${endTime?.format("HH:mm")}`;
       }
 
-      case OVER_TIME: {
+      case OVERTIME.value: {
         const { startTime, endTime } = values;
         return `${startTime?.format("HH:mm")}-${endTime?.format("HH:mm")}`;
       }
-      case UNPAID_LEAVE:
-      case ANNUAL_LEAVE:
-      case REMOTE:
-        const { leavingTime } = values;
-        if (leavingTime === MORNING) {
-          return `${MORNING_START}-${MORNING_END}`;
-        } else if (leavingTime === AFTERNOON) {
-          return `${AFTERNOON_START}-${AFTERNOON_END}`;
-        } else {
-          return `${MORNING_START}-${AFTERNOON_END}`;
-        }
+
       default:
         return "";
     }

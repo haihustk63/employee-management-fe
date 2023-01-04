@@ -18,24 +18,24 @@ import { Step } from "intro.js-react";
 
 export const ROLES: { [key: string]: { [key: string]: string | number } } = {
   CANDIDATE: {
-    roleName: "CANDIDATE",
-    priority: 0,
+    label: "CANDIDATE",
+    value: 0,
   },
   EMPLOYEE: {
-    roleName: "EMPLOYEE",
-    priority: 1,
+    label: "EMPLOYEE",
+    value: 1,
   },
   DIVISION_MANAGER: {
-    roleName: "DIVISION_MANAGER",
-    priority: 2,
+    label: "DIVISION_MANAGER",
+    value: 2,
   },
   ADMIN: {
-    roleName: "ADMIN",
-    priority: 3,
+    label: "ADMIN",
+    value: 3,
   },
   SUPER_ADMIN: {
-    roleName: "SUPER_ADMIN",
-    priority: 4,
+    label: "SUPER_ADMIN",
+    value: 4,
   },
 };
 
@@ -119,6 +119,7 @@ const APP_PAGE_NAME_ROUTES = {
   TESTS_CREATE: "/tests/create",
   TESTS_LIST: "/tests/list",
   TESTS_UPDATE: "/tests/update/:testId",
+  TIMESHEET: "/timesheet",
 };
 export const SIDER_ITEMS = [
   {
@@ -129,6 +130,11 @@ export const SIDER_ITEMS = [
   {
     key: APP_PAGE_NAME_ROUTES.HOME,
     label: "Home",
+    icon: <HomeOutlined />,
+  },
+  {
+    key: APP_PAGE_NAME_ROUTES.TIMESHEET,
+    label: "Timesheet",
     icon: <HomeOutlined />,
   },
   {
@@ -297,31 +303,26 @@ export const MANAGER_EXAMPLE = [
 
 export const BASIC_ROLES = [
   {
-    key: 1,
-    value: 0,
+    value: 1,
     label: "Employee",
   },
   {
-    key: 2,
-    value: 1,
+    value: 2,
     label: "Division Manager",
   },
 ];
 
 export const WORKING_STATUS = [
   {
-    key: 1,
-    value: "OFFICIAL",
+    value: 1,
     label: "Official",
   },
   {
-    key: 2,
-    value: "PROBATIONARY",
+    value: 2,
     label: "Probationary",
   },
   {
-    key: 3,
-    value: "TEMPORARY_LAYOFFS",
+    value: 3,
     label: "Temporary Layoffs",
   },
 ];
@@ -462,3 +463,26 @@ export const TEST_STATUS = [
     color: "success",
   },
 ];
+
+export const OTHERS_CONSTANTS = {
+  INVALID_DATE: "Invalid Date",
+};
+
+export const APP_ROLES = {
+  EMPLOYEE: {
+    value: 1,
+    label: "Employee",
+  },
+  DIVISION_MANAGER: {
+    value: 2,
+    label: "Division Manager",
+  },
+  ADMIN: {
+    value: 3,
+    label: "Admin",
+  },
+  SUPER_ADMIN: {
+    value: 4,
+    label: "Super Admin",
+  },
+};

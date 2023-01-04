@@ -5,13 +5,24 @@ import FormItem from "@/components/FormItem";
 import { FORM_ITEM_TYPES } from "@/constants/common";
 import { useGetEmployees } from "@/hooks/employee";
 import { dataToOptions } from "@/utils";
+import { useContext, useMemo } from "react";
+import { AccountManagementContext } from "@/pages/account";
 
 const { TEXT, PASSWORD, SELECT } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
-  const { values, handleSubmit, handleChange, setFieldValue } =
+  const { values, handleSubmit, handleChange, resetForm } =
     useFormikContext() as any;
   const { data: employees = [] } = useGetEmployees();
+  const { updateEmail } = useContext(AccountManagementContext) as any;
+
+  const buttonTitle = useMemo(() => {
+    if (updateEmail) {
+      return "Update";
+    } else {
+      return "Create";
+    }
+  }, [updateEmail]);
 
   return (
     <Form onSubmit={handleSubmit} className="form">
@@ -22,15 +33,18 @@ const FormFields = () => {
         type={TEXT}
         onChange={handleChange}
         placeholder="Enter email"
+        disabled={!!updateEmail}
       />
-      <FormItem
-        name="password"
-        label="Password"
-        value={values.password}
-        type={PASSWORD}
-        onChange={handleChange}
-        placeholder="Your password"
-      />
+      {!updateEmail && (
+        <FormItem
+          name="password"
+          label="Password"
+          value={values.password}
+          type={PASSWORD}
+          onChange={handleChange}
+          placeholder="Your password"
+        />
+      )}
       <FormItem
         name="employeeId"
         label="Employee"
@@ -40,7 +54,7 @@ const FormFields = () => {
         placeholder="Choose a employee"
       />
 
-      <AppButton buttonTitle="Create" htmlType="submit" />
+      <AppButton buttonTitle={buttonTitle} htmlType="submit" />
     </Form>
   );
 };

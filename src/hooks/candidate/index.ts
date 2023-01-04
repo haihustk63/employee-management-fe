@@ -31,31 +31,3 @@ export const useDeleteCandidateProfile = (candidateId: string) => {
     extraQueryKey: API_ROUTES.CANDIDATE_PROFILE,
   });
 };
-
-//account
-export const useGetCandidateAccount = () => {
-  return useFetch({
-    url: API_ROUTES.CANDIDATE_ACCOUNT,
-    config: {
-      select: (data: any) => {
-        return addKeyToData(data?.allAccounts || []);
-      },
-    },
-  });
-};
-
-export const useCreateCandidateAccount = () => {
-  return useAppMutation({
-    url: API_ROUTES.CANDIDATE_ACCOUNT,
-    method: "post",
-  });
-};
-
-export const useDeleteCandidateAccount = (username?: string) => {
-  if (!username) return;
-  return useAppMutation({
-    url: API_ROUTES.CANDIDATE_ACCOUNT,
-    itemId: username,
-    method: "delete",
-  });
-};

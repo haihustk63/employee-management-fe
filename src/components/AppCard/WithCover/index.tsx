@@ -2,16 +2,13 @@ import React, { FC } from "react";
 import { Image, Typography } from "antd";
 
 import { IAppCardWithCoverProps } from "../interface";
-import { purityContent } from "@/utils";
-
-const { Text, Title } = Typography;
 
 const AppWithCoverCard: FC<IAppCardWithCoverProps> = ({
   title,
   borderColor,
   backgroundColor,
   hasBoxShadow,
-  excerpt,
+  children,
   imageUrl,
   horizontal,
   onClick,
@@ -26,20 +23,15 @@ const AppWithCoverCard: FC<IAppCardWithCoverProps> = ({
             ? `var(--bs-${backgroundColor}-rgb)`
             : "var(--bs-white)",
           boxShadow: hasBoxShadow ? "var(--common-box-shadow)" : "",
-          display: horizontal ? "flex" : undefined,
+          flexDirection: horizontal ? "row" : "column",
         } as React.CSSProperties
       }
       onClick={onClick}
     >
-      <Image src={imageUrl} alt="Card with coverz" />
+      <Image preview={false} src={imageUrl} alt="Card with coverz" />
       <div className="content">
-        <div
-          className="title"
-          dangerouslySetInnerHTML={{ __html: purityContent(title) || "" }}
-        />
-        <div
-          dangerouslySetInnerHTML={{ __html: purityContent(excerpt) || "" }}
-        />
+        <h2 className="title">{title}</h2>
+        {children}
       </div>
     </div>
   );

@@ -16,8 +16,8 @@ const initialValues: IEmployeeFormProps = {
   dateOfBirth: dayjs(Date.now()),
   positionId: undefined,
   deliveryId: undefined,
-  workingStatus: "OFFICIAL",
-  role: undefined,
+  workingStatus: 1,
+  role: 1,
   joinDate: dayjs(Date.now()),
   paidLeaveCount: 0,
 };
@@ -31,19 +31,21 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
 
   useEffect(() => {
     if (data) {
-      const {
+      let {
         firstName = "",
         middleName = "",
         lastName = "",
         phoneNumber = "",
-        dateOfBirth = moment(Date.now()),
+        dateOfBirth,
         positionId = undefined,
-        deliveryId = undefined,
         workingStatus = "OFFICIAL",
-        deliveryEmployee: { isManager = false },
-        joinDate = moment(Date.now()),
+        deliveryEmployee,
+        joinDate,
         paidLeaveCount = 0,
       } = data as any;
+
+      dateOfBirth = dayjs(dateOfBirth ?? Date.now());
+      joinDate = dayjs(joinDate ?? Date.now());
 
       console.log(dateOfBirth, joinDate);
 
@@ -51,13 +53,19 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
       formRef.current.setFieldValue("middleName", middleName);
       formRef.current.setFieldValue("lastName", lastName);
       formRef.current.setFieldValue("phoneNumber", phoneNumber);
-      formRef.current.setFieldValue("dateOfBirth", moment(dateOfBirth));
+      formRef.current.setFieldValue("dateOfBirth", dayjs(dateOfBirth));
       formRef.current.setFieldValue("positionId", positionId);
-      formRef.current.setFieldValue("deliveryId", deliveryId);
+      formRef.current.setFieldValue(
+        "deliveryId",
+        deliveryEmployee?.delivery?.id
+      );
       formRef.current.setFieldValue("workingStatus", workingStatus);
-      formRef.current.setFieldValue("joinDate", moment(joinDate));
+      formRef.current.setFieldValue("joinDate", dayjs(joinDate));
       formRef.current.setFieldValue("paidLeaveCount", paidLeaveCount);
-      formRef.current.setFieldValue("role", isManager ? 1 : 0);
+      formRef.current.setFieldValue(
+        "role",
+        deliveryEmployee?.isManager ? 2 : 1
+      );
     }
   }, [data]);
 

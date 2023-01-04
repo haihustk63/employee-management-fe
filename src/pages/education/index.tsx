@@ -1,60 +1,73 @@
-import { useNavigate } from "react-router-dom";
 import { Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import AppWithCoverCard from "@/components/AppCard/WithCover";
+import AppTag from "@/components/AppTag";
+import ButtonDeleteProgram from "@/components/pages/education/ButtonDeleteProgram";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
+import { useGetAllEducationPrograms } from "@/hooks/education";
+import { mergeName } from "@/utils";
+import ButtonJoinProgram from "@/components/pages/education/ButtonJoinProgram";
+import AppButton from "@/components/AppButton";
+import useModal from "@/hooks/useModal";
+import ListAttendancesModal from "@/components/pages/education/ListAttendancesModal";
+import { createContext, useState } from "react";
 
 const { Title } = Typography;
 
-const news = [
-  {
-    title: "<h1>Hello 1</h1>",
-    excerpt: "<p>fefnjdsfsehrefwfh9ew</p>",
-    id: 1,
-  },
-  {
-    title: "<h1>Hello 2</h1>",
-    excerpt: "<p>dfjweifjiewfiew</p>",
-    id: 2,
-  },
-  {
-    title: "<h1>Hello 3</h1>",
-    excerpt: "<p>fefnjdsfsehrefwfh9ew</p>",
-    id: 3,
-  },
-  {
-    title: "<h1>Hello 4</h1>",
-    excerpt: "<p>dfjweifjiewfiew</p>",
-    id: 4,
-  },
-];
+export const EducationProgramContext = createContext({});
 
 const EducationProgramManagement = () => {
   const navigate = useNavigate();
 
-  const handleClickCard = (id: number) => () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.RECRUITMENT_NEWS_UPDATE(id));
+  const { showModal, handleToggleModal } = useModal();
+  const [selectProgramId, setSelectProgramId] = useState();
+
+  const { data: programs = [] } = useGetAllEducationPrograms();
+
+  const handleClickCard = (programId: number) => () => {
+    navigate(DYNAMIC_APP_PAGE_ROUTES.EDUCATION_PROGRAM_UPDATE(programId));
+  };
+
+  const handleSetSelectProgramId = (programId: any) => (e: any) => {
+    e.stopPropagation();
+    setSelectProgramId(programId);
+    handleToggleModal();
   };
 
   return (
-    <div className="recruitment-news-management">
-      <Title level={3}>Education Program</Title>
-      <div className="list">
-        {news.map((item, key) => {
-          return (
-            <AppWithCoverCard
-              horizontal
-              key={key}
-              title={item.title}
-              excerpt={item.excerpt}
-              imageUrl="https://demos.themeselection.com/sneat-bootstrap-html-admin-template-free/assets/img/elements/18.jpg"
-              onClick={handleClickCard(item.id)}
-              hasBoxShadow
-            />
-          );
-        })}
+    <EducationProgramContext.Provider
+      value={{ showModal, selectProgramId, handleToggleModal }}
+    >
+      <div className="education-program-management">
+        <Title level={3}>Education Program</Title>
+        <div className="list">
+          {programs.map((item: any) => {
+            return (
+              <AppWithCoverCard
+                key={item.id}
+                title={item.title}
+                imageUrl="https://demos.themeselection.com/sneat-bootstrap-html-admin-template-free/assets/img/elements/18.jpg"
+                onClick={handleClickCard(item.id)}
+                hasBoxShadow
+              >
+                <AppTag color="success">
+                  {item.tutor ? mergeName(item.tutor) : "WIP "}
+                </AppTag>
+                <AppTag color="success">{item.averageRate}</AppTag>
+                <ButtonDeleteProgram programId={item.id} />
+                <ButtonJoinProgram programId={item.id} />
+                <AppButton
+                  buttonTitle="Show attendances"
+                  onClick={handleSetSelectProgramId(item.id)}
+                />
+              </AppWithCoverCard>
+            );
+          })}
+        </div>
+        <ListAttendancesModal />
       </div>
-    </div>
+    </EducationProgramContext.Provider>
   );
 };
 

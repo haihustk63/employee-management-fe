@@ -1,15 +1,15 @@
-import React, { FC, useContext, useEffect, useRef } from "react";
-import { Typography } from "antd";
-import AppModal from "@/components/AppModal";
 import AppForm from "@/components/AppForm";
-import FormFields from "./FormFields";
+import AppModal from "@/components/AppModal";
 import {
   useGetCandidateProfile,
   useUpdateCandidateProfile,
 } from "@/hooks/candidate";
-import moment from "moment";
-import { CandidateProfileContext } from "@/pages/candidate";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { CandidateProfileContext } from "@/pages/candidate";
+import { FC, useContext, useEffect, useRef } from "react";
+import FormFields from "./FormFields";
+
+import { dayjs } from "@/dayjs-config";
 
 const initialValues = {
   assessment: undefined,
@@ -48,7 +48,7 @@ const ModalUpdateCandidate: FC = () => {
         formRef.current?.setFieldValue("interviewerId", interviewerId);
         formRef.current?.setFieldValue(
           "appointmentTime",
-          appointmentTime ? moment(appointmentTime) : undefined
+          appointmentTime ? dayjs(appointmentTime) : undefined
         );
       }
     }

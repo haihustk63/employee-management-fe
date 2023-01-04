@@ -11,6 +11,7 @@ const RequestList: FC<ITableDataProps> = ({
   const columns = useMemo(() => {
     return requestsTableColumns(currentPage);
   }, [currentPage]);
+
   return (
     <AppTable dataSource={dataSource} loading={loading} columns={columns} />
   );

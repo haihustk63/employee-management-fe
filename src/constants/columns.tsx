@@ -1,43 +1,61 @@
+import { Space, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
-import moment from "moment";
-import { Typography } from "antd";
 
 import AppButton from "@/components/AppButton";
 import AppTag from "@/components/AppTag";
-import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
-import { ICandidateProfile } from "@/hooks/candidate/interface";
-import { FC } from "react";
-import { ASSESSMENT, JOB_LEVELS, JOB_TYPES, TEST_STATUS } from "./common";
-import JobListAction from "@/components/pages/job/JobListAction";
+import GroupButtonAccount from "@/components/pages/account/GroupButtonAccount";
 import GroupButton from "@/components/pages/candidate/ProfileTable/GroupButton";
-import { getDateFormat, mergeName } from "@/utils";
-import TestListAction from "@/components/pages/test/TestListAction";
-import ButtonDeleteAccount from "@/components/pages/account/ButtonDeleteAccount";
-import {
-  REQUEST_STATUS,
-  REQUEST_TYPES,
-  REQUEST_TYPES_OPTIONS,
-  WORKING_TIME,
-  LEAVING_TIME,
-  REQUEST_STATUS_OPTIONS,
-} from "./request";
+import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
+import JobListAction from "@/components/pages/job/JobListAction";
 import ListRequestButtons from "@/components/pages/request/List/GroupButton";
+import TestListAction from "@/components/pages/test/TestListAction";
+import { ICandidateProfile } from "@/hooks/candidate/interface";
+import {
+  getDateFormat,
+  getRequestStatus,
+  getRequestTypeValues,
+  getRoleLabel,
+  getTime,
+  getWorkingStatusLabel,
+  mergeName,
+} from "@/utils";
+import {
+  ASSESSMENT,
+  JOB_LEVELS,
+  JOB_TYPES,
+  OTHERS_CONSTANTS,
+  TEST_STATUS,
+} from "./common";
+import { REQUEST_TYPES, WORKING_TIME } from "./request";
+import { dayjs } from "@/dayjs-config";
 
 const { Text } = Typography;
 
 const {
   ANNUAL_LEAVE,
-  MODIFY_CHECKIN,
-  MODIFY_CHECKOUT,
-  OVER_TIME,
-  REMOTE,
   UNPAID_LEAVE,
+  ANNUAL_MORNING_LEAVE,
+  UNPAID_MORNING_LEAVE,
+  ANNUAL_AFTERNOON_LEAVE,
+  UNPAID_AFTERNOON_LEAVE,
 } = REQUEST_TYPES;
+
+const leavingMorning = getRequestTypeValues([
+  ANNUAL_LEAVE,
+  ANNUAL_MORNING_LEAVE,
+  UNPAID_MORNING_LEAVE,
+  UNPAID_LEAVE,
+]);
+
+const leavingAfternoon = getRequestTypeValues([
+  ANNUAL_LEAVE,
+  ANNUAL_AFTERNOON_LEAVE,
+  UNPAID_AFTERNOON_LEAVE,
+  UNPAID_LEAVE,
+]);
 
 const { AFTERNOON_END, AFTERNOON_START, MORNING_END, MORNING_START } =
   WORKING_TIME;
-
-const { AFTERNOON, ALLDAY, MORNING } = LEAVING_TIME;
 
 const indexColumn = (currentPage: number) => ({
   key: "#",
@@ -110,7 +128,7 @@ export const candidateProfileTableColumns = (
         if (!value) {
           return "No info";
         }
-        return moment(value).format("DD/MM/yyyy");
+        return dayjs(value).format("DD/MM/yyyy");
       },
     },
     {
@@ -217,7 +235,7 @@ export const employeeListColumns = (
       width: "10%",
       render: (value: any) => {
         if (value) {
-          return moment(value).format("DD/MM/YYYY");
+          return dayjs(value).format("DD/MM/YYYY");
         }
         return null;
       },
@@ -233,7 +251,7 @@ export const employeeListColumns = (
       title: "Join Date",
       render: (value: any) => {
         if (value) {
-          return moment(value).format("DD/MM/YYYY");
+          return dayjs(value).format("DD/MM/YYYY");
         }
         return null;
       },
@@ -242,11 +260,19 @@ export const employeeListColumns = (
       key: "role",
       dataIndex: ["role"],
       title: "Role",
+      render: (value: number) => {
+        const label = getRoleLabel(value);
+        return <AppTag color="blue">{label}</AppTag>;
+      },
     },
     {
       key: "workingStatus",
       dataIndex: ["workingStatus"],
       title: "Working Status",
+      render: (value: number) => {
+        const label = getWorkingStatusLabel(value);
+        return <AppTag color="blue">{label}</AppTag>;
+      },
     },
     {
       key: "delivery",
@@ -285,6 +311,9 @@ export const accountTableColumns = (currentPage: number, t?: any) => {
       title: "Name",
       dataIndex: ["employee"],
       render: (value: any) => {
+        if (!value) {
+          return <AppTag color="error">Not assigned yet</AppTag>;
+        }
         return mergeName(value);
       },
     },
@@ -292,7 +321,7 @@ export const accountTableColumns = (currentPage: number, t?: any) => {
       key: "action",
       title: "Action",
       render: (_value: any, record: any) => {
-        return <ButtonDeleteAccount email={record?.email} />;
+        return <GroupButtonAccount email={record?.email} />;
       },
     },
   ];
@@ -355,7 +384,6 @@ export const testQuestionListColumns = ({
       dataIndex: "action",
       title: "Action",
       render: (_: any, record: any) => {
-        console.log(record);
         return (
           <AppButton
             buttonTitle="View Detail"
@@ -601,57 +629,14 @@ export const requestsTableColumns = (
       key: "duration",
       title: "Duration",
       dataIndex: ["duration"],
-      render: (value: any, record: any) => {
-        const { startTime, endTime } = splitDuration(value);
-        let showContent;
-        const { type } = record;
-        switch (type) {
-          case MODIFY_CHECKIN: {
-            showContent = startTime;
-            break;
-          }
-
-          case MODIFY_CHECKOUT: {
-            showContent = endTime;
-            break;
-          }
-
-          case OVER_TIME: {
-            showContent = value;
-            break;
-          }
-
-          case UNPAID_LEAVE:
-          case ANNUAL_LEAVE:
-          case REMOTE:
-            if (startTime === MORNING_START && endTime === MORNING_END) {
-              showContent = MORNING;
-            } else if (
-              startTime === AFTERNOON_START &&
-              endTime === AFTERNOON_END
-            ) {
-              showContent = AFTERNOON;
-            } else {
-              showContent = ALLDAY;
-            }
-            break;
-          default:
-            showContent = "";
-        }
-        return <AppTag color="blue">{showContent}</AppTag>;
+      render: (value: string) => {
+        return <AppTag color="blue">{value}</AppTag>;
       },
     },
     {
       key: "type",
       title: "Type",
       dataIndex: ["type"],
-      render: (value: number) => {
-        return (
-          <AppTag color="warning">
-            {REQUEST_TYPES_OPTIONS[value - 1].label}
-          </AppTag>
-        );
-      },
     },
     {
       key: "reason",
@@ -664,8 +649,8 @@ export const requestsTableColumns = (
       title: "Status",
       dataIndex: ["status"],
       render: (value: number) => {
-        const status = REQUEST_STATUS_OPTIONS[value];
-        return <AppTag color={status.color}>{status.label}</AppTag>;
+        const status = getRequestStatus(value);
+        return <AppTag color={status?.color}>{status?.label}</AppTag>;
       },
     },
     {
@@ -688,3 +673,123 @@ export const requestsTableColumns = (
     },
   ];
 };
+
+export const checkInOutTableColumns = (
+  currentPage: number,
+  t?: any
+): ColumnsType<ICandidateProfile> => {
+  return [
+    indexColumn(currentPage),
+    {
+      key: "employeeName",
+      title: "Employee Name",
+      dataIndex: ["employee"],
+      fixed: true,
+      width: "15%",
+      render: (value: any) => {
+        return mergeName(value);
+      },
+    },
+    {
+      key: "checkIn",
+      title: "Check in",
+      dataIndex: ["checkin"],
+      render: (value: any) => {
+        if (value) {
+          return getTime(value);
+        }
+        return value;
+      },
+    },
+    {
+      key: "checkout",
+      title: "Check out",
+      dataIndex: ["checkout"],
+      render: (value: any) => {
+        if (value) {
+          return getTime(value);
+        }
+        return value;
+      },
+    },
+  ];
+};
+
+export const timesheetTableColumns = (
+  currentPage: number,
+  t?: any
+): ColumnsType<ICandidateProfile> => {
+  return [
+    {
+      key: "date",
+      title: "Date",
+      dataIndex: ["date"],
+      fixed: true,
+      width: "15%",
+      render: (value: string) => {
+        const [day, dayName] = value.split(" ");
+        return (
+          <Space direction="horizontal" size="small">
+            <AppTag color="green">{day}</AppTag>
+            <AppTag color="blue">{dayName}</AppTag>
+          </Space>
+        );
+      },
+    },
+    {
+      key: "checkIn",
+      title: "Check in",
+      dataIndex: ["checkin"],
+      render: (value: string, record: any) => {
+        const { requestType = "" } = record;
+        if (requestType) {
+          if (leavingMorning.includes(requestType)) {
+            return (
+              <Space>
+                <AppTag color="warning">Leaving</AppTag>
+                {!!value && <AppTag color="warning">{value}</AppTag>}
+              </Space>
+            );
+          }
+        }
+        return value;
+      },
+    },
+    {
+      key: "checkout",
+      title: "Check out",
+      dataIndex: ["checkout"],
+      render: (value: string, record: any) => {
+        const { requestType = "" } = record;
+        if (requestType) {
+          if (leavingAfternoon.includes(requestType)) {
+            return (
+              <Space>
+                <AppTag color="warning">Leaving</AppTag>
+                {!!value && <AppTag color="warning">{value}</AppTag>}
+              </Space>
+            );
+          }
+        }
+        return value;
+      },
+    },
+    {
+      key: "workingHour",
+      title: "Working Hour",
+      dataIndex: ["workingHour"],
+      render: (value: string) => {
+        if (value === OTHERS_CONSTANTS.INVALID_DATE) {
+          return null;
+        }
+        return value;
+      },
+    },
+    {
+      key: "note",
+      title: "Note",
+      dataIndex: ["note"],
+    },
+  ];
+};
+

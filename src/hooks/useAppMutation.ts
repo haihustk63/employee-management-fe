@@ -66,8 +66,12 @@ const useAppMutation = ({
 
     onSettled(data, _e, _v, context) {
       queryClient.invalidateQueries([url!, params]);
-      if (extraQueryKey) {
+      if (typeof extraQueryKey === "string") {
         queryClient.invalidateQueries(extraQueryKey);
+      } else if (typeof extraQueryKey === "object") {
+        extraQueryKey?.map((key) => {
+          queryClient.invalidateQueries(key);
+        });
       }
     },
   });

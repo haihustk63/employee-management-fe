@@ -1,6 +1,5 @@
 import { DatePicker } from "antd";
-import React, { FC } from "react";
-import { Moment } from "moment";
+import { FC } from "react";
 
 import { IAppDatePickerProps } from "./interface";
 

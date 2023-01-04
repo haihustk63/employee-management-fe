@@ -1,6 +1,14 @@
 import { format } from "date-fns";
 import purity from "dompurify";
 import { createUniqueId } from "./helpers";
+import { dayjs } from "./dayjs-config";
+import {
+  LEAVING_TIME,
+  REQUEST_STATUS,
+  REQUEST_TYPES,
+} from "./constants/request";
+import { APP_ROLES, WORKING_STATUS } from "./constants/common";
+
 const purityContent = (content?: string) => {
   if (!content) return "";
   return purity.sanitize(content);
@@ -48,6 +56,125 @@ const mergeName = (value: any) => {
   return lastName + " " + middleName + " " + firstName;
 };
 
+export const getDaysInMonth = () => {
+  return dayjs(Date.now()).daysInMonth();
+};
+
+export const getRowsTimesheet = (data: any = []) => {
+  const days = getDaysInMonth();
+  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
+
+  let rows: any[] = [];
+  for (let day in [...Array(days)]) {
+    const dateFormat = dayjs(
+      `${currentYear}-${currentMonth}-${Number(day) + 1}`
+    ).format("D dddd");
+    rows = [
+      ...rows,
+      {
+        date: dateFormat,
+        checkin: "",
+        checkout: "",
+        workingHour: "",
+        note: "",
+      },
+    ];
+  }
+
+  data.map((item: any) => {
+    const { day, ...rest } = item;
+    const indexRow = day - 1;
+    rows[indexRow] = {
+      ...rows[indexRow],
+      ...rest,
+    };
+  });
+
+  return rows;
+};
+
+const getRequestTypeValues = (requestTypes: any[]) => {
+  return requestTypes.map((type: any) => type.value);
+};
+
+const getRequestTypeLabel = (type: any) => {
+  return Object.values(REQUEST_TYPES).find(
+    (requestType: any) => requestType.value === type
+  )?.label;
+};
+
+const unknowedTime = "X";
+
+const getDuration = (request: any) => {
+  let time;
+  const duration = request.duration;
+  if (duration) {
+    const splittedDurations = duration.split("-");
+    time = splittedDurations.includes(unknowedTime)
+      ? getHalfTime(splittedDurations)
+      : duration;
+  } else {
+    const timeLeaving = Object.values(REQUEST_TYPES).find(
+      (requestType) => requestType.value === request.type
+    ) as any;
+    time = getTimeLeavingLabel(timeLeaving.timeLeaving);
+  }
+
+  return time;
+};
+
+const getHalfTime = (time: any[]) => {
+  const [timeValue] = time.filter((timeVal) => timeVal !== unknowedTime);
+  return timeValue;
+};
+
+const getTimeLeavingLabel = (timeLeaving: any) => {
+  return Object.values(LEAVING_TIME).find(
+    (leavingTime) => leavingTime.value === timeLeaving
+  )?.label;
+};
+
+const getRequestRows = (requests: any[]) => {
+  return requests.map((request) => {
+    const type = getRequestTypeLabel(request.type);
+    const duration = getDuration(request);
+
+    return { ...request, type, duration };
+  });
+};
+
+const createRequestOptions = () => {
+  return Object.values(REQUEST_TYPES).map((type: any) => {
+    let typeLabel = type.label;
+    const { timeLeaving = "" } = type;
+    if (timeLeaving) {
+      typeLabel += " " + getTimeLeavingLabel(timeLeaving)?.toLocaleLowerCase();
+    }
+    return {
+      ...type,
+      label: typeLabel,
+    };
+  });
+};
+
+const getRequestStatus = (status: any) => {
+  return Object.values(REQUEST_STATUS).find(
+    (requestStatus: any) => requestStatus.value === status
+  );
+};
+
+const getRoleLabel = (role: any) => {
+  return Object.values(APP_ROLES).find((roleObj) => roleObj.value === role)
+    ?.label;
+};
+
+const getWorkingStatusLabel = (status: any) => {
+  return Object.values(WORKING_STATUS).find(
+    (statusObj) => statusObj.value === status
+  )?.label;
+};
+
 export {
   purityContent,
   addKeyToData,
@@ -57,4 +184,11 @@ export {
   getDateNow,
   mergeName,
   getDateFormat,
+  getRequestRows,
+  getRequestTypeLabel,
+  createRequestOptions,
+  getRequestStatus,
+  getRequestTypeValues,
+  getRoleLabel,
+  getWorkingStatusLabel,
 };

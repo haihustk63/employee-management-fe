@@ -31,32 +31,39 @@ const ListRequestButtons: FC<{ record: any }> = ({ record }) => {
   };
 
   const handleClickAccept = () => {
-    onUpdate({ status: ACCEPTED });
+    onUpdate({ status: ACCEPTED.value });
   };
 
   const handleClickReject = () => {
-    onUpdate({ status: REJECTED });
+    onUpdate({ status: REJECTED.value });
   };
 
   const handleClickCancel = () => {
-    onUpdate({ isCancelled: true });
+    onUpdate({ isCancelled: !record.isCancelled, status: 1 });
   };
 
   return (
     <div className="job-group-btn">
       <AppButton buttonTitle="View Detail" onClick={null} />
       <AppButton buttonTitle="Delete" onClick={handleDeleteRequest} />
-      <AppButton buttonTitle="Cancel" onClick={handleClickCancel} />
+      <AppButton
+        buttonTitle={record.isCancelled ? "Uncancel" : "Cancel"}
+        onClick={handleClickCancel}
+      />
       {/* 2 buttons below is just admin's permission */}
       <AppButton
         buttonTitle="Accept"
         onClick={handleClickAccept}
-        disabled={record.status === REJECTED}
+        disabled={
+          record.status === REJECTED.value || record.status === ACCEPTED.value
+        }
       />
       <AppButton
         buttonTitle="Reject"
         onClick={handleClickReject}
-        disabled={record.status === ACCEPTED}
+        disabled={
+          record.status === ACCEPTED.value || record.status === REJECTED.value
+        }
       />
     </div>
   );

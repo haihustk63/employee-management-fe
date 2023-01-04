@@ -33,3 +33,10 @@ export const useCreateEmployeeProfile = () => {
     method: "post",
   });
 };
+
+export const useUpdateEmployeeProfile = (employeeId: number | string) => {
+  return useAppMutation({
+    url: API_ROUTES.EMPLOYEE_PROFILE_ID(employeeId),
+    method: "patch",
+  });
+};

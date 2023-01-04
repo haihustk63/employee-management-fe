@@ -37,6 +37,9 @@ import UpdateJob from "@/pages/jobs/update";
 import JobManagement from "@/pages/jobs";
 import TestsManagement from "@/pages/tests";
 import AccountManagement from "@/pages/account";
+import TimeSheet from "@/pages/timesheet";
+
+const { CANDIDATE, EMPLOYEE, DIVISION_MANAGER, ADMIN, SUPER_ADMIN } = ROLES;
 
 export const APP_PAGE_NAME_ROUTES = {
   ACCOUNT: "/accounts",
@@ -83,6 +86,7 @@ export const APP_PAGE_NAME_ROUTES = {
   TESTS_CREATE: "/tests/create",
   TESTS_LIST: "/tests/list",
   TESTS_UPDATE: "/tests/update/:testId",
+  TIMESHEET: "/timesheet",
 };
 
 export const DYNAMIC_APP_PAGE_ROUTES = {
@@ -387,6 +391,13 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.JOB,
     path: APP_PAGE_NAME_ROUTES.JOB,
     element: JobManagement,
+    layout: CommonLayout,
+    role: ROLES.EMPLOYEE,
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.TIMESHEET,
+    path: APP_PAGE_NAME_ROUTES.TIMESHEET,
+    element: TimeSheet,
     layout: CommonLayout,
     role: ROLES.EMPLOYEE,
   },

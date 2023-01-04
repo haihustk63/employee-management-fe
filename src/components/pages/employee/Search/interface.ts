@@ -1,4 +1,4 @@
-import { Moment } from "moment";
+import { Dayjs } from "dayjs";
 
 export interface ISearchEmployeeProps {
   //name, email, phone number
@@ -7,6 +7,6 @@ export interface ISearchEmployeeProps {
   delivery?: string;
   workingStatus?: string;
   role?: string;
-  joinDate?: Moment;
+  joinDate?: Dayjs;
   //location
 }

@@ -1,70 +1,94 @@
 import moment from "moment";
 
-export const REQUEST_TYPES = {
-  MODIFY_CHECKIN: 1,
-  MODIFY_CHECKOUT: 2,
-  UNPAID_LEAVE: 3,
-  ANNUAL_LEAVE: 4,
-  OVER_TIME: 5,
-  REMOTE: 6,
-};
+// export const REQUEST_TYPES = {
+//   MODIFY_CHECKIN: 1,
+//   MODIFY_CHECKOUT: 2,
+//   UNPAID_LEAVE: 3,
+//   ANNUAL_LEAVE: 4,
+//   OVER_TIME: 5,
+//   REMOTE: 6,
+// };
 
-export const REQUEST_TYPES_OPTIONS = [
-  {
-    key: 1,
-    value: REQUEST_TYPES.MODIFY_CHECKIN,
+export const REQUEST_TYPES = {
+  MODIFY_CHECKIN: {
+    value: 1,
     label: "Modify checkin",
   },
-  {
-    key: 2,
-    value: REQUEST_TYPES.MODIFY_CHECKOUT,
+  MODIFY_CHECKOUT: {
+    value: 2,
     label: "Modify checkout",
   },
-  {
-    key: 3,
-    value: REQUEST_TYPES.UNPAID_LEAVE,
+  UNPAID_LEAVE: {
+    value: 3,
     label: "Unpaid leave",
+    timeLeaving: 3,
   },
-  {
-    key: 4,
-    value: REQUEST_TYPES.ANNUAL_LEAVE,
+  UNPAID_MORNING_LEAVE: {
+    value: 4,
+    label: "Unpaid leave",
+    timeLeaving: 1,
+  },
+  UNPAID_AFTERNOON_LEAVE: {
+    value: 5,
+    label: "Unpaid leave",
+    timeLeaving: 2,
+  },
+  ANNUAL_LEAVE: {
+    value: 6,
     label: "Annual leave",
+    timeLeaving: 3,
   },
-  {
-    key: 5,
-    value: REQUEST_TYPES.OVER_TIME,
+  ANNUAL_MORNING_LEAVE: {
+    value: 7,
+    label: "Annual leave",
+    timeLeaving: 1,
+  },
+  ANNUAL_AFTERNOON_LEAVE: {
+    value: 8,
+    label: "Annual leave",
+    timeLeaving: 2,
+  },
+  OVERTIME: {
+    value: 9,
     label: "Overtime",
   },
-  {
-    key: 6,
-    value: REQUEST_TYPES.REMOTE,
-    label: "Working remote",
+  REMOTE: {
+    value: 10,
+    label: "Remote",
+    timeLeaving: 3,
   },
-];
-
-export const LEAVING_TIME = {
-  MORNING: "MORNING",
-  AFTERNOON: "AFTERNOON",
-  ALLDAY: "ALLDAY",
+  REMOTE_MORNING: {
+    value: 11,
+    label: "Remote morning",
+    timeLeaving: 1,
+  },
+  REMOTE_AFTERNOON: {
+    value: 12,
+    label: "Remote afternoon",
+    timeLeaving: 2,
+  },
 };
 
-export const LEAVING_TIME_OPTIONS = [
-  {
-    key: 1,
-    value: LEAVING_TIME.MORNING,
-    label: "Morning",
+// export const LEAVING_TIME = {
+//   MORNING: "MORNING",
+//   AFTERNOON: "AFTERNOON",
+//   ALLDAY: "ALLDAY",
+// };
+
+export const LEAVING_TIME = {
+  MORNING: {
+    value: 1,
+    label: "MORNING",
   },
-  {
-    key: 2,
-    value: LEAVING_TIME.AFTERNOON,
-    label: "Afternoon",
+  AFTERNOON: {
+    value: 2,
+    label: "AFTERNOON",
   },
-  {
-    key: 3,
-    value: LEAVING_TIME.ALLDAY,
-    label: "All day",
+  ALLDAY: {
+    value: 3,
+    label: "ALL DAY",
   },
-];
+};
 
 export enum REQUEST_STEP {
   CHOOSE_TYPE,
@@ -80,26 +104,17 @@ export const WORKING_TIME = {
 };
 
 export const REQUEST_STATUS = {
-  PENDING: 1,
-  ACCEPTED: 2,
-  REJECTED: 3,
-};
-
-export const REQUEST_STATUS_OPTIONS = {
-  [REQUEST_STATUS.PENDING]: {
-    key: 1,
+  PENDING: {
     value: 1,
     label: "Pending",
     color: "warning",
   },
-  [REQUEST_STATUS.ACCEPTED]: {
-    key: 2,
+  ACCEPTED: {
     value: 2,
     color: "green",
     label: "Accepted",
   },
-  [REQUEST_STATUS.REJECTED]: {
-    key: 3,
+  REJECTED: {
     value: 3,
     color: "error",
     label: "Rejected",

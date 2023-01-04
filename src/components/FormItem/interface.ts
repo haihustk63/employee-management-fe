@@ -6,7 +6,7 @@ export interface IFormItemProps {
   label?: string;
   mode?: "multiple" | "tags";
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   type?: string;
   suffix?: ReactNode;
   maxLength?: number;
@@ -26,8 +26,8 @@ export interface IFormItemProps {
   onPopupScroll?: any;
   onSelect?: any;
   ref?: any;
-  min?: number;
-  max?: number;
+  min?: any;
+  max?: any;
   formatter?: (
     value: number | string,
     info: { userTyping: boolean; input: string }

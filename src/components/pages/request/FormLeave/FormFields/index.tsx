@@ -3,33 +3,35 @@ import { Form, useFormikContext } from "formik";
 
 import AppButton from "@/components/AppButton";
 import FormItem from "@/components/FormItem";
-import {
-  LEAVING_TIME_OPTIONS,
-  REQUEST_TYPES_OPTIONS,
-} from "@/constants/request";
+import { LEAVING_TIME, REQUEST_TYPES } from "@/constants/request";
 import { FORM_ITEM_TYPES } from "@/constants/common";
 import AppDatePicker from "@/components/AppDatePicker";
-import { REQUEST_TYPES } from "@/constants/request";
 import { TimePicker } from "antd";
 import { CreateRequestContext } from "@/pages/request/create-request";
 import {
   addCheckInRequestSchema,
   addCheckOutRequestSchema,
   addCommonRequestSchema,
-  addLeaveAndRemoteRequestSchema,
   addOvertimeRequestSchema,
 } from "@/schemas";
 import AppFormErrorMessage from "@/components/AppFormErrorMessage";
+import { createRequestOptions } from "@/utils";
 
 const { TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 
 const {
-  ANNUAL_LEAVE,
   MODIFY_CHECKIN,
   MODIFY_CHECKOUT,
-  OVER_TIME,
-  REMOTE,
-  UNPAID_LEAVE,
+  OVERTIME,
+  // ANNUAL_LEAVE,
+  // ANNUAL_AFTERNOON_LEAVE,
+  // ANNUAL_MORNING_LEAVE,
+  // REMOTE,
+  // REMOTE_AFTERNOON,
+  // REMOTE_MORNING,
+  // UNPAID_LEAVE,
+  // UNPAID_AFTERNOON_LEAVE,
+  // UNPAID_MORNING_LEAVE,
 } = REQUEST_TYPES;
 
 const FormFields = () => {
@@ -41,22 +43,16 @@ const FormFields = () => {
   useEffect(() => {
     let newSchema;
     switch (values.type) {
-      case MODIFY_CHECKIN:
+      case MODIFY_CHECKIN.value:
         newSchema = addCheckInRequestSchema;
         break;
 
-      case MODIFY_CHECKOUT:
+      case MODIFY_CHECKOUT.value:
         newSchema = addCheckOutRequestSchema;
         break;
 
-      case OVER_TIME:
+      case OVERTIME.value:
         newSchema = addOvertimeRequestSchema;
-        break;
-
-      case UNPAID_LEAVE:
-      case ANNUAL_LEAVE:
-      case REMOTE:
-        newSchema = addLeaveAndRemoteRequestSchema;
         break;
 
       default:
@@ -74,7 +70,7 @@ const FormFields = () => {
 
   const TimeComponent = useMemo(() => {
     switch (values.type) {
-      case MODIFY_CHECKIN:
+      case MODIFY_CHECKIN.value:
         return (
           <TimePicker
             format="HH:mm"
@@ -84,7 +80,7 @@ const FormFields = () => {
           />
         );
 
-      case MODIFY_CHECKOUT:
+      case MODIFY_CHECKOUT.value:
         return (
           <TimePicker
             format="HH:mm"
@@ -94,7 +90,7 @@ const FormFields = () => {
           />
         );
 
-      case OVER_TIME:
+      case OVERTIME.value:
         return (
           <div>
             <TimePicker
@@ -111,19 +107,8 @@ const FormFields = () => {
             />
           </div>
         );
-      case UNPAID_LEAVE:
-      case ANNUAL_LEAVE:
-      case REMOTE:
-        return (
-          <FormItem
-            name="leavingTime"
-            label="Leaving Time"
-            value={values.leavingTime}
-            type={SELECT}
-            options={LEAVING_TIME_OPTIONS}
-            placeholder="Select request leave time"
-          />
-        );
+      default:
+        return null;
     }
   }, [values]);
 
@@ -138,7 +123,7 @@ const FormFields = () => {
         label="Request Type"
         value={values.type}
         type={SELECT}
-        options={REQUEST_TYPES_OPTIONS}
+        options={Object.values(createRequestOptions())}
         placeholder="Select request type"
       />
 

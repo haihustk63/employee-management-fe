@@ -2,7 +2,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export const API_ROUTES = {
   ACCOUNTS: `${API_URL}/accounts`,
-  ACCOUNT_EMAIL: (email: string) => `${API_URL}/accounts/${email}`,
   // positions
   POSITION: `${API_URL}/positions/`,
   POSITION_ID: (positionId: string | number) =>
@@ -20,7 +19,6 @@ export const API_ROUTES = {
 
   // employee
   EMPLOYEE_PROFILE: `${API_URL}/employees/profile`,
-
   EMPLOYEE_PROFILE_ID: (employeeId: string | number) =>
     `${API_URL}/employees/profile/${employeeId}`,
 
@@ -49,10 +47,18 @@ export const API_ROUTES = {
 
   // check-in-out
   CHECK_IN_OUT: `${API_URL}/check-in-out`,
+  CHECK_IN_OUT_LIST: `${API_URL}/check-in-out/list`,
+  CHECK_IN_OUT_TIMESHEET: `${API_URL}/check-in-out/timesheet`,
 
   // jobs
   JOBS: `${API_URL}/jobs`,
   JOB_ID: (jobId: string | number) => `${API_URL}/jobs/${jobId}`,
+
+  // education-programs
+  EDUCATION_PROGRAM: `${API_URL}/education-programs`,
+  EDUCATION_PROGRAM_JOIN: `${API_URL}/education-programs-join`,
+  EDUCATION_PROGRAM_ID: (programId: string | number) =>
+    `${API_URL}/education-programs/${programId}`,
 
   // requets
   REQUESTS: `${API_URL}/requests`,

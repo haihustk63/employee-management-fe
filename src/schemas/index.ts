@@ -26,10 +26,15 @@ export const createTestSchema = object({
 });
 
 export const createAccountSchema = object({
-  email: string().required("Username is required").email("Email is invalid"),
+  email: string().required("Email is required").email("Email is invalid"),
   password: string()
     .min(6, "Password contains at least 6 characters")
     .required("Password is required"),
+});
+
+export const updateAccountSchema = object({
+  email: string().required("Email is required").email("Email is invalid"),
+  employeeId: number().required("Employee is required"),
 });
 
 export const createEmployeeProfileSchema = object({
@@ -48,10 +53,8 @@ export const createEmployeeProfileSchema = object({
   dateOfBirth: date().required("Date of birth is required"),
   positionId: number().required("Position is required"),
   deliveryId: number().required("Delivery is required"),
-  workingStatus: string()
-    .oneOf(["OFFICIAL", "PROBATIONARY", "TEMPORARY_LAYOFFS"])
-    .required("Working status is required"),
-  role: number().required("Role is required").oneOf([0, 1]),
+  workingStatus: number().required("Working status is required"),
+  role: number().required("Role is required"),
   joinDate: date().required("Join date is required"),
   paidLeaveCount: number()
     .typeError("Leave count must be a number")
@@ -70,15 +73,14 @@ export const createJobSchema = object({
   positionId: number().required("Position is required"),
 });
 
+export const createEducationProgramSchema = object({
+  title: string().required("Title is required"),
+  content: string().required("Content is required"),
+});
+
 export const addCommonRequestSchema = object({
   type: number().required("Type is required"),
   date: date().typeError("Invalid date").required("Date is required"),
-});
-
-export const addLeaveAndRemoteRequestSchema = object({
-  type: number().required("Type is required"),
-  date: date().typeError("Invalid date").required("Date is required"),
-  leavingTime: string().required("Leaving time is required"),
 });
 
 export const addOvertimeRequestSchema = object({

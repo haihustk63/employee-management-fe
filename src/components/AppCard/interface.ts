@@ -19,7 +19,7 @@ export interface IAppCardPrimaryProps {
 export interface IAppCardWithCoverProps {
   imageUrl?: string;
   title?: string;
-  excerpt?: string;
+  children?: any;
   backgroundColor?: AppColor;
   borderColor?: AppColor;
   hasBoxShadow?: boolean;

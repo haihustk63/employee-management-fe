@@ -10,6 +10,7 @@ import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useCheckInOut, useGetCheckInOutInfo } from "@/hooks/check-in-out";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { getTime } from "@/utils";
+import appNotification from "@/components/AppNotification";
 
 const { Title, Text } = Typography;
 
@@ -54,9 +55,16 @@ const CheckInOut = () => {
   };
 
   const handleCheckOut = () => {
+    if (!checkedIn?.isChecked) {
+      appNotification({
+        message: "Failes",
+        description: "You must check in first",
+        type: "error",
+      });
+      return;
+    }
     onCheckOut({ type: 1 });
   };
-  console.log(checkedOut.time);
 
   return (
     <div className="home-check-in-out">

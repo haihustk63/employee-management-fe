@@ -21,18 +21,16 @@ export const useGetAccounts = () => {
   });
 };
 
-// export const useUpdateEmployeeAccount = (employeeId: string| number) => {
-//   return useAppMutation({
-//     url: API_ROUTES.EMPLOYEE_ACCOUNT_ID(employeeId),
-//     method: "patch",
-//     extraQueryKey: API_ROUTES.EMPLOYEE_ACCOUNTS
-//   });
-// };
-
-export const useDeleteAccount = (email: string) => {
+export const useUpdateAccount = () => {
   return useAppMutation({
-    url: API_ROUTES.ACCOUNT_EMAIL(email),
+    url: API_ROUTES.ACCOUNTS,
+    method: "patch",
+  });
+};
+
+export const useDeleteAccount = () => {
+  return useAppMutation({
+    url: API_ROUTES.ACCOUNTS,
     method: "delete",
-    extraQueryKey: API_ROUTES.ACCOUNTS,
   });
 };

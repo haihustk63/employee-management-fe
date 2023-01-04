@@ -7,8 +7,8 @@ export interface IEmployeeFormProps {
   dateOfBirth?: Dayjs;
   positionId?: number;
   deliveryId?: number;
-  role?: string;
+  role?: number;
   joinDate?: Dayjs;
   paidLeaveCount?: number;
-  workingStatus: "OFFICIAL" | "PROBATIONARY" | "TEMPORARY_LAYOFFS";
+  workingStatus: number;
 }

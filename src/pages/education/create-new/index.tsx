@@ -1,18 +1,26 @@
-import TextEditor from "@/components/AppTextEditor";
-import { useState } from "react";
-import purify from "dompurify";
+import FormEducationProgram from "@/components/pages/education/FormEducationProgram";
+import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
+import { useCreateEducationProgram } from "@/hooks/education";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { useNavigate } from "react-router-dom";
 
-/*
-const [content, setContent] = useState("");
-  const handleSetContent = (newContent: string) => () => {
-    setContent(newContent);
-  }; 
-  <div dangerouslySetInnerHTML={{ __html: purify.sanitize(content) }}></div>
-*/
 const CreateNewEducationProgram = () => {
+  const { mutate: onCreate, isSuccess, isError } = useCreateEducationProgram();
+
+  useTriggerNoti({
+    isSuccess,
+    isError,
+    messageSuccess: "New program was added",
+  });
+
+  const handleSubmit = (values: any) => {
+    onCreate(values);
+  };
+
   return (
     <div>
-      <TextEditor onClickSave={() => {}} />
+      <h1>Create Education Program</h1>
+      <FormEducationProgram onSubmit={handleSubmit} />
     </div>
   );
 };

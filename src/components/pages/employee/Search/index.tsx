@@ -1,4 +1,3 @@
-import moment from "moment";
 import { FC, useContext, useEffect, useRef } from "react";
 
 import AppForm from "@/components/AppForm";
@@ -6,11 +5,13 @@ import FormFields from "./FormFields";
 import { ISearchEmployeeProps } from "./interface";
 import { EmployeeManagementContext } from "@/pages/employee";
 
+import { dayjs } from "@/dayjs-config";
+
 const initialValues: ISearchEmployeeProps = {
   keyword: "",
   delivery: undefined,
   position: undefined,
-  joinDate: moment(Date.now()),
+  joinDate: dayjs(Date.now()),
   role: undefined,
   workingStatus: undefined,
 };

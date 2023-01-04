@@ -1,7 +1,6 @@
 import EmployeeForm from "@/components/pages/employee/EmployeeForm";
 import { useCreateEmployeeProfile } from "@/hooks/employee";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import React from "react";
 
 const CreateNewEmployee = () => {
   const {
@@ -19,7 +18,7 @@ const CreateNewEmployee = () => {
   const onSubmit = (values: any) => {
     const data = {
       ...values,
-      isManager: values.role === 0 ? false : true,
+      isManager: values.role === 1 ? false : true,
     };
 
     delete data.role;

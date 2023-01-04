@@ -15,9 +15,9 @@ export const useGetAllJobs = (params?: any) => {
   });
 };
 
-export const useGetJobById = (jobId?: string) => {
+export const useGetJobById = (jobId?: string | number) => {
   return useFetch({
-    url: `${API_ROUTES.JOBS}/${jobId}`,
+    url: API_ROUTES.JOB_ID(jobId as string),
   });
 };
 
