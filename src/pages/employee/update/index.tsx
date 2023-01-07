@@ -18,13 +18,7 @@ const UpdateEmployee = () => {
   });
 
   const handleUpdate = (values: any) => {
-    const data = {
-      ...values,
-      isManager: values.role === 1 ? false : true,
-    };
-
-    delete data.role;
-    onUpdate(data);
+    onUpdate(values);
   };
 
   return (

@@ -4,7 +4,11 @@ import { useContext, useMemo } from "react";
 import AppButton from "@/components/AppButton";
 import AppCodeBlock from "@/components/AppCodeBlock";
 import FormItem from "@/components/FormItem";
-import { COMMON_TYPE_QUESTION, FORM_ITEM_TYPES } from "@/constants/common";
+import {
+  COMMON_TYPE_QUESTION,
+  FORM_ITEM_TYPES,
+  QUESTION_LEVELS,
+} from "@/constants/common";
 import { useGetConstantTestQuestionValue } from "@/hooks/constant";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
 import { addKeyToData, dataToOptions } from "@/utils";
@@ -13,6 +17,8 @@ import FormAddChoices from "../FormAddChoices";
 import GroupButtonChooseType from "../GroupButtonChooseType";
 
 const { TEXTAREA, SELECT } = FORM_ITEM_TYPES;
+
+const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
 
 const FormFields = () => {
   const { values, handleSubmit, handleChange, setFieldValue, resetForm } =
@@ -25,13 +31,10 @@ const FormFields = () => {
     setCurrentSource,
   } = useContext(FormAddQuestionContext) as any;
 
-  const [{ data: types = [] }, { data: levels = [] }] =
-    useGetConstantTestQuestionValue() as any;
-
   const { data: testTopics = [] } = useGetAllTestTopics();
 
   const AddChoiceQuestionComponent = useMemo(() => {
-    if (!values.type || values.type === COMMON_TYPE_QUESTION.ESSAYS) {
+    if (!values.type || values.type === essays.value) {
       return null;
     }
     return <FormAddChoices />;
@@ -78,7 +81,6 @@ const FormFields = () => {
         type={SELECT}
         options={dataToOptions(testTopics)}
         placeholder="Select topic"
-        showSearch
       />
 
       <FormItem
@@ -86,7 +88,7 @@ const FormFields = () => {
         label="Level"
         value={values.level}
         type={SELECT}
-        options={addKeyToData(levels)}
+        options={addKeyToData(Object.values(QUESTION_LEVELS))}
         placeholder="Select level"
       />
 

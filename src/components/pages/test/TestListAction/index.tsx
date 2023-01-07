@@ -20,7 +20,6 @@ const TestListAction: FC<{ record: any }> = ({ record }) => {
   });
 
   const handleNavigateToUpdate = () => {
-    console.log(record);
     navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_UPDATE(record.id));
   };
 

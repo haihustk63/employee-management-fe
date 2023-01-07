@@ -19,7 +19,13 @@ const initialValueForm = {
 const LoginEmployee = () => {
   const navigate = useNavigate();
 
-  const { mutate: login, data, isError, isSuccess } = useLoginEmployee() as any;
+  const {
+    mutate: login,
+    data,
+    isError,
+    isSuccess,
+    error,
+  } = useLoginEmployee() as any;
 
   const setCurrentUser = useSetRecoilState(currentUserAtom);
 
@@ -41,6 +47,7 @@ const LoginEmployee = () => {
     isSuccess,
     callbackSuccess: afterSuccessLogin,
     messageSuccess: "You logged in successfully",
+    messageError: error?.response?.data,
   });
 
   const handleLogin = (values: any) => {

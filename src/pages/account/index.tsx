@@ -1,40 +1,27 @@
-import { createContext, useState } from "react";
 import AppButton from "@/components/AppButton";
 import appNotification from "@/components/AppNotification";
 import ModalCreateAccountForm from "@/components/pages/account/FormCreate";
 import ListAccount from "@/components/pages/account/List";
 import {
   useCreateAccount,
-  useGetAccounts,
-  useUpdateAccount,
+  useGetAccounts
 } from "@/hooks/account";
 import useModal from "@/hooks/useModal";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { createContext } from "react";
 
 export const AccountManagementContext = createContext({});
 
 const AccountManagement = () => {
   const { data: accounts = [], isLoading, isFetching } = useGetAccounts();
   const { mutate: onCreateAccount, isSuccess, isError } = useCreateAccount();
-  const {
-    mutate: onUpdate,
-    isSuccess: updateSuccess,
-    isError: updateError,
-  } = useUpdateAccount();
   const { handleToggleModal, showModal } = useModal();
-  const [updateEmail, setUpdateEmail] = useState("");
 
   useTriggerNoti({
     isSuccess,
     isError,
     messageSuccess: "An account has been created",
     messageError: "Please check if the account is already existed",
-  });
-
-  useTriggerNoti({
-    isSuccess: updateSuccess,
-    isError: updateError,
-    messageSuccess: "Update account successfully",
   });
 
   const onSubmitForm = (values: any) => {
@@ -52,21 +39,10 @@ const AccountManagement = () => {
       return;
     }
 
-    if (updateEmail) {
-      onUpdate({ email, employeeId });
-      handleSetEmail("");
-      handleToggleModal();
-    } else {
-      onCreateAccount(values);
-    }
-  };
-
-  const handleSetEmail = (email: string) => {
-    setUpdateEmail(email);
+    onCreateAccount(values);
   };
 
   const handleClickCreate = () => {
-    handleSetEmail("");
     handleToggleModal();
   };
 
@@ -74,8 +50,6 @@ const AccountManagement = () => {
     <AccountManagementContext.Provider
       value={{
         onSubmitForm,
-        updateEmail,
-        handleSetEmail,
         showModal,
         handleToggleModal,
         accounts,

@@ -1,15 +1,6 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-// axios.interceptors.response.use(
-//   function (response) {
-//     console.log(response.headers);
-//     return response;
-//   },
-//   function (error) {
-//     return Promise.reject(error);
-//   }
-// );
 
 export const api = {
   get<T>({ url, params }: any): Promise<T> {
@@ -24,8 +15,8 @@ export const api = {
     return axios.patch(url, { data });
   },
 
-  delete({ url }: any): Promise<any> {
-    return axios.delete(url);
+  delete({ url, data }: any): Promise<any> {
+    return axios.delete(url, { data: { data } });
   },
 };
 

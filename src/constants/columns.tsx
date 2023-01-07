@@ -12,6 +12,8 @@ import TestListAction from "@/components/pages/test/TestListAction";
 import { ICandidateProfile } from "@/hooks/candidate/interface";
 import {
   getDateFormat,
+  getQuestionLevel,
+  getQuestionType,
   getRequestStatus,
   getRequestTypeValues,
   getRoleLabel,
@@ -28,6 +30,7 @@ import {
 } from "./common";
 import { REQUEST_TYPES, WORKING_TIME } from "./request";
 import { dayjs } from "@/dayjs-config";
+import EmployeeGroupButton from "@/components/pages/employee/EmployeeList/GroupButton";
 
 const { Text } = Typography;
 
@@ -53,9 +56,6 @@ const leavingAfternoon = getRequestTypeValues([
   UNPAID_AFTERNOON_LEAVE,
   UNPAID_LEAVE,
 ]);
-
-const { AFTERNOON_END, AFTERNOON_START, MORNING_END, MORNING_START } =
-  WORKING_TIME;
 
 const indexColumn = (currentPage: number) => ({
   key: "#",
@@ -107,18 +107,6 @@ export const candidateProfileTableColumns = (
         }
         return mergeName(value);
       },
-      // render: (value) => {
-      //   if (!value) {
-      //     return (
-      //       <AppButton
-      //         buttonTitle="Assign Interviewer"
-      //         onClick={() => console.log("here")}
-      //       />
-      //     );
-      //   } else {
-      //     <Link to="/">{value}</Link>;
-      //   }
-      // },
     },
     {
       key: "appointmentTime",
@@ -204,11 +192,7 @@ export const deliveryListColumns = (
 };
 
 // employee profile
-export const employeeListColumns = (
-  onClickButtonViewDetail: (id: any) => void,
-  currentPage: number,
-  t?: any
-) => {
+export const employeeListColumns = ({ currentPage, t }: any) => {
   return [
     indexColumn(currentPage),
     {
@@ -222,6 +206,11 @@ export const employeeListColumns = (
         }
         return null;
       },
+    },
+    {
+      key: "email",
+      dataIndex: ["employeeAccount", "email"],
+      title: "Email",
     },
     {
       key: "phoneNumber",
@@ -285,13 +274,7 @@ export const employeeListColumns = (
       title: "Action",
       width: "20%",
       render: (_: any, record: any) => {
-        return (
-          <AppButton
-            buttonTitle="View Employees"
-            htmlType="button"
-            onClick={onClickButtonViewDetail(record.id)}
-          />
-        );
+        return <EmployeeGroupButton record={record} />;
       },
     },
   ];
@@ -333,8 +316,6 @@ export const accountTableColumns = (currentPage: number, t?: any) => {
 export const testQuestionListColumns = ({
   onClickButtonViewDetail,
   currentPage,
-  testQuestionLevelsContants,
-  testQuestionTypesContants,
   t,
 }: any) => {
   return [
@@ -351,13 +332,8 @@ export const testQuestionListColumns = ({
       dataIndex: ["type"],
       title: "Type",
       render: (value: any) => {
-        if (testQuestionTypesContants) {
-          return (
-            <AppTag color={testQuestionTypesContants[value].color}>
-              {testQuestionTypesContants[value].label}
-            </AppTag>
-          );
-        }
+        const typeObj = getQuestionType(value);
+        return <AppTag color={typeObj?.color}>{typeObj?.label}</AppTag>;
       },
     },
     {
@@ -365,13 +341,8 @@ export const testQuestionListColumns = ({
       dataIndex: ["level"],
       title: "Level",
       render: (value: any) => {
-        if (testQuestionLevelsContants) {
-          return (
-            <AppTag color={testQuestionLevelsContants[value].color}>
-              {testQuestionLevelsContants[value].label}
-            </AppTag>
-          );
-        }
+        const levelObj = getQuestionLevel(value);
+        return <AppTag color={levelObj?.color}>{levelObj?.label}</AppTag>;
       },
     },
     {
@@ -792,4 +763,3 @@ export const timesheetTableColumns = (
     },
   ];
 };
-

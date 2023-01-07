@@ -1,26 +1,26 @@
-import { useFormikContext } from "formik";
-import { FC, useMemo, useState } from "react";
 import { Typography } from "antd";
+import { useFormikContext } from "formik";
+import { FC, useMemo } from "react";
 
 import AppButton from "@/components/AppButton";
 import {
-  AppCheckboxGroup,
-  AppInput,
-  AppRadioGroup,
+  AppCheckboxGroup, AppRadioGroup
 } from "@/components/AppFormField";
-import { createUniqueId } from "@/helpers";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
+import { createUniqueId } from "@/helpers";
 
 const { Text } = Typography;
+
+const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
 
 const FormAddChoices: FC = () => {
   const { setFieldValue, values } = useFormikContext() as any;
 
   const ShowChoices = useMemo(() => {
     switch (values.type) {
-      case COMMON_TYPE_QUESTION.MULTIPLE_CHOICE:
+      case multipleChoice.value:
         return AppCheckboxGroup;
-      case COMMON_TYPE_QUESTION.ONE_CHOICE:
+      case oneChoice.value:
         return AppRadioGroup;
       default:
         return AppCheckboxGroup;
@@ -49,7 +49,6 @@ const FormAddChoices: FC = () => {
     );
     if (optionIndex >= 0) {
       newOptions[optionIndex].choice = e.target.value;
-      console.log(newOptions);
       setFieldValue("options", newOptions);
     }
   };

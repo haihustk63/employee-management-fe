@@ -1,14 +1,13 @@
-import { FC, useContext } from "react";
 import AppButton from "@/components/AppButton";
 import { useDeleteAccount } from "@/hooks/account";
-import { AccountManagementContext } from "@/pages/account";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { FC } from "react";
 
 const GroupButtonAccount: FC<{ email: string }> = ({ email }) => {
   const { mutate, isError, isSuccess } = useDeleteAccount();
-  const { handleSetEmail, handleToggleModal } = useContext(
-    AccountManagementContext
-  ) as any;
+  // const { handleSetEmail, handleToggleModal } = useContext(
+  //   AccountManagementContext
+  // ) as any;
 
   useTriggerNoti({
     isError,
@@ -16,10 +15,10 @@ const GroupButtonAccount: FC<{ email: string }> = ({ email }) => {
     messageSuccess: "Delete account successfully",
   });
 
-  const handleClickAssign = () => {
-    handleSetEmail(email);
-    handleToggleModal();
-  };
+  // const handleClickAssign = () => {
+  //   handleSetEmail(email);
+  //   handleToggleModal();
+  // };
 
   const handleClickDelete = () => {
     mutate({ email });
@@ -27,7 +26,7 @@ const GroupButtonAccount: FC<{ email: string }> = ({ email }) => {
 
   return (
     <div>
-      <AppButton buttonTitle="Assign" onClick={handleClickAssign} />
+      {/* <AppButton buttonTitle="Assign" onClick={handleClickAssign} /> */}
       <AppButton buttonTitle="Delete" onClick={handleClickDelete} />
     </div>
   );

@@ -30,12 +30,15 @@ export const API_ROUTES = {
 
   // test-topics
   TEST_TOPICS: `${API_URL}/test-topics`,
+  TEST_TOPIC_ID: (topicId: string | number) =>
+    `${API_URL}/test-topics/${topicId}`,
 
   // constant test-questions
   CONSTANT_TEST_QUESTIONS: `${API_URL}/constants/test-questions`,
 
   // login
   LOGIN_EMPLOYEE: `${API_URL}/login`,
+  LOGOUT_EMPLOYEE: `${API_URL}/logout`,
 
   // tests
   CREATE_TEST_RANDOM: `${API_URL}/tests/create/random`,

@@ -1,43 +1,43 @@
-import { Typography } from "antd";
-import { useNavigate } from "react-router-dom";
-
-import AppPrimaryCard from "@/components/AppCard/Primary";
+import AddNewTopicModal from "@/components/pages/test-topic/AddNewTopic";
+import TopicList from "@/components/pages/test-topic/TopicList";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
-import AppButton from "@/components/AppButton";
-import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
+import useModal from "@/hooks/useModal";
+import { createContext, useState } from "react";
 
-const { Text, Title } = Typography;
+export const TopicManagementContext = createContext({}) as any;
 
-const TestTopicManagement = () => {
-  const { data, isLoading, isFetching } = useGetAllTestTopics();
+const TopicManagement = () => {
+  const { data = [], isFetching, isLoading } = useGetAllTestTopics();
+  const { showModal, handleToggleModal: onToggleModal } = useModal();
+  const [topicUpdateId, setTopicUpdateId] = useState<string | number>();
 
-  const navigate = useNavigate();
+  const handleSetTopicUpdateId = (topicId: string | number) => {
+    setTopicUpdateId(topicId);
+  };
 
-  const handleClickTopicCard = (topicId: any) => () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_BY_TOPIC(topicId));
+  const handleToggleModal = () => {
+    if (showModal) {
+      setTopicUpdateId(undefined);
+    }
+    onToggleModal();
   };
 
   return (
-    <div className="list-test-topic">
-      <div className="title">
-        <Title level={3}>Test Topics</Title>
-        <AppButton buttonTitle="Add topic" size="small" />
+    <TopicManagementContext.Provider
+      value={{
+        data,
+        showModal,
+        topicUpdateId,
+        handleToggleModal,
+        handleSetTopicUpdateId,
+      }}
+    >
+      <div className="Topic-management">
+        <AddNewTopicModal />
+        <TopicList />
       </div>
-      <div className="list">
-        {data?.map((testTopic: any, index) => {
-          return (
-            <AppPrimaryCard key={index} title={testTopic.name}>
-              <Text>{testTopic.description}</Text>
-              <AppButton
-                buttonTitle="View Questions List"
-                onClick={handleClickTopicCard(testTopic.id)}
-              />
-            </AppPrimaryCard>
-          );
-        })}
-      </div>
-    </div>
+    </TopicManagementContext.Provider>
   );
 };
 
-export default TestTopicManagement;
+export default TopicManagement;

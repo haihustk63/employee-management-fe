@@ -29,7 +29,7 @@ const AppInputNumber: FC<IFormItemProps> = ({
   onChange,
   placeholder,
   min,
-  max
+  max,
 }) => {
   return (
     <InputNumber
@@ -69,7 +69,7 @@ const AppSelect: FC<IFormItemProps> = ({
   placeholder,
   options,
   allowClear,
-  showSearch,
+  showSearch = true,
 }) => {
   const filterOption = (input: string, option: any) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());

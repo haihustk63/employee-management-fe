@@ -8,6 +8,7 @@ export interface IEmployeeFormProps {
   positionId?: number;
   deliveryId?: number;
   role?: number;
+  email?: string;
   joinDate?: Dayjs;
   paidLeaveCount?: number;
   workingStatus: number;

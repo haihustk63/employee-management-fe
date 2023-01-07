@@ -16,13 +16,7 @@ const CreateNewEmployee = () => {
   });
 
   const onSubmit = (values: any) => {
-    const data = {
-      ...values,
-      isManager: values.role === 1 ? false : true,
-    };
-
-    delete data.role;
-    onCreateProfile(data);
+    onCreateProfile(values);
   };
 
   return (

@@ -7,6 +7,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import { APP_ROUTES } from "./constants/routes";
+import { Spin } from "antd";
 
 const createRouter = (routes: any): { path: string; element: ReactNode }[] => {
   const createRoute = (route: any) => {
@@ -45,7 +46,7 @@ function App() {
       onError={(error) => console.log(error)}
     >
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <RouterProvider router={router} fallbackElement={<Spin />} />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ErrorBoundary>

@@ -2,23 +2,17 @@ import { FC, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AppTable from "@/components/AppTable";
-import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 import { employeeListColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
+import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 
 const EmployeeList: FC<ITableDataProps> = ({
   dataSource,
   loading,
   currentPage = 0,
 }) => {
-  const navigate = useNavigate();
-
-  const handleClickButtonViewDetail = (id: any) => () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.EMPLOYEE_UPDATE(id));
-  };
-
   const columns = useMemo(() => {
-    return employeeListColumns(handleClickButtonViewDetail, currentPage);
+    return employeeListColumns({ currentPage });
   }, [currentPage]);
 
   return (

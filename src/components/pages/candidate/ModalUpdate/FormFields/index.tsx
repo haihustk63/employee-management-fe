@@ -32,7 +32,6 @@ const FormFields = () => {
         value={values.interviewerId}
         type={SELECT}
         options={employeeOption}
-        showSearch
         placeholder="Choose interviewer"
       />
       <FormItem

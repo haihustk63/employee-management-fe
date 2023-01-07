@@ -41,7 +41,7 @@ const SelectField = ({ field, form, ...props }: IFieldProps) => {
     form.setFieldValue(field.name, value);
   };
 
-  const { onChange: handleChangeProp } = props as any;
+  const { onChange: handleChangeProp, showSearch } = props as any;
 
   const filterOption = (input: string, option: any) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
@@ -53,6 +53,7 @@ const SelectField = ({ field, form, ...props }: IFieldProps) => {
       allowClear
       onChange={handleChangeProp || handleChange}
       filterOption={filterOption}
+      showSearch={showSearch ?? true}
       optionFilterProp="label"
       className="select"
     />

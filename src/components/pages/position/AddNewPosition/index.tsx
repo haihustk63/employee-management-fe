@@ -18,7 +18,7 @@ const initialValues: IAddNewPositionProps = {
 };
 
 const AddNewPositionModal: FC = () => {
-  const { showModal, handleToggleModal, positionUpdateId } = useContext(
+  const { showModal, handleToggleModal, positionUpdateId, data } = useContext(
     PositionManagementContext
   ) as any;
 
@@ -28,7 +28,6 @@ const AddNewPositionModal: FC = () => {
     isError: updateErorr,
     isSuccess: updateSuccess,
   } = useUpdatePosition(positionUpdateId);
-  const { data: positions = [] } = useGetAllPositions();
 
   const formRef = useRef(null) as any;
 
@@ -46,7 +45,7 @@ const AddNewPositionModal: FC = () => {
 
   useEffect(() => {
     if (positionUpdateId !== undefined) {
-      const position: any = positions?.find(
+      const position: any = data?.find(
         (position: any) => position.id === positionUpdateId
       );
       if (position) {
@@ -56,7 +55,7 @@ const AddNewPositionModal: FC = () => {
     } else {
       formRef.current?.resetForm();
     }
-  }, [positionUpdateId]);
+  }, [positionUpdateId, data]);
 
   const appFormTitle = useMemo(() => {
     if (positionUpdateId !== undefined) {

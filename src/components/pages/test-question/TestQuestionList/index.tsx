@@ -5,7 +5,6 @@ import AppTable from "@/components/AppTable";
 import { testQuestionListColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
-import { useGetConstantTestQuestion } from "@/hooks/constant";
 
 const TestQuestionList: FC<ITableDataProps> = ({
   dataSource,
@@ -15,9 +14,6 @@ const TestQuestionList: FC<ITableDataProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const [testQuestionTypesContants, testQuestionLevelsContants] =
-    useGetConstantTestQuestion() as any;
-
   const handleClickViewDetail = (testId: number) => () => {
     navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_UPDATE(testId));
   };
@@ -25,11 +21,9 @@ const TestQuestionList: FC<ITableDataProps> = ({
   const columns = useMemo(() => {
     return testQuestionListColumns({
       onClickButtonViewDetail: handleClickViewDetail,
-      testQuestionLevelsContants: testQuestionLevelsContants.data?.levels,
-      testQuestionTypesContants: testQuestionTypesContants.data?.types,
       currentPage,
     });
-  }, [testQuestionLevelsContants.data, testQuestionTypesContants.data]);
+  }, [currentPage]);
 
   return (
     <div className="test-question-list">

@@ -7,6 +7,7 @@ import { IEmployeeFormProps } from "./interface";
 import { createEmployeeProfileSchema } from "@/schemas";
 import { useGetEmployeeById } from "@/hooks/employee";
 import dayjs from "dayjs";
+import { BASIC_ROLES, WORKING_STATUS } from "@/constants/common";
 
 const initialValues: IEmployeeFormProps = {
   firstName: "",
@@ -18,6 +19,7 @@ const initialValues: IEmployeeFormProps = {
   deliveryId: undefined,
   workingStatus: 1,
   role: 1,
+  email: undefined,
   joinDate: dayjs(Date.now()),
   paidLeaveCount: 0,
 };
@@ -38,20 +40,21 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
         phoneNumber = "",
         dateOfBirth,
         positionId = undefined,
-        workingStatus = "OFFICIAL",
+        workingStatus = WORKING_STATUS.official.value,
         deliveryEmployee,
         joinDate,
+        role = BASIC_ROLES.employee.value,
         paidLeaveCount = 0,
+        employeeAccount,
       } = data as any;
 
       dateOfBirth = dayjs(dateOfBirth ?? Date.now());
       joinDate = dayjs(joinDate ?? Date.now());
 
-      console.log(dateOfBirth, joinDate);
-
       formRef.current.setFieldValue("firstName", firstName);
       formRef.current.setFieldValue("middleName", middleName);
       formRef.current.setFieldValue("lastName", lastName);
+      formRef.current.setFieldValue("email", employeeAccount?.email);
       formRef.current.setFieldValue("phoneNumber", phoneNumber);
       formRef.current.setFieldValue("dateOfBirth", dayjs(dateOfBirth));
       formRef.current.setFieldValue("positionId", positionId);
@@ -62,10 +65,7 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
       formRef.current.setFieldValue("workingStatus", workingStatus);
       formRef.current.setFieldValue("joinDate", dayjs(joinDate));
       formRef.current.setFieldValue("paidLeaveCount", paidLeaveCount);
-      formRef.current.setFieldValue(
-        "role",
-        deliveryEmployee?.isManager ? 2 : 1
-      );
+      formRef.current.setFieldValue("role", role);
     }
   }, [data]);
 

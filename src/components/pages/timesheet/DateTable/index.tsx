@@ -14,8 +14,6 @@ const DateTable: FC<ITableDataProps> = ({
     return timesheetTableColumns(currentPage);
   }, [currentPage]);
 
-  console.log(dataSource)
-
   return (
     <div>
       <Typography.Text>{dayjs(Date.now()).format("MMMM YYYY")}</Typography.Text>

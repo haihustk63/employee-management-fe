@@ -13,6 +13,7 @@ import {
   WORKING_STATUS,
 } from "@/constants/common";
 import { useParams } from "react-router-dom";
+import { useGetAccounts } from "@/hooks/account";
 
 const { TEXT, SELECT, INPUT_NUMBER } = FORM_ITEM_TYPES;
 
@@ -20,13 +21,22 @@ const FormFields: FC = () => {
   const { values, handleSubmit, handleChange, setFieldValue, errors } =
     useFormikContext() as any;
 
-  const { employeeId } = useParams();
+  const { employeeId = "" } = useParams();
 
   const { data: positions = [] } = useGetAllPositions();
   const { data: deliveries = [] } = useGetAllDeliveries();
+  const { data: accounts = [] } = useGetAccounts();
+
+  const accountOption = useMemo(() => {
+    return dataToOptions(
+      accounts
+        .filter((acc: any) => acc.employeeId === null)
+        .map((acc: any) => ({ value: acc.email, label: acc.email }))
+    );
+  }, [accounts]);
 
   const buttonTitle = useMemo(() => {
-    if (employeeId !== undefined || employeeId !== null) {
+    if (employeeId !== "") {
       return "Update";
     } else {
       return "Create";
@@ -68,6 +78,14 @@ const FormFields: FC = () => {
         placeholder="Enter last name"
       />
       <FormItem
+        name="email"
+        label="Email"
+        value={values.email}
+        type={SELECT}
+        options={accountOption}
+        placeholder="Choose email"
+      />
+      <FormItem
         name="phoneNumber"
         label="Phone Number"
         value={values.phoneNumber}
@@ -101,7 +119,7 @@ const FormFields: FC = () => {
         label="Working Status"
         value={values.workingStatus}
         type={SELECT}
-        options={WORKING_STATUS}
+        options={Object.values(WORKING_STATUS)}
         placeholder="Choose workingStatus"
       />
       <AppDatePicker
@@ -114,7 +132,7 @@ const FormFields: FC = () => {
         label="Role"
         value={values.role}
         type={SELECT}
-        options={BASIC_ROLES}
+        options={Object.values(BASIC_ROLES)}
         placeholder="Choose role"
       />
       <FormItem

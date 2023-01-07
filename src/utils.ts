@@ -7,7 +7,13 @@ import {
   REQUEST_STATUS,
   REQUEST_TYPES,
 } from "./constants/request";
-import { APP_ROLES, WORKING_STATUS } from "./constants/common";
+import {
+  APP_ROLES,
+  COMMON_TYPE_QUESTION,
+  QUESTION_LEVELS,
+  SIDER_ITEMS,
+  WORKING_STATUS,
+} from "./constants/common";
 
 const purityContent = (content?: string) => {
   if (!content) return "";
@@ -175,6 +181,48 @@ const getWorkingStatusLabel = (status: any) => {
   )?.label;
 };
 
+const getSiderByRoles = (role: number) => {
+  const siderItems = SIDER_ITEMS.map(({ roles = [], ...rest }) => {
+    if (roles?.length) {
+      return roles.includes(role) ? { ...rest } : undefined;
+    }
+    let permittedChildren = rest.children?.map(
+      ({ roles = [], ...restChildren }: any) => {
+        if (roles.includes(role)) {
+          return restChildren;
+        }
+      }
+    );
+    permittedChildren = cleanArray(permittedChildren || []);
+    if (permittedChildren.length > 1) {
+      return {
+        ...rest,
+        children: permittedChildren,
+      };
+    }
+    return permittedChildren[0];
+  });
+  return cleanArray(siderItems);
+};
+
+const cleanArray = (arr: any[]) => {
+  return arr.filter(
+    (item) => item !== undefined && item !== null && item !== ""
+  );
+};
+
+const getQuestionType = (type: number) => {
+  return Object.values(COMMON_TYPE_QUESTION).find(
+    (typeObj) => typeObj.value === type
+  );
+};
+
+const getQuestionLevel = (level: number) => {
+  return Object.values(QUESTION_LEVELS).find(
+    (levelObj) => levelObj.value === level
+  );
+};
+
 export {
   purityContent,
   addKeyToData,
@@ -191,4 +239,7 @@ export {
   getRequestTypeValues,
   getRoleLabel,
   getWorkingStatusLabel,
+  getSiderByRoles,
+  getQuestionLevel,
+  getQuestionType,
 };

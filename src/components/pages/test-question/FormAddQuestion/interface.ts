@@ -14,7 +14,7 @@ export type TypeQuestionSourceBlock = {
 export interface IFormAddQuestionProps {
   questionText: string;
   questionSource?: TypeQuestionSource[];
-  type: string | undefined;
+  type: number | undefined;
   level: string | undefined;
   topicId?: string | number;
   options?: any[];

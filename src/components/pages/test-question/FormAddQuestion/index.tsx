@@ -20,11 +20,14 @@ import { createUniqueId } from "@/helpers";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import AppFormErrorMessage from "@/components/AppFormErrorMessage";
+
+const { oneChoice, multipleChoice, essays } = COMMON_TYPE_QUESTION;
 
 const initialValues: IFormAddQuestionProps = {
   questionText: "",
   level: undefined,
-  type: undefined,
+  type: oneChoice.value,
   topicId: undefined,
   options: [
     {
@@ -77,16 +80,15 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
         options,
         questionSource: sources,
       } = data;
-
       formRef.current.setFieldValue("topicId", topic?.id);
       formRef.current.setFieldValue("level", level);
       formRef.current.setFieldValue("type", type);
-      formRef.current.setFieldValue("options", options);
+      formRef.current.setFieldValue("options", options || [] );
       formRef.current.setFieldValue("questionText", questionText);
-
-      if (type === COMMON_TYPE_QUESTION.ONE_CHOICE) {
+      
+      if (type === oneChoice.value) {
         formRef.current.setFieldValue("answer", answer[0]);
-      } else if (type === COMMON_TYPE_QUESTION.MULTIPLE_CHOICE) {
+      } else if (type === multipleChoice.value) {
         formRef.current.setFieldValue("answer", answer);
       }
 
@@ -118,8 +120,8 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
   };
 
   const handleSubmitForm = (values: any) => {
-    const { answer: rawAnswer, type, options } = values;
-    if (type !== COMMON_TYPE_QUESTION.ESSAYS) {
+    let { answer, type, options } = values;
+    if (type !== essays.value) {
       if (!options?.length) {
         setError("At least one choice");
         return;
@@ -130,29 +132,26 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
           return;
         }
       }
-    }
-
-    let answer = rawAnswer;
-    if (typeof rawAnswer === "object" && !rawAnswer?.length) {
-      setError("At least one answer");
-      return;
-    }
-    if (typeof rawAnswer === "string") {
-      if (!rawAnswer) {
-        setError("Please choose an answer");
+      if (typeof answer === "object" && !answer?.length) {
+        setError("At least one answer");
         return;
       }
-      answer = [rawAnswer];
+      if (typeof answer === "string") {
+        if (!answer) {
+          setError("Please choose an answer");
+          return;
+        }
+        answer = [answer];
+      }
     }
 
     const sendData: any = { ...values, answer, questionSource };
-    if (type === "ESSAYS") {
+    if (type === essays.value) {
       sendData.answer = "";
       sendData.options = "";
     }
 
-    console.log(sendData)
-    if (questionId !== undefined) {
+    if (questionId !== "") {
       onUpdate(sendData);
     } else {
       onCreate(sendData);
@@ -197,7 +196,7 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
         >
           <>
             <FormFields />
-            {!!error && <Text>{error}</Text>}
+            {!!error && <AppFormErrorMessage message={error} />}
           </>
         </AppForm>
         {isDisplayCodeEditor && (

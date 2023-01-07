@@ -7,6 +7,7 @@ import { addDeliveryValidateSchema } from "@/schemas";
 import FormFields from "./FormFields";
 import { IAddNewDeliveryProps } from "./interface";
 import { useCreateDelivery } from "@/hooks/delivery";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 
 const initialValues: IAddNewDeliveryProps = {
   name: "",
@@ -18,10 +19,16 @@ const AddNewDeliveryModal: FC<IModalControlProps> = ({
   showModal,
   onToggleModal,
 }) => {
-  const { mutate } = useCreateDelivery();
+  const { mutate: createDelivery, isError, isSuccess } = useCreateDelivery();
+
+  useTriggerNoti({
+    isSuccess,
+    isError,
+    messageSuccess: "Delivery added successfully",
+  });
 
   const handleSubmitForm = (values: any) => {
-    mutate(values);
+    createDelivery(values);
   };
 
   return (
