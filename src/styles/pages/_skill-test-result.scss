@@ -1,0 +1,10 @@
+.skill-test-result {
+  > .result {
+    display: flex;
+    align-items: center;
+    color: black;
+  }
+  > .result > .item {
+    margin: 0 0.8rem;
+  }
+}

@@ -15,53 +15,61 @@ const initialValues = {
   assessment: undefined,
   interviewerId: undefined,
   appointmentTime: undefined,
+  account: undefined,
 };
 
 const ModalUpdateCandidate: FC = () => {
   const formRef = useRef() as any;
-  const { data: candidates = [] } = useGetCandidateProfile();
-  const { showModal, handleToggleModal, candidateIdModal } = useContext(
-    CandidateProfileContext
-  ) as any;
+  const {
+    showModal,
+    handleToggleModal,
+    candidateIdModal,
+    candidateInfo,
+    setCandidateIdModal,
+  } = useContext(CandidateProfileContext) as any;
 
   const {
     mutate: onUpdateCandidate,
     isError,
     isSuccess,
-  } = useUpdateCandidateProfile(candidateIdModal);
+    error,
+  } = useUpdateCandidateProfile(candidateIdModal) as any;
 
   useTriggerNoti({
+    error,
     isSuccess,
     isError,
     messageSuccess: "Update candidate profile successfully",
   });
 
   useEffect(() => {
-    if (candidateIdModal !== undefined && candidates.length > 0) {
-      const candidate = candidates.find(
-        (c: any) => c.id === candidateIdModal
-      ) as any;
-
-      if (candidate) {
-        const { assessment, interviewerId, appointmentTime } = candidate;
-        formRef.current?.setFieldValue("assessment", assessment);
-        formRef.current?.setFieldValue("interviewerId", interviewerId);
-        formRef.current?.setFieldValue(
-          "appointmentTime",
-          appointmentTime ? dayjs(appointmentTime) : undefined
-        );
-      }
+    if (candidateInfo) {
+      const { assessment, interviewerId, appointmentTime, employeeAccount } =
+        candidateInfo;
+      formRef.current?.setFieldValue("assessment", assessment);
+      formRef.current?.setFieldValue("account", employeeAccount?.email);
+      formRef.current?.setFieldValue("interviewerId", interviewerId);
+      formRef.current?.setFieldValue(
+        "appointmentTime",
+        appointmentTime ? dayjs(appointmentTime) : undefined
+      );
     }
-  }, [candidateIdModal, candidates]);
+  }, [candidateInfo]);
 
   const handleSubmit = (values: any) => {
+    delete values?.account;
     onUpdateCandidate(values);
+  };
+
+  const toggleModal = () => {
+    handleToggleModal();
+    setCandidateIdModal("");
   };
 
   return (
     <AppModal
       open={showModal}
-      onCancel={handleToggleModal}
+      onCancel={toggleModal}
       wrapClassName="modal-update-candidate"
       title="Update candidate"
     >

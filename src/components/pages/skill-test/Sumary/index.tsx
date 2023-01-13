@@ -1,20 +1,13 @@
 import AppButton from "@/components/AppButton";
-import { CandidateSkillTestContext } from "@/pages/skill-test";
+import { CandidateSkillTestContext } from "@/pages/skill-test/do-test";
 import { useContext } from "react";
 
 const Sumary = () => {
-  const {
-    answers,
-    handleEnableTour,
-    handleStart,
-    test = [],
-  } = useContext(CandidateSkillTestContext) as any;
+  const { answers, test = [] } = useContext(CandidateSkillTestContext) as any;
 
   const setBackgroundColor = (index: number) => {
-    if (
-      (Array.isArray(answers[index]) && answers[index].length === 0) ||
-      !answers[index]
-    ) {
+    const answer = answers[index]?.answer;
+    if (answer?.length === 0 || answer === undefined) {
       return undefined;
     } else {
       return "red";
@@ -35,14 +28,6 @@ const Sumary = () => {
             </div>
           );
         })}
-      </div>
-      <div className="btns">
-        <AppButton buttonTitle="Take a tour" onClick={handleEnableTour} />
-        <AppButton
-          id="attempt-btn"
-          buttonTitle="Start to attempt"
-          onClick={handleStart}
-        />
       </div>
     </div>
   );

@@ -13,7 +13,6 @@ const ButtonDeleteProgram: FC<{ programId: number }> = ({ programId = "" }) => {
   });
 
   const handleClickDelete = (e: any) => {
-    e.stopPropagation();
     mutate("");
   };
 

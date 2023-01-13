@@ -13,8 +13,8 @@ const InputQuestionInfoManual: FC = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   useEffect(() => {
-    if (currentTest.length) {
-      const initSelectedRowKeys = currentTest.map(
+    if (Object.keys(currentTest).length > 0) {
+      const initSelectedRowKeys = currentTest.testQuestionSkillTest.map(
         (question: any) => question.questionId
       );
       setSelectedRowKeys(initSelectedRowKeys);

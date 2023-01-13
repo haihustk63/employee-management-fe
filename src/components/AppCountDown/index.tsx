@@ -5,13 +5,13 @@ import Countdown, { CountdownApi } from "react-countdown";
 const { Text } = Typography;
 
 const AppCountDown = ({
-  hour = 0,
-  minute = 0,
+  seconds = 0,
   start,
+  callback,
 }: {
-  hour?: number;
-  minute?: number;
+  seconds?: number;
   start?: boolean;
+  callback?: any;
 }) => {
   let countdownApi: CountdownApi | null = null;
 
@@ -23,11 +23,15 @@ const AppCountDown = ({
 
   const renderer = ({
     completed,
+    seconds: currentSeconds,
+    minutes: currentMinutes,
+    hours: currentHours,
     formatted: { hours, minutes, seconds },
   }: any) => {
     if (completed) {
       return <Text>Done!</Text>;
     } else {
+      callback(currentSeconds + currentMinutes * 60 + currentHours * 3600);
       return (
         <span>
           {hours}:{minutes}:{seconds}
@@ -43,8 +47,8 @@ const AppCountDown = ({
   };
 
   const target = useMemo(() => {
-    return Date.now() + (hour * 3600 + minute * 60) * 1000;
-  }, [hour, minute]);
+    return Date.now() + seconds * 1000;
+  }, [seconds]);
 
   return (
     <div className="app-countdown">

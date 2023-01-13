@@ -2,13 +2,10 @@ import AppButton from "@/components/AppButton";
 import appNotification from "@/components/AppNotification";
 import ModalCreateAccountForm from "@/components/pages/account/FormCreate";
 import ListAccount from "@/components/pages/account/List";
-import {
-  useCreateAccount,
-  useGetAccounts
-} from "@/hooks/account";
+import { useCreateAccount, useGetAccounts } from "@/hooks/account";
 import useModal from "@/hooks/useModal";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 export const AccountManagementContext = createContext({});
 
@@ -16,6 +13,7 @@ const AccountManagement = () => {
   const { data: accounts = [], isLoading, isFetching } = useGetAccounts();
   const { mutate: onCreateAccount, isSuccess, isError } = useCreateAccount();
   const { handleToggleModal, showModal } = useModal();
+  const [switchOn, setSwitchOn] = useState(false);
 
   useTriggerNoti({
     isSuccess,
@@ -24,22 +22,48 @@ const AccountManagement = () => {
     messageError: "Please check if the account is already existed",
   });
 
-  const onSubmitForm = (values: any) => {
-    const { employeeId, email } = values;
-    const hasAccount = accounts?.findIndex(
-      (account: any) => account.employeeId === employeeId
-    );
+  const toggleSwitch = () => {
+    setSwitchOn(!switchOn);
+  };
 
-    if (hasAccount >= 0) {
-      appNotification({
-        description: "This employee has already had an account",
-        message: "Error",
-        type: "error",
-      });
-      return;
+  const onSubmitForm = (values: any) => {
+    const { employeeId, candidateId, ...rest } = values;
+    let formData;
+
+    if (switchOn) {
+      const hasAccount = accounts?.findIndex(
+        (account: any) => account.employeeId === employeeId
+      );
+
+      if (hasAccount >= 0) {
+        appNotification({
+          description: "This employee has already had an account",
+          message: "Error",
+          type: "error",
+        });
+        return;
+      }
+
+      formData = { employeeId, ...rest };
+    } else {
+      const hasAccount = accounts?.findIndex(
+        (account: any) => account.candidateId === candidateId
+      );
+      console.log(accounts)
+
+      if (hasAccount >= 0) {
+        appNotification({
+          description: "This candidate has already had an account",
+          message: "Error",
+          type: "error",
+        });
+        return;
+      }
+
+      formData = { candidateId, ...rest };
     }
 
-    onCreateAccount(values);
+    onCreateAccount(formData);
   };
 
   const handleClickCreate = () => {
@@ -53,6 +77,8 @@ const AccountManagement = () => {
         showModal,
         handleToggleModal,
         accounts,
+        switchOn,
+        toggleSwitch,
       }}
     >
       <div className="candidate-account-management">

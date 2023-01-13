@@ -24,13 +24,6 @@ export const useSaveTest = () => {
   });
 };
 
-export const useSubmitAnswer = (testId: number) => {
-  return useAppMutation({
-    url: API_ROUTES.TEST_ID(testId),
-    method: "post",
-  });
-};
-
 export const useGetTest = (testId: number | string, enabled: boolean) => {
   return useFetch({
     url: API_ROUTES.TEST_ID(testId),
@@ -43,14 +36,14 @@ export const useGetTest = (testId: number | string, enabled: boolean) => {
   });
 };
 
-export const useGetTestStatus = (testId: number) => {
-  return useFetch({
-    url: API_ROUTES.TEST_STATUS(testId),
-    config: {
-      enabled: typeof testId === "number",
-    },
-  });
-};
+// export const useGetTestStatus = (testId: number) => {
+//   return useFetch({
+//     url: API_ROUTES.TEST_STATUS(testId),
+//     config: {
+//       enabled: typeof testId === "number",
+//     },
+//   });
+// };
 
 export const useGetAllTests = () => {
   return useFetch({
@@ -60,6 +53,47 @@ export const useGetAllTests = () => {
         return addKeyToData(data?.tests);
       },
     },
+  });
+};
+
+//candidate test
+
+export const useSubmitAnswer = (testId: string | number) => {
+  return useAppMutation({
+    url: API_ROUTES.SUBMIT_TEST,
+    method: "post",
+    extraQueryKey: API_ROUTES.CONTESTANT_TEST_ID(testId),
+  });
+};
+
+export const useGetContestantTests = () => {
+  return useFetch({
+    url: API_ROUTES.CONTESTANT_TEST,
+    config: {
+      select: (data: any) => {
+        return addKeyToData(data?.tests);
+      },
+    },
+  });
+};
+
+export const useAssignTest = () => {
+  return useAppMutation({
+    url: API_ROUTES.CONTESTANT_TEST,
+    method: "post",
+  });
+};
+
+export const useGetContestantTest = (testId: string | number) => {
+  return useFetch({
+    url: API_ROUTES.CONTESTANT_TEST_ID(testId),
+  });
+};
+
+export const useUpdateContestantTest = (testId: string | number) => {
+  return useAppMutation({
+    url: API_ROUTES.CONTESTANT_TEST_ID(testId),
+    method: "patch",
   });
 };
 

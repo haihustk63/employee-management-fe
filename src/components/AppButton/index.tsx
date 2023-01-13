@@ -12,9 +12,14 @@ const AppButton: FC<IAppButton> = ({
   disabled,
   id,
 }) => {
+  const handleClick = (e: any) => {
+    e.stopPropagation();
+    onClick?.();
+  };
+
   return (
     <Button
-      onClick={onClick}
+      onClick={handleClick}
       htmlType={htmlType}
       className={`app-button ${className}`}
       size={size}

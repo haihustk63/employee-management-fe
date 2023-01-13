@@ -1,7 +1,8 @@
 import appNotification from "@/components/AppNotification";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 interface ITriggerNoti {
+  error?: any;
   isSuccess?: boolean;
   isError?: boolean;
   messageSuccess?: string;
@@ -11,6 +12,7 @@ interface ITriggerNoti {
 }
 
 export const useTriggerNoti = ({
+  error,
   isSuccess,
   isError,
   messageSuccess,
@@ -18,6 +20,17 @@ export const useTriggerNoti = ({
   callbackError,
   callbackSuccess,
 }: ITriggerNoti) => {
+  const errorMessage = useMemo(() => {
+    if (messageError) {
+      return messageError;
+    }
+    if (error) {
+      return typeof error?.response?.data === "object"
+        ? error?.response?.data?.message
+        : error?.response?.data;
+    }
+    return "Error";
+  }, [error]);
   useEffect(() => {
     if (isSuccess) {
       appNotification({
@@ -34,7 +47,7 @@ export const useTriggerNoti = ({
       appNotification({
         type: "error",
         message: "Error",
-        description: messageError || "Something went wrong",
+        description: errorMessage || "Something went wrong",
       });
       callbackError?.();
     }

@@ -1,33 +1,23 @@
-import { FC, useState } from "react";
 import { Space } from "antd";
+import { FC, useContext, useState } from "react";
 
-import AppButton from "@/components/AppButton";
+import { AppInputNumber } from "@/components/AppFormField";
 import AppTag from "@/components/AppTag";
 import AppTooltip from "@/components/AppTooltip";
-import { AppInputNumber } from "@/components/AppFormField";
+import { CreateTestContext } from "@/pages/tests/create-test";
 
 const RenderAction: FC<{
   color?: string;
   max?: number;
-  onSubmitQuestionInfo?: any;
-}> = ({ color, max, onSubmitQuestionInfo }: any) => {
+  record?: any;
+  level?: number;
+}> = ({ color, max, record, level }) => {
   const [amount, setAmount] = useState(0);
-
-  // const handleIncrease = () => {
-  //   const newAmount = amount === max ? amount : amount + 1;
-  //   setAmount(newAmount);
-  //   onSubmitQuestionInfo(newAmount);
-  // };
-
-  // const handleDecrease = () => {
-  //   const newAmount = amount === 0 ? 0 : amount - 1;
-  //   setAmount(newAmount);
-  //   onSubmitQuestionInfo(newAmount);
-  // };
+  const { onSubmitQuestionInfo } = useContext(CreateTestContext) as any;
 
   const handleChangeAmount = (value: number) => {
     setAmount(value);
-    onSubmitQuestionInfo(value);
+    onSubmitQuestionInfo({ topicId: record.id, level, amount: value });
   };
 
   return (
@@ -40,14 +30,6 @@ const RenderAction: FC<{
           <AppTag color="blue">{max}</AppTag>
         </>
       </AppTooltip>
-      {/* <AppTooltip
-        title="This tag shows your current amount of questions"
-        trigger={["hover"]}
-      >
-        <>
-          <AppTag color={color}>{amount}</AppTag>
-        </>
-      </AppTooltip> */}
 
       <AppInputNumber
         min={0}
@@ -55,17 +37,6 @@ const RenderAction: FC<{
         onChange={handleChangeAmount}
         value={amount}
       />
-
-      {/* <AppButton
-        disabled={amount === max}
-        buttonTitle="Increase"
-        onClick={handleIncrease}
-      />
-      <AppButton
-        disabled={amount === 0}
-        buttonTitle="Decrease"
-        onClick={handleDecrease}
-      /> */}
     </Space>
   );
 };

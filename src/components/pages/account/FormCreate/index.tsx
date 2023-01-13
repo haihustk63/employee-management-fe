@@ -9,12 +9,14 @@ export interface IAddNewAccount {
   email: string;
   password: string;
   employeeId?: number;
+  candidateId?: number;
 }
 
 const initialValues: IAddNewAccount = {
   email: "",
   password: "",
   employeeId: undefined,
+  candidateId: undefined
 };
 
 const ModalCreateAccountForm = () => {

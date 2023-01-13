@@ -19,6 +19,7 @@ const CandidateLayoutHeader = () => {
   };
 
   const handleLogout = () => {
+    localStorage.clear();
     setCurrentUser({});
     logout("");
   };

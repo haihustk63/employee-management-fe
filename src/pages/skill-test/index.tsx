@@ -1,79 +1,34 @@
-import { createContext, useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-
-import AppTour from "@/components/AppTour";
-import SessionInfo from "@/components/pages/skill-test/SessionInfo";
-import Sumary from "@/components/pages/skill-test/Sumary";
-import SkillTestContent from "@/components/pages/skill-test/Tests";
-import { SKILL_TEST_INTRO_STEPS } from "@/constants/common";
+import AppPrimaryCard from "@/components/AppCard/Primary";
+import AppTag from "@/components/AppTag";
+import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
+import { useGetContestantTests } from "@/hooks/tests";
 import { useNavigate } from "react-router-dom";
-import { useGetTest, useGetTestStatus } from "@/hooks/tests";
-import { currentUserAtom } from "@/modules/currentUser";
-import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 
-export const CandidateSkillTestContext = createContext({});
-
-const CandidateSkillTest = () => {
+const CandidateSkillTestManagement = () => {
   const navigate = useNavigate();
-  const { candidate } = useRecoilValue(currentUserAtom);
+  const { data: skillTests = [] } = useGetContestantTests();
 
-  const [enabledTour, setEnabledTour] = useState(false);
-  const [answers, setAnswers] = useState<(string | string[])[]>([]);
-  const [start, setStart] = useState(false);
-
-  const { data } = useGetTestStatus(candidate?.skillTest?.id) as any;
-  const isSubmitted = data?.isSubmitted;
-
-  const {
-    data: test = [],
-    isLoading,
-    isFetching,
-  } = useGetTest(candidate?.skillTest?.id, isSubmitted === false);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      navigate(APP_PAGE_NAME_ROUTES.APPLY_PROCESS);
-    }
-  }, [isSubmitted]);
-
-  const handleEnableTour = () => {
-    setEnabledTour(true);
-  };
-
-  const handleStart = () => {
-    setStart(true);
+  const doTest = (id: number) => () => {
+    navigate(DYNAMIC_APP_PAGE_ROUTES.DO_TEST(id));
   };
 
   return (
-    <CandidateSkillTestContext.Provider
-      value={{
-        answers,
-        start,
-        test,
-        setAnswers,
-        handleEnableTour,
-        handleStart,
-      }}
-    >
-      {isSubmitted === false && (
-        <div className="candidate-skill-test">
-          <div>
-            <Sumary />
-          </div>
-          <div className="content">
-            <SessionInfo />
-            <SkillTestContent />
-          </div>
-          <AppTour
-            initialStep={0}
-            steps={SKILL_TEST_INTRO_STEPS}
-            enabled={enabledTour}
-            onExit={() => setEnabledTour(false)}
-          />
-        </div>
-      )}
-    </CandidateSkillTestContext.Provider>
+    <div className="candidate-skill-test">
+      {skillTests?.map(({ id, test, attempted }: any) => {
+        return (
+          <AppPrimaryCard
+            title={test.title}
+            key={id}
+            onClick={attempted ? null : doTest(id)}
+          >
+            <AppTag color={attempted ? "success" : "error"}>
+              {attempted ? "Done" : "Not done"}
+            </AppTag>
+          </AppPrimaryCard>
+        );
+      })}
+    </div>
   );
 };
 
-export default CandidateSkillTest;
+export default CandidateSkillTestManagement;

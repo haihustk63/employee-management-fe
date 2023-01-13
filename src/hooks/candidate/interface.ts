@@ -10,4 +10,5 @@ export interface ICandidateProfile {
   appointmentTime?: any;
   createdAt: string;
   updatedAt: string;
+  employeeAccount?: any;
 }

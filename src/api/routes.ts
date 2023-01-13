@@ -45,8 +45,12 @@ export const API_ROUTES = {
   CREATE_TEST: `${API_URL}/tests/create/manual`,
   SAVE_TEST: `${API_URL}/tests`,
   TEST: `${API_URL}/tests`,
+  CONTESTANT_TEST: `${API_URL}/contestant-tests`,
+  CONTESTANT_TEST_ID: (testId: number | string) =>
+    `${API_URL}/contestant-tests/${testId}`,
   TEST_ID: (testId: number | string) => `${API_URL}/tests/${testId}`,
-  TEST_STATUS: (testId: number | string) => `${API_URL}/tests/status/${testId}`,
+  // TEST_STATUS: (testId: number | string) => `${API_URL}/tests/status/${testId}`,
+  SUBMIT_TEST: `${API_URL}/submit-test`,
 
   // check-in-out
   CHECK_IN_OUT: `${API_URL}/check-in-out`,

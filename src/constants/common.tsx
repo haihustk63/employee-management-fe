@@ -192,12 +192,6 @@ export const SIDER_ITEMS = [
     ],
   },
   {
-    key: APP_PAGE_NAME_ROUTES.PROPERTY,
-    label: "Property",
-    icon: <GoldOutlined />,
-    roles: [roleAdmin, roleSuperAdmin],
-  },
-  {
     key: APP_PAGE_NAME_ROUTES.ACCOUNT,
     label: "Account",
     icon: <TeamOutlined />,
@@ -377,7 +371,7 @@ export const COMMON_TYPE_QUESTION = {
 };
 
 export const QUESTION_LEVELS = {
-  east: {
+  easy: {
     value: 1,
     label: "Easy",
     color: "success",
@@ -421,12 +415,12 @@ export const SKILL_TEST_INTRO_STEPS: Step[] = [
     intro: "Click this button to submit the test.",
     element: ".skill-test-btn-group #submit-btn",
   },
-  {
-    title: "Start to attempt",
-    intro:
-      "Click this button to start the test. You can only attempt one time.",
-    element: "#attempt-btn",
-  },
+  // {
+  //   title: "Start to attempt",
+  //   intro:
+  //     "Click this button to start the test. You can only attempt one time.",
+  //   element: "#attempt-btn",
+  // },
 ];
 
 export const JOB_TYPES: { [key: string]: string | number }[] = [
@@ -510,21 +504,21 @@ export const ASSESSMENT: { [key: string]: string | number }[] = [
   },
 ];
 
-export const TEST_STATUS = [
-  {
-    key: 0,
-    value: 0,
-    label: "Not done yet",
-    color: "error",
-  },
-  {
-    key: 1,
-    value: 1,
-    label: "Submitted",
-    color: "success",
-  },
-];
-
 export const OTHERS_CONSTANTS = {
   INVALID_DATE: "Invalid Date",
+};
+
+export const TEST_STATUS = {
+  created: {
+    value: 1,
+    label: "Created",
+  },
+  attempting: {
+    value: 2,
+    label: "Attempting",
+  },
+  done: {
+    value: 3,
+    label: "Done",
+  },
 };

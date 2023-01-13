@@ -37,7 +37,9 @@ const createRouter = (routes: any): { path: string; element: ReactNode }[] => {
 
 const router = createBrowserRouter(createRouter(APP_ROUTES));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 1 } },
+});
 
 function App() {
   return (

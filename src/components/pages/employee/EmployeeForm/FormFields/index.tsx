@@ -27,10 +27,13 @@ const FormFields: FC = () => {
   const { data: deliveries = [] } = useGetAllDeliveries();
   const { data: accounts = [] } = useGetAccounts();
 
-  const accountOption = useMemo(() => {
+  const accountOptions = useMemo(() => {
     return dataToOptions(
       accounts
-        .filter((acc: any) => acc.employeeId === null)
+        .filter(
+          (acc: any) =>
+            acc.employeeId === null || acc.employeeId === Number(employeeId)
+        )
         .map((acc: any) => ({ value: acc.email, label: acc.email }))
     );
   }, [accounts]);
@@ -82,7 +85,7 @@ const FormFields: FC = () => {
         label="Email"
         value={values.email}
         type={SELECT}
-        options={accountOption}
+        options={accountOptions}
         placeholder="Choose email"
       />
       <FormItem

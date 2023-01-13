@@ -12,7 +12,7 @@ export interface IAppCardPrimaryProps {
   backgroundColor?: AppColor;
   hasBoxShadow?: boolean;
   children?: any;
-  onClick?: () => void;
+  onClick?: any;
   onDelete?: any;
 }
 

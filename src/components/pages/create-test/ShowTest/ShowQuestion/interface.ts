@@ -1,6 +1,6 @@
 export interface IShowQuestionProps {
   question: {
-    type?: string;
+    type?: number;
     questionText: string;
     questionSource?: any[];
     options?: any[];

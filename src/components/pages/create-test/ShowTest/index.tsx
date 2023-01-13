@@ -1,7 +1,6 @@
+import { Typography } from "antd";
 import { useContext } from "react";
-import { Space, Typography } from "antd";
 
-import AppTag from "@/components/AppTag";
 import { CreateTestContext } from "@/pages/tests/create-test";
 import ShowQuestion from "./ShowQuestion";
 

@@ -37,7 +37,6 @@ const PositionCard: FC<{ position: any }> = ({ position }) => {
   };
 
   const handleClickUpdate = (e: any) => {
-    e.stopPropagation();
     handleSetPositionUpdateId(position.id);
     handleToggleModal();
   };

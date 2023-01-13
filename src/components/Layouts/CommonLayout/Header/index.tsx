@@ -29,6 +29,7 @@ const CommonHeader = () => {
   };
 
   const handleLogout = () => {
+    localStorage.clear();
     setCurrentUser({});
     logout("");
   };

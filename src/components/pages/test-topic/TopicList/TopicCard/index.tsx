@@ -17,11 +17,7 @@ const TopicCard: FC<{ topic: any }> = ({ topic }) => {
     TopicManagementContext
   ) as any;
 
-  const {
-    mutate: deleteTopic,
-    isError,
-    isSuccess,
-  } = useDeleteTopic(topic.id);
+  const { mutate: deleteTopic, isError, isSuccess } = useDeleteTopic(topic.id);
 
   useTriggerNoti({
     isSuccess,
@@ -34,7 +30,6 @@ const TopicCard: FC<{ topic: any }> = ({ topic }) => {
   };
 
   const handleClickUpdate = (e: any) => {
-    e.stopPropagation();
     handleSetTopicUpdateId(topic.id);
     handleToggleModal();
   };

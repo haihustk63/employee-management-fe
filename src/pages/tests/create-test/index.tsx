@@ -1,31 +1,26 @@
 import AppButton from "@/components/AppButton";
-import { AppSelect } from "@/components/AppFormField";
-import appNotification from "@/components/AppNotification";
-import InputQuestionInfoManual from "@/components/pages/create-test/InputQuestionInfoManual";
+import AppFormErrorMessage from "@/components/AppFormErrorMessage";
+import { AppInput, AppInputNumber } from "@/components/AppFormField";
 import InputQuestionInfo from "@/components/pages/create-test/InputQuestionInfo";
+import InputQuestionInfoManual from "@/components/pages/create-test/InputQuestionInfoManual";
 import ListQuestionInfo from "@/components/pages/create-test/ListQuestionInfo";
+import ListQuestionInfoManual from "@/components/pages/create-test/ListQuestionInfoManual";
 import ShowTest from "@/components/pages/create-test/ShowTest";
-import { useGetCandidateProfile } from "@/hooks/candidate";
-import {
-  useSaveTest,
-  useGetTest,
-  useCreateTest,
-  useUpdateTest,
-} from "@/hooks/tests";
-import { dataToOptions } from "@/utils";
+import { QUESTION_LEVELS, TEST_STATUS } from "@/constants/common";
+import { useGetTest, useSaveTest, useUpdateTest } from "@/hooks/tests";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { Switch } from "antd";
 import { createContext, FC, useEffect, useMemo, useState } from "react";
-import ListQuestionInfoManual from "@/components/pages/create-test/ListQuestionInfoManual";
 import { useParams } from "react-router-dom";
-import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+
+const { easy, hard, medium } = QUESTION_LEVELS;
+const { created } = TEST_STATUS;
 
 export const CreateTestContext = createContext({}) as any;
 
 export interface IQuestionInfo {
   topicId: number | undefined;
-  EASY: number;
-  MEDIUM: number;
-  HARD: number;
+  [key: number]: number;
 }
 
 export interface IQuestionInfoManual {
@@ -44,11 +39,13 @@ const CreateTestPage: FC = () => {
     IQuestionInfoManual[]
   >([]);
   const [randomTest, setRandomTest] = useState([]);
-  const [chooseCandidate, setChooseCandidate] = useState("");
+  const [title, setTitle] = useState("");
+  const [duration, setDuration] = useState(0);
+  const [titleError, setTitleError] = useState(false);
+  const [durationError, setDurationError] = useState(false);
 
-  const { data: candidate = [] } = useGetCandidateProfile();
   const { mutate: onSaveTest, isError, isSuccess } = useSaveTest();
-  const { data: currentTest = [] } = useGetTest(testId as string, true);
+  const { data: currentTest = {} } = useGetTest(testId as string, true) as any;
   const {
     mutate: onUpdateTest,
     isError: updateError,
@@ -56,8 +53,8 @@ const CreateTestPage: FC = () => {
   } = useUpdateTest(testId);
 
   useEffect(() => {
-    if (currentTest?.length) {
-      const newQuestionManual = currentTest.map(
+    if (Object.keys(currentTest).length > 0) {
+      const newQuestionManual = currentTest.testQuestionSkillTest.map(
         ({ question, questionId }: any) => ({
           questionId: questionId,
           questionText: question.questionText,
@@ -67,6 +64,8 @@ const CreateTestPage: FC = () => {
         })
       );
       setQuestionInfoManual(newQuestionManual);
+      setTitle(currentTest.title);
+      setDuration(currentTest.duration);
     }
   }, [currentTest]);
 
@@ -81,6 +80,12 @@ const CreateTestPage: FC = () => {
     isSuccess: updateSuccess,
     messageSuccess: "Update test successfully",
   });
+
+  const isPublished = useMemo(() => {
+    return currentTest?.skillTestAccount?.some(
+      (item: any) => item.status !== created.value
+    );
+  }, [currentTest]);
 
   const renderModeContent = useMemo(() => {
     if (mode === "random") {
@@ -100,54 +105,67 @@ const CreateTestPage: FC = () => {
     }
   }, [mode]);
 
-  const handleSubmitQuestionInfo =
-    (topicId: number, level: "EASY" | "MEDIUM" | "HARD") =>
-    (amount: number) => {
-      let newQuestionInfo = [...questionInfo];
-      const questionInfoIndex = newQuestionInfo.findIndex(
-        (q) => q.topicId === topicId
-      );
-      if (questionInfoIndex >= 0) {
-        const questionAtIndex = newQuestionInfo[questionInfoIndex] as any;
-        questionAtIndex[level] = amount;
-        if (
-          questionAtIndex["EASY"] === 0 &&
-          questionAtIndex["MEDIUM"] === 0 &&
-          questionAtIndex["HARD"] === 0
-        ) {
-          newQuestionInfo = newQuestionInfo.filter(
-            (q: any) => q.topicId !== topicId
-          );
-        }
-        setQuestionInfo(newQuestionInfo);
-      } else {
-        setQuestionInfo([
-          ...questionInfo,
-          {
-            topicId,
-            EASY: 0,
-            MEDIUM: 0,
-            HARD: 0,
-            [level]: amount,
-          },
-        ]);
+  const handleSubmitQuestionInfo = ({
+    topicId,
+    level,
+    amount,
+  }: {
+    topicId: number;
+    level: number;
+    amount: number;
+  }) => {
+    let newQuestionInfo = [...questionInfo];
+    const questionInfoIndex = newQuestionInfo.findIndex(
+      (q) => q.topicId === topicId
+    );
+    if (questionInfoIndex >= 0) {
+      const questionAtIndex = newQuestionInfo[questionInfoIndex] as any;
+      questionAtIndex[level] = amount;
+      if (
+        questionAtIndex[easy.value] === 0 &&
+        questionAtIndex[medium.value] === 0 &&
+        questionAtIndex[hard.value] === 0
+      ) {
+        newQuestionInfo = newQuestionInfo.filter(
+          (q: any) => q.topicId !== topicId
+        );
       }
-    };
-
-  const handleChangeSelect = (value: string) => {
-    setChooseCandidate(value);
+      setQuestionInfo(newQuestionInfo);
+    } else {
+      setQuestionInfo([
+        ...questionInfo,
+        {
+          topicId,
+          [easy.value]: 0,
+          [medium.value]: 0,
+          [hard.value]: 0,
+          [level]: amount,
+        },
+      ]);
+    }
   };
 
   const handleSaveTest = () => {
     let questionIds;
+
+    if (!title) {
+      setTitleError(true);
+      return;
+    }
+
+    if (duration === null) {
+      setDurationError(true);
+      return;
+    }
+
     if (testId) {
       questionIds = questionInfoManual.map(
         (question: any) => question.questionId
       );
-      onUpdateTest({ questionIds, testId: Number(testId) });
+      onUpdateTest({ questionIds, title, duration });
     } else {
       questionIds = randomTest.map((question: any) => question.id);
-      onSaveTest({ questionIds, candidateId: chooseCandidate });
+      // onSaveTest({ questionIds, title, duration });
     }
   };
 
@@ -157,6 +175,16 @@ const CreateTestPage: FC = () => {
     } else {
       setMode("manual");
     }
+  };
+
+  const changeTitle = (e: any) => {
+    setTitle(e.target?.value);
+    setTitleError(false);
+  };
+
+  const changeDuration = (value: any) => {
+    setDuration(value);
+    setDurationError(false);
   };
 
   return (
@@ -173,23 +201,43 @@ const CreateTestPage: FC = () => {
       }}
     >
       <div className="create-test-page">
-        <Switch
-          defaultChecked={mode === "random"}
-          onChange={handleChangeSwitch}
-          className="switch"
+        <AppInput
+          placeholder="Test title"
+          value={title}
+          onChange={changeTitle}
+          label="Test title"
         />
+        {titleError && <AppFormErrorMessage message="Title is required" />}
+        <AppInputNumber
+          placeholder="Test duration"
+          value={duration}
+          onChange={changeDuration}
+          min={0}
+          label="Test duration (Minutes)"
+        />
+        {durationError && (
+          <AppFormErrorMessage message="Duration is required" />
+        )}
+
+        {!testId && (
+          <Switch
+            defaultChecked={mode === "random"}
+            onChange={handleChangeSwitch}
+            className="switch"
+          />
+        )}
         {renderModeContent}
         <ShowTest />
-        <AppSelect
-          options={dataToOptions(candidate)}
-          placeholder="Assign to candidate"
-          onChange={handleChangeSelect}
-        />
         <AppButton
           buttonTitle="Save test"
           onClick={handleSaveTest}
-          disabled={currentTest?.[0]?.test?.isSubmitted}
+          disabled={isPublished}
         />
+        {isPublished && (
+          <p>
+            This test can not modify because some comtestants have completed it
+          </p>
+        )}
       </div>
     </CreateTestContext.Provider>
   );

@@ -9,6 +9,9 @@ import {
   AppRadioGroup,
 } from "@/components/AppFormField";
 import AppCodeBlock from "@/components/AppCodeBlock";
+import { COMMON_TYPE_QUESTION } from "@/constants/common";
+
+const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
 
 const { Text } = Typography;
 
@@ -22,9 +25,9 @@ const ShowQuestion: FC<IShowQuestionProps> = ({
 }) => {
   const RenderOptions: any = useMemo(() => {
     switch (type) {
-      case "ONE_CHOICE":
+      case oneChoice.value:
         return AppRadioGroup;
-      case "MULTIPLE_CHOICE":
+      case multipleChoice.value:
         return AppCheckboxGroup;
       default:
         return AppInputTextArea;

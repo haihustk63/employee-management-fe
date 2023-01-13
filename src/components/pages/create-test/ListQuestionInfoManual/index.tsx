@@ -8,6 +8,7 @@ import { useGetAllTestTopics } from "@/hooks/test-topic";
 import AppTag from "@/components/AppTag";
 import AppButton from "@/components/AppButton";
 import { useCreateTest } from "@/hooks/tests";
+import { getQuestionLevel, getQuestionType } from "@/utils";
 
 const { Text } = Typography;
 
@@ -41,8 +42,12 @@ const ListQuestionInfoManual: FC = () => {
           >
             <Space>
               <AppTag color="blue">{item.topic}</AppTag>
-              <AppTag color="success">{item.level}</AppTag>
-              <AppTag color="warning">{item.type}</AppTag>
+              <AppTag color="success">
+                {getQuestionLevel(item.level)?.label}
+              </AppTag>
+              <AppTag color="warning">
+                {getQuestionType(item.type)?.label}
+              </AppTag>
               <Text>{item.questionText}</Text>
             </Space>
           </AppPrimaryCard>

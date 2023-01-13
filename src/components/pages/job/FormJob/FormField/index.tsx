@@ -9,12 +9,12 @@ import { useGetAllPositions } from "@/hooks/position";
 import AppFormErrorMessage from "@/components/AppFormErrorMessage";
 import { useParams } from "react-router-dom";
 import { useGetJobById } from "@/hooks/job";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 const { TEXT, SELECT } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
-  const { jobId } = useParams();
+  const { jobId = "" } = useParams();
   const { values, handleSubmit, handleChange, setFieldValue, errors, touched } =
     useFormikContext() as any;
   const { data: positions = [] } = useGetAllPositions();
@@ -29,6 +29,13 @@ const FormFields = () => {
       setFieldValue("positionId", job.positionId);
     }
   }, [job]);
+
+  const buttonTitle = useMemo(() => {
+    if (jobId !== "") {
+      return "Update";
+    }
+    return "Create";
+  }, [jobId]);
 
   const handleChangeEditor = (value: string) => {
     setFieldValue("jobDetail", value);
@@ -83,7 +90,7 @@ const FormFields = () => {
         options={dataToOptions(positions)}
         placeholder="Choose position"
       />
-      <AppButton buttonTitle="Create" htmlType="submit" />
+      <AppButton buttonTitle={buttonTitle} htmlType="submit" />
     </Form>
   );
 };

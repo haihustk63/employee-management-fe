@@ -8,6 +8,9 @@ import { useGetAllTestTopics } from "@/hooks/test-topic";
 import AppTag from "@/components/AppTag";
 import AppButton from "@/components/AppButton";
 import { useCreateRandomTest } from "@/hooks/tests";
+import { QUESTION_LEVELS } from "@/constants/common";
+
+const { easy, hard, medium } = QUESTION_LEVELS;
 
 const { Text } = Typography;
 
@@ -34,6 +37,8 @@ const ListQuestionInfo: FC = () => {
     }
   };
 
+  console.log(questionInfo)
+
   return (
     <div className="input-question-info">
       {questionInfo.map((item: any, index: number) => {
@@ -49,9 +54,9 @@ const ListQuestionInfo: FC = () => {
               <AppTag color="blue">
                 {topics.find((topic: any) => topic.id === item.topicId)?.name}
               </AppTag>
-              <AppTag color="success">{item.EASY} Easy</AppTag>
-              <AppTag color="warning">{item.MEDIUM} Medium</AppTag>
-              <AppTag color="error">{item.HARD} Hard</AppTag>
+              <AppTag color="success">{item[easy.value]} Easy</AppTag>
+              <AppTag color="warning">{item[medium.value]} Medium</AppTag>
+              <AppTag color="error">{item[hard.value]} Hard</AppTag>
             </Space>
           </AppPrimaryCard>
         );

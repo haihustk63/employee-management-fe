@@ -13,7 +13,6 @@ const ButtonJoinProgram: FC<{ programId: number }> = ({ programId = "" }) => {
   });
 
   const handleClickDelete = (e: any) => {
-    e.stopPropagation();
     onJoin({ programId });
   };
 

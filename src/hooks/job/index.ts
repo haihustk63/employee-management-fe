@@ -35,7 +35,7 @@ export const useUpdateJob = (jobId?: string) => {
   });
 };
 
-export const useDeleteJob = (jobId?: string) => {
+export const useDeleteJob = (jobId?: string | number) => {
   return useAppMutation({
     url: `${API_ROUTES.JOBS}/${jobId}`,
     method: "delete",

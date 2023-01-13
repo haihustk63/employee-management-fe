@@ -8,7 +8,6 @@ import GroupButton from "@/components/pages/candidate/ProfileTable/GroupButton";
 import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
 import JobListAction from "@/components/pages/job/JobListAction";
 import ListRequestButtons from "@/components/pages/request/List/GroupButton";
-import TestListAction from "@/components/pages/test/TestListAction";
 import { ICandidateProfile } from "@/hooks/candidate/interface";
 import {
   getDateFormat,
@@ -27,12 +26,16 @@ import {
   JOB_TYPES,
   OTHERS_CONSTANTS,
   TEST_STATUS,
+  QUESTION_LEVELS,
+  APP_ROLES,
 } from "./common";
 import { REQUEST_TYPES, WORKING_TIME } from "./request";
 import { dayjs } from "@/dayjs-config";
 import EmployeeGroupButton from "@/components/pages/employee/EmployeeList/GroupButton";
 
 const { Text } = Typography;
+
+const { easy, hard, medium } = QUESTION_LEVELS;
 
 const {
   ANNUAL_LEAVE,
@@ -85,6 +88,25 @@ export const candidateProfileTableColumns = (
       dataIndex: ["email"],
     },
     {
+      key: "account",
+      title: "Account",
+      dataIndex: ["employeeAccount", "email"],
+      render: (value: any) => {
+        if (!value) return <AppTag color="error">Not assigned yet</AppTag>;
+        return value;
+      },
+    },
+    {
+      key: "status",
+      title: "Status",
+      dataIndex: ["employeeAccount", "employeeId"],
+      render: (value: any, record: any) => {
+        console.log(record);
+        if (!value) return <AppTag color="error">Candidate</AppTag>;
+        return <AppTag color="success">Official Employee</AppTag>;
+      },
+    },
+    {
       key: "job",
       title: "Job",
       dataIndex: ["job", "title"],
@@ -94,7 +116,11 @@ export const candidateProfileTableColumns = (
       title: "CV Link",
       dataIndex: ["cvLink"],
       render: (value) => {
-        return <a href={value}>View CV</a>;
+        return (
+          <a href={value} target="_blank">
+            View CV
+          </a>
+        );
       },
     },
     {
@@ -116,7 +142,7 @@ export const candidateProfileTableColumns = (
         if (!value) {
           return "No info";
         }
-        return dayjs(value).format("DD/MM/yyyy");
+        return dayjs(value).format("DD/MM/YYYY");
       },
     },
     {
@@ -290,14 +316,25 @@ export const accountTableColumns = (currentPage: number, t?: any) => {
       dataIndex: ["email"],
     },
     {
-      key: "name",
-      title: "Name",
+      key: "employee",
+      title: "Employee",
       dataIndex: ["employee"],
       render: (value: any) => {
         if (!value) {
           return <AppTag color="error">Not assigned yet</AppTag>;
         }
         return mergeName(value);
+      },
+    },
+    {
+      key: "candidate",
+      title: "Candidate",
+      dataIndex: ["candidate", "name"],
+      render: (value: any) => {
+        if (!value) {
+          return <AppTag color="error">Not assigned yet</AppTag>;
+        }
+        return value;
       },
     },
     {
@@ -367,11 +404,7 @@ export const testQuestionListColumns = ({
   ];
 };
 
-const getMaxConfig = (
-  classifiedData: any,
-  record: any,
-  level: "EASY" | "MEDIUM" | "HARD"
-) => {
+const getMaxConfig = (classifiedData: any, record: any, level: number) => {
   const topicId = record.id;
   let max = 0;
 
@@ -390,7 +423,6 @@ const getMaxConfig = (
 export const createTestColumns = ({
   currentPage = 0,
   t,
-  onSubmitQuestionInfo,
   classifiedData,
 }: any) => {
   return [
@@ -406,13 +438,8 @@ export const createTestColumns = ({
       key: "easy",
       title: "Easy",
       render: (_: any, record: any) => {
-        const max = getMaxConfig(classifiedData, record, "EASY");
-        return (
-          <RenderAction
-            max={max}
-            onSubmitQuestionInfo={onSubmitQuestionInfo?.(record.id, "EASY")}
-          />
-        );
+        const max = getMaxConfig(classifiedData, record, easy.value);
+        return <RenderAction max={max} record={record} level={easy.value} />;
       },
       width: "20%",
     },
@@ -420,12 +447,13 @@ export const createTestColumns = ({
       key: "medium",
       title: "Medium",
       render: (_: any, record: any) => {
-        const max = getMaxConfig(classifiedData, record, "MEDIUM");
+        const max = getMaxConfig(classifiedData, record, medium.value);
         return (
           <RenderAction
             color="warning"
             max={max}
-            onSubmitQuestionInfo={onSubmitQuestionInfo?.(record.id, "MEDIUM")}
+            record={record}
+            level={medium.value}
           />
         );
       },
@@ -435,12 +463,13 @@ export const createTestColumns = ({
       key: "hard",
       title: "Hard",
       render: (_: any, record: any) => {
-        const max = getMaxConfig(classifiedData, record, "HARD");
+        const max = getMaxConfig(classifiedData, record, hard.value);
         return (
           <RenderAction
             color="error"
             max={max}
-            onSubmitQuestionInfo={onSubmitQuestionInfo?.(record.id, "HARD")}
+            record={record}
+            level={hard.value}
           />
         );
       },
@@ -506,61 +535,33 @@ export const jobsTableColumns = (
   ];
 };
 
-export const testsTableColumns = (
-  currentPage: number,
-  t?: any
-): ColumnsType<ICandidateProfile> => {
-  return [
-    indexColumn(currentPage),
-    {
-      key: "candidateName",
-      title: "Candidate",
-      dataIndex: ["candidate", "name"],
-      fixed: true,
-      render: (value: any) => {
-        if (!value) {
-          return <AppTag color="warning">Not assigned yet</AppTag>;
-        }
-        return value;
-      },
-    },
-    {
-      key: "score",
-      title: "Score",
-      dataIndex: ["score"],
-      render: (value: any, record: any) => {
-        if (!value) {
-          return <AppTag color="warning">Wait for attemp</AppTag>;
-        }
-        return (
-          <Text>
-            {value}/{record.countQuestion}
-          </Text>
-        );
-      },
-    },
-    {
-      key: "isSubmitted",
-      title: "Status",
-      dataIndex: ["isSubmitted"],
-      render: (value: any) => {
-        const renderIndex = value ? 1 : 0;
-        return (
-          <AppTag color={TEST_STATUS[renderIndex].color}>
-            {TEST_STATUS[renderIndex].label}
-          </AppTag>
-        );
-      },
-    },
-    {
-      key: "actions",
-      title: "Actions",
-      render: (_value: any, record: any) => {
-        return <TestListAction record={record} />;
-      },
-    },
-  ];
-};
+// export const testsTableColumns = (
+//   currentPage: number,
+//   t?: any
+// ): ColumnsType<ICandidateProfile> => {
+//   return [
+//     indexColumn(currentPage),
+//     {
+//       key: "title",
+//       title: "Title",
+//       dataIndex: ["title"],
+//       fixed: true,
+//     },
+//     {
+//       key: "duration",
+//       title: "Duration (Minutes)",
+//       dataIndex: ["duration"],
+//     },
+
+//     {
+//       key: "actions",
+//       title: "Actions",
+//       render: (_value: any, record: any) => {
+//         return <TestListAction record={record} />;
+//       },
+//     },
+//   ];
+// };
 
 const splitDuration = (duration: string) => {
   if (!duration)
@@ -574,20 +575,27 @@ const splitDuration = (duration: string) => {
 
 export const requestsTableColumns = (
   currentPage: number,
+  role: number = APP_ROLES.EMPLOYEE.value,
   t?: any
 ): ColumnsType<ICandidateProfile> => {
+  const employeeNameColumn =
+    role === APP_ROLES.EMPLOYEE.value
+      ? []
+      : [
+          {
+            key: "employeeName",
+            title: "Employee Name",
+            dataIndex: ["employee"],
+            fixed: true,
+            width: "15%",
+            render: (value: any) => {
+              return mergeName(value);
+            },
+          },
+        ];
   return [
     indexColumn(currentPage),
-    {
-      key: "employeeName",
-      title: "Employee Name",
-      dataIndex: ["employee"],
-      fixed: true,
-      width: "15%",
-      render: (value: any) => {
-        return mergeName(value);
-      },
-    },
+    ...employeeNameColumn,
     {
       key: "date",
       title: "Date",

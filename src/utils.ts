@@ -12,6 +12,7 @@ import {
   COMMON_TYPE_QUESTION,
   QUESTION_LEVELS,
   SIDER_ITEMS,
+  TEST_STATUS,
   WORKING_STATUS,
 } from "./constants/common";
 
@@ -223,6 +224,10 @@ const getQuestionLevel = (level: number) => {
   );
 };
 
+const getSkillTestStatusLabel = (value: number) => {
+  return Object.values(TEST_STATUS).find((item) => item.value === value)?.label;
+};
+
 export {
   purityContent,
   addKeyToData,
@@ -242,4 +247,5 @@ export {
   getSiderByRoles,
   getQuestionLevel,
   getQuestionType,
+  getSkillTestStatusLabel,
 };

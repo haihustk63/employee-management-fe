@@ -83,9 +83,9 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
       formRef.current.setFieldValue("topicId", topic?.id);
       formRef.current.setFieldValue("level", level);
       formRef.current.setFieldValue("type", type);
-      formRef.current.setFieldValue("options", options || [] );
+      formRef.current.setFieldValue("options", options || []);
       formRef.current.setFieldValue("questionText", questionText);
-      
+
       if (type === oneChoice.value) {
         formRef.current.setFieldValue("answer", answer[0]);
       } else if (type === multipleChoice.value) {
@@ -147,8 +147,8 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
 
     const sendData: any = { ...values, answer, questionSource };
     if (type === essays.value) {
-      sendData.answer = "";
-      sendData.options = "";
+      sendData.answer = [];
+      sendData.options = [];
     }
 
     if (questionId !== "") {

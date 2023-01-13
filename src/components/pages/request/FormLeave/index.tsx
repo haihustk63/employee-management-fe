@@ -36,11 +36,11 @@ const initialValues: IFormLeaveProps = {
 };
 
 const FormLeave: FC = () => {
-  const { employeeId = "" } = useRecoilValue(currentUserAtom);
   const { schemaValidation } = useContext(CreateRequestContext) as any;
-  const { mutate: onCreate, isError, isSuccess } = useCreateRequest();
+  const { mutate: onCreate, isError, isSuccess, error } = useCreateRequest();
 
   useTriggerNoti({
+    error,
     isError,
     isSuccess,
     messageSuccess: "A request is created successfully",
@@ -74,7 +74,6 @@ const FormLeave: FC = () => {
     const { date, reason, type } = values;
     const duration = createDuration(values);
     const sendData = {
-      employeeId,
       type,
       date,
       duration,

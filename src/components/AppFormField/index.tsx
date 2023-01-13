@@ -30,6 +30,7 @@ const AppInputNumber: FC<IFormItemProps> = ({
   placeholder,
   min,
   max,
+  precision = 0
 }) => {
   return (
     <InputNumber
@@ -39,6 +40,7 @@ const AppInputNumber: FC<IFormItemProps> = ({
       placeholder={placeholder}
       min={min}
       max={max}
+      precision={precision}
     />
   );
 };
@@ -101,22 +103,23 @@ const AppRadioGroup: FC<IAppRadioGroup> = ({
   if (typeof value === "object") {
     value = value[0];
   }
+
   return (
     <Radio.Group value={value} onChange={onChange}>
       {options.map((option: any, index: number) => (
         <div key={option.id}>
-          {isEditable ? (
-            <Radio value={option.id}>
+          <Radio value={option.id}>
+            {isEditable ? (
               <AppInput
                 name={nameInput}
                 value={option.choice}
                 onChange={onChangeInput(option.id)}
                 placeholder={`Enter answer ${index + 1}`}
               />
-            </Radio>
-          ) : (
-            option.choice
-          )}
+            ) : (
+              option.choice
+            )}
+          </Radio>
           {onDeleteOption && (
             <AppButton onClick={onDeleteOption(option.id)} buttonTitle="Del" />
           )}

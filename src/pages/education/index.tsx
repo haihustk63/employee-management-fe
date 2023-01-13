@@ -29,8 +29,7 @@ const EducationProgramManagement = () => {
     navigate(DYNAMIC_APP_PAGE_ROUTES.EDUCATION_PROGRAM_UPDATE(programId));
   };
 
-  const handleSetSelectProgramId = (programId: any) => (e: any) => {
-    e.stopPropagation();
+  const handleSetSelectProgramId = (programId: any) => () => {
     setSelectProgramId(programId);
     handleToggleModal();
   };

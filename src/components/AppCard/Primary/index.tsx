@@ -15,7 +15,6 @@ const AppPrimaryCard: FC<IAppCardPrimaryProps> = ({
   onDelete,
 }) => {
   const handleOnDelete = (e: any) => {
-    e.stopPropagation();
     onDelete();
   };
   

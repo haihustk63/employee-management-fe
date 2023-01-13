@@ -1,7 +1,6 @@
 import CandidateLayout from "@/components/Layouts/CandidateLayout";
 import CommonLayout from "@/components/Layouts/CommonLayout";
 import AccountManagement from "@/pages/account";
-import ApplyProcess from "@/pages/apply-process";
 import CandidateProfileManagement from "@/pages/candidate";
 import AdminDashboard from "@/pages/dashboard";
 import DeliveryManagement from "@/pages/delivery";
@@ -12,6 +11,7 @@ import EmployeeManagement from "@/pages/employee";
 import CreateNewEmployee from "@/pages/employee/create-new";
 import UpdateEmployee from "@/pages/employee/update";
 import Home from "@/pages/home";
+import InternalTestResult from "@/pages/internal-test-result";
 import JobManagement from "@/pages/jobs";
 import CreateJob from "@/pages/jobs/create";
 import UpdateJob from "@/pages/jobs/update";
@@ -20,13 +20,14 @@ import PersonalInfo from "@/pages/personal-info";
 import PersonalInfoAccount from "@/pages/personal-info/account";
 import PersonalInfoDetail from "@/pages/personal-info/detail";
 import PositionManagement from "@/pages/position";
-import PropertyManagement from "@/pages/property";
 import RecruitmentNewsManagement from "@/pages/recruitment-news";
 import CreateNewRecruitmentNews from "@/pages/recruitment-news/create-new";
 import UpdateRecruitmentNews from "@/pages/recruitment-news/update";
 import RequestManagement from "@/pages/request";
 import CreateRequest from "@/pages/request/create-request";
-import CandidateSkillTest from "@/pages/skill-test";
+import CandidateSkillTestManagement from "@/pages/skill-test";
+import DoSkillTest from "@/pages/skill-test/do-test";
+import SkillTestRawResult from "@/pages/skill-test/raw-result";
 import TestQuestionManagement from "@/pages/test-questions";
 import CreateTestQuestion from "@/pages/test-questions/create-new";
 import UpdateTestQuestion from "@/pages/test-questions/update";
@@ -46,7 +47,6 @@ const {
 
 export const APP_PAGE_NAME_ROUTES = {
   ACCOUNT: "/accounts",
-  APPLY_PROCESS: "/apply-process",
   CANDIDATE: "/candidates",
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
@@ -60,6 +60,7 @@ export const APP_PAGE_NAME_ROUTES = {
   EMPLOYEE_UPDATE: "/employees/:employeeId/update",
   HIRING_NEWS: "/hiring-news",
   HOME: "/",
+  INTERNAL_TEST_RESULT: "/internal-test-result/:testId",
   JOB: "/jobs",
   JOB_CREATE: "/jobs/create",
   JOB_LIST: "/jobs/list",
@@ -78,6 +79,8 @@ export const APP_PAGE_NAME_ROUTES = {
   REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
+  DO_SKILL_TEST: "/skill-test/:testId",
+  SKILL_TEST_RESULT: "/skill-test/:testId/result",
   TEST_TOPIC: "/test-topics",
   TEST_TOPIC_CREATE: "/test-topics/create",
   TEST_TOPIC_UPDATE: "/test-topics/:topicId/update",
@@ -104,6 +107,9 @@ export const DYNAMIC_APP_PAGE_ROUTES = {
     `/test-questions/${questionId}/update`,
   JOB_UPDATE: (jobId: any) => `/jobs/${jobId}/update`,
   TEST_UPDATE: (testId: any) => `/tests/${testId}/update`,
+  DO_TEST: (testId: any) => `/skill-test/${testId}`,
+  SKILL_TEST_RESULT: (testId: any) => `/skill-test/${testId}/result`,
+  INTERNAL_TEST_RESULT: (testId: any) => `/internal-test-result/${testId}`,
 };
 
 export const APP_ROUTES = [
@@ -115,11 +121,18 @@ export const APP_ROUTES = [
     roles: [roleAdmin, roleSuperAdmin],
   },
   {
-    name: APP_PAGE_NAME_ROUTES.APPLY_PROCESS,
-    path: APP_PAGE_NAME_ROUTES.APPLY_PROCESS,
-    element: ApplyProcess,
+    name: APP_PAGE_NAME_ROUTES.SKILL_TEST_RESULT,
+    path: APP_PAGE_NAME_ROUTES.SKILL_TEST_RESULT,
+    element: SkillTestRawResult,
     layout: CandidateLayout,
     roles: [roleCandidate],
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.INTERNAL_TEST_RESULT,
+    path: APP_PAGE_NAME_ROUTES.INTERNAL_TEST_RESULT,
+    element: InternalTestResult,
+    layout: CandidateLayout,
+    roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
   },
   {
     name: APP_PAGE_NAME_ROUTES.HOME,
@@ -171,7 +184,14 @@ export const APP_ROUTES = [
   {
     name: APP_PAGE_NAME_ROUTES.SKILL_TEST,
     path: APP_PAGE_NAME_ROUTES.SKILL_TEST,
-    element: CandidateSkillTest,
+    element: CandidateSkillTestManagement,
+    layout: CandidateLayout,
+    roles: [roleCandidate],
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.DO_SKILL_TEST,
+    path: APP_PAGE_NAME_ROUTES.DO_SKILL_TEST,
+    element: DoSkillTest,
     layout: CandidateLayout,
     roles: [roleCandidate],
   },
@@ -249,13 +269,6 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_UPDATE,
     path: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_UPDATE,
     element: UpdateEducationProgram,
-    layout: CommonLayout,
-    roles: [roleAdmin, roleSuperAdmin],
-  },
-  {
-    name: APP_PAGE_NAME_ROUTES.PROPERTY,
-    path: APP_PAGE_NAME_ROUTES.PROPERTY,
-    element: PropertyManagement,
     layout: CommonLayout,
     roles: [roleAdmin, roleSuperAdmin],
   },
