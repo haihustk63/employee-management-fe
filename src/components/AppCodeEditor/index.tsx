@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import CodeEditor from "@monaco-editor/react";
 import { Select } from "antd";
 import AppButton from "../AppButton";

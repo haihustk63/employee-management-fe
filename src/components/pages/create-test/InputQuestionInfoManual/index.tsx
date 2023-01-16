@@ -26,7 +26,7 @@ const InputQuestionInfoManual: FC = () => {
     onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
       const newInfo = selectedRows.map((row: any) => ({
         questionId: row.id,
-        topic: row.topic.name,
+        topic: row.topicName,
         level: row.level,
         type: row.type,
         questionText: row.questionText,

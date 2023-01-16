@@ -12,6 +12,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
   showToday = true,
   value,
   pickerLabel,
+  showTime = false,
   ...props
 }) => {
   const handleOnChangeDatePicker = (date: any) => {
@@ -29,6 +30,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
         showToday={showToday}
         placement={placement}
         value={value}
+        showTime={showTime}
         {...props}
       />
     </div>

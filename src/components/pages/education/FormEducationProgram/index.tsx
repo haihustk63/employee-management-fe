@@ -9,15 +9,15 @@ import { dayjs } from "@/dayjs-config";
 export interface IAddNewEducationProgram {
   title: string;
   content: string;
-  maxSlot?: number;
-  time: Dayjs;
+  time?: Dayjs;
+  duration: number;
   tutorId?: number | string;
 }
 
 const initialValues: IAddNewEducationProgram = {
   title: "",
   content: "",
-  maxSlot: undefined,
+  duration: 0,
   time: dayjs(Date.now()),
   tutorId: undefined,
 };

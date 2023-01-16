@@ -3,7 +3,11 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import debounce from "lodash/debounce";
 
 import FormItem from "@/components/FormItem";
-import { FORM_ITEM_TYPES } from "@/constants/common";
+import {
+  COMMON_TYPE_QUESTION,
+  FORM_ITEM_TYPES,
+  QUESTION_LEVELS,
+} from "@/constants/common";
 import { dataToOptions, makeCleanObject } from "@/utils";
 import { TestQuestionConText } from "@/pages/test-questions";
 import { useGetConstantTestQuestionValue } from "@/hooks/constant";
@@ -12,8 +16,6 @@ import { useGetAllTestTopics } from "@/hooks/test-topic";
 const { TEXT, SELECT } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
-  const [{ data: types = [] }, { data: levels = [] }] =
-    useGetConstantTestQuestionValue() as any;
   const { data: testTopics = [] } = useGetAllTestTopics();
 
   const { setQueryParams, queryParams } = useContext(
@@ -65,40 +67,36 @@ const FormFields = () => {
 
   return (
     <Form onSubmit={handleSubmit} className="form">
-      {!types.isLoading && !levels.isLoading && (
-        <>
-          <FormItem
-            name="keyword"
-            type={TEXT}
-            onChange={handleChangeKeyword}
-            placeholder="Keywords"
-          />
-          <FormItem
-            name="topic"
-            value={values.topic}
-            type={SELECT}
-            options={dataToOptions(testTopics)}
-            onChange={handleChangeOtherValue("topic")}
-            placeholder="Select topic"
-          />
-          <FormItem
-            name="type"
-            value={values.type}
-            type={SELECT}
-            options={dataToOptions(types)}
-            placeholder="Select type"
-            onChange={handleChangeOtherValue("type")}
-          />
-          <FormItem
-            name="level"
-            value={values.level}
-            type={SELECT}
-            options={dataToOptions(levels)}
-            onChange={handleChangeOtherValue("level")}
-            placeholder="Select level"
-          />
-        </>
-      )}
+      <FormItem
+        name="keyword"
+        type={TEXT}
+        onChange={handleChangeKeyword}
+        placeholder="Keywords"
+      />
+      <FormItem
+        name="topic"
+        value={values.topic}
+        type={SELECT}
+        options={dataToOptions(testTopics)}
+        onChange={handleChangeOtherValue("topic")}
+        placeholder="Select topic"
+      />
+      <FormItem
+        name="type"
+        value={values.type}
+        type={SELECT}
+        options={Object.values(COMMON_TYPE_QUESTION)}
+        placeholder="Select type"
+        onChange={handleChangeOtherValue("type")}
+      />
+      <FormItem
+        name="level"
+        value={values.level}
+        type={SELECT}
+        options={Object.values(QUESTION_LEVELS)}
+        onChange={handleChangeOtherValue("level")}
+        placeholder="Select level"
+      />
     </Form>
   );
 };

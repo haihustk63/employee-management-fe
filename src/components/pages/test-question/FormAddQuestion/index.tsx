@@ -55,7 +55,6 @@ const { Text } = Typography;
 export const FormAddQuestionContext = createContext(null) as any;
 
 const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
-  const navigate = useNavigate();
 
   const [questionSource, setQuestionSource] = useState<TypeQuestionSource[]>(
     []
@@ -114,10 +113,6 @@ const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
     isSuccess: updateSuccess,
     messageSuccess: "Question updated successfully",
   });
-
-  const handleNavigateToQuestionList = () => {
-    navigate(APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST);
-  };
 
   const handleSubmitForm = (values: any) => {
     let { answer, type, options } = values;

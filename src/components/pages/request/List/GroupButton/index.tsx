@@ -4,8 +4,9 @@ import { REQUEST_STATUS } from "@/constants/request";
 import { useDeleteRequest, useUpdateRequest } from "@/hooks/request";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { currentUserAtom } from "@/modules/currentUser";
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { APP_ROLES } from "@/constants/common";
+import { REQUEST_TYPES } from "@/constants/request";
 
 const { ADMIN, SUPER_ADMIN, DIVISION_MANAGER, EMPLOYEE } = APP_ROLES;
 
@@ -13,12 +14,19 @@ const { ACCEPTED, PENDING, REJECTED } = REQUEST_STATUS;
 
 const ListRequestButtons: FC<{ record: any }> = ({ record }) => {
   const { employee, employeeId } = useRecoilValue(currentUserAtom);
+  const { mutate: onDelete, isError, isSuccess } = useDeleteRequest(record.id);
 
   const {
     mutate: onUpdate,
     isError: updateError,
     isSuccess: updateSuccess,
   } = useUpdateRequest(record.id);
+
+  useTriggerNoti({
+    isError,
+    isSuccess,
+    messageSuccess: "Action is successful",
+  });
 
   useTriggerNoti({
     isError: updateError,
@@ -35,7 +43,11 @@ const ListRequestButtons: FC<{ record: any }> = ({ record }) => {
   };
 
   const handleClickCancel = () => {
-    onUpdate({ isCancelled: !record.isCancelled });
+    onUpdate({ isCancelled: true });
+  };
+
+  const handleClickDelete = () => {
+    onDelete("");
   };
 
   const renderCancelButton = useMemo(() => {
@@ -43,12 +55,17 @@ const ListRequestButtons: FC<{ record: any }> = ({ record }) => {
       employee?.role === EMPLOYEE.value ||
       (employee?.role !== EMPLOYEE.value && employeeId === record.employeeId)
     ) {
-      return (
-        <AppButton
-          buttonTitle={record.isCancelled ? "Uncancel" : "Cancel"}
-          onClick={handleClickCancel}
-        />
-      );
+      if (
+        record.status === REJECTED.value ||
+        (record.isAdminReviewed && record.isCancelled) ||
+        (record.isAdminReviewed &&
+          (record.type === REQUEST_TYPES.MODIFY_CHECKIN.value ||
+            record.type === REQUEST_TYPES.MODIFY_CHECKOUT.value))
+      ) {
+        return null;
+      } else {
+        return <AppButton buttonTitle="Cancel" onClick={handleClickCancel} />;
+      }
     }
     return null;
   }, [employee, record]);
@@ -76,6 +93,7 @@ const ListRequestButtons: FC<{ record: any }> = ({ record }) => {
               record.status === REJECTED.value
             }
           />
+          <AppButton buttonTitle="Delete" onClick={handleClickDelete} />
         </>
       )}
     </div>

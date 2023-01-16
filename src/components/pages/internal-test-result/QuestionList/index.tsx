@@ -22,11 +22,15 @@ const TestResultQuestionItem: FC<{
   const checkRightAnswer = (answerId: string) => {
     const right = question?.answer?.find((item: string) => item === answerId);
     const contestantChose = contestantAnswer?.includes(answerId);
+    console.log(right, contestantAnswer, answerId, contestantChose);
     if (right && contestantChose) {
       return true;
     }
     if (!right && contestantChose) {
       return false;
+    }
+    if (right && !contestantChose) {
+      return null;
     }
     return undefined;
   };
@@ -51,7 +55,8 @@ const TestResultQuestionItem: FC<{
                   className={cx({
                     item: true,
                     "-right": right,
-                    "-wrong": !right,
+                    "-wrong": right === false,
+                    "-miss": right === null,
                   })}
                 >
                   {idx + 1}. <span>{item.choice}</span>

@@ -7,11 +7,14 @@ import { dataToOptions } from "@/utils";
 import AppTextEditor from "@/components/AppTextEditor";
 import { useGetAllPositions } from "@/hooks/position";
 import AppFormErrorMessage from "@/components/AppFormErrorMessage";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetJobById } from "@/hooks/job";
 import { useEffect, useMemo } from "react";
+import { Space, Typography } from "antd";
+import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 
 const { TEXT, SELECT } = FORM_ITEM_TYPES;
+const { Text } = Typography;
 
 const FormFields = () => {
   const { jobId = "" } = useParams();
@@ -36,6 +39,20 @@ const FormFields = () => {
     }
     return "Create";
   }, [jobId]);
+
+  const positionLabel = useMemo(() => {
+    return (
+      <Space>
+        <Text>Position</Text>
+        <Link
+          to={`${APP_PAGE_NAME_ROUTES.POSITION}?modal=true`}
+          target="_blank"
+        >
+          Create position
+        </Link>
+      </Space>
+    );
+  }, []);
 
   const handleChangeEditor = (value: string) => {
     setFieldValue("jobDetail", value);
@@ -84,7 +101,7 @@ const FormFields = () => {
       )}
       <FormItem
         name="positionId"
-        label="Position"
+        label={positionLabel}
         value={values.positionId}
         type={SELECT}
         options={dataToOptions(positions)}

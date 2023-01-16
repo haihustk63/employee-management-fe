@@ -21,6 +21,7 @@ const InputNumberField = ({ field, form, ...props }: IFieldProps) => {
   return (
     <InputNumber
       {...field}
+      precision={0}
       {...props}
       onChange={handleChange}
       className="input"

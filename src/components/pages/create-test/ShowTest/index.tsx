@@ -3,13 +3,22 @@ import { useContext } from "react";
 
 import { CreateTestContext } from "@/pages/tests/create-test";
 import ShowQuestion from "./ShowQuestion";
+import AppModal from "@/components/AppModal";
 
 const { Text } = Typography;
 
-const ShowTest = () => {
-  const { randomTest = [] } = useContext(CreateTestContext) as any;
+const ShowTestModal = () => {
+  const {
+    randomTest = [],
+    showTestModal,
+    toggleShowTestModal,
+  } = useContext(CreateTestContext) as any;
   return (
-    <div className="show-test">
+    <AppModal
+      open={showTestModal}
+      onCancel={toggleShowTestModal}
+      wrapClassName="show-test"
+    >
       {randomTest.length === 0 && (
         <Text>The random test will be displayed here</Text>
       )}
@@ -22,8 +31,8 @@ const ShowTest = () => {
           disableInput
         />
       ))}
-    </div>
+    </AppModal>
   );
 };
 
-export default ShowTest;
+export default ShowTestModal;

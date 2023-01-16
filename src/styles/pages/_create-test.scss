@@ -1,17 +1,47 @@
 .create-test-page {
-  
+  > .info {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  > .manual {
+    display: flex;
+    margin-top: 2rem;
+  }
+
+  > .manual > .input-question-info {
+    width: 60%;
+    margin-right: 2rem;
+  }
 }
 
 .show-test {
-  background-color: var(--bs-white);
-  border-radius: var(--common-border-radius);
-  padding: 2rem;
-  margin-top: 1.6rem;
+  > .ant-modal {
+    width: 80% !important;
+    max-height: 80vh;
+  }
+
+  > .ant-modal > .ant-modal-content > .ant-modal-body {
+    overflow: auto;
+    height: 65vh;
+  }
 }
 
-.input-question-info {
-  > .app-primary-card {
+// .input-question-info {
+//   > .app-primary-card {
+//     padding: 1rem;
+//     margin: 1.6rem 0;
+//   }
+// }
+
+.list-question-info {
+  > .list {
+    max-height: 50rem;
+    overflow: auto;
+  }
+
+  > .list > .app-primary-card {
     padding: 1rem;
-    margin: 1.6rem 0;
   }
 }

@@ -14,6 +14,7 @@ import {
   getQuestionLevel,
   getQuestionType,
   getRequestStatus,
+  getRequestTypeLabel,
   getRequestTypeValues,
   getRoleLabel,
   getTime,
@@ -384,7 +385,7 @@ export const testQuestionListColumns = ({
     },
     {
       key: "topic",
-      dataIndex: ["topic", "name"],
+      dataIndex: ["topicName"],
       title: "Topic",
     },
     {
@@ -616,6 +617,10 @@ export const requestsTableColumns = (
       key: "type",
       title: "Type",
       dataIndex: ["type"],
+      render: (value: number) => {
+        const typeLabel = getRequestTypeLabel(value);
+        return <AppTag color="warning">{typeLabel}</AppTag>;
+      },
     },
     {
       key: "reason",
@@ -638,8 +643,8 @@ export const requestsTableColumns = (
       dataIndex: ["isCancelled"],
       render: (value: number) => {
         const tag = value
-          ? { label: "Cancelled", color: "green" }
-          : { label: "Not cancelled", color: "warning" };
+          ? { label: "Yes", color: "green" }
+          : { label: "No", color: "warning" };
         return <AppTag color={tag.color}>{tag.label}</AppTag>;
       },
     },

@@ -5,9 +5,10 @@ import InputQuestionInfo from "@/components/pages/create-test/InputQuestionInfo"
 import InputQuestionInfoManual from "@/components/pages/create-test/InputQuestionInfoManual";
 import ListQuestionInfo from "@/components/pages/create-test/ListQuestionInfo";
 import ListQuestionInfoManual from "@/components/pages/create-test/ListQuestionInfoManual";
-import ShowTest from "@/components/pages/create-test/ShowTest";
+import ShowTestModal from "@/components/pages/create-test/ShowTest";
 import { QUESTION_LEVELS, TEST_STATUS } from "@/constants/common";
 import { useGetTest, useSaveTest, useUpdateTest } from "@/hooks/tests";
+import useModal from "@/hooks/useModal";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { Switch } from "antd";
 import { createContext, FC, useEffect, useMemo, useState } from "react";
@@ -43,6 +44,8 @@ const CreateTestPage: FC = () => {
   const [duration, setDuration] = useState(0);
   const [titleError, setTitleError] = useState(false);
   const [durationError, setDurationError] = useState(false);
+  const { showModal: showTestModal, handleToggleModal: toggleShowTestModal } =
+    useModal();
 
   const { mutate: onSaveTest, isError, isSuccess } = useSaveTest();
   const { data: currentTest = {} } = useGetTest(testId as string, true) as any;
@@ -81,29 +84,74 @@ const CreateTestPage: FC = () => {
     messageSuccess: "Update test successfully",
   });
 
+  const saveTest = () => {
+    let questionIds;
+
+    if (!title) {
+      setTitleError(true);
+      return;
+    }
+
+    if (duration === null) {
+      setDurationError(true);
+      return;
+    }
+
+    if (testId) {
+      questionIds = questionInfoManual.map(
+        (question: any) => question.questionId
+      );
+      onUpdateTest({ questionIds, title, duration });
+    } else {
+      questionIds = randomTest.map((question: any) => question.id);
+      onSaveTest({ questionIds, title, duration });
+    }
+  };
+
   const isPublished = useMemo(() => {
     return currentTest?.skillTestAccount?.some(
       (item: any) => item.status !== created.value
     );
   }, [currentTest]);
 
+  const renderPreviewAndSave = useMemo(() => {
+    return (
+      <>
+        <AppButton
+          buttonTitle="Save test"
+          onClick={saveTest}
+          disabled={isPublished}
+        />
+        {isPublished && (
+          <p>
+            This test can not modify because some comtestants have completed it
+          </p>
+        )}
+      </>
+    );
+  }, [isPublished, saveTest]);
+
   const renderModeContent = useMemo(() => {
     if (mode === "random") {
       return (
-        <>
+        <div className="random">
           <InputQuestionInfo />
           <ListQuestionInfo />
-        </>
+          {renderPreviewAndSave}
+        </div>
       );
     } else {
       return (
-        <>
+        <div className="manual">
           <InputQuestionInfoManual />
-          <ListQuestionInfoManual />
-        </>
+          <div className="info">
+            <ListQuestionInfoManual />
+            {renderPreviewAndSave}
+          </div>
+        </div>
       );
     }
-  }, [mode]);
+  }, [mode, renderPreviewAndSave]);
 
   const handleSubmitQuestionInfo = ({
     topicId,
@@ -145,30 +193,6 @@ const CreateTestPage: FC = () => {
     }
   };
 
-  const handleSaveTest = () => {
-    let questionIds;
-
-    if (!title) {
-      setTitleError(true);
-      return;
-    }
-
-    if (duration === null) {
-      setDurationError(true);
-      return;
-    }
-
-    if (testId) {
-      questionIds = questionInfoManual.map(
-        (question: any) => question.questionId
-      );
-      onUpdateTest({ questionIds, title, duration });
-    } else {
-      questionIds = randomTest.map((question: any) => question.id);
-      // onSaveTest({ questionIds, title, duration });
-    }
-  };
-
   const handleChangeSwitch = (checked: boolean) => {
     if (checked) {
       setMode("random");
@@ -191,53 +215,49 @@ const CreateTestPage: FC = () => {
     <CreateTestContext.Provider
       value={{
         questionInfo,
-        onSubmitQuestionInfo: handleSubmitQuestionInfo,
         randomTest,
-        setRandomTest,
         questionInfoManual,
-        setQuestionInfoManual,
-        testId,
         currentTest,
+        testId,
+        showTestModal,
+        mode,
+        onSubmitQuestionInfo: handleSubmitQuestionInfo,
+        setRandomTest,
+        setQuestionInfoManual,
+        toggleShowTestModal,
       }}
     >
       <div className="create-test-page">
-        <AppInput
-          placeholder="Test title"
-          value={title}
-          onChange={changeTitle}
-          label="Test title"
-        />
-        {titleError && <AppFormErrorMessage message="Title is required" />}
-        <AppInputNumber
-          placeholder="Test duration"
-          value={duration}
-          onChange={changeDuration}
-          min={0}
-          label="Test duration (Minutes)"
-        />
-        {durationError && (
-          <AppFormErrorMessage message="Duration is required" />
-        )}
-
-        {!testId && (
-          <Switch
-            defaultChecked={mode === "random"}
-            onChange={handleChangeSwitch}
-            className="switch"
+        <div className="info">
+          <AppInput
+            placeholder="Test title"
+            value={title}
+            onChange={changeTitle}
+            label="Test title"
+            allowClear
           />
-        )}
+          {titleError && <AppFormErrorMessage message="Title is required" />}
+          <AppInputNumber
+            placeholder="Test duration"
+            value={duration}
+            onChange={changeDuration}
+            min={0}
+            label="Test duration (Minutes)"
+          />
+          {durationError && (
+            <AppFormErrorMessage message="Duration is required" />
+          )}
+
+          {!testId && (
+            <Switch
+              defaultChecked={mode === "random"}
+              onChange={handleChangeSwitch}
+              className="switch"
+            />
+          )}
+        </div>
         {renderModeContent}
-        <ShowTest />
-        <AppButton
-          buttonTitle="Save test"
-          onClick={handleSaveTest}
-          disabled={isPublished}
-        />
-        {isPublished && (
-          <p>
-            This test can not modify because some comtestants have completed it
-          </p>
-        )}
+        <ShowTestModal />
       </div>
     </CreateTestContext.Provider>
   );

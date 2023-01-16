@@ -49,7 +49,6 @@ const AccountManagement = () => {
       const hasAccount = accounts?.findIndex(
         (account: any) => account.candidateId === candidateId
       );
-      console.log(accounts)
 
       if (hasAccount >= 0) {
         appNotification({

@@ -4,6 +4,8 @@ export interface IAppDatePickerProps {
   allowClear?: boolean;
   pickerLabel?: string;
   bordered?: boolean;
+  format?: string;
+  disabledDate?: any;
   className?: string;
   picker?: "date" | "week" | "month" | "quarter" | "year";
   open?: boolean;
@@ -13,4 +15,5 @@ export interface IAppDatePickerProps {
   onOpenChange?: () => void;
   onChange?: any;
   onOk?: () => void;
+  showTime?: boolean | object;
 }

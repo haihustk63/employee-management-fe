@@ -1,10 +1,7 @@
 import AppForm from "@/components/AppForm";
 import AppModal from "@/components/AppModal";
-import { IModalControlProps } from "@/constants/interface";
 import {
-  useCreatePosition,
-  useGetAllPositions,
-  useUpdatePosition,
+  useCreatePosition, useUpdatePosition
 } from "@/hooks/position";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { PositionManagementContext } from "@/pages/position";

@@ -365,7 +365,7 @@ export const COMMON_TYPE_QUESTION = {
   },
   essays: {
     value: 3,
-    label: "Esaays",
+    label: "Essays",
     color: "error",
   },
 };
@@ -522,3 +522,5 @@ export const TEST_STATUS = {
     label: "Done",
   },
 };
+
+export const RATE_LEVELS = ["Terrible", "Bad", "Normal", "Good", "Wonderful"];

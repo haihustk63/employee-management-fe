@@ -63,6 +63,8 @@ export const API_ROUTES = {
 
   // education-programs
   EDUCATION_PROGRAM: `${API_URL}/education-programs`,
+  MY_EDUCATION_PROGRAM: `${API_URL}/my-education-programs`,
+  RATE_EDUCATION_PROGRAM: `${API_URL}/rate-education-programs`,
   EDUCATION_PROGRAM_JOIN: `${API_URL}/education-programs-join`,
   EDUCATION_PROGRAM_ID: (programId: string | number) =>
     `${API_URL}/education-programs/${programId}`,

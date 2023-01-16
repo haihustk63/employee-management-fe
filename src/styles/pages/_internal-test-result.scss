@@ -47,7 +47,11 @@
     background-color: green;
   }
 
-  > .answers > .wrong {
+  > .answers > .-wrong {
     background-color: red;
+  }
+
+  > .answers > .-miss {
+    background-color: blue;
   }
 }

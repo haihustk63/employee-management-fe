@@ -1,3 +1,4 @@
+import AppButton from "@/components/AppButton";
 import AppFormErrorMessage from "@/components/AppFormErrorMessage";
 import { AppInput, AppSelect } from "@/components/AppFormField";
 import AppModal from "@/components/AppModal";
@@ -27,7 +28,7 @@ const AssignTestModal = () => {
     setAssignment((prev: any) => ({ ...prev, email }));
   };
 
-  const handleClickOk = () => {
+  const handleAssign = () => {
     if (assignment.email === undefined) {
       setError(true);
       return;
@@ -35,12 +36,14 @@ const AssignTestModal = () => {
     assignTest();
   };
 
+  const Footer = <AppButton buttonTitle="Confirm" onClick={handleAssign} />;
+
   return (
     <AppModal
       title="Assign Test"
       open={showAssignModal}
       onCancel={handleCloseAssignModal}
-      onOk={handleClickOk}
+      footer={Footer}
     >
       <AppSelect
         placeholder="Choose email"

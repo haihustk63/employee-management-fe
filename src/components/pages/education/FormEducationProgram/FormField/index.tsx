@@ -5,7 +5,7 @@ import AppFormErrorMessage from "@/components/AppFormErrorMessage";
 import AppTextEditor from "@/components/AppTextEditor";
 import FormItem from "@/components/FormItem";
 import { FORM_ITEM_TYPES, JOB_LEVELS, JOB_TYPES } from "@/constants/common";
-import { dataToOptions } from "@/utils";
+import { dataToOptions, disabledDateBeforeToday } from "@/utils";
 import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useGetEmployees } from "@/hooks/employee";
@@ -18,7 +18,7 @@ const { TEXT, SELECT, INPUT_NUMBER } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
   const { programId = "" } = useParams();
-  const { values, handleSubmit, handleChange, setFieldValue, errors, touched } =
+  const { values, errors, touched, handleSubmit, handleChange, setFieldValue } =
     useFormikContext() as any;
 
   const { data: employees = [] } = useGetEmployees();
@@ -26,17 +26,17 @@ const FormFields = () => {
 
   useEffect(() => {
     if (Object.keys(program).length > 0) {
-      const { title, content, maxSlot, time, tutor } = program;
+      const { title, content, time, tutor, duration } = program;
       setFieldValue("title", title);
       setFieldValue("content", content);
-      setFieldValue("maxSlot", maxSlot);
+      setFieldValue("duration", duration);
       setFieldValue("time", dayjs(time ?? Date.now()));
       setFieldValue("tutorId", tutor?.id);
     }
   }, [program]);
 
   const buttonTitle = useMemo(() => {
-    if (programId !== undefined || programId !== null) {
+    if (programId) {
       return "Update";
     } else {
       return "Create";
@@ -70,19 +70,22 @@ const FormFields = () => {
         <AppFormErrorMessage message={errors.content} />
       )}
 
-      <FormItem
-        name="maxSlot"
-        label="Max slot"
-        value={values.maxSlot}
-        min={0}
-        type={INPUT_NUMBER}
-        placeholder="Enter max slot"
-      />
-
       <AppDatePicker
         value={values.time}
         onChange={handleDatePickerChange}
         pickerLabel="Time"
+        format="YYYY-MM-DD HH:mm"
+        disabledDate={disabledDateBeforeToday}
+        showTime={{ defaultValue: dayjs("00:00", "HH:mm") }}
+      />
+
+      <FormItem
+        name="duration"
+        label="Duration"
+        value={values.duration}
+        type={INPUT_NUMBER}
+        min={0}
+        placeholder="Choose duration"
       />
 
       <FormItem

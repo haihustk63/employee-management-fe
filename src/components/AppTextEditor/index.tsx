@@ -17,9 +17,9 @@ const AppTextEditor: FC<{ onChange?: any; initialValue?: string }> = ({
   const handleContentChange = (newContent: any) => {
     if (content === "<p></br></p>") {
       setContent("");
-      return;
+    } else {
+      setContent(newContent);
     }
-    setContent(newContent);
     onChange(newContent);
   };
 

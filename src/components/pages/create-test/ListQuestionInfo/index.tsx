@@ -37,10 +37,8 @@ const ListQuestionInfo: FC = () => {
     }
   };
 
-  console.log(questionInfo)
-
   return (
-    <div className="input-question-info">
+    <div className="list-question-info">
       {questionInfo.map((item: any, index: number) => {
         return (
           <AppPrimaryCard

@@ -15,7 +15,7 @@
   }
 
   > .ant-layout > .ant-layout {
-    margin-left: 30rem;
+    // margin-left: 30rem;
   }
 }
 
@@ -34,8 +34,8 @@
 
 .common-sider {
   background-color: var(--bs-white) !important;
-  position: fixed !important;
-  height: calc(100vh - 6.3rem);
+  // position: fixed !important;
+  // min-height: calc(100vh - 6.3rem);
 
   > .ant-layout-sider-children {
     overflow-y: scroll;

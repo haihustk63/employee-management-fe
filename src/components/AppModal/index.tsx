@@ -16,6 +16,7 @@ const AppModal: FC<IAppModalProps> = ({
   title,
   wrapClassName,
   children,
+  footer = null,
   ...props
 }) => {
   return (
@@ -32,6 +33,7 @@ const AppModal: FC<IAppModalProps> = ({
       maskClosable={maskClosable}
       wrapClassName={`app-modal ${wrapClassName}`}
       open={open}
+      footer={footer}
       {...props}
     >
       {children}

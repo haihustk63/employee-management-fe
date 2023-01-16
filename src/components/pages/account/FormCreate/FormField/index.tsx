@@ -8,7 +8,7 @@ import { dataToOptions } from "@/utils";
 import { useContext, useMemo, useState } from "react";
 import { AccountManagementContext } from "@/pages/account";
 import { useGetCandidateProfile } from "@/hooks/candidate";
-import { Switch } from "antd";
+import { Switch, Typography } from "antd";
 
 const { TEXT, PASSWORD, SELECT } = FORM_ITEM_TYPES;
 
@@ -72,14 +72,19 @@ const FormFields = () => {
           placeholder="Choose a employee"
         />
       ) : (
-        <FormItem
-          name="candidateId"
-          label="Candidate"
-          value={values.candidateId}
-          type={SELECT}
-          options={candidateOptions}
-          placeholder="Choose a candidate"
-        />
+        <>
+          <Typography.Text>
+            Select candidate so that we can send he/she an email
+          </Typography.Text>
+          <FormItem
+            name="candidateId"
+            label="Candidate"
+            value={values.candidateId}
+            type={SELECT}
+            options={candidateOptions}
+            placeholder="Choose a candidate"
+          />
+        </>
       )}
 
       <AppButton buttonTitle={buttonTitle} htmlType="submit" />

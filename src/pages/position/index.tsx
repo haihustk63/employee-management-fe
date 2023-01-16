@@ -2,14 +2,24 @@ import AddNewPositionModal from "@/components/pages/position/AddNewPosition";
 import PositionList from "@/components/pages/position/PositionList";
 import { useGetAllPositions } from "@/hooks/position";
 import useModal from "@/hooks/useModal";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export const PositionManagementContext = createContext({}) as any;
 
 const PositionManagement = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { data, isFetching, isLoading } = useGetAllPositions();
   const { showModal, handleToggleModal: onToggleModal } = useModal();
   const [positionUpdateId, setPositionUpdateId] = useState<string | number>();
+
+  useEffect(() => {
+    const modal = searchParams.get("modal");
+    if (modal) {
+      onToggleModal();
+      setSearchParams({});
+    }
+  }, [searchParams]);
 
   const handleSetPositionUpdateId = (positionId: string | number) => {
     setPositionUpdateId(positionId);

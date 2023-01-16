@@ -1,42 +1,57 @@
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { Typography } from "antd";
 
 import AppList from "@/components/AppList";
 import AppModal from "@/components/AppModal";
-import { useGetEducationProgramById } from "@/hooks/education";
+import {
+  useGetAllEducationPrograms,
+  useGetEducationProgramById,
+} from "@/hooks/education";
 import { EducationProgramContext } from "@/pages/education";
 import { mergeName } from "@/utils";
+import AppRate from "@/components/AppRate";
 
 const { Title } = Typography;
 
 const ListAttendancesModal = () => {
-  const { showModal, handleToggleModal, selectProgramId } = useContext(
-    EducationProgramContext
-  ) as any;
-
   const {
-    data: program = {},
-    isLoading,
-    isFetching,
-  } = useGetEducationProgramById(selectProgramId) as any;
+    showListAttendancesModal,
+    toggleListAttendancesModal,
+    selectProgramId,
+  } = useContext(EducationProgramContext) as any;
+
+  const { data: programs = [] } = useGetAllEducationPrograms();
+
+  const program = useMemo(() => {
+    return programs.find((p: any) => p.id === selectProgramId);
+  }, [programs, selectProgramId]);
 
   const dataItems = useMemo(() => {
-    if (Object.keys(program).length > 0) {
-      return program?.employees?.map(({ employee }: any) => ({
-        title: mergeName(employee),
-      }));
-    } else {
-      return [];
+    if (program) {
+      if (Object.keys(program).length > 0) {
+        return program?.employees?.map(({ isTutor, rate, employee }: any) => {
+          let title = mergeName(employee);
+          if (isTutor) {
+            title += " (HOST)";
+          }
+          return {
+            title,
+            description: <AppRate value={rate || 0} disabled />,
+          };
+        });
+      } else {
+        return [];
+      }
     }
   }, [program]);
 
   return (
-    <AppModal open={showModal} onCancel={handleToggleModal}>
+    <AppModal
+      open={showListAttendancesModal}
+      onCancel={toggleListAttendancesModal}
+    >
       {program?.title && <Title level={3}>{program?.title}</Title>}
-      <AppList
-        dataSource={dataItems as any}
-        loading={isLoading || isFetching}
-      />
+      <AppList dataSource={dataItems as any} />
     </AppModal>
   );
 };

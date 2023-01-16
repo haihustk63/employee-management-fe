@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export interface IFormItemProps {
   name?: string;
-  label?: string;
+  label?: string | ReactNode;
   mode?: "multiple" | "tags";
   placeholder?: string;
   value?: string | number;

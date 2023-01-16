@@ -1,4 +1,5 @@
 import AppButton from "@/components/AppButton";
+import { showDeleteConfirm } from "@/components/AppConfirm";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 import { useDeleteJob } from "@/hooks/job";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
@@ -9,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 const TestListAction: FC<{ testId: number }> = ({ testId }) => {
   const navigate = useNavigate();
   const { mutate: onDeleteTest, isError, isSuccess } = useDeleteJob(testId);
-  const { toggleAssignModal, setAssignment } = useContext(TestsContext) as any;
+  const { isAdmin, toggleAssignModal, setAssignment, showContestants } =
+    useContext(TestsContext) as any;
 
   useTriggerNoti({
     isError,
@@ -22,7 +24,7 @@ const TestListAction: FC<{ testId: number }> = ({ testId }) => {
   };
 
   const handleDeleteTest = () => {
-    onDeleteTest("");
+    showDeleteConfirm({ onDelete: onDeleteTest });
   };
 
   const assignTest = () => {
@@ -33,8 +35,12 @@ const TestListAction: FC<{ testId: number }> = ({ testId }) => {
   return (
     <div className="job-group-btn">
       <AppButton buttonTitle="View Detail" onClick={handleNavigateToUpdate} />
+      <AppButton
+        buttonTitle="View Contestants"
+        onClick={showContestants(testId)}
+      />
       <AppButton buttonTitle="Delete" onClick={handleDeleteTest} />
-      <AppButton buttonTitle="Assign Test" onClick={assignTest} />
+      {isAdmin && <AppButton buttonTitle="Assign Test" onClick={assignTest} />}
     </div>
   );
 };

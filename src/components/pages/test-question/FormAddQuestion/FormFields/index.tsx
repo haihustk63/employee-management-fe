@@ -15,6 +15,9 @@ import { addKeyToData, dataToOptions } from "@/utils";
 import { FormAddQuestionContext } from "..";
 import FormAddChoices from "../FormAddChoices";
 import GroupButtonChooseType from "../GroupButtonChooseType";
+import { Space } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 
 const { TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 
@@ -23,6 +26,7 @@ const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
 const FormFields = () => {
   const { values, handleSubmit, handleChange, setFieldValue, resetForm } =
     useFormikContext() as any;
+  const navigate = useNavigate();
 
   const {
     questionSource = [],
@@ -39,6 +43,24 @@ const FormFields = () => {
     }
     return <FormAddChoices />;
   }, [values.type]);
+
+  const navigateAddTopic = () => {
+    navigate(`${APP_PAGE_NAME_ROUTES.TEST_TOPIC}?modal=true`);
+  };
+
+  const TopicLabel = useMemo(() => {
+    return (
+      <Space>
+        <span>Topic</span>
+        <Link
+          to={`${APP_PAGE_NAME_ROUTES.TEST_TOPIC}?modal=true`}
+          target="_blank"
+        >
+          Add Topic
+        </Link>
+      </Space>
+    );
+  }, []);
 
   const handleDeleteCodeBlock = (codeBlockId: string) => () => {
     if (setQuestionSource) {
@@ -70,13 +92,14 @@ const FormFields = () => {
 
   const handleChangeType = (type: string) => () => {
     setFieldValue("type", type);
+    setFieldValue("answer", []);
   };
 
   return (
     <Form onSubmit={handleSubmit} className="form">
       <FormItem
         name="topicId"
-        label="Topic"
+        label={TopicLabel}
         value={values.topicId}
         type={SELECT}
         options={dataToOptions(testTopics)}

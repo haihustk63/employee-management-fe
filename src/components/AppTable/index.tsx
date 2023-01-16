@@ -23,10 +23,12 @@ const AppTable: FC<IAppTableProps> = ({
 }) => {
   return (
     <div className="app-table">
-      <div className="title">
-        {onGoBack && <AppBackPage onBack={onGoBack} />}
-        <Title level={3}>{tableName}</Title>
-      </div>
+      {tableName && (
+        <div className="title">
+          {onGoBack && <AppBackPage onBack={onGoBack} />}
+          <Title level={3}>{tableName}</Title>
+        </div>
+      )}
       <Table
         columns={columns}
         dataSource={dataSource}
@@ -36,7 +38,7 @@ const AppTable: FC<IAppTableProps> = ({
         onChange={onChange}
         bordered={bordered}
         sortDirections={sortDirections}
-        scroll={scroll ? scroll : { x: true, y: 400 }}
+        scroll={scroll ? scroll : { x: true, y: 500 }}
         sticky={sticky}
         rowSelection={rowSelection}
       />

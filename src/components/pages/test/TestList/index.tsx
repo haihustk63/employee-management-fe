@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 import TestListAction from "../TestListAction";
 
 const TestList = () => {
-  const { tests, showContestants } = useContext(TestsContext) as any;
+  const { tests } = useContext(TestsContext) as any;
 
   return (
     <div className="test-list">
@@ -16,7 +16,6 @@ const TestList = () => {
           <AppPrimaryCard
             title={item.title}
             key={item.id}
-            onClick={showContestants(item.id)}
           >
             <AppTag color="success">{item.duration} minutes</AppTag>
             <TestListAction testId={item.id} />

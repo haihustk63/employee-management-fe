@@ -15,6 +15,7 @@ import {
   TEST_STATUS,
   WORKING_STATUS,
 } from "./constants/common";
+import { Dayjs } from "dayjs";
 
 const purityContent = (content?: string) => {
   if (!content) return "";
@@ -144,10 +145,9 @@ const getTimeLeavingLabel = (timeLeaving: any) => {
 
 const getRequestRows = (requests: any[]) => {
   return requests.map((request) => {
-    const type = getRequestTypeLabel(request.type);
     const duration = getDuration(request);
 
-    return { ...request, type, duration };
+    return { ...request, duration };
   });
 };
 
@@ -228,6 +228,10 @@ const getSkillTestStatusLabel = (value: number) => {
   return Object.values(TEST_STATUS).find((item) => item.value === value)?.label;
 };
 
+const disabledDateBeforeToday = (current: Dayjs) => {
+  return current && current < dayjs().startOf("day");
+};
+
 export {
   purityContent,
   addKeyToData,
@@ -248,4 +252,5 @@ export {
   getQuestionLevel,
   getQuestionType,
   getSkillTestStatusLabel,
+  disabledDateBeforeToday,
 };
