@@ -8,9 +8,9 @@ const Sumary = () => {
   const setBackgroundColor = (index: number) => {
     const answer = answers[index]?.answer;
     if (answer?.length === 0 || answer === undefined) {
-      return undefined;
+      return "blue";
     } else {
-      return "red";
+      return "green";
     }
   };
 
@@ -22,7 +22,11 @@ const Sumary = () => {
             <div
               key={index + 1}
               className="number"
-              style={{ backgroundColor: setBackgroundColor(index) }}
+              style={{
+                backgroundColor: `var(--color-primary-${setBackgroundColor(
+                  index
+                )})`,
+              }}
             >
               {index + 1}
             </div>

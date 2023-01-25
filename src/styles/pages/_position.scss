@@ -1,12 +1,3 @@
-.position-management {
-  display: flex;
-
-  > .position-list {
-    flex-grow: 1;
-    margin-left: 2rem;
-  }
-}
-
 .add-new-position {
   > .app-form {
     padding: 0;
@@ -15,21 +6,14 @@
 
 .position-list {
   > .list {
-    display: flex;
-    flex-wrap: wrap;
-
-    > .app-primary-card {
-      width: calc((100% - 6.4rem) / 4);
-      margin: 0.8rem;
-    }
+    @include cardList(3, 1.6rem);
   }
 
   > .title {
-    display: flex;
-    align-items: center;
-
-    > .app-button {
-      margin-left: 1rem;
-    }
+    @include titleWithAction;
   }
+}
+
+.position-card {
+  @include cardItemContent;
 }

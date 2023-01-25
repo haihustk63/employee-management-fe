@@ -1,9 +1,20 @@
 .test-list {
-  display: flex;
-  flex-wrap: wrap;
+  > .app-title {
+    @include titleWithAction;
+  }
 
-  > .app-primary-card {
-    width: calc((100% - 6.4rem) / 4);
-    margin: 0.8rem;
+  > .list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  > .list > .app-primary-card {
+    @include cardItemContent;
+  }
+
+  > .list > .app-primary-card > .title {
+    margin-bottom: 1rem;
   }
 }

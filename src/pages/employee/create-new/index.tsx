@@ -7,7 +7,7 @@ const CreateNewEmployee = () => {
     mutate: onCreateProfile,
     isSuccess,
     isError,
-  } = useCreateEmployeeProfile();
+  } = useCreateEmployeeProfile() as any;
 
   useTriggerNoti({
     isSuccess,
@@ -16,7 +16,16 @@ const CreateNewEmployee = () => {
   });
 
   const onSubmit = (values: any) => {
-    onCreateProfile(values);
+    const formData = new FormData();
+    const { avatar, ...rest } = values;
+    formData.append("avatar", avatar);
+    formData.append("data", JSON.stringify(rest));
+    onCreateProfile({
+      data: formData,
+      config: {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    });
   };
 
   return (

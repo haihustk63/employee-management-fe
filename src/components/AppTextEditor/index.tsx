@@ -1,10 +1,15 @@
+import { Typography } from "antd";
 import { FC, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { IAppTextEditor } from "./interface";
 
-const AppTextEditor: FC<{ onChange?: any; initialValue?: string }> = ({
-  onChange,
+const { Text } = Typography;
+
+const AppTextEditor: FC<IAppTextEditor> = ({
+  title,
   initialValue,
+  onChange,
 }) => {
   const [content, setContent] = useState("");
 
@@ -25,6 +30,7 @@ const AppTextEditor: FC<{ onChange?: any; initialValue?: string }> = ({
 
   return (
     <div className="app-text-editor">
+      {!!title && <Text className="form-label">{title}</Text>}
       <div className="editor">
         <ReactQuill
           theme="snow"

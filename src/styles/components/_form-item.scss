@@ -1,8 +1,86 @@
 .form-item {
   display: flex;
   flex-direction: column;
+  gap: 0.6rem;
+
+  > .input,
+  > .inputnumber {
+    @include formItem;
+  }
+
+  > .inputnumber > .ant-input-number-input-wrap,
+  > .inputnumber > .ant-input-number-input-wrap > .ant-input-number-input {
+    height: 100%;
+  }
+
+  > .select > .ant-select-selector {
+    box-shadow: none !important;
+    height: 4rem;
+  }
+
+  > .select > .ant-select-selector:hover {
+    outline: none;
+    border-color: var(--color-primary-blue) !important;
+  }
+
+  > .select > .ant-select-selector {
+    @include formItem;
+  }
+
+  > .select
+    > .ant-select-selector
+    > .ant-select-selection-search
+    > .ant-select-selection-search-input {
+    height: 100%;
+  }
+  > .select > .ant-select-selector > .ant-select-selection-placeholder,
+  .select > .ant-select-selector > .ant-select-selection-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
 
   > .textarea {
-    min-height: 20rem;
+    min-height: 10rem;
+    box-shadow: none;
+  }
+
+  > .textarea:hover {
+    border-color: var(--color-primary-blue);
+  }
+}
+
+.ant-select-item.ant-select-item-option.ant-select-item-option-selected {
+  background-color: var(--color-primary-blue);
+  color: var(--bs-white);
+}
+
+.app-radio-group,
+.app-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  > .item {
+    display: flex;
+    align-items: center;
+  }
+
+  > .item > label {
+    flex-grow: 1;
+    margin: 0;
+  }
+
+  > .item > label > span:last-child {
+    width: 100%;
+    padding-inline-end: 0;
+  }
+
+  > .item .ant-input {
+    width: 100%;
+  }
+
+  > .item > .svg-icon {
+    margin-left: 1rem;
   }
 }

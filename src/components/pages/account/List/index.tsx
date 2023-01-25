@@ -14,12 +14,7 @@ const ListAccount: FC<ITableDataProps> = ({
 
   return (
     <div className="list-account">
-      <AppTable
-        dataSource={dataSource}
-        columns={columns}
-        loading={loading}
-        tableName="Account"
-      />
+      <AppTable dataSource={dataSource} columns={columns} loading={loading} />
     </div>
   );
 };

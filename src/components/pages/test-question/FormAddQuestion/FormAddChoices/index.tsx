@@ -3,9 +3,7 @@ import { useFormikContext } from "formik";
 import { FC, useMemo } from "react";
 
 import AppButton from "@/components/AppButton";
-import {
-  AppCheckboxGroup, AppRadioGroup
-} from "@/components/AppFormField";
+import { AppCheckboxGroup, AppRadioGroup } from "@/components/AppFormField";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
 import { createUniqueId } from "@/helpers";
 
@@ -72,7 +70,10 @@ const FormAddChoices: FC = () => {
         onChangeInput={handleChangeAnswerInput}
         onDeleteOption={handleDeleteAnswer}
       />
-      <AppButton buttonTitle="Add choice" onClick={handleAddChoice} />
+      <AppButton
+        buttonTitle="Add choice"
+        onClick={handleAddChoice}
+      />
     </div>
   );
 };

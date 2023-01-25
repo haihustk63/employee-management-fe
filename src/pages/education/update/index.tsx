@@ -18,15 +18,23 @@ const UpdateNewEducationProgram = () => {
   });
 
   const handleSubmit = (values: any) => {
-    onUpdate(values);
+    const { materials = [], ...rest } = values;
+
+    const formData = new FormData();
+    materials.map((item: any) => {
+      formData.append("materials[]", item);
+    });
+    formData.append("data", JSON.stringify(rest));
+
+    onUpdate({
+      data: formData,
+      config: {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    });
   };
 
-  return (
-    <div>
-      <h1>Update Education Program</h1>
-      <FormEducationProgram onSubmit={handleSubmit} />
-    </div>
-  );
+  return <FormEducationProgram onSubmit={handleSubmit} />;
 };
 
 export default UpdateNewEducationProgram;

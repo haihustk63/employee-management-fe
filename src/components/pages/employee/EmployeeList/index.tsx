@@ -1,10 +1,8 @@
 import { FC, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 
 import AppTable from "@/components/AppTable";
 import { employeeListColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
-import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 
 const EmployeeList: FC<ITableDataProps> = ({
   dataSource,
@@ -20,8 +18,8 @@ const EmployeeList: FC<ITableDataProps> = ({
       <AppTable
         columns={columns}
         dataSource={dataSource}
-        tableName="List Employee"
         loading={loading}
+        scroll={{ x: 1600 }}
       />
     </div>
   );

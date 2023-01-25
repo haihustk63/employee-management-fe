@@ -1,6 +1,6 @@
 export interface IAppRadioGroup {
-  options?: string[];
-  value?: string;
+  options?: any[];
+  value?: string | number;
   onChange?: any;
   onDeleteOption?: any;
   nameInput?: string;
@@ -9,8 +9,8 @@ export interface IAppRadioGroup {
 }
 
 export interface IAppCheckboxGroup {
-  options?: string[];
-  value?: string[];
+  options?: any[];
+  value?: string[] | number[];
   onChange?: any;
   onDeleteOption?: any;
   nameInput?: string;

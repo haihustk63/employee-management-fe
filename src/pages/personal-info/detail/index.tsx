@@ -1,9 +1,11 @@
-import React from 'react'
+import EmployeeProfile from "@/components/pages/employee/EmployeeProfile/Profile";
+import { currentUserAtom } from "@/modules/currentUser";
+import React from "react";
+import { useRecoilValue } from "recoil";
 
 const PersonalInfoDetail = () => {
-  return (
-    <div>PersonalInfoDetail</div>
-  )
-}
+  const { employee } = useRecoilValue(currentUserAtom);
+  return <EmployeeProfile employee={employee} />;
+};
 
-export default PersonalInfoDetail
+export default PersonalInfoDetail;

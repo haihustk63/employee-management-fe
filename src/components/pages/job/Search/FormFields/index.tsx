@@ -64,12 +64,14 @@ const FormFields = () => {
     <Form onSubmit={handleSubmit} className="form">
       <FormItem
         name="title"
+        label="Keyword"
         type={TEXT}
         onChange={handleChangeTitle}
-        placeholder="Title"
+        placeholder="Keyword: Job Title"
       />
       <FormItem
         name="typeOfJob"
+        label="Job Type"
         value={values.typeOfJob}
         type={SELECT}
         options={dataToOptions(JOB_TYPES)}
@@ -79,6 +81,7 @@ const FormFields = () => {
 
       <FormItem
         name="level"
+        label="Job Level"
         value={values.level}
         type={SELECT}
         options={dataToOptions(JOB_LEVELS)}
@@ -88,6 +91,7 @@ const FormFields = () => {
 
       <FormItem
         name="positionId"
+        label="Position"
         value={values.positionId}
         type={SELECT}
         options={dataToOptions(positions)}

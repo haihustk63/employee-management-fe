@@ -1,7 +1,33 @@
 .internal-test-result {
+  > .instruction {
+    @include appSection;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  > .instruction > .item {
+    padding: 0.5rem 1rem;
+    border-radius: var(--common-border-radius);
+    color: var(--bs-white);
+    font-size: 1.2rem;
+  }
+
+  > .instruction > .item:first-child {
+    background-color: var(--color-primary-green);
+  }
+
+  > .instruction > .item:nth-child(2) {
+    background-color: var(--color-primary-red);
+  }
+
+  > .instruction > .item:nth-child(3) {
+    background-color: var(--color-primary-blue);
+  }
+
   > .summary {
-    border-bottom: 0.2rem dotted #ccc;
-    padding-bottom: 2rem;
+    @include appSection;
   }
 
   > .summary > .name {
@@ -23,10 +49,20 @@
 }
 
 .test-result-question-item {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
+  @include appSection;
 
   > .index {
     font-size: 2rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  > .content {
+    white-space: pre-wrap;
+    margin-bottom: 2rem;
+    display: block;
   }
 
   > .codeblocks {
@@ -37,21 +73,69 @@
 
   > .answers {
     margin-top: 2rem;
+    border: 0.2rem dotted var(--color-primary-blue);
+    border-radius: var(--common-border-radius);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   > .answers > .item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  > .answers > .item > .text {
+    padding: 0.5rem 1rem;
+    border-radius: var(--common-border-radius);
+    flex-grow: 1;
+  }
+
+  > .answers > .item > .right {
+    background-color: var(--color-primary-green);
+    color: var(--bs-white);
+  }
+
+  > .answers > .item > .wrong {
+    background-color: var(--color-primary-red);
+    color: var(--bs-white);
+  }
+
+  > .answers > .item > .miss {
+    background-color: var(--color-primary-blue);
+    color: var(--bs-white);
+  }
+
+  > .answers > .item > .index {
+    background-color: var(--color-primary-gray);
+    border-radius: 10rem;
     padding: 0.5rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bs-white);
+    font-weight: 700;
+    user-select: none;
   }
 
-  > .answers > .-right {
-    background-color: green;
+  > .right {
+    margin-top: 2rem;
   }
 
-  > .answers > .-wrong {
-    background-color: red;
+  > .right > .text {
+    font-size: 2rem;
+    font-weight: 700;
   }
 
-  > .answers > .-miss {
-    background-color: blue;
+  > .right > .answers {
+    margin-top: 1rem;
+    padding-left: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 }

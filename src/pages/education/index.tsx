@@ -21,6 +21,8 @@ import { mergeName } from "@/utils";
 import { createContext, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import AppRate from "@/components/AppRate";
+import AppTooltip from "@/components/AppTooltip";
+import AppPrimaryCard from "@/components/AppCard/Primary";
 
 const { Title, Text } = Typography;
 
@@ -70,6 +72,17 @@ const EducationProgramManagement = () => {
     setIsShowMyProgram(!isShowMyProgram);
   };
 
+  const renderCardTitle = (title: string, averageRate: number) => {
+    return (
+      <>
+        <span>{title}</span>
+        <span>
+          <AppRate value={averageRate} disabled />
+        </span>
+      </>
+    );
+  };
+
   return (
     <EducationProgramContext.Provider
       value={{
@@ -81,53 +94,58 @@ const EducationProgramManagement = () => {
       }}
     >
       <div className="education-program-management">
-        <Title level={3}>Education Program</Title>
-        <Text>Click to each card to view detail</Text>
-        <Switch checked={isShowMyProgram} onChange={toggleSwitch} />
+        <div className="title">
+          <Text className="app-title">Education Programs</Text>
+          <AppTooltip title="Click here to view your programs">
+            <Switch checked={isShowMyProgram} onChange={toggleSwitch} />
+          </AppTooltip>
+        </div>
         <div className="list">
           {programs.map((item: any) => {
             return (
-              <AppWithCoverCard
+              <AppPrimaryCard
                 key={item.id}
-                title={item.title}
-                imageUrl="https://demos.themeselection.com/sneat-bootstrap-html-admin-template-free/assets/img/elements/18.jpg"
+                title={renderCardTitle(item.title, item.averageRate)}
                 hasBoxShadow
-                horizontal
               >
-                <Space>
+                <div className="description">
                   <AppTag color="success">
                     {item.tutor ? mergeName(item.tutor) : "WIP"}
                   </AppTag>
-                  <AppTag color="success">
-                    {dayjs(item.time).format("DD-MM-YYYY HH:mm")}
-                  </AppTag>
-                  <AppTag color="success">
-                    {dayjs(item.endTime).format("DD-MM-YYYY HH:mm")}
-                  </AppTag>
-                  <AppRate value={item.averageRate} disabled />
-                </Space>
-                {(employee?.role === APP_ROLES.ADMIN.value ||
-                  employee?.role === APP_ROLES.SUPER_ADMIN.value) && (
-                  <>
-                    <ButtonDeleteProgram programId={item.id} />
-                    <AppButton
-                      buttonTitle="Update"
-                      onClick={navigateUpdateProgram(item.id)}
-                    />
-                  </>
-                )}
+                  <div className="time">
+                    <AppTag color="success">
+                      {dayjs(item.time).format("DD-MM-YYYY")}
+                    </AppTag>
+                    <AppTag color="success">
+                      {`${dayjs(item.time).format("HH:mm")}-${dayjs(
+                        item.endTime
+                      ).format("HH:mm")}`}
+                    </AppTag>
+                  </div>
+                </div>
+                <div className="actions">
+                  <ButtonJoinProgram program={item} />
+                  <AppButton
+                    buttonTitle="View Detail"
+                    onClick={showProgramDetail(item.id)}
+                  />
+                  <AppButton
+                    buttonTitle="Show attendances"
+                    onClick={showAttendances(item.id)}
+                  />
 
-                <ButtonJoinProgram program={item} />
-                <AppButton
-                  buttonTitle="View Detail"
-                  onClick={showProgramDetail(item.id)}
-                />
-                <AppButton
-                  buttonTitle="Show attendances"
-                  onClick={showAttendances(item.id)}
-                />
-                <AppButton buttonTitle="Test" />
-              </AppWithCoverCard>
+                  {(employee?.role === APP_ROLES.ADMIN.value ||
+                    employee?.role === APP_ROLES.SUPER_ADMIN.value) && (
+                    <>
+                      <AppButton
+                        buttonTitle="Update"
+                        onClick={navigateUpdateProgram(item.id)}
+                      />
+                      <ButtonDeleteProgram programId={item.id} />
+                    </>
+                  )}
+                </div>
+              </AppPrimaryCard>
             );
           })}
         </div>

@@ -3,6 +3,9 @@ import { createContext, useEffect, useState } from "react";
 import ListJob from "@/components/pages/job/List";
 import { useGetAllJobs } from "@/hooks/job";
 import Search from "@/components/pages/job/Search";
+import { Typography } from "antd";
+
+const { Text } = Typography;
 
 export const JobManagementContext = createContext({});
 
@@ -23,6 +26,7 @@ const JobManagement = () => {
       value={{ queryParams, isInit, setQueryParams, searchParams, setIsInit }}
     >
       <div className="job-management">
+        <Text className="app-title">Jobs</Text>
         <Search />
         <ListJob dataSource={jobs} loading={isLoading || isFetching} />
       </div>

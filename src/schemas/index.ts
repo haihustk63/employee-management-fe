@@ -86,22 +86,29 @@ export const addCommonRequestSchema = object({
 export const addOvertimeRequestSchema = object({
   type: number().required("Type is required"),
   date: date().typeError("Invalid date").required("Date is required"),
-  startTime: date()
-    .typeError("Invalid date")
-    .required("Start time is required"),
-  endTime: date().typeError("Invalid date").required("End time is required"),
+  startTime: date().typeError("Invalid date").required("Time is required"),
+  endTime: date().typeError("Invalid date").required("Time is required"),
 });
 
 export const addCheckInRequestSchema = object({
   type: number().required("Type is required"),
   date: date().typeError("Invalid date").required("Date is required"),
-  startTime: date()
-    .typeError("Invalid date")
-    .required("Start time is required"),
+  startTime: date().typeError("Invalid time").required("Time is required"),
 });
 
 export const addCheckOutRequestSchema = object({
   type: number().required("Type is required"),
   date: date().typeError("Invalid date").required("Date is required"),
-  endTime: date().typeError("Invalid date").required("End time is required"),
+  endTime: date().typeError("Invalid time").required("Time is required"),
+});
+
+export const testInfoSchema = object({
+  title: string().required("Title is required"),
+  duration: number()
+    .typeError("Invalid duration")
+    .required("Duration is required"),
+});
+
+export const assignCandidateAccountSchema = object({
+  candidateId: number().required("Candidate is required"),
 });

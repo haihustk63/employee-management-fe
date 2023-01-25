@@ -1,19 +1,17 @@
-type AppColor =
-  | "primary"
-  | "secondary"
-  | "success"
-  | "info"
-  | "warning"
-  | "danger";
+import { ReactNode } from "react";
+
+type AppColor = "blue" | "green" | "red" | "gray";
 
 export interface IAppCardPrimaryProps {
-  title?: string;
+  title?: string | ReactNode;
   borderColor?: AppColor;
+  borderType?: string;
   backgroundColor?: AppColor;
   hasBoxShadow?: boolean;
   children?: any;
   onClick?: any;
   onDelete?: any;
+  className?: string;
 }
 
 export interface IAppCardWithCoverProps {
@@ -24,5 +22,6 @@ export interface IAppCardWithCoverProps {
   borderColor?: AppColor;
   hasBoxShadow?: boolean;
   horizontal?: boolean;
+  className?: string;
   onClick?: () => void;
 }

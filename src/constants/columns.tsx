@@ -7,7 +7,7 @@ import GroupButtonAccount from "@/components/pages/account/GroupButtonAccount";
 import GroupButton from "@/components/pages/candidate/ProfileTable/GroupButton";
 import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
 import JobListAction from "@/components/pages/job/JobListAction";
-import ListRequestButtons from "@/components/pages/request/List/GroupButton";
+import ListRequestActions from "@/components/pages/request/List/GroupActions";
 import { ICandidateProfile } from "@/hooks/candidate/interface";
 import {
   getDateFormat,
@@ -33,6 +33,7 @@ import {
 import { REQUEST_TYPES, WORKING_TIME } from "./request";
 import { dayjs } from "@/dayjs-config";
 import EmployeeGroupButton from "@/components/pages/employee/EmployeeList/GroupButton";
+import QuestionActionGroup from "@/components/pages/test-question/QuestionActionGroup";
 
 const { Text } = Typography;
 
@@ -61,13 +62,14 @@ const leavingAfternoon = getRequestTypeValues([
   UNPAID_LEAVE,
 ]);
 
-const indexColumn = (currentPage: number) => ({
+const indexColumn = (currentPage: number, fixed: boolean = true) => ({
   key: "#",
   title: "#",
-  fixed: true,
+  fixed,
   render: (_value: any, _record: any, index: any) => {
     return currentPage * 10 + index + 1;
   },
+  width: 60,
 });
 
 //candidate
@@ -82,11 +84,13 @@ export const candidateProfileTableColumns = (
       title: "Name",
       fixed: true,
       dataIndex: ["name"],
+      width: 150,
     },
     {
       key: "email",
       title: "Email",
       dataIndex: ["email"],
+      width: 300,
     },
     {
       key: "account",
@@ -96,6 +100,7 @@ export const candidateProfileTableColumns = (
         if (!value) return <AppTag color="error">Not assigned yet</AppTag>;
         return value;
       },
+      width: 300,
     },
     {
       key: "status",
@@ -106,11 +111,13 @@ export const candidateProfileTableColumns = (
         if (!value) return <AppTag color="error">Candidate</AppTag>;
         return <AppTag color="success">Official Employee</AppTag>;
       },
+      width: 200,
     },
     {
       key: "job",
       title: "Job",
       dataIndex: ["job", "title"],
+      width: 200,
     },
     {
       key: "cvLink",
@@ -123,6 +130,7 @@ export const candidateProfileTableColumns = (
           </a>
         );
       },
+      width: 200,
     },
     {
       key: "interviewer",
@@ -130,10 +138,11 @@ export const candidateProfileTableColumns = (
       dataIndex: ["interviewer"],
       render: (value) => {
         if (!value) {
-          return "No info";
+          return "";
         }
         return mergeName(value);
       },
+      width: 200,
     },
     {
       key: "appointmentTime",
@@ -141,10 +150,11 @@ export const candidateProfileTableColumns = (
       dataIndex: ["appointmentTime"],
       render: (value) => {
         if (!value) {
-          return "No info";
+          return "";
         }
         return dayjs(value).format("DD/MM/YYYY");
       },
+      width: 200,
     },
     {
       key: "assessment",
@@ -152,7 +162,7 @@ export const candidateProfileTableColumns = (
       dataIndex: ["assessment"],
       render: (value) => {
         if (value === undefined) {
-          return "No info";
+          return "";
         }
         return (
           <AppTag color={ASSESSMENT[value].color as string}>
@@ -160,6 +170,7 @@ export const candidateProfileTableColumns = (
           </AppTag>
         );
       },
+      width: 200,
     },
     {
       key: "action",
@@ -167,6 +178,7 @@ export const candidateProfileTableColumns = (
       render: (_value: any, record: any) => {
         return <GroupButton record={record} />;
       },
+      width: 200,
     },
   ];
 };
@@ -233,34 +245,39 @@ export const employeeListColumns = ({ currentPage, t }: any) => {
         }
         return null;
       },
+      width: 200,
     },
     {
       key: "email",
       dataIndex: ["employeeAccount", "email"],
       title: "Email",
+      width: 300,
     },
     {
       key: "phoneNumber",
       dataIndex: ["phoneNumber"],
       title: "Phone Number",
+      width: 150,
     },
     {
       key: "dateOfBirth",
       dataIndex: ["dateOfBirth"],
       title: "Date Of Birth",
-      width: "10%",
       render: (value: any) => {
         if (value) {
           return dayjs(value).format("DD/MM/YYYY");
         }
         return null;
       },
+      width: 150,
     },
     {
       key: "position",
       dataIndex: ["position", "name"],
       title: "Position",
+      width: 150,
     },
+
     {
       key: "joinDate",
       dataIndex: ["joinDate"],
@@ -271,6 +288,7 @@ export const employeeListColumns = ({ currentPage, t }: any) => {
         }
         return null;
       },
+      width: 150,
     },
     {
       key: "role",
@@ -280,6 +298,7 @@ export const employeeListColumns = ({ currentPage, t }: any) => {
         const label = getRoleLabel(value);
         return <AppTag color="blue">{label}</AppTag>;
       },
+      width: 150,
     },
     {
       key: "workingStatus",
@@ -289,20 +308,22 @@ export const employeeListColumns = ({ currentPage, t }: any) => {
         const label = getWorkingStatusLabel(value);
         return <AppTag color="blue">{label}</AppTag>;
       },
+      width: 200,
     },
     {
       key: "delivery",
       dataIndex: ["deliveryEmployee", "delivery", "name"],
       title: "Delivery",
+      width: 120,
     },
     {
       key: "action",
       dataIndex: "action",
       title: "Action",
-      width: "20%",
       render: (_: any, record: any) => {
         return <EmployeeGroupButton record={record} />;
       },
+      width: 200,
     },
   ];
 };
@@ -342,7 +363,7 @@ export const accountTableColumns = (currentPage: number, t?: any) => {
       key: "action",
       title: "Action",
       render: (_value: any, record: any) => {
-        return <GroupButtonAccount email={record?.email} />;
+        return <GroupButtonAccount record={record} />;
       },
     },
   ];
@@ -351,11 +372,7 @@ export const accountTableColumns = (currentPage: number, t?: any) => {
 // test topics
 
 // test questions
-export const testQuestionListColumns = ({
-  onClickButtonViewDetail,
-  currentPage,
-  t,
-}: any) => {
+export const testQuestionListColumns = ({ currentPage, t }: any) => {
   return [
     indexColumn(currentPage),
     {
@@ -363,7 +380,10 @@ export const testQuestionListColumns = ({
       dataIndex: ["questionText"],
       title: "Question",
       fixed: true,
-      width: "40%",
+      width: 300,
+      render: (value: string) => {
+        return <Text className="app-text-ellipsis">{value}</Text>;
+      },
     },
     {
       key: "type",
@@ -373,6 +393,7 @@ export const testQuestionListColumns = ({
         const typeObj = getQuestionType(value);
         return <AppTag color={typeObj?.color}>{typeObj?.label}</AppTag>;
       },
+      width: 150,
     },
     {
       key: "level",
@@ -382,25 +403,22 @@ export const testQuestionListColumns = ({
         const levelObj = getQuestionLevel(value);
         return <AppTag color={levelObj?.color}>{levelObj?.label}</AppTag>;
       },
+      width: 100,
     },
     {
       key: "topic",
       dataIndex: ["topicName"],
       title: "Topic",
+      width: 200,
     },
     {
       key: "action",
       dataIndex: "action",
       title: "Action",
       render: (_: any, record: any) => {
-        return (
-          <AppButton
-            buttonTitle="View Detail"
-            htmlType="button"
-            onClick={onClickButtonViewDetail(record.id)}
-          />
-        );
+        return <QuestionActionGroup record={record} />;
       },
+      width: 200,
     },
   ];
 };
@@ -493,6 +511,7 @@ export const jobsTableColumns = (
       title: "Job title",
       fixed: true,
       dataIndex: ["title"],
+      width: 200,
     },
     {
       key: "typeOfJob",
@@ -504,12 +523,15 @@ export const jobsTableColumns = (
         const color = type?.color as string;
         return <AppTag color={color}>{label}</AppTag>;
       },
+      width: 100,
     },
     {
       key: "upTo",
       title: "Upto",
       dataIndex: ["upTo"],
+      width: 100,
     },
+
     {
       key: "level",
       title: "Level",
@@ -520,18 +542,22 @@ export const jobsTableColumns = (
         const color = level?.color as string;
         return <AppTag color={color}>{label}</AppTag>;
       },
+      width: 100,
     },
     {
       key: "position",
       title: "Position",
       dataIndex: ["positionName"],
+      width: 150,
     },
+
     {
       key: "actions",
       title: "Actions",
       render: (_value: any, record: any) => {
         return <JobListAction jobId={record.id} jobTitle={record.title} />;
       },
+      width: 200,
     },
   ];
 };
@@ -588,7 +614,7 @@ export const requestsTableColumns = (
             title: "Employee Name",
             dataIndex: ["employee"],
             fixed: true,
-            width: "15%",
+            width: 200,
             render: (value: any) => {
               return mergeName(value);
             },
@@ -604,6 +630,7 @@ export const requestsTableColumns = (
       render: (value: any) => {
         return getDateFormat(value);
       },
+      width: 150,
     },
     {
       key: "duration",
@@ -612,6 +639,7 @@ export const requestsTableColumns = (
       render: (value: string) => {
         return <AppTag color="blue">{value}</AppTag>;
       },
+      width: 120,
     },
     {
       key: "type",
@@ -621,12 +649,13 @@ export const requestsTableColumns = (
         const typeLabel = getRequestTypeLabel(value);
         return <AppTag color="warning">{typeLabel}</AppTag>;
       },
+      width: 200,
     },
     {
       key: "reason",
       title: "Reason",
       dataIndex: ["reason"],
-      width: "20%",
+      width: 250,
     },
     {
       key: "status",
@@ -636,6 +665,7 @@ export const requestsTableColumns = (
         const status = getRequestStatus(value);
         return <AppTag color={status?.color}>{status?.label}</AppTag>;
       },
+      width: 100,
     },
     {
       key: "isCancelled",
@@ -647,13 +677,15 @@ export const requestsTableColumns = (
           : { label: "No", color: "warning" };
         return <AppTag color={tag.color}>{tag.label}</AppTag>;
       },
+      width: 100,
     },
     {
       key: "actions",
       title: "Actions",
       render: (_value: any, record: any) => {
-        return <ListRequestButtons record={record} />;
+        return <ListRequestActions record={record} />;
       },
+      width: 100,
     },
   ];
 };
@@ -663,16 +695,15 @@ export const checkInOutTableColumns = (
   t?: any
 ): ColumnsType<ICandidateProfile> => {
   return [
-    indexColumn(currentPage),
+    indexColumn(currentPage, false),
     {
       key: "employeeName",
       title: "Employee Name",
       dataIndex: ["employee"],
-      fixed: true,
-      width: "15%",
       render: (value: any) => {
         return mergeName(value);
       },
+      width: "40%",
     },
     {
       key: "checkIn",

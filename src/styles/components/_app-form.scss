@@ -3,7 +3,33 @@
   border-radius: var(--common-border-radius);
   padding: 4rem;
 
+  &.-horizontal {
+    padding: 2rem;
+  }
+
+  > .app-title {
+    text-transform: uppercase;
+    margin-bottom: 4rem;
+  }
+
   > .form {
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &.-horizontal {
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    &.-horizontal > * {
+      flex-grow: 1;
+    }
+  }
+
+  > .form > .app-button {
+    height: 4rem;
+    text-transform: uppercase;
   }
 }

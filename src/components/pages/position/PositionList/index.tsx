@@ -5,7 +5,7 @@ import AppButton from "@/components/AppButton";
 import PositionCard from "./PositionCard";
 import { PositionManagementContext } from "@/pages/position";
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const PositionList: FC = () => {
   const { data = [], handleToggleModal } = useContext(
@@ -15,7 +15,7 @@ const PositionList: FC = () => {
   return (
     <div className="position-list">
       <div className="title">
-        <Title level={3}>Positions</Title>
+        <Text className="app-title">Positions</Text>
         <AppButton
           buttonTitle="Add position"
           size="small"

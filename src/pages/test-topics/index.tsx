@@ -41,7 +41,7 @@ const TopicManagement = () => {
         handleSetTopicUpdateId,
       }}
     >
-      <div className="Topic-management">
+      <div className="topic-management">
         <AddNewTopicModal />
         <TopicList />
       </div>

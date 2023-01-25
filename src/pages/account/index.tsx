@@ -6,13 +6,22 @@ import { useCreateAccount, useGetAccounts } from "@/hooks/account";
 import useModal from "@/hooks/useModal";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { createContext, useState } from "react";
+import { Typography } from "antd";
+import ModalAssignAccount from "@/components/pages/account/ModalAssign";
+
+const { Text } = Typography;
 
 export const AccountManagementContext = createContext({});
 
 const AccountManagement = () => {
   const { data: accounts = [], isLoading, isFetching } = useGetAccounts();
   const { mutate: onCreateAccount, isSuccess, isError } = useCreateAccount();
-  const { handleToggleModal, showModal } = useModal();
+  const [account, setAccount] = useState();
+
+  const { showModal, handleToggleModal } = useModal();
+  const { showModal: showAssignModal, handleToggleModal: toggleAssignModal } =
+    useModal();
+
   const [switchOn, setSwitchOn] = useState(false);
 
   useTriggerNoti({
@@ -72,18 +81,30 @@ const AccountManagement = () => {
   return (
     <AccountManagementContext.Provider
       value={{
-        onSubmitForm,
         showModal,
-        handleToggleModal,
         accounts,
         switchOn,
+        showAssignModal,
+        account,
+        onSubmitForm,
+        handleToggleModal,
         toggleSwitch,
+        toggleAssignModal,
+        setAccount,
       }}
     >
-      <div className="candidate-account-management">
-        <AppButton buttonTitle="Create account" onClick={handleClickCreate} />
+      <div className="account-management">
+        <div className="title">
+          <Text className="app-title">Accounts</Text>
+          <AppButton
+            buttonTitle="Create account"
+            size="small"
+            onClick={handleClickCreate}
+          />
+        </div>
         <ListAccount dataSource={accounts} loading={isLoading || isFetching} />
         <ModalCreateAccountForm />
+        <ModalAssignAccount />
       </div>
     </AccountManagementContext.Provider>
   );

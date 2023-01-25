@@ -1,0 +1,10 @@
+.app-rate {
+  > .ant-rate {
+    display: flex;
+    gap: .6rem;
+  }
+
+  > .ant-rate > .ant-rate-star {
+    margin: 0;
+  }
+}

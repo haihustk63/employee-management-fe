@@ -34,16 +34,19 @@ const ListQuestionInfoManual: FC = () => {
 
   return (
     <div className="list-question-info">
+      <Text className="app-title">Test Info</Text>
       <div className="list">
         {questionInfoManual?.map((item: any, index: number) => {
           return (
             <AppPrimaryCard
               key={createUniqueId()}
               hasBoxShadow
-              borderColor="success"
+              borderColor="blue"
+              borderType="dashed"
               onDelete={() => {}}
             >
               <Space>
+                <AppTag color="blue">{index + 1}</AppTag>
                 <AppTag color="blue">{item.topic}</AppTag>
                 <AppTag color="success">
                   {getQuestionLevel(item.level)?.label}
@@ -51,8 +54,8 @@ const ListQuestionInfoManual: FC = () => {
                 <AppTag color="warning">
                   {getQuestionType(item.type)?.label}
                 </AppTag>
-                <Text>{item.questionText}</Text>
               </Space>
+              <Text className="question">{item.questionText}</Text>
             </AppPrimaryCard>
           );
         })}

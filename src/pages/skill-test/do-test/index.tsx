@@ -180,10 +180,8 @@ const DoSkillTest = () => {
     >
       {info?.status === created.value && <ConfirmAttempt />}
       {info?.status === attempting.value && test && (
-        <div className="candidate-skill-test">
-          <div>
-            <Sumary />
-          </div>
+        <div className="candidate-skill-do-test">
+          <Sumary />
           <div className="content">
             <SessionInfo />
             <SkillTestContent />

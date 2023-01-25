@@ -5,7 +5,7 @@ import AppButton from "@/components/AppButton";
 import { TopicManagementContext } from "@/pages/test-topics";
 import TopicCard from "./TopicCard";
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const TopicList: FC = () => {
   const { data = [], handleToggleModal } = useContext(
@@ -15,7 +15,7 @@ const TopicList: FC = () => {
   return (
     <div className="topic-list">
       <div className="title">
-        <Title level={3}>Topics</Title>
+        <Text className="app-title">Topics</Text>
         <AppButton
           buttonTitle="Add topic"
           size="small"

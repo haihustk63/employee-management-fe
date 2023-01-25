@@ -41,22 +41,22 @@ const ModalCreateAccountForm = () => {
     }
   }, [updateEmail]);
 
-  useEffect(() => {
-    if (updateEmail) {
-      const account = accounts?.find((acc: any) => acc.email === updateEmail);
-      if (account) {
-        const { employeeId } = account;
-        formRef?.current?.setFieldValue?.("email", updateEmail);
-        formRef?.current?.setFieldValue?.(
-          "employeeId",
-          employeeId ?? undefined
-        );
-      }
-    } else {
-      formRef?.current?.setFieldValue?.("email", "");
-      formRef?.current?.setFieldValue?.("employeeId", undefined);
-    }
-  }, [updateEmail]);
+  // useEffect(() => {
+  //   if (updateEmail) {
+  //     const account = accounts?.find((acc: any) => acc.email === updateEmail);
+  //     if (account) {
+  //       const { employeeId } = account;
+  //       formRef?.current?.setFieldValue?.("email", updateEmail);
+  //       formRef?.current?.setFieldValue?.(
+  //         "employeeId",
+  //         employeeId ?? undefined
+  //       );
+  //     }
+  //   } else {
+  //     formRef?.current?.setFieldValue?.("email", "");
+  //     formRef?.current?.setFieldValue?.("employeeId", undefined);
+  //   }
+  // }, [updateEmail]);
 
   return (
     <AppModal open={showModal} onCancel={handleToggleModal} title={titleModal}>

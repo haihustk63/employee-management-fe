@@ -1,0 +1,14 @@
+.app-date-picker {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+
+  > .ant-picker {
+    height: 4rem;
+    box-shadow: none;
+  }
+
+  > .ant-picker:hover {
+    border-color: var(--color-primary-blue);
+  }
+}

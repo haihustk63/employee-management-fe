@@ -1,0 +1,45 @@
+.create-job {
+  > .app-form > .form > .part {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  > .app-form > .form > .part > * {
+    flex: 0 0 calc((100% - 4rem) / 3);
+  }
+
+  > .app-form > .form > .app-button {
+    width: fit-content;
+  }
+}
+
+.job-management {
+  > .app-title {
+    @include titleWithAction;
+  }
+
+  > .job-search {
+    margin-bottom: 2rem;
+  }
+}
+
+.job-search {
+  padding: 2rem;
+  background-color: var(--bs-white);
+  border-radius: var(--common-border-radius);
+
+  > .app-form {
+    padding: 0;
+  }
+
+  > .app-form > .form {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  > .app-form > .form > * {
+    flex: 0 0 calc((100% - 6rem) / 4);
+  }
+}

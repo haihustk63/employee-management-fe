@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import purity from "dompurify";
 import { createUniqueId } from "./helpers";
 import { dayjs } from "./dayjs-config";
@@ -48,15 +47,16 @@ const makeCleanObject = (obj: object = {}) => {
 const getTime = (date: string) => {
   if (!date) return "";
   const dateObj = new Date(date);
-  return format(dateObj, "HH:mm");
+  return dayjs(dateObj).format("HH:mm");
 };
 
 const getDateNow = () => {
-  return format(new Date(), "dd/MM/yyyy");
+  return dayjs().format("DD/MM/YYYY");
 };
 
 const getDateFormat = (date: string) => {
-  return format(new Date(date), "dd/MM/yyyy");
+  if (!date) return "";
+  return dayjs(date).format("DD/MM/YYYY");
 };
 
 const mergeName = (value: any) => {

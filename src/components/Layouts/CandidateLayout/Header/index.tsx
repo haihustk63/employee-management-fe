@@ -26,13 +26,19 @@ const CandidateLayoutHeader = () => {
 
   return (
     <Header className="candidate-layout-header">
-      <div className="logo">Logo</div>
+      <div className="logo">
+        <img
+          src="https://www.logodesign.net/logo/abstract-hr-person-inside-location-pin-742ld.png?nwm=1&nws=1&industry=employment-hr&sf="
+          alt="Logo"
+          className="image"
+        />
+      </div>
       <Menu
         theme="dark"
         mode="horizontal"
         className="menu"
         onClick={handleClickHeaderItem}
-        items={HEADER_CANDIDATE_ITEMS(0)}
+        items={HEADER_CANDIDATE_ITEMS}
       />
       <AppButton buttonTitle="Logout" onClick={handleLogout} />
     </Header>

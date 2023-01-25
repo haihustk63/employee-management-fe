@@ -1,5 +1,6 @@
 import { DatePicker } from "antd";
 import { FC } from "react";
+import AppFormErrorMessage from "../AppFormErrorMessage";
 
 import { IAppDatePickerProps } from "./interface";
 
@@ -13,6 +14,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
   value,
   pickerLabel,
   showTime = false,
+  error,
   ...props
 }) => {
   const handleOnChangeDatePicker = (date: any) => {
@@ -21,7 +23,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
 
   return (
     <div className="app-date-picker">
-      {pickerLabel && <label>{pickerLabel}</label>}
+      <label className="form-label">{pickerLabel ?? "Date"}</label>
       <DatePicker
         allowClear={allowClear}
         bordered={bordered}
@@ -33,6 +35,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
         showTime={showTime}
         {...props}
       />
+      {error ? <AppFormErrorMessage message={error} /> : null}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import AppPrimaryCard from "@/components/AppCard/Primary";
 import { useDeleteTopic } from "@/hooks/test-topic";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { TopicManagementContext } from "@/pages/test-topics";
+import { showDeleteConfirm } from "@/components/AppConfirm";
 
 const { Text } = Typography;
 
@@ -34,14 +35,25 @@ const TopicCard: FC<{ topic: any }> = ({ topic }) => {
     handleToggleModal();
   };
 
+  const handleDelete = () => {
+    showDeleteConfirm({ onDelete: deleteTopic });
+  };
+
   return (
-    <AppPrimaryCard
-      title={topic.name}
-      onDelete={deleteTopic}
-      onClick={handleClickTopicCard(topic.id)}
-    >
-      <Text>{topic.description}</Text>
-      <AppButton buttonTitle="Update" onClick={handleClickUpdate} />
+    <AppPrimaryCard title={topic.name} className="topic-card">
+      <Text className="description">{topic.description}</Text>
+      <div className="actions">
+        <AppButton buttonTitle="Update" onClick={handleClickUpdate} />
+        <AppButton
+          buttonTitle="View questions"
+          onClick={handleClickTopicCard(topic.id)}
+        />
+        <AppButton
+          buttonTitle="Delete"
+          onClick={handleDelete}
+          className="-danger"
+        />
+      </div>
     </AppPrimaryCard>
   );
 };

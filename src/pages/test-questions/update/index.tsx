@@ -2,12 +2,7 @@ import { useLocation, useParams } from "react-router-dom";
 import FormAddQuestion from "@/components/pages/test-question/FormAddQuestion";
 
 const UpdateTestQuestion = () => {
-  const { questionId } = useParams();
-  return (
-    <div>
-      <FormAddQuestion questionId={questionId} />
-    </div>
-  );
+  return <FormAddQuestion />;
 };
 
 export default UpdateTestQuestion;

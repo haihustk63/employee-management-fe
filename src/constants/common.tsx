@@ -24,29 +24,10 @@ export const FORM_ITEM_TYPES = {
   SELECT: "select",
 };
 
-export const HEADER_ITEMS = [
-  {
-    key: "/",
-    label: "Home",
-  },
-  {
-    key: "/requests",
-    label: "Requests",
-  },
-  {
-    key: "/education-programs",
-    label: "Education Programs",
-  },
-];
-
-export const HEADER_CANDIDATE_ITEMS = (candidateId: number) => [
+export const HEADER_CANDIDATE_ITEMS = [
   {
     key: "/skill-test",
-    label: "Your skill test",
-  },
-  {
-    key: `/candidate-cv/${candidateId}`,
-    label: "Your CV",
+    label: "Home",
   },
 ];
 
@@ -524,3 +505,14 @@ export const TEST_STATUS = {
 };
 
 export const RATE_LEVELS = ["Terrible", "Bad", "Normal", "Good", "Wonderful"];
+
+export const CREATE_TEST_MODE = {
+  manual: {
+    value: 1,
+    label: "Manual",
+  },
+  random: {
+    value: 2,
+    label: "Random",
+  },
+};

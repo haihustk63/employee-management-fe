@@ -16,4 +16,5 @@ export interface IAppDatePickerProps {
   onChange?: any;
   onOk?: () => void;
   showTime?: boolean | object;
+  error?: string;
 }

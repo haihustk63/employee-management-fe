@@ -1,6 +1,7 @@
 import AppForm from "@/components/AppForm";
 import { createJobSchema } from "@/schemas";
-import { FC } from "react";
+import { FC, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import FormFields from "./FormField";
 
 export interface IAddNewCandidateAccount {
@@ -22,16 +23,25 @@ const initialValues: IAddNewCandidateAccount = {
 };
 
 const FormJob: FC<{ onSubmit: any }> = ({ onSubmit }) => {
+  const { jobId = "" } = useParams();
+
+  const formTitle = useMemo(() => {
+    if (jobId) {
+      return "Update Job";
+    } else {
+      return "Create Job";
+    }
+  }, [jobId]);
+
   return (
-    <div>
-      <AppForm<IAddNewCandidateAccount>
-        initialValues={initialValues}
-        handleSubmitForm={onSubmit}
-        validationSchema={createJobSchema}
-      >
-        <FormFields />
-      </AppForm>
-    </div>
+    <AppForm<IAddNewCandidateAccount>
+      initialValues={initialValues}
+      handleSubmitForm={onSubmit}
+      validationSchema={createJobSchema}
+      title={formTitle}
+    >
+      <FormFields />
+    </AppForm>
   );
 };
 

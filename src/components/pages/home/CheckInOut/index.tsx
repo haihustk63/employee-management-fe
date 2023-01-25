@@ -1,24 +1,22 @@
+import { Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { Typography } from "antd";
 
 import AppButton from "@/components/AppButton";
 import AppPrimaryCard from "@/components/AppCard/Primary";
-import DateTime from "@/components/DateTime";
-import { currentUserAtom } from "@/modules/currentUser";
+import appNotification from "@/components/AppNotification";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useCheckInOut, useGetCheckInOutInfo } from "@/hooks/check-in-out";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { getTime } from "@/utils";
-import appNotification from "@/components/AppNotification";
+import { currentUserAtom } from "@/modules/currentUser";
+import { getDateNow, getTime, mergeName } from "@/utils";
 
 const { Title, Text } = Typography;
 
 const CheckInOut = () => {
   const navigate = useNavigate();
 
-  const currentUser = useRecoilValue(currentUserAtom);
-  const { name } = currentUser;
+  const { employee } = useRecoilValue(currentUserAtom);
 
   const {
     mutate: onCheckIn,
@@ -69,20 +67,20 @@ const CheckInOut = () => {
   return (
     <div className="home-check-in-out">
       <div className="user">
-        <Title level={2}>Hello {name}</Title>
-        <DateTime />
+        <Title level={2}>Hello {mergeName(employee)}</Title>
+        <Text>Today is: {getDateNow()}</Text>
       </div>
       <div className="cards">
-        <AppPrimaryCard title="Check in" hasBoxShadow backgroundColor="info">
+        <AppPrimaryCard title="Checkin" borderColor="blue" borderType="dashed">
           {!!checkedIn.time ? (
-            <Title>{getTime(checkedIn.time)}</Title>
+            <Text className="time">{getTime(checkedIn.time)}</Text>
           ) : (
             <Text>You have not checked in</Text>
           )}
         </AppPrimaryCard>
-        <AppPrimaryCard title="Check out" hasBoxShadow backgroundColor="info">
+        <AppPrimaryCard title="Checkout" borderColor="blue" borderType="dashed">
           {checkedOut.time ? (
-            <Title>{getTime(checkedOut.time)}</Title>
+            <Text className="time">{getTime(checkedOut.time)}</Text>
           ) : (
             <Text>You have not checked out</Text>
           )}

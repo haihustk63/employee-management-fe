@@ -39,10 +39,18 @@ export const useCreateTestQuestion = () => {
   });
 };
 
-export const useUpdateTestQuestion = (testId: string | number) => {
+export const useUpdateTestQuestion = (questionId: string | number) => {
   return useAppMutation({
     method: "patch",
-    url: API_ROUTES.TEST_QUESTIONS_ID(testId),
+    url: API_ROUTES.TEST_QUESTIONS_ID(questionId),
+    extraQueryKey: API_ROUTES.TEST_QUESTIONS,
+  });
+};
+
+export const useDeleteTestQuestion = (questionId: string | number) => {
+  return useAppMutation({
+    method: "delete",
+    url: API_ROUTES.TEST_QUESTIONS_ID(questionId),
     extraQueryKey: API_ROUTES.TEST_QUESTIONS,
   });
 };

@@ -1,0 +1,15 @@
+.request-page {
+  > .app-form {
+    width: 50%;
+    margin: auto;
+  }
+
+  > .app-form > .form > .grouptime {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  > .app-form > .form > .grouptime > * {
+    flex: 0 0 49%;
+  }
+}

@@ -1,10 +1,96 @@
 .employee-management {
-  background-color: var(--bs-white);
-  padding: 2rem;
   height: 100%;
-  border-radius: var(--common-border-radius);
+
+  > .app-title {
+    @include titleWithAction;
+  }
 
   > .employee-list {
     margin-top: 2rem;
+  }
+}
+
+.employee-profile-modal {
+  @include infoModal;
+}
+
+.employee-profile {
+  display: flex;
+  gap: 2rem;
+
+  > .left {
+    width: 30%;
+    text-align: center;
+  }
+
+  > .left,
+  > .right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    border: 1px dashed var(--color-secondary-blue);
+  }
+
+  > .left > .avatar {
+    width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+
+  > .right {
+    flex-grow: 1;
+  }
+
+  > .right > .app-info-item {
+    margin-bottom: 1rem;
+  }
+}
+
+.employee-form {
+  width: 80%;
+  margin: auto;
+
+  > .app-form > .form > .parts {
+    display: flex;
+  }
+
+  > .app-form > .form > .parts > .part {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 48%;
+    gap: 2rem;
+  }
+
+  > .app-form > .form > .parts > .part:first-child {
+    margin-right: auto;
+  }
+
+  > .app-form .form-item > .inputnumber {
+    width: 100%;
+  }
+
+  > .app-form > .form > .app-button {
+    width: 20rem;
+    align-self: center;
+  }
+}
+
+.employee-search {
+  padding: 2rem;
+  background-color: var(--bs-white);
+  border-radius: var(--common-border-radius);
+
+  > .app-form {
+    padding: 0;
+  }
+
+  > .app-form > .form > .part {
+    display: flex;
+    gap: 2rem;
+  }
+
+  > .app-form > .form > .part > * {
+    flex: 0 0 calc((100% - 4rem) / 3);
   }
 }

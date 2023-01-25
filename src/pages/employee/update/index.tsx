@@ -18,7 +18,19 @@ const UpdateEmployee = () => {
   });
 
   const handleUpdate = (values: any) => {
-    onUpdate(values);
+    const formData = new FormData();
+    const { avatar, ...rest } = values;
+    formData.append("data", JSON.stringify(rest));
+
+    if (avatar) {
+      formData.append("avatar", avatar);
+    }
+    onUpdate({
+      data: formData,
+      config: {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    });
   };
 
   return (

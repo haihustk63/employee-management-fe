@@ -22,7 +22,13 @@ const ButtonDeleteProgram: FC<{ programId: number }> = ({ programId = "" }) => {
     showDeleteConfirm({ onDelete });
   };
 
-  return <AppButton buttonTitle="Delete" onClick={handleClickDelete} />;
+  return (
+    <AppButton
+      buttonTitle="Delete"
+      className="-danger"
+      onClick={handleClickDelete}
+    />
+  );
 };
 
 export default ButtonDeleteProgram;

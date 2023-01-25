@@ -8,10 +8,16 @@ export const api = {
   },
 
   post({ url, data }: any): Promise<any> {
+    if (data.config) {
+      return axios.post(url, data.data, { ...data.config });
+    }
     return axios.post(url, { data });
   },
 
   patch({ url, data }: any): Promise<any> {
+    if (data.config) {
+      return axios.patch(url, data.data, { ...data.config });
+    }
     return axios.patch(url, { data });
   },
 

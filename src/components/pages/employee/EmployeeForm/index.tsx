@@ -1,13 +1,12 @@
-import moment from "moment";
 import { FC, useEffect, useRef } from "react";
 
 import AppForm from "@/components/AppForm";
+import { BASIC_ROLES, WORKING_STATUS } from "@/constants/common";
+import { useGetEmployeeById } from "@/hooks/employee";
+import { createEmployeeProfileSchema } from "@/schemas";
+import dayjs from "dayjs";
 import FormFields from "./FormFields";
 import { IEmployeeFormProps } from "./interface";
-import { createEmployeeProfileSchema } from "@/schemas";
-import { useGetEmployeeById } from "@/hooks/employee";
-import dayjs from "dayjs";
-import { BASIC_ROLES, WORKING_STATUS } from "@/constants/common";
 
 const initialValues: IEmployeeFormProps = {
   firstName: "",
@@ -22,6 +21,7 @@ const initialValues: IEmployeeFormProps = {
   email: undefined,
   joinDate: dayjs(Date.now()),
   paidLeaveCount: 0,
+  avatar: undefined,
 };
 
 const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
@@ -29,10 +29,10 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
   onSubmit,
 }) => {
   const formRef = useRef() as any;
-  const { data } = useGetEmployeeById(employeeId);
+  const { data: employee } = useGetEmployeeById(employeeId);
 
   useEffect(() => {
-    if (data) {
+    if (employee) {
       let {
         firstName = "",
         middleName = "",
@@ -46,7 +46,7 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
         role = BASIC_ROLES.employee.value,
         paidLeaveCount = 0,
         employeeAccount,
-      } = data as any;
+      } = employee as any;
 
       dateOfBirth = dayjs(dateOfBirth ?? Date.now());
       joinDate = dayjs(joinDate ?? Date.now());
@@ -67,7 +67,7 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
       formRef.current.setFieldValue("paidLeaveCount", paidLeaveCount);
       formRef.current.setFieldValue("role", role);
     }
-  }, [data]);
+  }, [employee]);
 
   return (
     <div className="employee-form">

@@ -1,0 +1,16 @@
+.topic-management {
+}
+
+.topic-list {
+  > .list {
+    @include cardList(3, 1.6rem);
+  }
+
+  > .title {
+    @include titleWithAction;
+  }
+}
+
+.topic-card {
+  @include cardItemContent;
+}

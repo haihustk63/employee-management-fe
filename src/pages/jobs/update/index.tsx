@@ -19,7 +19,7 @@ const UpdateJob = () => {
   };
 
   return (
-    <div className="update-job">
+    <div className="create-job">
       <FormJob onSubmit={handleSubmit} />
     </div>
   );

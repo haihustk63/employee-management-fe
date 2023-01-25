@@ -1,7 +1,9 @@
 import AppButton from "@/components/AppButton";
+import { showDeleteConfirm } from "@/components/AppConfirm";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 import { useDeleteJob } from "@/hooks/job";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { Space } from "antd";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +12,7 @@ const JobListAction: FC<{ jobId: string; jobTitle: string }> = ({
   jobTitle,
 }) => {
   const navigate = useNavigate();
-  const { mutate: onDeleteJob, isError, isSuccess } = useDeleteJob(jobId);
+  const { mutate: onDelete, isError, isSuccess } = useDeleteJob(jobId);
 
   useTriggerNoti({
     isError,
@@ -23,13 +25,22 @@ const JobListAction: FC<{ jobId: string; jobTitle: string }> = ({
   };
 
   const handleDeleteJob = () => {
-    onDeleteJob("");
+    showDeleteConfirm({ onDelete });
   };
   return (
-    <div className="job-group-btn">
-      <AppButton buttonTitle="View Detail" onClick={handleNavigateToUpdate} />
-      <AppButton buttonTitle="Delete" onClick={handleDeleteJob} />
-    </div>
+    <Space>
+      <AppButton
+        buttonTitle="View Detail"
+        size="small"
+        onClick={handleNavigateToUpdate}
+      />
+      <AppButton
+        buttonTitle="Delete"
+        size="small"
+        className="-danger"
+        onClick={handleDeleteJob}
+      />
+    </Space>
   );
 };
 

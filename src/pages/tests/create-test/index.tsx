@@ -1,12 +1,18 @@
 import AppButton from "@/components/AppButton";
 import AppFormErrorMessage from "@/components/AppFormErrorMessage";
 import { AppInput, AppInputNumber } from "@/components/AppFormField";
+import AppTooltip from "@/components/AppTooltip";
 import InputQuestionInfo from "@/components/pages/create-test/InputQuestionInfo";
 import InputQuestionInfoManual from "@/components/pages/create-test/InputQuestionInfoManual";
 import ListQuestionInfo from "@/components/pages/create-test/ListQuestionInfo";
 import ListQuestionInfoManual from "@/components/pages/create-test/ListQuestionInfoManual";
 import ShowTestModal from "@/components/pages/create-test/ShowTest";
-import { QUESTION_LEVELS, TEST_STATUS } from "@/constants/common";
+import TestInfoForm from "@/components/pages/test/TestInfoForm";
+import {
+  CREATE_TEST_MODE,
+  QUESTION_LEVELS,
+  TEST_STATUS,
+} from "@/constants/common";
 import { useGetTest, useSaveTest, useUpdateTest } from "@/hooks/tests";
 import useModal from "@/hooks/useModal";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
@@ -34,7 +40,7 @@ export interface IQuestionInfoManual {
 
 const CreateTestPage: FC = () => {
   const { testId = "" } = useParams();
-  const [mode, setMode] = useState<"random" | "manual">("manual");
+  const [mode, setMode] = useState<number>(CREATE_TEST_MODE.manual.value);
   const [questionInfo, setQuestionInfo] = useState<IQuestionInfo[]>([]);
   const [questionInfoManual, setQuestionInfoManual] = useState<
     IQuestionInfoManual[]
@@ -42,12 +48,10 @@ const CreateTestPage: FC = () => {
   const [randomTest, setRandomTest] = useState([]);
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState(0);
-  const [titleError, setTitleError] = useState(false);
-  const [durationError, setDurationError] = useState(false);
   const { showModal: showTestModal, handleToggleModal: toggleShowTestModal } =
     useModal();
 
-  const { mutate: onSaveTest, isError, isSuccess } = useSaveTest();
+  const { mutate: onSaveTest, isError, isSuccess, error } = useSaveTest();
   const { data: currentTest = {} } = useGetTest(testId as string, true) as any;
   const {
     mutate: onUpdateTest,
@@ -76,6 +80,7 @@ const CreateTestPage: FC = () => {
     isError,
     isSuccess,
     messageSuccess: "A new test was saved",
+    error,
   });
 
   useTriggerNoti({
@@ -86,16 +91,6 @@ const CreateTestPage: FC = () => {
 
   const saveTest = () => {
     let questionIds;
-
-    if (!title) {
-      setTitleError(true);
-      return;
-    }
-
-    if (duration === null) {
-      setDurationError(true);
-      return;
-    }
 
     if (testId) {
       questionIds = questionInfoManual.map(
@@ -132,12 +127,14 @@ const CreateTestPage: FC = () => {
   }, [isPublished, saveTest]);
 
   const renderModeContent = useMemo(() => {
-    if (mode === "random") {
+    if (mode === CREATE_TEST_MODE.random.value) {
       return (
         <div className="random">
           <InputQuestionInfo />
-          <ListQuestionInfo />
-          {renderPreviewAndSave}
+          <div className="info">
+            <ListQuestionInfo />
+            {renderPreviewAndSave}
+          </div>
         </div>
       );
     } else {
@@ -193,22 +190,8 @@ const CreateTestPage: FC = () => {
     }
   };
 
-  const handleChangeSwitch = (checked: boolean) => {
-    if (checked) {
-      setMode("random");
-    } else {
-      setMode("manual");
-    }
-  };
-
-  const changeTitle = (e: any) => {
-    setTitle(e.target?.value);
-    setTitleError(false);
-  };
-
-  const changeDuration = (value: any) => {
-    setDuration(value);
-    setDurationError(false);
+  const changeMode = (e: any) => {
+    setMode(e.target.value);
   };
 
   return (
@@ -221,41 +204,19 @@ const CreateTestPage: FC = () => {
         testId,
         showTestModal,
         mode,
+        title,
+        duration,
         onSubmitQuestionInfo: handleSubmitQuestionInfo,
         setRandomTest,
         setQuestionInfoManual,
         toggleShowTestModal,
+        setTitle,
+        setDuration,
+        changeMode,
       }}
     >
       <div className="create-test-page">
-        <div className="info">
-          <AppInput
-            placeholder="Test title"
-            value={title}
-            onChange={changeTitle}
-            label="Test title"
-            allowClear
-          />
-          {titleError && <AppFormErrorMessage message="Title is required" />}
-          <AppInputNumber
-            placeholder="Test duration"
-            value={duration}
-            onChange={changeDuration}
-            min={0}
-            label="Test duration (Minutes)"
-          />
-          {durationError && (
-            <AppFormErrorMessage message="Duration is required" />
-          )}
-
-          {!testId && (
-            <Switch
-              defaultChecked={mode === "random"}
-              onChange={handleChangeSwitch}
-              className="switch"
-            />
-          )}
-        </div>
+        <TestInfoForm />
         {renderModeContent}
         <ShowTestModal />
       </div>

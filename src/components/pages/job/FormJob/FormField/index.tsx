@@ -1,17 +1,19 @@
 import { Form, useFormikContext } from "formik";
+import { useEffect, useMemo } from "react";
+import { Space, Typography } from "antd";
+import { Link, useParams } from "react-router-dom";
 
 import AppButton from "@/components/AppButton";
 import FormItem from "@/components/FormItem";
-import { FORM_ITEM_TYPES, JOB_LEVELS, JOB_TYPES } from "@/constants/common";
-import { dataToOptions } from "@/utils";
 import AppTextEditor from "@/components/AppTextEditor";
 import { useGetAllPositions } from "@/hooks/position";
 import AppFormErrorMessage from "@/components/AppFormErrorMessage";
-import { Link, useParams } from "react-router-dom";
 import { useGetJobById } from "@/hooks/job";
-import { useEffect, useMemo } from "react";
-import { Space, Typography } from "antd";
+import { dataToOptions } from "@/utils";
+import { FORM_ITEM_TYPES, JOB_LEVELS, JOB_TYPES } from "@/constants/common";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
+import AppTooltip from "@/components/AppTooltip";
+import AddIcon from "@/components/Icons/AddIcon";
 
 const { TEXT, SELECT } = FORM_ITEM_TYPES;
 const { Text } = Typography;
@@ -43,13 +45,16 @@ const FormFields = () => {
   const positionLabel = useMemo(() => {
     return (
       <Space>
-        <Text>Position</Text>
-        <Link
-          to={`${APP_PAGE_NAME_ROUTES.POSITION}?modal=true`}
-          target="_blank"
-        >
-          Create position
-        </Link>
+        <Text className="text">Position</Text>
+        <AppTooltip title="Click here to add position">
+          <Link
+            to={`${APP_PAGE_NAME_ROUTES.POSITION}?modal=true`}
+            target="_blank"
+            className="app-link"
+          >
+            <AddIcon />
+          </Link>
+        </AppTooltip>
       </Space>
     );
   }, []);
@@ -69,37 +74,6 @@ const FormFields = () => {
         placeholder="Enter job title"
       />
       <FormItem
-        name="typeOfJob"
-        label="Job type"
-        value={values.typeOfJob}
-        type={SELECT}
-        options={dataToOptions(JOB_TYPES)}
-        placeholder="Choose type of job"
-      />
-      <FormItem
-        name="upTo"
-        label="Upto"
-        value={values.upTo}
-        type={TEXT}
-        onChange={handleChange}
-        placeholder="Enter upto salary"
-      />
-      <FormItem
-        name="level"
-        label="Job level"
-        value={values.level}
-        type={SELECT}
-        options={dataToOptions(JOB_LEVELS)}
-        placeholder="Choose level"
-      />
-      <AppTextEditor
-        onChange={handleChangeEditor}
-        initialValue={job?.jobDetail}
-      />
-      {!!errors.jobDetail && !!touched.jobDetail && (
-        <AppFormErrorMessage message={errors.jobDetail} />
-      )}
-      <FormItem
         name="positionId"
         label={positionLabel}
         value={values.positionId}
@@ -107,6 +81,41 @@ const FormFields = () => {
         options={dataToOptions(positions)}
         placeholder="Choose position"
       />
+      <div className="part">
+        <FormItem
+          name="typeOfJob"
+          label="Job type"
+          value={values.typeOfJob}
+          type={SELECT}
+          options={dataToOptions(JOB_TYPES)}
+          placeholder="Choose type of job"
+        />
+        <FormItem
+          name="level"
+          label="Job level"
+          value={values.level}
+          type={SELECT}
+          options={dataToOptions(JOB_LEVELS)}
+          placeholder="Choose level"
+        />
+        <FormItem
+          name="upTo"
+          label="Upto"
+          value={values.upTo}
+          type={TEXT}
+          onChange={handleChange}
+          placeholder="Enter upto salary"
+        />
+      </div>
+      <AppTextEditor
+        onChange={handleChangeEditor}
+        initialValue={job?.jobDetail}
+        title="Job Detail"
+      />
+      {!!errors.jobDetail && !!touched.jobDetail && (
+        <AppFormErrorMessage message={errors.jobDetail} />
+      )}
+
       <AppButton buttonTitle={buttonTitle} htmlType="submit" />
     </Form>
   );

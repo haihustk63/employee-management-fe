@@ -24,7 +24,7 @@ const InputNumberField = ({ field, form, ...props }: IFieldProps) => {
       precision={0}
       {...props}
       onChange={handleChange}
-      className="input"
+      className="inputnumber"
     />
   );
 };
@@ -42,7 +42,11 @@ const SelectField = ({ field, form, ...props }: IFieldProps) => {
     form.setFieldValue(field.name, value);
   };
 
-  const { onChange: handleChangeProp, showSearch } = props as any;
+  const handleClear = () => {
+    form.setFieldTouched(field.name, true);
+  };
+
+  const { onChange: handleChangeProp, showSearch, allowClear } = props as any;
 
   const filterOption = (input: string, option: any) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
@@ -51,7 +55,8 @@ const SelectField = ({ field, form, ...props }: IFieldProps) => {
     <Select
       {...field}
       {...props}
-      allowClear
+      allowClear={allowClear ?? false}
+      onClear={handleClear}
       onChange={handleChangeProp || handleChange}
       filterOption={filterOption}
       showSearch={showSearch ?? true}
@@ -98,7 +103,11 @@ const FormItem: FC<IFormItemProps> = ({ name, type, label, ...props }) => {
 
   return (
     <div className="form-item">
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && (
+        <label htmlFor={name} className="form-label">
+          {label}
+        </label>
+      )}
       <Field name={name} type={type} {...props} component={renderComponent} />
       <ErrorMessage render={renderErrorMessage} name={name as string} />
     </div>

@@ -1,10 +1,5 @@
 .delivery-management {
   display: flex;
-
-  > .delivery-list {
-    flex-grow: 1;
-    margin-left: 2rem;
-  }
 }
 
 .add-new-delivery {
@@ -15,21 +10,14 @@
 
 .delivery-list {
   > .list {
-    display: flex;
-    flex-wrap: wrap;
-
-    > .app-primary-card {
-      width: calc((100% - 6.4rem) / 4);
-      margin: 0.8rem;
-    }
+    @include cardList(3, 1.6rem);
   }
 
   > .title {
-    display: flex;
-    align-items: center;
-
-    > .app-button {
-      margin-left: 1rem;
-    }
+    @include titleWithAction;
   }
+}
+
+.delivery-card {
+  @include cardItemContent;
 }

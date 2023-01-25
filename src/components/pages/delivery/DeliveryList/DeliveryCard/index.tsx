@@ -7,25 +7,43 @@ import AppPrimaryCard from "@/components/AppCard/Primary";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useDeleteDelivery } from "@/hooks/delivery";
 import { mergeName } from "@/utils";
+import { showDeleteConfirm } from "@/components/AppConfirm";
 
 const { Text } = Typography;
 
 const DeliveryCard: FC<{ delivery: any }> = ({ delivery }) => {
   const navigate = useNavigate();
-  const { mutate: mutateDeleteDelivery } = useDeleteDelivery(delivery.id);
+  const { mutate: deleteDelivery } = useDeleteDelivery(delivery.id);
 
   const handleClickDeliveryCard = (deliveryId: number) => () => {
     navigate(`${APP_PAGE_NAME_ROUTES.EMPLOYEE_LIST}?delivery=${deliveryId}`);
   };
 
+  const handleDelete = () => {
+    showDeleteConfirm({ onDelete: deleteDelivery });
+  };
+
   return (
     <AppPrimaryCard
       title={delivery.name}
-      onDelete={mutateDeleteDelivery}
       onClick={handleClickDeliveryCard(delivery.id)}
+      className="delivery-card"
     >
-      <Text>{mergeName(delivery?.deliveryEmployee?.[0]?.employee)}</Text>
-      <AppButton buttonTitle="Update" onClick={null} />
+      <Text className="description">
+        Manager: {mergeName(delivery?.deliveryEmployee?.[0]?.employee)}
+      </Text>
+      <div className="actions">
+        <AppButton buttonTitle="Update" onClick={null} />
+        <AppButton
+          buttonTitle="View employee"
+          onClick={handleClickDeliveryCard(delivery.id)}
+        />
+        <AppButton
+          buttonTitle="Delete"
+          onClick={handleDelete}
+          className="-danger"
+        />
+      </div>
     </AppPrimaryCard>
   );
 };

@@ -1,22 +1,26 @@
 .education-program-management {
+  > .title {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    margin-bottom: 2rem;
+  }
+
   > .list {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     gap: 1rem;
   }
-  > .list > .app-with-cover-card {
-    // width: calc((100% - 6.4rem) / 4);
-    height: 16rem;
+
+  > .list > .app-primary-card {
+    @include cardItemContent;
   }
 
-  > .list > .app-with-cover-card > .ant-image {
-    height: 100%;
-  }
-
-  > .list > .app-with-cover-card > .ant-image > .ant-image-img {
-    height: 100%;
-    border-radius: var(--common-border-radius);
+  > .list > .app-primary-card > .content > .description > .time {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 }
 
@@ -30,7 +34,6 @@
   }
 
   > .ant-modal > .ant-modal-content > .ant-modal-body {
-    height: 65vh;
     display: flex;
     flex-direction: column;
   }
@@ -42,8 +45,40 @@
     border-radius: var(--common-border-radius);
   }
 
-  > .ant-modal > .ant-modal-content > .ant-modal-body > .content {
-    flex-grow: 1;
+  > .ant-modal
+    > .ant-modal-content
+    > .ant-modal-body
+    > .ant-tabs
+    > .ant-tabs-content-holder {
+    height: 55vh;
     overflow: auto;
+  }
+
+  > .ant-modal > .ant-modal-content > .ant-modal-body .materials {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.form-education {
+  width: 80%;
+  margin: auto;
+
+  > .app-form > .form > .part {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  > .app-form > .form > .part > * {
+    flex-grow: 1;
+  }
+
+  > .app-form > .form > .part > .form-item:nth-child(2) {
+    max-width: 18%;
+  }
+
+  > .app-form > .form > .part > .form-item:nth-child(2) > .inputnumber {
+    width: 100%;
   }
 }

@@ -35,17 +35,21 @@ const ShowQuestion: FC<IShowQuestionProps> = ({
   }, [type]);
 
   return (
-    <div className="show-question">
-      <AppPrimaryCard>
-        <Text>{idx + ". " + questionText}</Text>
-        {questionSource.length > 0 &&
-          questionSource.map((block: any) => (
+    <AppPrimaryCard className="skill-test-question-card">
+      <Text className="index">Question {idx}</Text>
+      <Text className="text">{questionText}</Text>
+      {questionSource.length > 0 && (
+        <div className="source">
+          {questionSource.map((block: any) => (
             <AppCodeBlock
               key={block.id}
               type={block.source.type}
               content={block.source.content}
             />
           ))}
+        </div>
+      )}
+      <div className="answers">
         {options.length > 0 ? (
           <RenderOptions
             options={options}
@@ -60,8 +64,8 @@ const ShowQuestion: FC<IShowQuestionProps> = ({
             onChange={handleChange}
           />
         )}
-      </AppPrimaryCard>
-    </div>
+      </div>
+    </AppPrimaryCard>
   );
 };
 

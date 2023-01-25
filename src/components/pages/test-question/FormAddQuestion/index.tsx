@@ -1,6 +1,6 @@
 import { createContext, FC, useEffect, useRef, useState } from "react";
 import { Switch, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import AppForm from "@/components/AppForm";
 import FormFields from "./FormFields";
@@ -54,8 +54,8 @@ const { Text } = Typography;
 
 export const FormAddQuestionContext = createContext(null) as any;
 
-const FormAddQuestion: FC<{ questionId?: string }> = ({ questionId = "" }) => {
-
+const FormAddQuestion = () => {
+  const { questionId = "" } = useParams() as any;
   const [questionSource, setQuestionSource] = useState<TypeQuestionSource[]>(
     []
   );

@@ -3,7 +3,9 @@ import cx from "classnames";
 import AppCodeBlock from "@/components/AppCodeBlock";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
 import { AppInputTextArea } from "@/components/AppFormField";
+import { Space, Typography } from "antd";
 
+const { Text } = Typography;
 const { essays } = COMMON_TYPE_QUESTION;
 
 const TestResultQuestionItem: FC<{
@@ -22,7 +24,6 @@ const TestResultQuestionItem: FC<{
   const checkRightAnswer = (answerId: string) => {
     const right = question?.answer?.find((item: string) => item === answerId);
     const contestantChose = contestantAnswer?.includes(answerId);
-    console.log(right, contestantAnswer, answerId, contestantChose);
     if (right && contestantChose) {
       return true;
     }
@@ -37,39 +38,43 @@ const TestResultQuestionItem: FC<{
 
   return (
     <div className="test-result-question-item">
-      <p className="index">Question {questionIdx + 1}</p>
-      <p className="content">{question.questionText}</p>
+      <Text className="index">Question {questionIdx + 1}</Text>
+      <Text className="content">{question?.questionText}</Text>
       <div className="codeblocks">
         {question?.questionSource?.map(({ id, source }: any) => (
           <AppCodeBlock type={source.type} content={source.content} key={id} />
         ))}
       </div>
-      {question.type !== essays.value ? (
+      {question?.type !== essays.value ? (
         <>
           <div className="answers">
             {question?.options?.map((item: any, idx: number) => {
               const right = checkRightAnswer(item.id);
               return (
-                <p
-                  key={item.id}
-                  className={cx({
-                    item: true,
-                    "-right": right,
-                    "-wrong": right === false,
-                    "-miss": right === null,
-                  })}
-                >
-                  {idx + 1}. <span>{item.choice}</span>
-                </p>
+                <div key={item.id} className="item">
+                  <span className="index">{idx + 1}</span>
+                  <Text
+                    className={cx({
+                      text: true,
+                      right: right,
+                      wrong: right === false,
+                      miss: right === null,
+                    })}
+                  >
+                    {item.choice}
+                  </Text>
+                </div>
               );
             })}
           </div>
-          <div className="right">
-            <p className="text">Right answers</p>
-            {rightAnswers?.map((item: string, idx: number) => (
-              <p key={idx}>{item}</p>
-            ))}
-          </div>
+          {/* <div className="right">
+            <Text className="text">Right answers</Text>
+            <ul className="answers">
+              {rightAnswers?.map((item: string, idx: number) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+          </div> */}
         </>
       ) : (
         <AppInputTextArea value={contestantAnswer?.content} disabled />

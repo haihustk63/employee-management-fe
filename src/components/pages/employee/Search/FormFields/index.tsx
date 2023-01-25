@@ -61,48 +61,58 @@ const FormFields = () => {
 
   return (
     <Form onSubmit={handleSubmit} className="form">
-      <FormItem
-        name="keyword"
-        value={values.keyword}
-        type={TEXT}
-        onChange={handleChangeKeyword}
-        placeholder="Keywords: name, email, phone"
-      />
-      <FormItem
-        name="delivery"
-        value={values.delivery}
-        type={SELECT}
-        options={dataToOptions(data)}
-        placeholder="Select delivery"
-      />
-      <FormItem
-        name="position"
-        value={values.position}
-        type={SELECT}
-        options={MANAGER_EXAMPLE}
-        placeholder="Select position"
-        onChange={handleChange}
-      />
-      <FormItem
-        name="role"
-        value={values.role}
-        type={SELECT}
-        options={MANAGER_EXAMPLE}
-        onChange={handleChange}
-        placeholder="Select role"
-      />
-      <FormItem
-        name="workingStatus"
-        value={values.workingStatus}
-        type={SELECT}
-        options={MANAGER_EXAMPLE}
-        onChange={handleChange}
-        placeholder="Select Working Status"
-      />
-      <AppDatePicker
-        value={values.joinDate}
-        onChange={handleDatePickerChange}
-      />
+      <div className="part">
+        <FormItem
+          name="keyword"
+          label="Keyword"
+          value={values.keyword}
+          type={TEXT}
+          onChange={handleChangeKeyword}
+          placeholder="Keywords: name, email, phone"
+        />
+        <FormItem
+          name="delivery"
+          label="Delivery"
+          value={values.delivery}
+          type={SELECT}
+          options={dataToOptions(data)}
+          placeholder="Select delivery"
+        />
+        <FormItem
+          name="position"
+          label="Position"
+          value={values.position}
+          type={SELECT}
+          options={MANAGER_EXAMPLE}
+          placeholder="Select position"
+          onChange={handleChange}
+        />
+      </div>
+      <div className="part">
+        <FormItem
+          name="role"
+          label="Role"
+          value={values.role}
+          type={SELECT}
+          options={MANAGER_EXAMPLE}
+          onChange={handleChange}
+          placeholder="Select role"
+        />
+        <FormItem
+          name="workingStatus"
+          label="Working Status"
+          value={values.workingStatus}
+          type={SELECT}
+          options={MANAGER_EXAMPLE}
+          onChange={handleChange}
+          placeholder="Select Working Status"
+        />
+        <AppDatePicker
+          pickerLabel="Join Date"
+          value={values.joinDate}
+          onChange={handleDatePickerChange}
+        />
+      </div>
     </Form>
   );
 };

@@ -16,9 +16,9 @@ const SessionInfo = () => {
 
   return (
     <div className="skill-test-session-info">
-      <Title>Hello {user?.candidate?.name}</Title>
-      <Text>This is your skill test on {getDateNow()}</Text>
-      <Text id="count-down">
+      <Text className="name">Hello {user?.candidate?.name}</Text>
+      <Text className="date">This is your skill test on {getDateNow()}</Text>
+      <Text id="count-down" className="countdown">
         Time left:{" "}
         {duration > 0 && (
           <AppCountDown

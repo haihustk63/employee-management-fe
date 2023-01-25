@@ -1,30 +1,38 @@
 .home-page {
-  display: flex;
 }
 
 .home-check-in-out {
-  width: 55%;
   background-color: var(--bs-white);
-  padding: 2.4rem;
+  padding: 4rem;
   border-radius: var(--common-border-radius);
 
   > .cards {
     display: flex;
     margin-top: 4rem;
     justify-content: space-between;
+  }
 
-    > .app-primary-card {
-      flex: 0 0 45%;
-    }
+  > .cards > .app-primary-card {
+    flex: 0 0 45%;
+  }
+
+  > .cards > .app-primary-card > .title,
+  > .cards > .app-primary-card > .content > .time {
+    text-align: center;
+  }
+
+  > .cards > .app-primary-card > .content > .time {
+    font-size: 4rem;
+    font-weight: 700;
   }
 
   > .function {
     display: flex;
+    gap: 1rem;
     margin-top: 4rem;
   }
 }
 
 .home-check-in-out-list {
-  flex-grow: 1;
-  margin-left: 3rem;
+  margin-top: 4rem;
 }

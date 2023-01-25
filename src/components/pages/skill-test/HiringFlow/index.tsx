@@ -1,5 +1,4 @@
-import React from "react";
-import { StepProps, Steps } from "antd";
+import { StepProps, Steps, Typography } from "antd";
 
 import {
   LoadingOutlined,
@@ -7,6 +6,8 @@ import {
   SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+
+const { Text } = Typography;
 
 const items: StepProps[] = [
   {
@@ -34,7 +35,8 @@ const items: StepProps[] = [
 const HiringFlow = () => {
   return (
     <div className="hiring-flow">
-      <Steps items={items} />
+      <Text className="title">Our hiring process</Text>
+      <Steps items={items} direction="vertical" className="steps" />
     </div>
   );
 };

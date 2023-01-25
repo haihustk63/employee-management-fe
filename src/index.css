@@ -87,8 +87,10 @@
   --color-secondary-red: #f7dbda;
   --color-primary-blue: #1e5ac7;
   --color-secondary-blue: #d9e1f7;
-  --color-primary-grey: #8c8f8c;
-  --color-secondary-grey: #e6e6e6;
+  --color-primary-gray: #8c8f8c;
+  --color-secondary-gray: #e6e6e6;
+  --color-primary-green: #00a029;
+  --color-secondary-green: #f0faf0;
 }
 
 body {
@@ -117,6 +119,10 @@ a:hover {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+ol, ul {
+  margin: 0;
 }
 
 button {

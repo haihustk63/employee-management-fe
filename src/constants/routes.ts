@@ -16,7 +16,7 @@ import JobManagement from "@/pages/jobs";
 import CreateJob from "@/pages/jobs/create";
 import UpdateJob from "@/pages/jobs/update";
 import LoginEmployee from "@/pages/login";
-import PersonalInfo from "@/pages/personal-info";
+import PersonalInfo from "@/pages/personal-info/detail";
 import PersonalInfoAccount from "@/pages/personal-info/account";
 import PersonalInfoDetail from "@/pages/personal-info/detail";
 import PositionManagement from "@/pages/position";

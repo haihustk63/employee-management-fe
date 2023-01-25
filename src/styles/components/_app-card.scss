@@ -3,7 +3,6 @@
   position: relative;
   padding: 2.4rem;
   border-radius: var(--app-card-border-radius);
-  // cursor: unset;
 
   > .ant-typography {
     display: block;
@@ -13,19 +12,16 @@
   }
 
   > .title {
-    margin-bottom: 0.875rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
   }
 
-  > .anticon.anticon-close-circle {
-    color: var(--bs-black);
-    position: absolute;
-    font-size: 2rem;
-    top: 0;
-    right: 0;
-    transform: translate(50%, -50%);
+  > .content {
+    display: flex;
+    flex-direction: column;
   }
 }
 

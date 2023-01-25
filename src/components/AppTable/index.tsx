@@ -4,7 +4,7 @@ import AppBackPage from "../AppBackPage";
 
 import { IAppTableProps } from "./interface";
 
-const { Title } = Typography;
+const { Text } = Typography;
 
 const AppTable: FC<IAppTableProps> = ({
   columns,
@@ -26,7 +26,7 @@ const AppTable: FC<IAppTableProps> = ({
       {tableName && (
         <div className="title">
           {onGoBack && <AppBackPage onBack={onGoBack} />}
-          <Title level={3}>{tableName}</Title>
+          <Text className="app-title">{tableName}</Text>
         </div>
       )}
       <Table
@@ -38,7 +38,7 @@ const AppTable: FC<IAppTableProps> = ({
         onChange={onChange}
         bordered={bordered}
         sortDirections={sortDirections}
-        scroll={scroll ? scroll : { x: true, y: 500 }}
+        scroll={scroll ? { ...scroll, y: 500 } : { y: 500 }}
         sticky={sticky}
         rowSelection={rowSelection}
       />

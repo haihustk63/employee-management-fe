@@ -42,9 +42,10 @@ const Search: FC = () => {
   }, [searchParams, isInit]);
 
   return (
-    <div className="employee-search">
+    <div className="question-search">
       <AppForm<ISearchQuestionProps>
         initialValues={initialValues}
+        className="-horizontal"
         // handleSubmitForm={handleSubmitForm}
         innerRef={formRef}
       >

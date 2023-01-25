@@ -1,21 +1,28 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 import AppButton from "@/components/AppButton";
-import { CandidateProfileContext } from "@/pages/candidate";
 import { useDeleteCandidateProfile } from "@/hooks/candidate";
+import { CandidateProfileContext } from "@/pages/candidate";
+import { Space } from "antd";
 
 const GroupButton = ({ record }: any) => {
   const { handleSetCandidateId } = useContext(CandidateProfileContext) as any;
   const { mutate: onDeleteCandidate } = useDeleteCandidateProfile(record.id);
 
   return (
-    <div className="">
+    <Space>
       <AppButton
         buttonTitle="Update"
+        size="small"
         onClick={handleSetCandidateId(record.id)}
       />
-      <AppButton buttonTitle="Delete" onClick={onDeleteCandidate} />
-    </div>
+      <AppButton
+        buttonTitle="Delete"
+        size="small"
+        className="-danger"
+        onClick={onDeleteCandidate}
+      />
+    </Space>
   );
 };
 

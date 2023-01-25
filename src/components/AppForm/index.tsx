@@ -1,27 +1,23 @@
 import { Typography } from "antd";
 import { Formik } from "formik";
+import cx from "classnames";
 
 import { IAppFormProps } from "./interface";
 
-const { Title } = Typography;
+const { Text } = Typography;
 
-const AppForm = <T,>(props: IAppFormProps<T>) => {
-  const {
-    children,
-    handleSubmitForm,
-    initialValues,
-    title,
-    innerRef,
-    validationSchema,
-  } = props as any;
-
+const AppForm = <T,>({
+  children,
+  handleSubmitForm,
+  initialValues,
+  title,
+  innerRef,
+  validationSchema,
+  className,
+}: IAppFormProps<T>) => {
   return (
-    <div className="app-form">
-      {title && (
-        <Title className="app-title" level={2}>
-          {title}
-        </Title>
-      )}
+    <div className={cx("app-form", className)}>
+      {title && <Text className="app-title">{title}</Text>}
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmitForm}

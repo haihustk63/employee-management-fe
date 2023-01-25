@@ -12,4 +12,5 @@ export interface IEmployeeFormProps {
   joinDate?: Dayjs;
   paidLeaveCount?: number;
   workingStatus: number;
+  avatar?: any;
 }

@@ -16,27 +16,22 @@ import {
 } from "@/schemas";
 import AppFormErrorMessage from "@/components/AppFormErrorMessage";
 import { createRequestOptions } from "@/utils";
+import AppTimePicker from "@/components/AppTimePicker";
 
 const { TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 
-const {
-  MODIFY_CHECKIN,
-  MODIFY_CHECKOUT,
-  OVERTIME,
-  // ANNUAL_LEAVE,
-  // ANNUAL_AFTERNOON_LEAVE,
-  // ANNUAL_MORNING_LEAVE,
-  // REMOTE,
-  // REMOTE_AFTERNOON,
-  // REMOTE_MORNING,
-  // UNPAID_LEAVE,
-  // UNPAID_AFTERNOON_LEAVE,
-  // UNPAID_MORNING_LEAVE,
-} = REQUEST_TYPES;
+const { MODIFY_CHECKIN, MODIFY_CHECKOUT, OVERTIME } = REQUEST_TYPES;
 
 const FormFields = () => {
-  const { values, handleSubmit, handleChange, setFieldValue, errors } =
-    useFormikContext() as any;
+  const {
+    values,
+    errors,
+    touched,
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+  } = useFormikContext() as any;
 
   const { setSchemaValidation } = useContext(CreateRequestContext) as any;
 
@@ -65,6 +60,9 @@ const FormFields = () => {
 
   const handleChangeTimePicker =
     (field: string) => (time: any, timeString: string) => {
+      // if (time) {
+      //   setFieldTouched(field, false);
+      // }
       setFieldValue(field, time);
     };
 
@@ -72,45 +70,50 @@ const FormFields = () => {
     switch (values.type) {
       case MODIFY_CHECKIN.value:
         return (
-          <TimePicker
-            format="HH:mm"
+          <AppTimePicker
             onChange={handleChangeTimePicker("startTime")}
-            placeholder="Choose time"
             value={values.startTime}
+            name="startTime"
+            label="Time"
+            error={errors.startTime}
+            // onBlur={() => setFieldTouched("startTime", true)}
           />
         );
 
       case MODIFY_CHECKOUT.value:
         return (
-          <TimePicker
-            format="HH:mm"
+          <AppTimePicker
             onChange={handleChangeTimePicker("endTime")}
-            placeholder="Choose time"
             value={values.endTime}
+            label="Time"
+            name="endTime"
+            error={errors.endTime}
           />
         );
 
       case OVERTIME.value:
         return (
-          <div>
-            <TimePicker
-              format="HH:mm"
+          <div className="grouptime">
+            <AppTimePicker
               onChange={handleChangeTimePicker("startTime")}
-              placeholder="Choose start time"
               value={values.startTime}
+              label="From"
+              name="startTime"
+              error={errors.startTime}
             />
-            <TimePicker
-              format="HH:mm"
+            <AppTimePicker
               onChange={handleChangeTimePicker("endTime")}
-              placeholder="Choose end time"
               value={values.endTime}
+              label="To"
+              name="endTime"
+              error={errors.endTime}
             />
           </div>
         );
       default:
         return null;
     }
-  }, [values]);
+  }, [values, errors, touched]);
 
   const handleDatePickerChange = (newDate: any) => {
     setFieldValue("date", newDate);
@@ -128,13 +131,12 @@ const FormFields = () => {
       />
 
       {TimeComponent}
-      {errors.startTime ? (
-        <AppFormErrorMessage message={errors.startTime} />
-      ) : null}
-      {errors.endTime ? <AppFormErrorMessage message={errors.endTime} /> : null}
 
-      <AppDatePicker value={values.date} onChange={handleDatePickerChange} />
-      {errors.date ? <AppFormErrorMessage message={errors.date} /> : null}
+      <AppDatePicker
+        value={values.date}
+        onChange={handleDatePickerChange}
+        error={errors.date}
+      />
 
       <FormItem
         name="reason"

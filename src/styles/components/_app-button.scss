@@ -1,0 +1,32 @@
+.app-button {
+  color: var(--color-primary-blue);
+  border-color: var(--color-primary-blue) !important;
+  border-radius: var(--common-border-radius);
+  background: transparent;
+  outline: none !important;
+
+  &.-danger {
+    color: var(--color-primary-red);
+    border-color: var(--color-primary-red) !important;
+  }
+
+  &.-danger:hover {
+    background: var(--color-primary-red);
+  }
+
+  &:hover {
+    color: var(--bs-white) !important;
+    background: var(--color-primary-blue);
+  }
+
+  &:active {
+    transform: translateY(0.3rem);
+  }
+
+  &:disabled,
+  &:disabled:hover {
+    border-color: var(--color-secondary-gray) !important;
+    background-color: var(--color-secondary-gray);
+    color: var(--color-primary-gray) !important;
+  }
+}

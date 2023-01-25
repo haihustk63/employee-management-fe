@@ -10,6 +10,7 @@ import { mergeName } from "@/utils";
 import { useDeletePosition } from "@/hooks/position";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { PositionManagementContext } from "@/pages/position";
+import { showDeleteConfirm } from "@/components/AppConfirm";
 
 const { Text } = Typography;
 
@@ -21,7 +22,7 @@ const PositionCard: FC<{ position: any }> = ({ position }) => {
   ) as any;
 
   const {
-    mutate: mutateDeletePosition,
+    mutate: deletePosition,
     isError,
     isSuccess,
   } = useDeletePosition(position.id);
@@ -41,14 +42,29 @@ const PositionCard: FC<{ position: any }> = ({ position }) => {
     handleToggleModal();
   };
 
+  const handleDelete = () => {
+    showDeleteConfirm({ onDelete: deletePosition });
+  };
+
   return (
     <AppPrimaryCard
       title={position.name}
-      onDelete={mutateDeletePosition}
       onClick={handleClickPositionCard(position.id)}
+      className="position-card"
     >
-      <Text>{position.description}</Text>
-      <AppButton buttonTitle="Update" onClick={handleClickUpdate} />
+      <Text className="description">{position.description}</Text>
+      <div className="actions">
+        <AppButton buttonTitle="Update" onClick={handleClickUpdate} />
+        <AppButton
+          buttonTitle="View employee"
+          onClick={handleClickPositionCard(position.id)}
+        />
+        <AppButton
+          buttonTitle="Delete"
+          onClick={handleDelete}
+          className="-danger"
+        />
+      </div>
     </AppPrimaryCard>
   );
 };

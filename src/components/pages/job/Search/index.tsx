@@ -46,7 +46,7 @@ const Search: FC = () => {
   }, [searchParams, isInit]);
 
   return (
-    <div className="employee-search">
+    <div className="job-search">
       <AppForm<ISearchJobProps>
         initialValues={initialValues}
         innerRef={formRef}

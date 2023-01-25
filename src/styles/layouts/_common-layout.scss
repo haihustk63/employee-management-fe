@@ -6,29 +6,52 @@
     margin-top: 6.8rem;
   }
 
+  > .ant-layout > .ant-layout > .main {
+    padding: 2rem;
+  }
+
   .common-header {
     position: fixed;
     top: 0;
     width: 100%;
     height: 6.8rem;
     z-index: 99;
-  }
-
-  > .ant-layout > .ant-layout {
-    // margin-left: 30rem;
+    display: flex;
+    justify-content: space-between;
   }
 }
 
 .common-header {
   display: flex;
   align-items: center;
+  background-color: var(--color-secondary-blue) !important;
 
   > .logo {
-    color: var(--bs-white);
+    height: 100%;
+  }
+
+  > .logo > .image {
+    height: 100%;
   }
 
   > .menu {
     flex-grow: 1;
+  }
+
+  > .personal {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  > .personal > .name {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  > .personal > .ant-dropdown-trigger > .svg-icon {
+    width: 4.8rem;
+    height: 4.8rem;
+    cursor: pointer;
   }
 }
 

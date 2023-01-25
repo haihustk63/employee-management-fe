@@ -1,6 +1,6 @@
-import React, { FC } from "react";
 import { Typography } from "antd";
-import { CloseCircleFilled, EditFilled } from "@ant-design/icons";
+import cx from "classnames";
+import React, { FC } from "react";
 import { IAppCardPrimaryProps } from "../interface";
 
 const { Text, Title } = Typography;
@@ -8,31 +8,25 @@ const { Text, Title } = Typography;
 const AppPrimaryCard: FC<IAppCardPrimaryProps> = ({
   title,
   borderColor,
+  borderType = "solid",
   backgroundColor,
   hasBoxShadow,
+  className,
   children,
-  onClick,
-  onDelete,
 }) => {
-  const handleOnDelete = (e: any) => {
-    onDelete();
-  };
-  
   return (
     <div
-      className="app-primary-card"
+      className={cx("app-primary-card", className)}
       style={
         {
-          border: `1px solid var(--bs-${borderColor}-rgb)`,
+          border: `1px ${borderType} var(--color-primary-${borderColor})`,
           backgroundColor: backgroundColor
-            ? `var(--bs-${backgroundColor}-rgb)`
+            ? `var(--color-secondary-${backgroundColor})`
             : "var(--bs-white)",
           boxShadow: hasBoxShadow ? "var(--common-box-shadow)" : "",
         } as React.CSSProperties
       }
-      onClick={onClick}
     >
-      {onDelete && <CloseCircleFilled onClick={handleOnDelete} />}
       {!!title && (
         <Title level={3} className="title">
           {title}

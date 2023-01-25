@@ -1,8 +1,6 @@
 import FormEducationProgram from "@/components/pages/education/FormEducationProgram";
-import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useCreateEducationProgram } from "@/hooks/education";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { useNavigate } from "react-router-dom";
 
 const CreateNewEducationProgram = () => {
   const { mutate: onCreate, isSuccess, isError } = useCreateEducationProgram();
@@ -14,15 +12,23 @@ const CreateNewEducationProgram = () => {
   });
 
   const handleSubmit = (values: any) => {
-    onCreate(values);
+    const { materials = [], _deleteMaterialList, ...rest } = values;
+
+    const formData = new FormData();
+    materials.map((item: any) => {
+      formData.append("materials[]", item);
+    });
+    formData.append("data", JSON.stringify(rest));
+
+    onCreate({
+      data: formData,
+      config: {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    });
   };
 
-  return (
-    <div>
-      <h1>Create Education Program</h1>
-      <FormEducationProgram onSubmit={handleSubmit} />
-    </div>
-  );
+  return <FormEducationProgram onSubmit={handleSubmit} />;
 };
 
 export default CreateNewEducationProgram;

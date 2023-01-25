@@ -5,14 +5,14 @@ import AppButton from "@/components/AppButton";
 import DeliveryCard from "./DeliveryCard";
 import { IDeliveryListProps } from "./interface";
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const DeliveryList: FC<IDeliveryListProps> = ({ data, onToggleModal }) => {
 
   return (
     <div className="delivery-list">
       <div className="title">
-        <Title level={3}>Deliveries</Title>
+        <Text className="app-title">Deliveries</Text>
         <AppButton
           buttonTitle="Add delivery"
           size="small"

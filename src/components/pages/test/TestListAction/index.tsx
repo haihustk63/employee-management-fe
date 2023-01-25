@@ -33,14 +33,18 @@ const TestListAction: FC<{ testId: number }> = ({ testId }) => {
   };
 
   return (
-    <div className="job-group-btn">
+    <div className="actions">
       <AppButton buttonTitle="View Detail" onClick={handleNavigateToUpdate} />
       <AppButton
         buttonTitle="View Contestants"
         onClick={showContestants(testId)}
       />
-      <AppButton buttonTitle="Delete" onClick={handleDeleteTest} />
       {isAdmin && <AppButton buttonTitle="Assign Test" onClick={assignTest} />}
+      <AppButton
+        buttonTitle="Delete"
+        className="-danger"
+        onClick={handleDeleteTest}
+      />
     </div>
   );
 };

@@ -1,13 +1,17 @@
 import AppButton from "@/components/AppButton";
-import { useDeleteAccount } from "@/hooks/account";
+import { showDeleteConfirm } from "@/components/AppConfirm";
+import { APP_ROLES } from "@/constants/common";
+import { useDeleteAccount, useUpdateAccount } from "@/hooks/account";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { FC } from "react";
+import { AccountManagementContext } from "@/pages/account";
+import { Space } from "antd";
+import { FC, useContext, useMemo } from "react";
 
-const GroupButtonAccount: FC<{ email: string }> = ({ email }) => {
+const GroupButtonAccount: FC<{ record: any }> = ({ record }) => {
   const { mutate, isError, isSuccess } = useDeleteAccount();
-  // const { handleSetEmail, handleToggleModal } = useContext(
-  //   AccountManagementContext
-  // ) as any;
+  const { toggleAssignModal, setAccount } = useContext(
+    AccountManagementContext
+  ) as any;
 
   useTriggerNoti({
     isError,
@@ -15,19 +19,42 @@ const GroupButtonAccount: FC<{ email: string }> = ({ email }) => {
     messageSuccess: "Delete account successfully",
   });
 
-  // const handleClickAssign = () => {
-  //   handleSetEmail(email);
-  //   handleToggleModal();
-  // };
+  const onClickAssignButton = () => {
+    setAccount(record?.email);
+    toggleAssignModal();
+  };
+
+  const renderButtonAssignAccount = useMemo(() => {
+    if (!record?.employeeId && !record?.candidateId) {
+      return (
+        <AppButton
+          buttonTitle="Assign"
+          size="small"
+          onClick={onClickAssignButton}
+        />
+      );
+    }
+    return null;
+  }, [record]);
 
   const handleClickDelete = () => {
-    mutate({ email });
+    showDeleteConfirm({ onDelete: () => mutate({ email: record.email }) });
   };
 
   return (
     <div>
-      {/* <AppButton buttonTitle="Assign" onClick={handleClickAssign} /> */}
-      <AppButton buttonTitle="Delete" onClick={handleClickDelete} />
+      {record.employee?.role !== APP_ROLES.ADMIN.value &&
+        record.employee?.role !== APP_ROLES.SUPER_ADMIN.value && (
+          <Space>
+            {renderButtonAssignAccount}
+            <AppButton
+              buttonTitle="Delete"
+              size="small"
+              className="-danger"
+              onClick={handleClickDelete}
+            />
+          </Space>
+        )}
     </div>
   );
 };

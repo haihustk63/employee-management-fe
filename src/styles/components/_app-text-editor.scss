@@ -1,4 +1,9 @@
 .app-text-editor {
+  .form-label {
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
   > .editor {
     background-color: var(--bs-white);
     .ql-editor {

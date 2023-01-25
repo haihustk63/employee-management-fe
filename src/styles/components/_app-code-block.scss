@@ -1,15 +1,22 @@
 .app-code-block {
-  border-radius: 0.5rem;
-  padding: 1rem;
-  background-color: var(--bs-secondary);
   position: relative;
 
-  > .app-tag {
+  > pre {
+    border-radius: 0.5rem;
+    margin: 0 !important;
+  }
+
+  > .type {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     opacity: 0.3;
     transition: opacity 0.5s ease;
+    background-color: var(--color-primary-gray);
+    padding: .3rem 1rem;
+    border-radius: var(--common-border-radius);
+    user-select: none;
+    text-transform: capitalize;
 
     &:hover {
       opacity: 1;

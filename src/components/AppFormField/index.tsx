@@ -1,8 +1,10 @@
 import { Checkbox, Input, InputNumber, Radio, Select } from "antd";
 import { FC } from "react";
 import AppButton from "../AppButton";
+import AppTooltip from "../AppTooltip";
 
 import { IFormItemProps } from "../FormItem/interface";
+import DeleteIcon from "../Icons/DeleteIcon";
 import { IAppCheckboxGroup, IAppRadioGroup } from "./interface";
 
 const AppInput: FC<IFormItemProps> = ({
@@ -30,7 +32,7 @@ const AppInputNumber: FC<IFormItemProps> = ({
   placeholder,
   min,
   max,
-  precision = 0
+  precision = 0,
 }) => {
   return (
     <InputNumber
@@ -105,9 +107,9 @@ const AppRadioGroup: FC<IAppRadioGroup> = ({
   }
 
   return (
-    <Radio.Group value={value} onChange={onChange}>
+    <Radio.Group value={value} onChange={onChange} className="app-radio-group">
       {options.map((option: any, index: number) => (
-        <div key={option.id}>
+        <div key={option.id} className="item">
           <Radio value={option.id}>
             {isEditable ? (
               <AppInput
@@ -120,9 +122,7 @@ const AppRadioGroup: FC<IAppRadioGroup> = ({
               option.choice
             )}
           </Radio>
-          {onDeleteOption && (
-            <AppButton onClick={onDeleteOption(option.id)} buttonTitle="Del" />
-          )}
+          {onDeleteOption && <DeleteIcon onClick={onDeleteOption(option.id)} />}
         </div>
       ))}
     </Radio.Group>
@@ -142,11 +142,11 @@ const AppCheckboxGroup: FC<IAppCheckboxGroup> = ({
     <Checkbox.Group
       value={value}
       onChange={onChange}
-      className="app-checkbox-gr"
+      className="app-checkbox-group"
     >
       {options.map((option: any, index: number) => (
-        <div key={option.id}>
-          <Checkbox value={option.id}>
+        <div key={option.id} className="item">
+          <Checkbox value={option.id} className="checkbox">
             {isEditable ? (
               <AppInput
                 name={nameInput}
@@ -158,9 +158,7 @@ const AppCheckboxGroup: FC<IAppCheckboxGroup> = ({
               option.choice
             )}
           </Checkbox>
-          {onDeleteOption && (
-            <AppButton onClick={onDeleteOption(option.id)} buttonTitle="Del" />
-          )}
+          {onDeleteOption && <DeleteIcon onClick={onDeleteOption(option.id)} />}
         </div>
       ))}
     </Checkbox.Group>

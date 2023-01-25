@@ -66,12 +66,13 @@ const FormFields = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="form">
+    <Form onSubmit={handleSubmit} className="form -horizontal">
       <FormItem
         name="keyword"
         type={TEXT}
         onChange={handleChangeKeyword}
         placeholder="Keywords"
+        label="Keyword"
       />
       <FormItem
         name="topic"
@@ -80,6 +81,7 @@ const FormFields = () => {
         options={dataToOptions(testTopics)}
         onChange={handleChangeOtherValue("topic")}
         placeholder="Select topic"
+        label="Topic"
       />
       <FormItem
         name="type"
@@ -88,6 +90,7 @@ const FormFields = () => {
         options={Object.values(COMMON_TYPE_QUESTION)}
         placeholder="Select type"
         onChange={handleChangeOtherValue("type")}
+        label="Question type"
       />
       <FormItem
         name="level"
@@ -96,6 +99,7 @@ const FormFields = () => {
         options={Object.values(QUESTION_LEVELS)}
         onChange={handleChangeOtherValue("level")}
         placeholder="Select level"
+        label="Level"
       />
     </Form>
   );

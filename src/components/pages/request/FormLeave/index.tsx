@@ -1,13 +1,11 @@
 import { FC, useContext } from "react";
 
 import AppForm from "@/components/AppForm";
-import { LEAVING_TIME, REQUEST_TYPES, WORKING_TIME } from "@/constants/request";
+import { REQUEST_TYPES } from "@/constants/request";
 import { dayjs } from "@/dayjs-config";
 import { useCreateRequest } from "@/hooks/request";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { currentUserAtom } from "@/modules/currentUser";
 import { CreateRequestContext } from "@/pages/request/create-request";
-import { useRecoilValue } from "recoil";
 import FormFields from "./FormFields";
 import { IFormLeaveProps } from "./interface";
 

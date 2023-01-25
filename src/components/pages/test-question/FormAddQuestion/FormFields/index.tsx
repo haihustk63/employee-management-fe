@@ -3,30 +3,33 @@ import { useContext, useMemo } from "react";
 
 import AppButton from "@/components/AppButton";
 import AppCodeBlock from "@/components/AppCodeBlock";
+import AppTooltip from "@/components/AppTooltip";
 import FormItem from "@/components/FormItem";
+import AddIcon from "@/components/Icons/AddIcon";
 import {
   COMMON_TYPE_QUESTION,
   FORM_ITEM_TYPES,
   QUESTION_LEVELS,
 } from "@/constants/common";
-import { useGetConstantTestQuestionValue } from "@/hooks/constant";
+import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
 import { addKeyToData, dataToOptions } from "@/utils";
+import { Space, Typography } from "antd";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FormAddQuestionContext } from "..";
 import FormAddChoices from "../FormAddChoices";
-import GroupButtonChooseType from "../GroupButtonChooseType";
-import { Space } from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
+import TypeGroup from "../TypeGroup";
 
 const { TEXTAREA, SELECT } = FORM_ITEM_TYPES;
+const { Text } = Typography;
 
 const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
 
 const FormFields = () => {
+  const navigate = useNavigate();
+  const { questionId } = useParams();
   const { values, handleSubmit, handleChange, setFieldValue, resetForm } =
     useFormikContext() as any;
-  const navigate = useNavigate();
 
   const {
     questionSource = [],
@@ -44,6 +47,14 @@ const FormFields = () => {
     return <FormAddChoices />;
   }, [values.type]);
 
+  const addButtonTitle = useMemo(() => {
+    if (questionId) {
+      return "Update";
+    } else {
+      return "Add";
+    }
+  }, [questionId]);
+
   const navigateAddTopic = () => {
     navigate(`${APP_PAGE_NAME_ROUTES.TEST_TOPIC}?modal=true`);
   };
@@ -51,13 +62,16 @@ const FormFields = () => {
   const TopicLabel = useMemo(() => {
     return (
       <Space>
-        <span>Topic</span>
-        <Link
-          to={`${APP_PAGE_NAME_ROUTES.TEST_TOPIC}?modal=true`}
-          target="_blank"
-        >
-          Add Topic
-        </Link>
+        <Text className="text">Topic</Text>
+        <AppTooltip title="Click here to add topic">
+          <Link
+            to={`${APP_PAGE_NAME_ROUTES.TEST_TOPIC}?modal=true`}
+            target="_blank"
+            className="app-link"
+          >
+            <AddIcon />
+          </Link>
+        </AppTooltip>
       </Space>
     );
   }, []);
@@ -90,7 +104,7 @@ const FormFields = () => {
     setQuestionSource([]);
   };
 
-  const handleChangeType = (type: string) => () => {
+  const handleChangeType = (type: string) => {
     setFieldValue("type", type);
     setFieldValue("answer", []);
   };
@@ -124,7 +138,7 @@ const FormFields = () => {
         placeholder="Enter question text"
       />
 
-      <GroupButtonChooseType handleChangeType={handleChangeType} />
+      <TypeGroup handleChangeType={handleChangeType} type={values.type} />
 
       {AddChoiceQuestionComponent && AddChoiceQuestionComponent}
 
@@ -139,12 +153,15 @@ const FormFields = () => {
           />
         );
       })}
-      <AppButton buttonTitle="Add" htmlType="submit" />
-      <AppButton
-        buttonTitle="Clear and add new"
-        htmlType="button"
-        onClick={handleClearForm}
-      />
+      <div className="buttons">
+        <AppButton buttonTitle={addButtonTitle} htmlType="submit" />
+        <AppButton
+          buttonTitle="Clear and add new"
+          htmlType="button"
+          className="-danger"
+          onClick={handleClearForm}
+        />
+      </div>
     </Form>
   );
 };

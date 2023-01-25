@@ -1,0 +1,65 @@
+@mixin infoModal {
+  > .ant-modal {
+    width: 80% !important;
+    max-height: 80vh;
+  }
+
+  > .ant-modal > .ant-modal-content > .ant-modal-body {
+    overflow: auto;
+    height: 65vh;
+  }
+}
+
+@mixin formItem {
+  height: 4rem;
+  box-shadow: none;
+  &:hover {
+    border-color: var(--color-primary-blue);
+  }
+}
+
+@mixin cardList($cardCount, $gap) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+  > * {
+    width: calc((100% - ($cardCount - 1) * $gap) / ($cardCount));
+  }
+}
+
+@mixin textEllipsis {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin cardItemContent {
+  > .content > .description {
+    font-weight: 700;
+  }
+
+  > .content > .actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  > .content > .actions > .app-button {
+    font-size: 1.2rem;
+    padding: 0.5rem 2rem;
+  }
+}
+
+@mixin titleWithAction {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1.4rem;
+}
+
+@mixin appSection {
+  border-radius: var(--common-border-radius);
+  background-color: var(--bs-white);
+  padding: 4rem;
+}

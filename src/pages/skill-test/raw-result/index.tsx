@@ -1,10 +1,13 @@
+import AppInfoItem from "@/components/AppInfoItem";
 import AppTag from "@/components/AppTag";
 import HiringFlow from "@/components/pages/skill-test/HiringFlow";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useGetContestantTest } from "@/hooks/tests";
-import { Space } from "antd";
+import { Space, Typography } from "antd";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
+const { Text } = Typography;
 
 const SkillTestRawResult = () => {
   const { testId = "" } = useParams();
@@ -21,21 +24,25 @@ const SkillTestRawResult = () => {
   return (
     <div className="skill-test-result">
       <div className="result">
-        Your result:
-        <Space className="item">
-          <AppTag color="error">
-            {score}/{questionCount - essayCount}{" "}
-          </AppTag>
-          <AppTag color="success">selection questions</AppTag>
-        </Space>
-        and
-        <Space className="item">
-          <AppTag color="error">{essayCount} </AppTag>
-          <AppTag color="success">constructed-response questions</AppTag>
-        </Space>
-        waiting for review
+        <Text className="thanks">Thank you for attempting the test!</Text>
+        {!!email && (
+          <Text className="email">
+            We've send email to {email}, please check it for more information!
+          </Text>
+        )}
+        <div className="raw">
+          <AppInfoItem label="Number of questions" value={questionCount} />
+          <AppInfoItem
+            label="Selection questions"
+            value={`${score}/${questionCount - essayCount}`}
+          />
+          <AppInfoItem
+            label="Constructed response questions (Waiting for review)"
+            value={essayCount}
+          />
+        </div>
       </div>
-      <p>We've send email to {email} </p>
+
       <HiringFlow />
     </div>
   );

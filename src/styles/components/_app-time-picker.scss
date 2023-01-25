@@ -1,0 +1,9 @@
+.app-time-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  > .ant-picker {
+    @include formItem;
+  }
+}

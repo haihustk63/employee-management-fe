@@ -4,7 +4,7 @@ import AppButton from "@/components/AppButton";
 import FormItem from "@/components/FormItem";
 import { FORM_ITEM_TYPES } from "@/constants/common";
 import { useGetEmployees } from "@/hooks/employee";
-import { dataToOptions } from "@/utils";
+import { dataToOptions, mergeName } from "@/utils";
 import { useContext, useMemo, useState } from "react";
 import { AccountManagementContext } from "@/pages/account";
 import { useGetCandidateProfile } from "@/hooks/candidate";
@@ -21,12 +21,25 @@ const FormFields = () => {
 
   const candidateOptions = useMemo(() => {
     return dataToOptions(
-      candidates.map((candidate: any) => ({
-        value: candidate.id,
-        label: `${candidate.name} (${candidate.email})`,
-      }))
+      candidates
+        .filter((candidate: any) => !candidate.employeeAccount)
+        .map((candidate: any) => ({
+          value: candidate.id,
+          label: `${candidate.name} (${candidate.email})`,
+        }))
     );
   }, [candidates]);
+
+  const employeeOptions = useMemo(() => {
+    return dataToOptions(
+      employees
+        .filter((employee: any) => !employee.employeeAccount)
+        .map((employee: any) => ({
+          value: employee.id,
+          label: mergeName(employee),
+        }))
+    );
+  }, [employees]);
 
   const { updateEmail, switchOn, toggleSwitch } = useContext(
     AccountManagementContext
@@ -68,7 +81,7 @@ const FormFields = () => {
           label="Employee"
           value={values.employeeId}
           type={SELECT}
-          options={dataToOptions(employees)}
+          options={employeeOptions}
           placeholder="Choose a employee"
         />
       ) : (
