@@ -1,0 +1,11 @@
+.ant-switch {
+  &.ant-switch-checked {
+    background-color: var(--color-primary-blue) !important;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}

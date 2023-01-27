@@ -1,5 +1,9 @@
 .delivery-management {
   display: flex;
+
+  > .delivery-list {
+    width: 100%;
+  }
 }
 
 .add-new-delivery {

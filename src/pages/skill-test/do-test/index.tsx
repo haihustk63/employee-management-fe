@@ -101,6 +101,10 @@ const DoSkillTest = () => {
     }
   }, [info?.test?.duration]);
 
+  const isAllEmpty = useMemo(() => {
+    return answers?.every((item: any) => !item?.answer?.length);
+  }, [answers]);
+
   const confirmAttempt = () => {
     onUpdate({ confirmAttempt: true });
   };
@@ -126,30 +130,29 @@ const DoSkillTest = () => {
         ])
       );
     }
+
+    if (!seconds) {
+      if (isAllEmpty) {
+        navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
+      } else {
+        handleSubmit();
+      }
+    }
   };
 
   const handleSubmit = () => {
     const sessionId = Number(testId);
-    const notComplete = answers.filter((item: any, index: number) => {
-      return item?.answer.length === 0 || item.answer === undefined;
-    });
 
-    if (notComplete?.length) {
-      appNotification({
-        type: "error",
-        description: "Some questions were not completed",
-        message: "Error",
-      });
-      return;
-    }
-
-    const sendAnswers = answers.map(
-      ({ questionId, answer }: any, index: number) => ({
+    const sendAnswers = answers
+      .map(({ questionId, answer }: any, index: number) => ({
         sessionId,
         questionId: questionId,
         answer: transformAnswer(answer, index),
-      })
-    );
+      }))
+      .filter(
+        (item: any) =>
+          item.answer?.length > 0 || item.answer?.content?.length > 0
+      );
 
     onSubmitAnswer({ testId: sessionId, answers: sendAnswers });
   };
@@ -172,6 +175,7 @@ const DoSkillTest = () => {
         test,
         duration,
         testId: Number(testId),
+        isAllEmpty,
         setAnswers,
         confirmAttempt,
         handleSetCurrentDuration,

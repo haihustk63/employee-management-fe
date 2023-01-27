@@ -1,4 +1,6 @@
 .internal-test-result {
+  position: relative;
+
   > .instruction {
     @include appSection;
     margin-top: 2rem;
@@ -28,14 +30,25 @@
 
   > .summary {
     @include appSection;
+    display: flex;
+    flex-direction: column;
   }
 
-  > .summary > .name {
+  > .summary > .contestant {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 0.1rem dashed var(--color-primary-blue);
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  > .summary > .contestant > .name {
     font-size: 3.2rem;
   }
 
   > .summary > .title {
     font-size: 2.4rem;
+    margin-bottom: .5rem;
   }
 
   > .summary > .tags {
@@ -43,8 +56,28 @@
     gap: 1rem;
   }
 
+  > .summary > .note {
+    margin-top: 2rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: var(--common-border-radius);
+    background-color: var(--color-secondary-red);
+    color: var(--color-primary-red);
+  }
+
   > .detail {
     margin-top: 2rem;
+  }
+
+  > .print {
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+  }
+
+  > .print > .app-tooltip > .icon > .svg-icon {
+    width: 2.8rem;
+    height: 2.8rem;
   }
 }
 
@@ -137,5 +170,13 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  > .essay {
+    white-space: pre-wrap;
+    padding: 2rem;
+    background-color: var(--color-dracula);
+    border-radius: var(--common-border-radius);
+    color: var(--color-secondary-gray);
   }
 }

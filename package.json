@@ -32,6 +32,8 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.4.3",
     "react-syntax-highlighter": "^15.5.0",
+    "react-to-print": "^2.14.11",
+    "recharts": "^2.3.2",
     "recoil": "^0.7.6",
     "recoil-persist": "^4.2.0",
     "uuid": "^9.0.0",

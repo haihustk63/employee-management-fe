@@ -67,17 +67,9 @@ const TestResultQuestionItem: FC<{
               );
             })}
           </div>
-          {/* <div className="right">
-            <Text className="text">Right answers</Text>
-            <ul className="answers">
-              {rightAnswers?.map((item: string, idx: number) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
-          </div> */}
         </>
       ) : (
-        <AppInputTextArea value={contestantAnswer?.content} disabled />
+        <div className="essay">{contestantAnswer?.content || "No answer"}</div>
       )}
     </div>
   );

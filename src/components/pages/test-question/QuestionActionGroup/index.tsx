@@ -21,7 +21,7 @@ const QuestionActionGroup: FC<{ record: any }> = ({ record }) => {
   return (
     <Space>
       <AppButton
-        buttonTitle="View Detail"
+        buttonTitle="Detail"
         htmlType="button"
         size="small"
         onClick={viewQuestionDetail(record.id)}

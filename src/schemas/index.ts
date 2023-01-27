@@ -1,4 +1,4 @@
-import { string, object, number, date } from "yup";
+import { string, object, number, date, ref } from "yup";
 
 export const addDeliveryValidateSchema = object({
   name: string().required("Please enter name"),
@@ -111,4 +111,15 @@ export const testInfoSchema = object({
 
 export const assignCandidateAccountSchema = object({
   candidateId: number().required("Candidate is required"),
+});
+
+export const changePasswordSchema = object({
+  oldPassword: string().required("Old password is required"),
+  newPassword: string().required("New password is required"),
+  newPasswordConfirm: string()
+    .required("Confirm password is required")
+    .oneOf(
+      [ref("newPassword"), null],
+      "Confirm password doesn't match new password "
+    ),
 });

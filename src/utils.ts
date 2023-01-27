@@ -232,6 +232,15 @@ const disabledDateBeforeToday = (current: Dayjs) => {
   return current && current < dayjs().startOf("day");
 };
 
+const dataWithHeader = (data: FormData) => {
+  return {
+    data,
+    config: {
+      headers: { "Content-Type": "multipart/form-data" },
+    },
+  };
+};
+
 export {
   purityContent,
   addKeyToData,
@@ -253,4 +262,5 @@ export {
   getQuestionType,
   getSkillTestStatusLabel,
   disabledDateBeforeToday,
+  dataWithHeader
 };

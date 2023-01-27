@@ -2,6 +2,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export const API_ROUTES = {
   ACCOUNTS: `${API_URL}/accounts`,
+  CHANGE_PASSWORD: `${API_URL}/accounts/change-password`,
   // positions
   POSITION: `${API_URL}/positions/`,
   POSITION_ID: (positionId: string | number) =>
@@ -73,4 +74,6 @@ export const API_ROUTES = {
   REQUESTS: `${API_URL}/requests`,
   REQUEST_ID: (requestId: string | number) =>
     `${API_URL}/requests/${requestId}`,
+
+  APPLICATION_STATISTICS: `${API_URL}/statistics/applications`,
 };

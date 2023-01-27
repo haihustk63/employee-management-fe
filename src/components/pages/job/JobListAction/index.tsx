@@ -30,7 +30,7 @@ const JobListAction: FC<{ jobId: string; jobTitle: string }> = ({
   return (
     <Space>
       <AppButton
-        buttonTitle="View Detail"
+        buttonTitle="Detail"
         size="small"
         onClick={handleNavigateToUpdate}
       />

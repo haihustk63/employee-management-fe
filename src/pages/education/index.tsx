@@ -126,7 +126,7 @@ const EducationProgramManagement = () => {
                 <div className="actions">
                   <ButtonJoinProgram program={item} />
                   <AppButton
-                    buttonTitle="View Detail"
+                    buttonTitle="Detail"
                     onClick={showProgramDetail(item.id)}
                   />
                   <AppButton

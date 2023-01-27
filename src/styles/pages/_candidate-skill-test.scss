@@ -10,12 +10,13 @@
   }
 
   > .list {
-    @include cardList(4, 2rem);
+    @include cardList(4, 1.6rem);
   }
 }
 
 .candidate-skill-do-test {
   display: flex;
+  justify-content: space-between
 }
 
 .skill-test-card {
@@ -31,6 +32,7 @@
   align-items: center;
   border-radius: var(--common-border-radius);
   border: 0.2rem dashed var(--color-primary-red);
+  background-color: var(--bs-white);
   padding: 4rem;
   transform: translateY(100%);
 

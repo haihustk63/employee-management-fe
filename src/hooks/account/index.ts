@@ -34,3 +34,10 @@ export const useDeleteAccount = () => {
     method: "delete",
   });
 };
+
+export const useUpdatePassword = () => {
+  return useAppMutation({
+    url: API_ROUTES.CHANGE_PASSWORD,
+    method: "patch",
+  });
+};

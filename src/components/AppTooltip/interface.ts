@@ -8,6 +8,7 @@ export interface IAppTooltip {
   defaultOpen?: boolean;
   mouseEnterDelay?: number;
   overlayClassName?: string;
+  className?: string;
   placement?:
     | "top"
     | "left"

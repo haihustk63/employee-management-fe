@@ -34,7 +34,7 @@ const TestListAction: FC<{ testId: number }> = ({ testId }) => {
 
   return (
     <div className="actions">
-      <AppButton buttonTitle="View Detail" onClick={handleNavigateToUpdate} />
+      <AppButton buttonTitle="Detail" onClick={handleNavigateToUpdate} />
       <AppButton
         buttonTitle="View Contestants"
         onClick={showContestants(testId)}

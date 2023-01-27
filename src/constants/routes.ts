@@ -36,6 +36,7 @@ import TestsManagement from "@/pages/tests";
 import CreateTestPage from "@/pages/tests/create-test";
 import TimeSheet from "@/pages/timesheet";
 import { APP_ROLES } from "./common";
+import ChangePassword from "@/pages/change-password";
 
 const {
   CANDIDATE: { value: roleCandidate },
@@ -48,6 +49,7 @@ const {
 export const APP_PAGE_NAME_ROUTES = {
   ACCOUNT: "/accounts",
   CANDIDATE: "/candidates",
+  CHANGE_PASSWORD: "/change-password",
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
@@ -131,7 +133,7 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.INTERNAL_TEST_RESULT,
     path: APP_PAGE_NAME_ROUTES.INTERNAL_TEST_RESULT,
     element: InternalTestResult,
-    layout: CandidateLayout,
+    layout: CommonLayout,
     roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
   },
   {
@@ -395,6 +397,13 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.TIMESHEET,
     path: APP_PAGE_NAME_ROUTES.TIMESHEET,
     element: TimeSheet,
+    layout: CommonLayout,
+    roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.CHANGE_PASSWORD,
+    path: APP_PAGE_NAME_ROUTES.CHANGE_PASSWORD,
+    element: ChangePassword,
     layout: CommonLayout,
     roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
   },

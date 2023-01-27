@@ -516,3 +516,22 @@ export const CREATE_TEST_MODE = {
     label: "Random",
   },
 };
+
+export const TIME_FILTER_TYPES = {
+  allTime: {
+    value: 1,
+    label: "All time",
+  },
+  year: {
+    value: 2,
+    label: "Year",
+  },
+  quarter: {
+    value: 3,
+    label: "Quarter",
+  },
+  month: {
+    value: 4,
+    label: "Month",
+  },
+};

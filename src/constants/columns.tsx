@@ -323,7 +323,7 @@ export const employeeListColumns = ({ currentPage, t }: any) => {
       render: (_: any, record: any) => {
         return <EmployeeGroupButton record={record} />;
       },
-      width: 200,
+      width: 300,
     },
   ];
 };
@@ -589,16 +589,6 @@ export const jobsTableColumns = (
 //     },
 //   ];
 // };
-
-const splitDuration = (duration: string) => {
-  if (!duration)
-    return {
-      startTime: 0,
-      endTime: 0,
-    };
-  const [startTime, endTime] = duration.split("-");
-  return { startTime, endTime };
-};
 
 export const requestsTableColumns = (
   currentPage: number,
