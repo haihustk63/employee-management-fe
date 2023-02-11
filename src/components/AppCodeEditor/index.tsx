@@ -1,8 +1,11 @@
-import { FC, useEffect, useState } from "react";
 import CodeEditor from "@monaco-editor/react";
-import { Select } from "antd";
+import { Typography } from "antd";
+import { FC, useEffect, useState } from "react";
 import AppButton from "../AppButton";
+import { AppSelect } from "../AppFormField";
 import { IAppCodeEditorProps } from "./interface";
+
+const { Text } = Typography;
 
 const languages = [
   {
@@ -60,20 +63,27 @@ const AppCodeEditor: FC<IAppCodeEditorProps> = ({
 
   return (
     <div className="app-code-editor">
-      <Select
-        options={languages}
-        placeholder="Select language"
-        onChange={handleChange}
-        value={currentLanguage}
-      />
+      <div className="form-item">
+        <Text className="form-label">Choose language</Text>
+        <AppSelect
+          options={languages}
+          placeholder="Select language"
+          onChange={handleChange}
+          value={currentLanguage}
+        />
+      </div>
       <CodeEditor
         language={currentLanguage}
         value={value}
         onChange={handleSourceChange}
         height={500}
+        loading={<div>Loading...</div>}
+        className="editor"
       />
-      <AppButton buttonTitle="Submit" onClick={handleAddCodeBlock} />
-      <AppButton buttonTitle="Clear" onClick={handleClear} />
+      <div className="actions">
+        <AppButton buttonTitle="Submit" onClick={handleAddCodeBlock} />
+        <AppButton buttonTitle="Clear" onClick={handleClear} />
+      </div>
     </div>
   );
 };

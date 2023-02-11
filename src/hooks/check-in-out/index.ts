@@ -35,8 +35,11 @@ export const useGetCheckInOutTimesheet = () => {
   return useFetch({
     url: API_ROUTES.CHECK_IN_OUT_TIMESHEET,
     config: {
-      select: (data: any) => {
-        return addKeyToData(getRowsTimesheet(data));
+      select: (results: any) => {
+        return {
+          ...results,
+          data: addKeyToData(getRowsTimesheet(results.data)),
+        };
       },
     },
   });

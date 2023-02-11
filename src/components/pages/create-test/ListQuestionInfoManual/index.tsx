@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect } from "react";
-import { Space, Typography } from "antd";
+import { Alert, Space, Typography } from "antd";
 
 import AppPrimaryCard from "@/components/AppCard/Primary";
 import { createUniqueId } from "@/helpers";
@@ -15,9 +15,12 @@ const { Text } = Typography;
 const ListQuestionInfoManual: FC = () => {
   const {
     testId,
+    selectedRowKeys,
     toggleShowTestModal,
     questionInfoManual = [],
     setRandomTest,
+    setSelectedRowKeys,
+    setQuestionInfoManual,
   } = useContext(CreateTestContext) as any;
   const { mutate: createTest, data, isSuccess } = useCreateTest() as any;
 
@@ -32,18 +35,35 @@ const ListQuestionInfoManual: FC = () => {
     toggleShowTestModal();
   };
 
+  const deleteQuestion = (questionId: number) => () => {
+    const newSelectedRowsKey = selectedRowKeys?.filter(
+      (key: number) => key !== questionId
+    );
+    const newQuestionInfoManual = questionInfoManual?.filter(
+      (item: any) => item.questionId !== questionId
+    );
+    setSelectedRowKeys(newSelectedRowsKey);
+    setQuestionInfoManual(newQuestionInfoManual);
+  };
+
   return (
     <div className="list-question-info">
       <Text className="app-title">Test Info</Text>
+      {!questionInfoManual?.length && (
+        <Alert
+          type="warning"
+          message="No question is selected"
+          closable={false}
+        />
+      )}
       <div className="list">
         {questionInfoManual?.map((item: any, index: number) => {
           return (
             <AppPrimaryCard
-              key={createUniqueId()}
+              key={item.questionId}
               hasBoxShadow
               borderColor="blue"
               borderType="dashed"
-              onDelete={() => {}}
             >
               <Space>
                 <AppTag color="blue">{index + 1}</AppTag>
@@ -56,12 +76,18 @@ const ListQuestionInfoManual: FC = () => {
                 </AppTag>
               </Space>
               <Text className="question">{item.questionText}</Text>
+              <AppButton
+                buttonTitle="Delete"
+                size="small"
+                className="-danger"
+                onClick={deleteQuestion(item.questionId)}
+              />
             </AppPrimaryCard>
           );
         })}
       </div>
       <AppButton
-        buttonTitle="Create test"
+        buttonTitle="Preview test"
         onClick={handleCreateTest}
         disabled={!questionInfoManual?.length}
       />

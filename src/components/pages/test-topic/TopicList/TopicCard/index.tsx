@@ -8,6 +8,7 @@ import { useDeleteTopic } from "@/hooks/test-topic";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { TopicManagementContext } from "@/pages/test-topics";
 import { showDeleteConfirm } from "@/components/AppConfirm";
+import AppTooltip from "@/components/AppTooltip";
 
 const { Text } = Typography;
 
@@ -41,7 +42,9 @@ const TopicCard: FC<{ topic: any }> = ({ topic }) => {
 
   return (
     <AppPrimaryCard title={topic.name} className="topic-card">
-      <Text className="description">{topic.description}</Text>
+      <AppTooltip title={topic.description} placement="leftBottom">
+        <Text className="description">{topic.description}</Text>
+      </AppTooltip>
       <div className="actions">
         <AppButton buttonTitle="Update" onClick={handleClickUpdate} />
         <AppButton

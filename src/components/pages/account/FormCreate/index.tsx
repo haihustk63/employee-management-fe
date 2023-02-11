@@ -16,7 +16,7 @@ const initialValues: IAddNewAccount = {
   email: "",
   password: "",
   employeeId: undefined,
-  candidateId: undefined
+  candidateId: undefined,
 };
 
 const ModalCreateAccountForm = () => {
@@ -24,14 +24,6 @@ const ModalCreateAccountForm = () => {
     useContext(AccountManagementContext) as any;
 
   const formRef = useRef() as any;
-
-  const titleModal = useMemo(() => {
-    if (updateEmail) {
-      return "Update Account";
-    } else {
-      return "Create Account";
-    }
-  }, [updateEmail]);
 
   const schema = useMemo(() => {
     if (updateEmail) {
@@ -59,12 +51,13 @@ const ModalCreateAccountForm = () => {
   // }, [updateEmail]);
 
   return (
-    <AppModal open={showModal} onCancel={handleToggleModal} title={titleModal}>
+    <AppModal open={showModal} onCancel={handleToggleModal}>
       <AppForm<IAddNewAccount>
         initialValues={initialValues}
         validationSchema={schema}
         handleSubmitForm={onSubmitForm}
         innerRef={formRef}
+        title="Create Account"
       >
         <FormFields />
       </AppForm>

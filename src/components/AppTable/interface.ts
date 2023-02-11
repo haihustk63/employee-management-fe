@@ -1,5 +1,5 @@
 import { TablePaginationConfig } from "antd";
-import { SortOrder } from "antd/es/table/interface";
+import { FilterValue, SorterResult, SortOrder } from "antd/es/table/interface";
 
 export interface IAppTableProps {
   bordered?: boolean;
@@ -8,7 +8,7 @@ export interface IAppTableProps {
   title?: any;
   tableName?: string;
   loading?: boolean;
-  pagination?: false | TablePaginationConfig | undefined;
+  pagination?: any;
   rowKey?: any;
   scroll?: object;
   showSorterTooltip?: boolean;
@@ -16,8 +16,18 @@ export interface IAppTableProps {
   sortDirections?: SortOrder[] | undefined;
   sticky?: boolean;
   rowSelection?: object;
+  onChangeParams?: any;
+  total?: number;
+  pageSize?: number;
+  needResetPage?: boolean;
   onGoBack?: () => void;
   onChange?: () => void;
   onHeaderRow?: () => void;
   onRow?: () => void;
+}
+
+export interface TableParams {
+  pagination?: TablePaginationConfig;
+  sorter?: SorterResult<any>;
+  filters?: Record<string, FilterValue>;
 }

@@ -3,21 +3,10 @@
     margin-bottom: 2rem;
   }
 
-  > .app-form > .form > .form-item:first-child {
-    flex: 0 0 80%;
-  }
-
-  > .app-form > .form > .form-item:nth-child(2) {
-    width: 10%;
-  }
-
-  > .app-form > .form > .form-item > .inputnumber {
-    width: 100%;
-  }
-
-  > .manual {
-    display: flex;
-    justify-content: space-between;
+  > .app-form > .form > .app-button {
+    flex-grow: 0;
+    background-color: var(--color-primary-blue);
+    color: var(--bs-white);
   }
 
   > .manual > .info,
@@ -25,14 +14,6 @@
     border-radius: var(--common-border-radius);
     background-color: var(--bs-white);
     padding: 2rem;
-  }
-
-  > .manual > .input-question-info {
-    max-width: 65%;
-  }
-
-  > .manual > .info {
-    width: 33%;
   }
 
   > .random > .info {
@@ -45,27 +26,50 @@
   }
 }
 
+.create-test-page > .app-form > .form > .form-item {
+  &:first-child {
+    flex: 0 0 80%;
+  }
+
+  &:nth-child(2) {
+    width: 10%;
+  }
+
+  > .inputnumber {
+    width: 100%;
+  }
+}
+
 .show-test {
   @include infoModal;
 }
 
-.list-question-info {
-  > .list {
-    max-height: 40rem;
-    overflow: auto;
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+.list-question-info > .list {
+  max-height: 55rem;
+  overflow: auto;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
-  > .list > .app-primary-card {
+  > .app-primary-card {
     padding: 1rem;
     border-color: var(--color-primary-blue);
   }
 
-  > .list > .app-primary-card > .content > .question {
+  > .app-primary-card > .content > .question {
     @include textEllipsis;
+    margin-top: 1rem;
+  }
+
+  > .app-primary-card > .content > .app-button {
+    margin-top: 1rem;
+    width: fit-content;
+  }
+}
+
+.test-info-drawer {
+  .info > .app-button {
     margin-top: 1rem;
   }
 }

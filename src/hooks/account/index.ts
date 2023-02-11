@@ -10,14 +10,18 @@ export const useCreateAccount = () => {
   });
 };
 
-export const useGetAccounts = () => {
+export const useGetAccounts = (params: any) => {
   return useFetch({
     url: API_ROUTES.ACCOUNTS,
     config: {
-      select: (data: any) => {
-        return addKeyToData(data?.allAccounts);
+      select: (results: any) => {
+        return {
+          ...results,
+          data: addKeyToData(results?.data),
+        };
       },
     },
+    params,
   });
 };
 

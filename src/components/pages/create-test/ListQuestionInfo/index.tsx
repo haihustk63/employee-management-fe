@@ -15,9 +15,11 @@ const { easy, hard, medium } = QUESTION_LEVELS;
 const { Text } = Typography;
 
 const ListQuestionInfo: FC = () => {
-  const { questionInfo = [], setRandomTest } = useContext(
-    CreateTestContext
-  ) as any;
+  const {
+    questionInfo = [],
+    setRandomTest,
+    toggleShowTestModal,
+  } = useContext(CreateTestContext) as any;
   const { data: topics = [] } = useGetAllTestTopics();
   const {
     mutate: createRandomTest,
@@ -34,6 +36,7 @@ const ListQuestionInfo: FC = () => {
   const handleCreateRandomTest = () => {
     if (createRandomTest) {
       createRandomTest(questionInfo);
+      toggleShowTestModal();
     }
   };
 
@@ -49,7 +52,6 @@ const ListQuestionInfo: FC = () => {
               borderColor="blue"
               borderType="dashed"
               title={item.type}
-              onDelete={() => {}}
             >
               <Space>
                 <AppTag color="blue">

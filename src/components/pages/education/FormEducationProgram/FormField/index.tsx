@@ -120,7 +120,7 @@ const FormFields = () => {
           label="Tutor"
           value={values.tutorId}
           type={SELECT}
-          options={dataToOptions(employees)}
+          options={dataToOptions(employees?.data)}
           placeholder="Choose tutor"
         />
       </div>

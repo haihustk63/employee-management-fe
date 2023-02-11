@@ -1,9 +1,11 @@
-import { Space, Switch, Typography } from "antd";
+import { Switch, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 import AppButton from "@/components/AppButton";
-import AppWithCoverCard from "@/components/AppCard/WithCover";
+import AppPrimaryCard from "@/components/AppCard/Primary";
+import AppRate from "@/components/AppRate";
 import AppTag from "@/components/AppTag";
+import AppTooltip from "@/components/AppTooltip";
 import ButtonDeleteProgram from "@/components/pages/education/ButtonDeleteProgram";
 import ButtonJoinProgram from "@/components/pages/education/ButtonJoinProgram";
 import ListAttendancesModal from "@/components/pages/education/ListAttendancesModal";
@@ -20,9 +22,8 @@ import { currentUserAtom } from "@/modules/currentUser";
 import { mergeName } from "@/utils";
 import { createContext, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
-import AppRate from "@/components/AppRate";
-import AppTooltip from "@/components/AppTooltip";
-import AppPrimaryCard from "@/components/AppCard/Primary";
+import { useTableParams } from "@/hooks/useTableParams";
+import AppSearchKeyword from "@/components/AppSearchKeyword";
 
 const { Title, Text } = Typography;
 
@@ -31,6 +32,8 @@ export const EducationProgramContext = createContext({});
 const EducationProgramManagement = () => {
   const navigate = useNavigate();
   const { employee } = useRecoilValue(currentUserAtom);
+  const [selectProgramId, setSelectProgramId] = useState();
+  const [isShowMyProgram, setIsShowMyProgram] = useState(false);
 
   const {
     showModal: showListAttendancesModal,
@@ -41,11 +44,17 @@ const EducationProgramManagement = () => {
     handleToggleModal: toggleProgramDetailModal,
   } = useModal();
 
-  const [selectProgramId, setSelectProgramId] = useState();
-  const [isShowMyProgram, setIsShowMyProgram] = useState(false);
+  const {
+    isInit,
+    queryParams,
+    searchParams,
+    setQueryParams,
+    setIsInit,
+    resetPageParams,
+  } = useTableParams();
 
-  const { data: allPrograms = [] } = useGetAllEducationPrograms();
-  const { data: myPrograms = [] } = useGetMyEducationPrograms();
+  const { data: allPrograms = [] } = useGetAllEducationPrograms(queryParams);
+  const { data: myPrograms = [] } = useGetMyEducationPrograms(queryParams);
 
   const programs = useMemo(() => {
     if (isShowMyProgram) {
@@ -89,8 +98,14 @@ const EducationProgramManagement = () => {
         showListAttendancesModal,
         showProgramDetailModal,
         selectProgramId,
+        isInit,
+        queryParams,
+        searchParams,
         toggleListAttendancesModal,
         toggleProgramDetailModal,
+        setQueryParams,
+        setIsInit,
+        resetPageParams,
       }}
     >
       <div className="education-program-management">
@@ -100,6 +115,14 @@ const EducationProgramManagement = () => {
             <Switch checked={isShowMyProgram} onChange={toggleSwitch} />
           </AppTooltip>
         </div>
+        <AppSearchKeyword
+          isInit={isInit}
+          queryParams={queryParams}
+          searchParams={searchParams}
+          resetPageParams={resetPageParams}
+          setIsInit={setIsInit}
+          setQueryParams={setQueryParams}
+        />
         <div className="list">
           {programs.map((item: any) => {
             return (

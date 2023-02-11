@@ -1,0 +1,21 @@
+.app-code-editor {
+  background-color: var(--bs-white);
+  border-radius: var(--common-border-radius);
+  padding: 4rem 2rem;
+
+  > .form-item {
+    margin-bottom: 1rem;
+  }
+
+  .editor {
+    border: 1px dashed var(--color-primary-blue);
+    border-radius: var(--common-border-radius);
+    padding: 1rem;
+  }
+
+  > .actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+}

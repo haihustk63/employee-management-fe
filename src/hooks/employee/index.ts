@@ -8,8 +8,11 @@ export const useGetEmployees = (params?: object) => {
     url: API_ROUTES.EMPLOYEE_PROFILE,
     params,
     config: {
-      select: (data: any) => {
-        return addKeyToData(data?.allEmployeeProfile);
+      select: (result: any) => {
+        return {
+          ...result,
+          data: addKeyToData(result?.data),
+        };
       },
     },
   });

@@ -5,7 +5,7 @@ export interface IShowQuestionProps {
     questionSource?: any[];
     options?: any[];
   };
-  idx: number;
+  idx?: number;
   answer?: any[];
   disableInput?: boolean;
   handleChange?: (value: any) => void;

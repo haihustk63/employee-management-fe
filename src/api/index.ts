@@ -1,6 +1,21 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      localStorage.setItem(
+        "recoil-persist",
+        JSON.stringify({ currentUser: {} })
+      );
+      window.location.replace("/login");
+      return Promise.reject(error);
+    }
+  }
+);
 
 export const api = {
   get<T>({ url, params }: any): Promise<T> {

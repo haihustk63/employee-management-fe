@@ -1,26 +1,25 @@
-import { createContext, FC, useEffect, useRef, useState } from "react";
-import { Switch, Typography } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { Typography } from "antd";
+import { createContext, useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 
+import AppCodeEditor from "@/components/AppCodeEditor";
 import AppForm from "@/components/AppForm";
+import AppFormErrorMessage from "@/components/AppFormErrorMessage";
+import { COMMON_TYPE_QUESTION } from "@/constants/common";
+import { createUniqueId } from "@/helpers";
+import {
+  useCreateTestQuestion,
+  useGetOneTestQuestions,
+  useUpdateTestQuestion
+} from "@/hooks/test-question";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { addTestQuestionValidateSchema } from "@/schemas";
 import FormFields from "./FormFields";
 import {
   IFormAddQuestionProps,
   TypeQuestionSource,
-  TypeQuestionSourceBlock,
+  TypeQuestionSourceBlock
 } from "./interface";
-import AppCodeEditor from "@/components/AppCodeEditor";
-import { addTestQuestionValidateSchema } from "@/schemas";
-import {
-  useCreateTestQuestion,
-  useGetOneTestQuestions,
-  useUpdateTestQuestion,
-} from "@/hooks/test-question";
-import { createUniqueId } from "@/helpers";
-import { COMMON_TYPE_QUESTION } from "@/constants/common";
-import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
-import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import AppFormErrorMessage from "@/components/AppFormErrorMessage";
 
 const { oneChoice, multipleChoice, essays } = COMMON_TYPE_QUESTION;
 
@@ -49,8 +48,6 @@ const initialValues: IFormAddQuestionProps = {
   ],
   answer: [],
 };
-
-const { Text } = Typography;
 
 export const FormAddQuestionContext = createContext(null) as any;
 
@@ -123,7 +120,7 @@ const FormAddQuestion = () => {
       } else {
         const emptyOption = options?.some((option: any) => !option.choice);
         if (emptyOption) {
-          setError("Choice is empty");
+          setError("Some choices are empty");
           return;
         }
       }
@@ -168,20 +165,17 @@ const FormAddQuestion = () => {
     <FormAddQuestionContext.Provider
       value={{
         questionSource,
-        setQuestionSource,
         currentLanguage,
-        setCurrentLanguage,
         currentSource,
+        isDisplayCodeEditor,
+        setQuestionSource,
+        setCurrentLanguage,
         setCurrentSource,
+        handleChangeSwitch,
+        setError,
       }}
     >
       <div className="form-add-question">
-        <Switch
-          onChange={handleChangeSwitch}
-          className="switch"
-          defaultChecked={isDisplayCodeEditor}
-        />
-
         <AppForm<IFormAddQuestionProps>
           title={questionId ? "Update Question" : "Add New Question"}
           initialValues={initialValues}

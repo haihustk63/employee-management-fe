@@ -1,7 +1,5 @@
 import AppButton from "@/components/AppButton";
-import AppFormErrorMessage from "@/components/AppFormErrorMessage";
-import { AppInput, AppInputNumber } from "@/components/AppFormField";
-import AppTooltip from "@/components/AppTooltip";
+import appNotification from "@/components/AppNotification";
 import InputQuestionInfo from "@/components/pages/create-test/InputQuestionInfo";
 import InputQuestionInfoManual from "@/components/pages/create-test/InputQuestionInfoManual";
 import ListQuestionInfo from "@/components/pages/create-test/ListQuestionInfo";
@@ -16,9 +14,11 @@ import {
 import { useGetTest, useSaveTest, useUpdateTest } from "@/hooks/tests";
 import useModal from "@/hooks/useModal";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { Switch } from "antd";
+import { Drawer, Typography } from "antd";
 import { createContext, FC, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+
+const { Text } = Typography;
 
 const { easy, hard, medium } = QUESTION_LEVELS;
 const { created } = TEST_STATUS;
@@ -45,9 +45,11 @@ const CreateTestPage: FC = () => {
   const [questionInfoManual, setQuestionInfoManual] = useState<
     IQuestionInfoManual[]
   >([]);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [randomTest, setRandomTest] = useState([]);
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState(0);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { showModal: showTestModal, handleToggleModal: toggleShowTestModal } =
     useModal();
 
@@ -89,7 +91,22 @@ const CreateTestPage: FC = () => {
     messageSuccess: "Update test successfully",
   });
 
+  useEffect(() => {
+    if (mode === CREATE_TEST_MODE.random.value) {
+      setRandomTest([]);
+    }
+  }, [mode, questionInfo]);
+
   const saveTest = () => {
+    if (!title || !duration) {
+      appNotification({
+        type: "error",
+        message: "Error",
+        description: "Both title and duration are required",
+      });
+      return;
+    }
+
     let questionIds;
 
     if (testId) {
@@ -98,9 +115,23 @@ const CreateTestPage: FC = () => {
       );
       onUpdateTest({ questionIds, title, duration });
     } else {
-      questionIds = randomTest.map((question: any) => question.id);
+      if (mode === CREATE_TEST_MODE.manual.value) {
+        questionIds = questionInfoManual.map(
+          (question: any) => question.questionId
+        );
+      } else {
+        questionIds = randomTest.map((question: any) => question.id);
+      }
       onSaveTest({ questionIds, title, duration });
     }
+  };
+
+  const changeMode = (e: any) => {
+    setMode(e.target.value);
+  };
+
+  const toggleDrawer = () => {
+    setOpenDrawer(!openDrawer);
   };
 
   const isPublished = useMemo(() => {
@@ -109,22 +140,26 @@ const CreateTestPage: FC = () => {
     );
   }, [currentTest]);
 
+  const isDisabledSaveButton = useMemo(() => {
+    return (
+      isPublished ||
+      (mode === CREATE_TEST_MODE.random.value && !randomTest.length)
+    );
+  }, [mode, randomTest, isPublished]);
+
   const renderPreviewAndSave = useMemo(() => {
     return (
       <>
-        <AppButton
-          buttonTitle="Save test"
-          onClick={saveTest}
-          disabled={isPublished}
-        />
+        <AppButton buttonTitle="Save test" onClick={saveTest} />
         {isPublished && (
-          <p>
-            This test can not modify because some comtestants have completed it
-          </p>
+          <Text>
+            Be careful when modify this test because some comtestants have
+            completed it
+          </Text>
         )}
       </>
     );
-  }, [isPublished, saveTest]);
+  }, [saveTest]);
 
   const renderModeContent = useMemo(() => {
     if (mode === CREATE_TEST_MODE.random.value) {
@@ -141,10 +176,18 @@ const CreateTestPage: FC = () => {
       return (
         <div className="manual">
           <InputQuestionInfoManual />
-          <div className="info">
-            <ListQuestionInfoManual />
-            {renderPreviewAndSave}
-          </div>
+          <Drawer
+            title="Test info"
+            className="test-info-drawer"
+            width={600}
+            open={openDrawer}
+            onClose={toggleDrawer}
+          >
+            <div className="info">
+              <ListQuestionInfoManual />
+              {renderPreviewAndSave}
+            </div>
+          </Drawer>
         </div>
       );
     }
@@ -190,10 +233,6 @@ const CreateTestPage: FC = () => {
     }
   };
 
-  const changeMode = (e: any) => {
-    setMode(e.target.value);
-  };
-
   return (
     <CreateTestContext.Provider
       value={{
@@ -206,6 +245,7 @@ const CreateTestPage: FC = () => {
         mode,
         title,
         duration,
+        selectedRowKeys,
         onSubmitQuestionInfo: handleSubmitQuestionInfo,
         setRandomTest,
         setQuestionInfoManual,
@@ -213,6 +253,8 @@ const CreateTestPage: FC = () => {
         setTitle,
         setDuration,
         changeMode,
+        setSelectedRowKeys,
+        toggleDrawer,
       }}
     >
       <div className="create-test-page">

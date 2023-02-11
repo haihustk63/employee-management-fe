@@ -14,13 +14,12 @@ import { useMemo } from "react";
 const { TEXT, TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
-  const { values, handleSubmit, handleChange, setFieldValue } =
-    useFormikContext() as any;
+  const { values, handleSubmit, handleChange } = useFormikContext() as any;
 
-  const { data: employees = [] } = useGetEmployees();
+  const { data: employees = {} } = useGetEmployees();
 
   const suitableEmployees = useMemo(() => {
-    const roleEmployee = employees.filter(
+    const roleEmployee = employees.data?.filter(
       (em: any) => em.role === APP_ROLES.EMPLOYEE.value
     );
     return dataToOptions(roleEmployee);

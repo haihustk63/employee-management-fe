@@ -2,66 +2,67 @@
   > .app-title {
     @include titleWithAction;
   }
-
-  > .question-search {
-    margin-bottom: 2rem;
-  }
 }
 
 .form-add-question {
   display: flex;
   position: relative;
 
-  > .switch {
-    outline: none;
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-  }
-
   > .app-form {
     flex: 0 0 50%;
     margin: auto;
   }
 
-  > .app-form > .form > .part {
-    display: flex;
-  }
-
-  > .app-form > .form > .part > .form-item {
-    flex: 0 0 49%;
-  }
-
-  > .app-form > .form > .part > .form-item:first-child {
-    margin-right: auto;
-  }
-
-  > .app-form > .form > .app-code-block {
-    margin: 1rem 0;
-  }
-
-  > .app-form > .form > .form-item > .textarea {
-    min-height: 10rem;
-  }
-
-  > .app-form > .form > .types {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  > .app-form > .form > .buttons {
-    display: flex;
-    gap: 1rem;
-  }
-
-  > .app-form > .form > .buttons > .app-button {
-    height: 4rem;
-    text-transform: uppercase;
+  > .app-form > .form-field-error-message {
+    margin-top: 1rem;
+    display: inline-block;
   }
 
   > .app-code-editor {
     flex-grow: 1;
     margin-left: 1rem;
+    height: fit-content;
+  }
+}
+
+.form-add-question > .app-form > .form {
+  > .form-item.switch > .ant-switch {
+    width: fit-content;
+  }
+
+  > .part {
+    display: flex;
+  }
+
+  > .part > .form-item {
+    flex: 0 0 49%;
+  }
+
+  > .part > .form-item:first-child {
+    margin-right: auto;
+  }
+
+  > .app-code-block {
+    margin: 1rem 0;
+  }
+
+  > .form-item > .textarea {
+    min-height: 10rem;
+  }
+
+  > .types {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  > .buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  > .buttons > .app-button {
+    height: 4rem;
+    text-transform: uppercase;
   }
 }
 
@@ -74,5 +75,26 @@
     margin: auto;
     margin-top: 1rem;
     display: block;
+  }
+}
+
+.modal-question-detail {
+  .ant-modal {
+    min-width: 50vw;
+    max-width: 70vw;
+  }
+  .ant-modal-body {
+    overflow-y: scroll;
+    max-height: 50rem;
+  }
+}
+
+.question-search > .app-form > .form > .form-item {
+  &:first-child {
+    width: 40%;
+  }
+
+  &:not(:first-child) {
+    width: 18%;
   }
 }

@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { CloseCircleFilled, RightCircleFilled } from "@ant-design/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
-import AppTag from "../AppTag";
 import { IAppCodeBlockProps } from "./interface";
 import { purityContent } from "@/utils";
+import AppTooltip from "../AppTooltip";
 
 const AppCodeBlock: FC<IAppCodeBlockProps> = ({
   content,
@@ -23,8 +23,22 @@ const AppCodeBlock: FC<IAppCodeBlockProps> = ({
       >
         {purityContent(content)}
       </SyntaxHighlighter>
-      {onDelete && <CloseCircleFilled onClick={onDelete} />}
-      {onShow && <RightCircleFilled onClick={onShow} />}
+      <div className="actions">
+        {onDelete && (
+          <AppTooltip title="Delete this code block">
+            <>
+              <CloseCircleFilled className="icon" onClick={onDelete} />
+            </>
+          </AppTooltip>
+        )}
+        {onShow && (
+          <AppTooltip title="Show on editor">
+            <>
+              <RightCircleFilled className="icon" onClick={onShow} />
+            </>
+          </AppTooltip>
+        )}
+      </div>
     </div>
   );
 };

@@ -206,6 +206,8 @@ const FormFields: FC = () => {
           changeFile: setAvatar,
           onlyOne: true,
           cropFeature: true,
+          description:
+            "You can click here to upload avatar or dragging avatar here",
         }}
       />
       {employee?.avatar && (

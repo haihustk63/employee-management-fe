@@ -99,7 +99,11 @@ const ListRequestActions: FC<{ record: any }> = ({ record }) => {
 
   const deleteButton = useMemo(() => {
     return renderAdminButtons ? (
-      <AppButton buttonTitle="Delete" onClick={handleClickDelete} />
+      <AppButton
+        buttonTitle="Delete"
+        onClick={handleClickDelete}
+        className="-danger"
+      />
     ) : null;
   }, [renderAdminButtons]);
 
@@ -131,7 +135,7 @@ const ListRequestActions: FC<{ record: any }> = ({ record }) => {
         key: "delete",
         label: deleteButton,
       },
-    ];
+    ].filter((item) => !!item.label);
   }, [cancelButton, acceptButton, rejectButton, deleteButton]);
 
   return (

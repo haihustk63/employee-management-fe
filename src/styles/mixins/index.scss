@@ -35,8 +35,13 @@
 }
 
 @mixin cardItemContent {
-  > .content > .description {
+  > .content > .description,
+  > .content > .app-tooltip > .description {
     font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
   }
 
   > .content > .actions {

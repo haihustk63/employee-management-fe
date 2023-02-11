@@ -1,11 +1,12 @@
 import { Typography } from "antd";
 import { useFormikContext } from "formik";
-import { FC, useMemo } from "react";
+import { FC, useContext, useMemo } from "react";
 
 import AppButton from "@/components/AppButton";
 import { AppCheckboxGroup, AppRadioGroup } from "@/components/AppFormField";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
 import { createUniqueId } from "@/helpers";
+import { FormAddQuestionContext } from "..";
 
 const { Text } = Typography;
 
@@ -13,6 +14,7 @@ const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
 
 const FormAddChoices: FC = () => {
   const { setFieldValue, values } = useFormikContext() as any;
+  const { setError } = useContext(FormAddQuestionContext) as any;
 
   const ShowChoices = useMemo(() => {
     switch (values.type) {
@@ -31,13 +33,27 @@ const FormAddChoices: FC = () => {
     } else {
       setFieldValue("answer", e);
     }
+    setError("");
   };
 
-  const handleDeleteAnswer = (optionId: number) => () => {
+  const deleteOptionInAnswer = (optionId: string) => {
+    if (values.type === multipleChoice.value) {
+      const newAnswer = values?.answer?.filter(
+        (item: string) => item !== optionId
+      );
+      setFieldValue("answer", newAnswer);
+    } else {
+      if (optionId === values.answer) setFieldValue("answer", "");
+    }
+  };
+
+  const handleDeleteAnswer = (optionId: string) => () => {
+    deleteOptionInAnswer(optionId);
     const newOptions = values?.options?.filter(
       (option: any) => option.id !== optionId
     );
     setFieldValue("options", newOptions);
+    setError("");
   };
 
   const handleChangeAnswerInput = (optionId: number) => (e: any) => {
@@ -48,6 +64,7 @@ const FormAddChoices: FC = () => {
     if (optionIndex >= 0) {
       newOptions[optionIndex].choice = e.target.value;
       setFieldValue("options", newOptions);
+      setError("");
     }
   };
 
@@ -57,6 +74,7 @@ const FormAddChoices: FC = () => {
       choice: "",
     };
     setFieldValue("options", [...values?.options, newOption]);
+    setError("");
   };
 
   return (
@@ -70,10 +88,7 @@ const FormAddChoices: FC = () => {
         onChangeInput={handleChangeAnswerInput}
         onDeleteOption={handleDeleteAnswer}
       />
-      <AppButton
-        buttonTitle="Add choice"
-        onClick={handleAddChoice}
-      />
+      <AppButton buttonTitle="Add choice" onClick={handleAddChoice} />
     </div>
   );
 };

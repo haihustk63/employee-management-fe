@@ -55,7 +55,7 @@ const CheckInOut = () => {
   const handleCheckOut = () => {
     if (!checkedIn?.isChecked) {
       appNotification({
-        message: "Failes",
+        message: "Failed",
         description: "You must check in first",
         type: "error",
       });

@@ -10,15 +10,14 @@ const AppTooltip: FC<IAppTooltip> = ({
   ...props
 }) => {
   return (
-    <div className="app-tooltip">
-      <Tooltip
-        arrowPointAtCenter={arrowPointAtCenter}
-        mouseEnterDelay={mouseEnterDelay}
-        {...props}
-      >
-        {children}
-      </Tooltip>
-    </div>
+    <Tooltip
+      arrowPointAtCenter={arrowPointAtCenter}
+      mouseEnterDelay={mouseEnterDelay}
+      overlayClassName="app-tooltip"
+      {...props}
+    >
+      {children}
+    </Tooltip>
   );
 };
 

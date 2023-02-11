@@ -1,16 +1,17 @@
 import { useGetAllTestQuestions } from "@/hooks/test-question";
-import { useGetAllTestTopics } from "@/hooks/test-topic";
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useMemo, useState } from "react";
 
 import TestQuestionList from "@/components/pages/test-question/TestQuestionList";
 import { CreateTestContext } from "@/pages/tests/create-test";
 
 const InputQuestionInfoManual: FC = () => {
-  const { setQuestionInfoManual, currentTest = [] } = useContext(
-    CreateTestContext
-  ) as any;
+  const {
+    selectedRowKeys,
+    currentTest = [],
+    setSelectedRowKeys,
+    setQuestionInfoManual,
+  } = useContext(CreateTestContext) as any;
   const { data: questions, isLoading, isFetching } = useGetAllTestQuestions();
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   useEffect(() => {
     if (Object.keys(currentTest).length > 0) {
@@ -21,21 +22,24 @@ const InputQuestionInfoManual: FC = () => {
     }
   }, [currentTest]);
 
-  const rowSelection = {
-    type: "checkbox",
-    onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
-      const newInfo = selectedRows.map((row: any) => ({
-        questionId: row.id,
-        topic: row.topicName,
-        level: row.level,
-        type: row.type,
-        questionText: row.questionText,
-      }));
-      setQuestionInfoManual(newInfo);
-      setSelectedRowKeys(selectedRowKeys);
-    },
-    selectedRowKeys: selectedRowKeys,
-  };
+  const rowSelection = useMemo(
+    () => ({
+      type: "checkbox",
+      onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
+        const newInfo = selectedRows.map((row: any) => ({
+          questionId: row.id,
+          topic: row.topicName,
+          level: row.level,
+          type: row.type,
+          questionText: row.questionText,
+        }));
+        setQuestionInfoManual(newInfo);
+        setSelectedRowKeys(selectedRowKeys);
+      },
+      selectedRowKeys: selectedRowKeys,
+    }),
+    [selectedRowKeys]
+  );
 
   return (
     <div className="input-question-info">
@@ -43,6 +47,7 @@ const InputQuestionInfoManual: FC = () => {
         dataSource={questions}
         loading={isLoading || isFetching}
         rowSelection={rowSelection}
+        allowDelete={false}
       />
     </div>
   );

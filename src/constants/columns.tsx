@@ -67,7 +67,7 @@ const indexColumn = (currentPage: number, fixed: boolean = true) => ({
   title: "#",
   fixed,
   render: (_value: any, _record: any, index: any) => {
-    return currentPage * 10 + index + 1;
+    return (currentPage - 1) * 10 + index + 1;
   },
   width: 60,
 });
@@ -107,7 +107,6 @@ export const candidateProfileTableColumns = (
       title: "Status",
       dataIndex: ["employeeAccount", "employeeId"],
       render: (value: any, record: any) => {
-        console.log(record);
         if (!value) return <AppTag color="error">Candidate</AppTag>;
         return <AppTag color="success">Official Employee</AppTag>;
       },
@@ -231,25 +230,23 @@ export const deliveryListColumns = (
 };
 
 // employee profile
-export const employeeListColumns = ({ currentPage, t }: any) => {
+export const employeeListColumns = ({ currentPage }: any) => {
   return [
     indexColumn(currentPage),
     {
       key: "name",
       title: "Name",
+      dataIndex: ["lastName"],
+      sorter: true,
       fixed: true,
       render: (_: any, record: any) => {
-        if (record) {
-          const { firstName, lastName, middleName } = record;
-          return lastName + " " + middleName + " " + firstName;
-        }
-        return null;
+        return mergeName(record);
       },
       width: 200,
     },
     {
       key: "email",
-      dataIndex: ["employeeAccount", "email"],
+      dataIndex: ["email"],
       title: "Email",
       width: 300,
     },
@@ -273,7 +270,7 @@ export const employeeListColumns = ({ currentPage, t }: any) => {
     },
     {
       key: "position",
-      dataIndex: ["position", "name"],
+      dataIndex: ["positionName"],
       title: "Position",
       width: 150,
     },
@@ -282,6 +279,7 @@ export const employeeListColumns = ({ currentPage, t }: any) => {
       key: "joinDate",
       dataIndex: ["joinDate"],
       title: "Join Date",
+      sorter: true,
       render: (value: any) => {
         if (value) {
           return dayjs(value).format("DD/MM/YYYY");
@@ -312,7 +310,7 @@ export const employeeListColumns = ({ currentPage, t }: any) => {
     },
     {
       key: "delivery",
-      dataIndex: ["deliveryEmployee", "delivery", "name"],
+      dataIndex: ["deliveryName"],
       title: "Delivery",
       width: 120,
     },
@@ -372,14 +370,14 @@ export const accountTableColumns = (currentPage: number, t?: any) => {
 // test topics
 
 // test questions
-export const testQuestionListColumns = ({ currentPage, t }: any) => {
+export const testQuestionListColumns = ({ currentPage, allowDelete }: any) => {
   return [
     indexColumn(currentPage),
     {
       key: "questionText",
       dataIndex: ["questionText"],
       title: "Question",
-      fixed: true,
+      sorter: true,
       width: 300,
       render: (value: string) => {
         return <Text className="app-text-ellipsis">{value}</Text>;
@@ -416,7 +414,9 @@ export const testQuestionListColumns = ({ currentPage, t }: any) => {
       dataIndex: "action",
       title: "Action",
       render: (_: any, record: any) => {
-        return <QuestionActionGroup record={record} />;
+        return (
+          <QuestionActionGroup record={record} allowDelete={allowDelete} />
+        );
       },
       width: 200,
     },
@@ -562,38 +562,9 @@ export const jobsTableColumns = (
   ];
 };
 
-// export const testsTableColumns = (
-//   currentPage: number,
-//   t?: any
-// ): ColumnsType<ICandidateProfile> => {
-//   return [
-//     indexColumn(currentPage),
-//     {
-//       key: "title",
-//       title: "Title",
-//       dataIndex: ["title"],
-//       fixed: true,
-//     },
-//     {
-//       key: "duration",
-//       title: "Duration (Minutes)",
-//       dataIndex: ["duration"],
-//     },
-
-//     {
-//       key: "actions",
-//       title: "Actions",
-//       render: (_value: any, record: any) => {
-//         return <TestListAction record={record} />;
-//       },
-//     },
-//   ];
-// };
-
 export const requestsTableColumns = (
   currentPage: number,
-  role: number = APP_ROLES.EMPLOYEE.value,
-  t?: any
+  role: number = APP_ROLES.EMPLOYEE.value
 ): ColumnsType<ICandidateProfile> => {
   const employeeNameColumn =
     role === APP_ROLES.EMPLOYEE.value
@@ -602,11 +573,12 @@ export const requestsTableColumns = (
           {
             key: "employeeName",
             title: "Employee Name",
-            dataIndex: ["employee"],
+            dataIndex: ["lastName"],
+            sorter: true,
             fixed: true,
             width: 200,
-            render: (value: any) => {
-              return mergeName(value);
+            render: (value: any, record: any) => {
+              return mergeName(record.employee);
             },
           },
         ];
@@ -617,6 +589,7 @@ export const requestsTableColumns = (
       key: "date",
       title: "Date",
       dataIndex: ["date"],
+      sorter: true,
       render: (value: any) => {
         return getDateFormat(value);
       },

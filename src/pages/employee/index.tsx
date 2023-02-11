@@ -7,54 +7,61 @@ import { createContext, useMemo, useState } from "react";
 import useModal from "@/hooks/useModal";
 import EmployeeProfileModal from "@/components/pages/employee/EmployeeProfile";
 import { Typography } from "antd";
+import { useTableParams } from "@/hooks/useTableParams";
 
 const { Text } = Typography;
 
 export const EmployeeManagementContext = createContext({}) as any;
 
 const EmployeeManagement = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const {
+    isInit,
+    needResetPage,
+    queryParams,
+    searchParams,
+    onChangeTableParams,
+    resetPageParams,
+    setIsInit,
+    setQueryParams,
+  } = useTableParams();
+
   const [employeeId, setEmployeeId] = useState();
   const {
     handleToggleModal: toggleEmployeeProfileModal,
     showModal: showEmployeeProfileModal,
   } = useModal();
 
-  const params = useMemo(() => {
-    return {
-      delivery: searchParams.get("delivery"),
-      keyword: searchParams.get("keyword"),
-      position: searchParams.get("position"),
-      role: searchParams.get("role"),
-      workingStatus: searchParams.get("workingStatus"),
-      joinDate: searchParams.get("joinDate"),
-    };
-  }, [searchParams]);
-
   const {
-    data: employees = [],
+    data: dataSource = {},
     isLoading,
     isFetching,
-  } = useGetEmployees(params);
+  } = useGetEmployees(queryParams);
 
   const employee = useMemo(() => {
     if (employeeId) {
-      return employees.find((employee) => employee.id === employeeId);
+      return dataSource.data?.find(
+        (employee: any) => employee.id === employeeId
+      );
     }
     return {};
-  }, [employeeId]);
+  }, [employeeId, dataSource]);
 
   return (
     <EmployeeManagementContext.Provider
       value={{
-        params,
+        queryParams,
         employeeId,
         employee,
         searchParams,
         showEmployeeProfileModal,
-        setSearchParams,
+        isInit,
+        needResetPage,
         toggleEmployeeProfileModal,
         setEmployeeId,
+        onChangeTableParams,
+        resetPageParams,
+        setIsInit,
+        setQueryParams,
       }}
     >
       <div className="employee-management">
@@ -62,7 +69,7 @@ const EmployeeManagement = () => {
         <Search />
         <EmployeeList
           loading={isLoading || isFetching}
-          dataSource={employees}
+          dataSource={dataSource}
         />
         <EmployeeProfileModal />
       </div>

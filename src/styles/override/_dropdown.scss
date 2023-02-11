@@ -1,3 +1,18 @@
 .ant-dropdown-trigger {
   display: flex;
 }
+
+.ant-dropdown-menu {
+  padding: 1rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.ant-dropdown-menu-item {
+  padding: 0 !important;
+
+  .app-button {
+    width: 100%;
+  }
+}

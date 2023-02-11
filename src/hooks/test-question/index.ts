@@ -8,10 +8,13 @@ export const useGetAllTestQuestions = (params?: any) => {
     url: API_ROUTES.TEST_QUESTIONS,
     params,
     config: {
-      select: (data: any) => {
-        return addKeyToData(data.allTestQuestions, (item: any) => {
-          return `${item.topicId}-${item.questionId}`;
-        });
+      select: (result: any) => {
+        return {
+          ...result,
+          data: addKeyToData(result.data, (item: any) => {
+            return `${item.topicId}-${item.questionId}`;
+          }),
+        };
       },
     },
   });

@@ -9,20 +9,7 @@ import { CreateRequestContext } from "@/pages/request/create-request";
 import FormFields from "./FormFields";
 import { IFormLeaveProps } from "./interface";
 
-const {
-  MODIFY_CHECKIN,
-  MODIFY_CHECKOUT,
-  OVERTIME,
-  // ANNUAL_LEAVE,
-  // ANNUAL_AFTERNOON_LEAVE,
-  // ANNUAL_MORNING_LEAVE,
-  // REMOTE,
-  // REMOTE_AFTERNOON,
-  // REMOTE_MORNING,
-  // UNPAID_LEAVE,
-  // UNPAID_AFTERNOON_LEAVE,
-  // UNPAID_MORNING_LEAVE,
-} = REQUEST_TYPES;
+const { MODIFY_CHECKIN, MODIFY_CHECKOUT, OVERTIME } = REQUEST_TYPES;
 
 const initialValues: IFormLeaveProps = {
   date: dayjs(Date.now()),

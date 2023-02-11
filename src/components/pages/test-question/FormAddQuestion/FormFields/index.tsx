@@ -14,7 +14,7 @@ import {
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
 import { addKeyToData, dataToOptions } from "@/utils";
-import { Space, Typography } from "antd";
+import { Space, Switch, Typography } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FormAddQuestionContext } from "..";
 import FormAddChoices from "../FormAddChoices";
@@ -34,6 +34,8 @@ const FormFields = () => {
   const {
     questionSource = [],
     setQuestionSource,
+    isDisplayCodeEditor,
+    handleChangeSwitch,
     setCurrentLanguage,
     setCurrentSource,
   } = useContext(FormAddQuestionContext) as any;
@@ -90,13 +92,19 @@ const FormFields = () => {
       (block: any) => block.id === codeBlockId
     );
 
-    const {
-      source: { type, content },
-    } = codeBlock;
-    if (type && content) {
+    const newQuestionSource = questionSource.filter(
+      (block: any) => block.id !== codeBlockId
+    );
+
+    if (codeBlock) {
+      const {
+        source: { type, content },
+      } = codeBlock;
       setCurrentLanguage(type);
       setCurrentSource(content);
+      handleChangeSwitch(true);
     }
+    setQuestionSource(newQuestionSource);
   };
 
   const handleClearForm = () => {
@@ -141,6 +149,14 @@ const FormFields = () => {
       <TypeGroup handleChangeType={handleChangeType} type={values.type} />
 
       {AddChoiceQuestionComponent && AddChoiceQuestionComponent}
+
+      <div className="form-item switch">
+        <Text className="form-label">Add code block</Text>
+        <Switch
+          onChange={handleChangeSwitch}
+          defaultChecked={isDisplayCodeEditor}
+        />
+      </div>
 
       {questionSource?.map(({ id, source }: any) => {
         return (

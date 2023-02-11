@@ -11,10 +11,13 @@ import {
   COMMON_TYPE_QUESTION,
   QUESTION_LEVELS,
   SIDER_ITEMS,
+  SORT_ORDER,
   TEST_STATUS,
   WORKING_STATUS,
 } from "./constants/common";
 import { Dayjs } from "dayjs";
+import { TableParams } from "./components/AppTable/interface";
+import { SorterResult } from "antd/es/table/interface";
 
 const purityContent = (content?: string) => {
   if (!content) return "";
@@ -61,7 +64,7 @@ const getDateFormat = (date: string) => {
 
 const mergeName = (value: any) => {
   const { firstName = "", middleName = "", lastName = "" } = value || {};
-  return lastName + " " + middleName + " " + firstName;
+  return firstName + " " + middleName + " " + lastName;
 };
 
 export const getDaysInMonth = () => {
@@ -143,7 +146,7 @@ const getTimeLeavingLabel = (timeLeaving: any) => {
   )?.label;
 };
 
-const getRequestRows = (requests: any[]) => {
+const getRequestRows = (requests: any[] = []) => {
   return requests.map((request) => {
     const duration = getDuration(request);
 
@@ -241,7 +244,27 @@ const dataWithHeader = (data: FormData) => {
   };
 };
 
+const formatTableParams = (tableParams: TableParams = {}) => {
+  const formattedTableParams: { [key: string]: any } = {};
+  const { filters = {}, pagination = {}, sorter = {} } = tableParams;
+  const { current: page, pageSize: limit } = pagination;
+  if (page) formattedTableParams.page = page;
+  if (limit) formattedTableParams.limit = limit;
+  if (sorter.field) {
+    formattedTableParams[`${sorter.field}Sort`] = sorter.order
+      ? SORT_ORDER[sorter.order].value
+      : undefined;
+  }
+
+  return formattedTableParams;
+};
+
+const isEmptyObject = (obj: object = {}) => {
+  return !Object.keys(obj).length;
+};
+
 export {
+  isEmptyObject,
   purityContent,
   addKeyToData,
   dataToOptions,
@@ -262,5 +285,6 @@ export {
   getQuestionType,
   getSkillTestStatusLabel,
   disabledDateBeforeToday,
-  dataWithHeader
+  dataWithHeader,
+  formatTableParams,
 };

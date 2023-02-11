@@ -81,6 +81,7 @@ export const createEducationProgramSchema = object({
 export const addCommonRequestSchema = object({
   type: number().required("Type is required"),
   date: date().typeError("Invalid date").required("Date is required"),
+  reason: string().required("Reason is required"),
 });
 
 export const addOvertimeRequestSchema = object({
@@ -88,18 +89,21 @@ export const addOvertimeRequestSchema = object({
   date: date().typeError("Invalid date").required("Date is required"),
   startTime: date().typeError("Invalid date").required("Time is required"),
   endTime: date().typeError("Invalid date").required("Time is required"),
+  reason: string().required("Reason is required"),
 });
 
 export const addCheckInRequestSchema = object({
   type: number().required("Type is required"),
   date: date().typeError("Invalid date").required("Date is required"),
   startTime: date().typeError("Invalid time").required("Time is required"),
+  reason: string().required("Reason is required"),
 });
 
 export const addCheckOutRequestSchema = object({
   type: number().required("Type is required"),
   date: date().typeError("Invalid date").required("Date is required"),
   endTime: date().typeError("Invalid time").required("Time is required"),
+  reason: string().required("Reason is required"),
 });
 
 export const testInfoSchema = object({

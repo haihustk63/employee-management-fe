@@ -6,6 +6,7 @@ import { CreateTestContext } from "@/pages/tests/create-test";
 import { Radio, Typography } from "antd";
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import AppButton from "@/components/AppButton";
 
 const { TEXT, INPUT_NUMBER } = FORM_ITEM_TYPES;
 const { Text } = Typography;
@@ -13,8 +14,15 @@ const { Text } = Typography;
 const FormFields = () => {
   const { testId } = useParams();
   const { values, handleSubmit, handleChange } = useFormikContext() as any;
-  const { title, duration, mode, setTitle, setDuration, changeMode } =
-    useContext(CreateTestContext) as any;
+  const {
+    title,
+    duration,
+    mode,
+    setTitle,
+    setDuration,
+    changeMode,
+    toggleDrawer,
+  } = useContext(CreateTestContext) as any;
 
   useEffect(() => {
     setTitle(values.title);
@@ -50,6 +58,12 @@ const FormFields = () => {
             value={mode}
           />
         </div>
+      )}
+      {mode === CREATE_TEST_MODE.manual.value && (
+        <AppButton
+          buttonTitle="Show test info"
+          onClick={toggleDrawer}
+        />
       )}
     </Form>
   );

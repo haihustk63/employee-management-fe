@@ -1,3 +1,27 @@
 .app-select {
-  width: max-content;
+  > .ant-select-selector {
+    box-shadow: none;
+    height: 4rem !important;
+  }
+
+  > .ant-select-selector:hover {
+    outline: none;
+    border-color: var(--color-primary-blue) !important;
+  }
+
+  > .ant-select-selector {
+    @include formItem;
+  }
+
+  > .ant-select-selector
+    > .ant-select-selection-search
+    > .ant-select-selection-search-input {
+    height: 100%;
+  }
+  > .ant-select-selector > .ant-select-selection-placeholder,
+  > .ant-select-selector > .ant-select-selection-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
 }

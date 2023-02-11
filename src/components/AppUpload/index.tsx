@@ -68,7 +68,8 @@ const AppUpload: FC<{ standard: UploadProps; extra?: any }> = ({
         >
           <UploadIcon />
           <Text className="instruction">
-            You can click here to upload files or dragging files here
+            {extra?.description ??
+              "You can click here to upload files or dragging files here"}
           </Text>
         </Upload.Dragger>
       </Wrapper>

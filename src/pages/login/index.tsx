@@ -57,7 +57,6 @@ const LoginEmployee = () => {
   return (
     <div className="login-page">
       <FormLogin
-        actor="employee"
         initialValue={initialValueForm}
         validationSchema={loginSchema}
         onSubmit={handleLogin}

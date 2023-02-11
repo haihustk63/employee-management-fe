@@ -1,0 +1,9 @@
+.app-tooltip {
+  --antd-arrow-background-color: var(--color-primary-blue);
+  max-width: 50rem;
+
+  > .ant-tooltip-content > .ant-tooltip-inner {
+    color: var(--bs-white);
+    background-color: var(--color-primary-blue);
+  }
+}

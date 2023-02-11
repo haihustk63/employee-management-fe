@@ -36,7 +36,7 @@ const ShowQuestion: FC<IShowQuestionProps> = ({
 
   return (
     <AppPrimaryCard className="skill-test-question-card">
-      <Text className="index">Question {idx}</Text>
+      {idx && <Text className="index">Question {idx}</Text>}
       <Text className="text">{questionText}</Text>
       {questionSource.length > 0 && (
         <div className="source">

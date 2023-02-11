@@ -5,19 +5,22 @@ import { timesheetTableColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
 import { dayjs } from "@/dayjs-config";
 
-const DateTable: FC<ITableDataProps> = ({
-  currentPage = 0,
-  dataSource,
-  loading,
-}) => {
+const DateTable: FC<ITableDataProps> = ({ dataSource, loading }) => {
   const columns = useMemo(() => {
-    return timesheetTableColumns(currentPage);
-  }, [currentPage]);
+    return timesheetTableColumns(dataSource?.page || 1);
+  }, [dataSource]);
 
   return (
     <div>
       <Typography.Text>{dayjs(Date.now()).format("MMMM YYYY")}</Typography.Text>
-      <AppTable dataSource={dataSource} loading={loading} columns={columns} />
+      <AppTable
+        dataSource={dataSource?.data}
+        loading={loading}
+        columns={columns}
+        total={dataSource?.total}
+        pageSize={31}
+        pagination
+      />
     </div>
   );
 };

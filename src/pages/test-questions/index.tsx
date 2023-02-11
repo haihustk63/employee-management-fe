@@ -1,10 +1,9 @@
-import { createContext, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { createContext } from "react";
 
-import { useGetAllTestQuestions } from "@/hooks/test-question";
-import TestQuestionList from "@/components/pages/test-question/TestQuestionList";
 import Search from "@/components/pages/test-question/Search";
-import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
+import TestQuestionList from "@/components/pages/test-question/TestQuestionList";
+import { useGetAllTestQuestions } from "@/hooks/test-question";
+import { useTableParams } from "@/hooks/useTableParams";
 import { Typography } from "antd";
 
 const { Text } = Typography;
@@ -12,18 +11,22 @@ const { Text } = Typography;
 export const TestQuestionConText = createContext({}) as any;
 
 const TestQuestionManagement = () => {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [queryParams, setQueryParams] = useState();
-  const [isInit, setIsInit] = useState(false);
+  const {
+    isInit,
+    needResetPage,
+    queryParams,
+    searchParams,
+    onChangeTableParams,
+    resetPageParams,
+    setIsInit,
+    setQueryParams,
+  } = useTableParams();
 
-  useEffect(() => {
-    if (isInit) {
-      setSearchParams(queryParams as any);
-    }
-  }, [queryParams, isInit]);
-
-  const { data, isLoading, isFetching } = useGetAllTestQuestions(queryParams);
+  const {
+    data = {},
+    isLoading,
+    isFetching,
+  } = useGetAllTestQuestions(queryParams);
 
   return (
     <TestQuestionConText.Provider
@@ -31,8 +34,11 @@ const TestQuestionManagement = () => {
         queryParams,
         isInit,
         searchParams,
+        needResetPage,
         setQueryParams,
         setIsInit,
+        onChangeTableParams,
+        resetPageParams,
       }}
     >
       <div className="test-question-management">

@@ -11,6 +11,7 @@ import { useDeletePosition } from "@/hooks/position";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { PositionManagementContext } from "@/pages/position";
 import { showDeleteConfirm } from "@/components/AppConfirm";
+import AppTooltip from "@/components/AppTooltip";
 
 const { Text } = Typography;
 
@@ -52,7 +53,9 @@ const PositionCard: FC<{ position: any }> = ({ position }) => {
       onClick={handleClickPositionCard(position.id)}
       className="position-card"
     >
-      <Text className="description">{position.description}</Text>
+      <AppTooltip title={position.description} placement="leftBottom">
+        <Text className="description">{position.description}</Text>
+      </AppTooltip>
       <div className="actions">
         <AppButton buttonTitle="Update" onClick={handleClickUpdate} />
         <AppButton

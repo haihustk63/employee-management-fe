@@ -1,38 +1,56 @@
 import { FC, useContext, useEffect, useRef } from "react";
 
 import AppForm from "@/components/AppForm";
+import { EmployeeManagementContext } from "@/pages/employee";
 import FormFields from "./FormFields";
 import { ISearchEmployeeProps } from "./interface";
-import { EmployeeManagementContext } from "@/pages/employee";
+import { makeCleanObject } from "@/utils";
 
 import { dayjs } from "@/dayjs-config";
 
 const initialValues: ISearchEmployeeProps = {
   keyword: "",
   delivery: undefined,
-  position: undefined,
-  joinDate: dayjs(Date.now()),
   role: undefined,
+  position: undefined,
   workingStatus: undefined,
 };
 
 const Search: FC = () => {
-  const { params = {} } = useContext(EmployeeManagementContext) as any;
+  const {
+    searchParams = {},
+    isInit,
+    queryParams = {},
+    setIsInit,
+    setQueryParams,
+  } = useContext(EmployeeManagementContext) as any;
 
   const formRef = useRef() as any;
 
   useEffect(() => {
-    if (Object.keys(params).length > 0) {
-      if (params.delivery) {
-        formRef?.current?.setFieldValue("delivery", Number(params.delivery));
-      }
-      formRef?.current?.setFieldValue("keyword", params.keyword);
-      formRef?.current?.setFieldValue("position", params.position);
-      formRef?.current?.setFieldValue("role", params.role);
-      formRef?.current?.setFieldValue("workingStatus", params.workingStatus);
-      formRef?.current?.setFieldValue("joinDate", params.joinDate);
+    if (searchParams.toString() && !isInit) {
+      const keyword = searchParams.get("keyword");
+      const delivery = searchParams.get("delivery");
+      const position = searchParams.get("position");
+      const workingStatus = searchParams.get("workingStatus");
+      const role = searchParams.get("role");
+
+      formRef?.current?.setFieldValue("keyword", keyword);
+      formRef?.current?.setFieldValue("delivery", parseInt(delivery) || null);
+      formRef?.current?.setFieldValue("position", parseInt(position) || null);
+      formRef?.current?.setFieldValue("role", parseInt(role) || null);
+      formRef?.current?.setFieldValue(
+        "workingStatus",
+        parseInt(workingStatus) || null
+      );
+
+      const params = { keyword, delivery, position, workingStatus, role };
+      const pureParams = makeCleanObject(params);
+      setQueryParams({ ...queryParams, ...pureParams });
+
+      setIsInit(true);
     }
-  }, [params]);
+  }, [queryParams, searchParams, isInit]);
 
   const handleSubmitForm = () => {};
   return (

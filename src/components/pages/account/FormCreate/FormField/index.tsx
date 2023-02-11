@@ -10,6 +10,8 @@ import { AccountManagementContext } from "@/pages/account";
 import { useGetCandidateProfile } from "@/hooks/candidate";
 import { Switch, Typography } from "antd";
 
+const { Text } = Typography;
+
 const { TEXT, PASSWORD, SELECT } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
@@ -74,7 +76,12 @@ const FormFields = () => {
           placeholder="Your password"
         />
       )}
-      <Switch checked={switchOn} onChange={toggleSwitch} />
+      <div className="form-item">
+        <Text className="form-label">
+          Assign {switchOn ? "Employee" : "Candidate"}
+        </Text>
+        <Switch checked={switchOn} onChange={toggleSwitch} />
+      </div>
       {switchOn ? (
         <FormItem
           name="employeeId"

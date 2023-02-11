@@ -8,14 +8,26 @@ import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { createContext, useState } from "react";
 import { Typography } from "antd";
 import ModalAssignAccount from "@/components/pages/account/ModalAssign";
+import { useTableParams } from "@/hooks/useTableParams";
 
 const { Text } = Typography;
 
 export const AccountManagementContext = createContext({});
 
 const AccountManagement = () => {
-  const { data: accounts = [], isLoading, isFetching } = useGetAccounts();
-  const { mutate: onCreateAccount, isSuccess, isError } = useCreateAccount();
+  const { onChangeTableParams, queryParams } = useTableParams();
+  const {
+    data: accounts = [],
+    isLoading,
+    isFetching,
+  } = useGetAccounts(queryParams);
+
+  const {
+    mutate: onCreateAccount,
+    isSuccess,
+    isError,
+    error,
+  } = useCreateAccount();
   const [account, setAccount] = useState();
 
   const { showModal, handleToggleModal } = useModal();
@@ -27,8 +39,8 @@ const AccountManagement = () => {
   useTriggerNoti({
     isSuccess,
     isError,
+    error,
     messageSuccess: "An account has been created",
-    messageError: "Please check if the account is already existed",
   });
 
   const toggleSwitch = () => {
@@ -36,7 +48,17 @@ const AccountManagement = () => {
   };
 
   const onSubmitForm = (values: any) => {
-    const { employeeId, candidateId, ...rest } = values;
+    const { employeeId, candidateId, email, password } = values;
+    const account = accounts.find((acc: any) => acc.email === email);
+    if (account) {
+      appNotification({
+        description: "This account has been existed",
+        message: "Error",
+        type: "error",
+      });
+      return;
+    }
+
     let formData;
 
     if (switchOn) {
@@ -53,7 +75,7 @@ const AccountManagement = () => {
         return;
       }
 
-      formData = { employeeId, ...rest };
+      formData = { employeeId, email, password };
     } else {
       const hasAccount = accounts?.findIndex(
         (account: any) => account.candidateId === candidateId
@@ -68,7 +90,7 @@ const AccountManagement = () => {
         return;
       }
 
-      formData = { candidateId, ...rest };
+      formData = { candidateId, email, password };
     }
 
     onCreateAccount(formData);
@@ -91,6 +113,7 @@ const AccountManagement = () => {
         toggleSwitch,
         toggleAssignModal,
         setAccount,
+        onChangeTableParams,
       }}
     >
       <div className="account-management">

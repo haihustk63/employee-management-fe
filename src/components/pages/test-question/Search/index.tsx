@@ -14,9 +14,13 @@ const initialValues: ISearchQuestionProps = {
 };
 
 const Search: FC = () => {
-  const { searchParams, isInit, setIsInit, setQueryParams } = useContext(
-    TestQuestionConText
-  ) as any;
+  const {
+    searchParams,
+    queryParams = {},
+    isInit,
+    setIsInit,
+    setQueryParams,
+  } = useContext(TestQuestionConText) as any;
 
   const formRef = useRef() as any;
 
@@ -28,25 +32,22 @@ const Search: FC = () => {
       const topic = searchParams.get("topic");
 
       formRef?.current?.setFieldValue("keyword", keyword);
-      formRef?.current?.setFieldValue("type", type);
-      formRef?.current?.setFieldValue("level", level);
-      if (topic !== null && topic !== undefined) {
-        formRef?.current?.setFieldValue("topic", Number(topic));
-      }
+      formRef?.current?.setFieldValue("type", parseInt(type) || null);
+      formRef?.current?.setFieldValue("level", parseInt(level) || null);
+      formRef?.current?.setFieldValue("topic", parseInt(topic) || null);
 
       const params = { keyword, type, level, topic };
       const pureParams = makeCleanObject(params);
-      setQueryParams(pureParams);
+      setQueryParams({ ...queryParams, ...pureParams });
     }
     setIsInit(true);
-  }, [searchParams, isInit]);
+  }, [queryParams, searchParams, isInit]);
 
   return (
     <div className="question-search">
       <AppForm<ISearchQuestionProps>
         initialValues={initialValues}
         className="-horizontal"
-        // handleSubmitForm={handleSubmitForm}
         innerRef={formRef}
       >
         <FormFields />
