@@ -12,8 +12,9 @@ axios.interceptors.response.use(
         JSON.stringify({ currentUser: {} })
       );
       window.location.replace("/login");
-      return Promise.reject(error);
     }
+
+    return Promise.reject(error);
   }
 );
 

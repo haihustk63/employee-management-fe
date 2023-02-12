@@ -14,13 +14,13 @@ const AssignTestModal = () => {
     handleCloseAssignModal,
     assignTest,
   } = useContext(TestsContext) as any;
-  const { data: accounts = [] } = useGetAccounts();
+  const { data: accounts = {} } = useGetAccounts(undefined);
   const [error, setError] = useState(false);
 
   const accountOptions = useMemo(() => {
-    return accounts
-      .filter((account) => !account.employeeId)
-      .map((account) => ({ value: account.email, label: account.email }));
+    return accounts.data
+      ?.filter((account: any) => !account.employeeId)
+      .map((account: any) => ({ value: account.email, label: account.email }));
   }, [accounts]);
 
   const changeEmail = (email: string) => {

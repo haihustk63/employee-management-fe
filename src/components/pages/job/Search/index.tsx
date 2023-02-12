@@ -7,10 +7,10 @@ import FormFields from "./FormFields";
 import { ISearchJobProps } from "./interface";
 
 const initialValues: ISearchJobProps = {
-  title: "",
+  keyword: "",
   typeOfJob: undefined,
   level: undefined,
-  positionId: undefined,
+  position: undefined,
 };
 
 const Search: FC = () => {
@@ -22,23 +22,23 @@ const Search: FC = () => {
 
   useEffect(() => {
     if (searchParams.toString() && !isInit) {
-      const title = searchParams.get("title");
+      const keyword = searchParams.get("keyword");
       const typeOfJob = searchParams.get("typeOfJob");
       const level = searchParams.get("level");
-      const positionId = searchParams.get("positionId");
+      const position = searchParams.get("position");
 
-      formRef?.current?.setFieldValue("title", title);
+      formRef?.current?.setFieldValue("keyword", keyword);
       if (typeOfJob !== undefined && typeOfJob !== null) {
-        formRef?.current?.setFieldValue("typeOfJob", Number(typeOfJob));
+        formRef?.current?.setFieldValue("typeOfJob", +typeOfJob || null);
       }
       if (level !== undefined && level !== null) {
-        formRef?.current?.setFieldValue("level", Number(level));
+        formRef?.current?.setFieldValue("level", +level || null);
       }
-      if (positionId !== undefined && positionId !== null) {
-        formRef?.current?.setFieldValue("positionId", Number(positionId));
+      if (position !== undefined && position !== null) {
+        formRef?.current?.setFieldValue("position", +position || null);
       }
 
-      const params = { title, typeOfJob, level, positionId };
+      const params = { keyword, typeOfJob, level, position };
       const pureParams = makeCleanObject(params);
       setQueryParams(pureParams);
     }

@@ -7,8 +7,11 @@ export const useGetAllJobs = (params?: any) => {
   return useFetch({
     url: API_ROUTES.JOBS,
     config: {
-      select: (data: any) => {
-        return addKeyToData(data?.allJobs);
+      select: (results: any) => {
+        return {
+          ...results,
+          data: addKeyToData(results?.data),
+        };
       },
     },
     params,

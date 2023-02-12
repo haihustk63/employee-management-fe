@@ -4,26 +4,38 @@ import ListJob from "@/components/pages/job/List";
 import { useGetAllJobs } from "@/hooks/job";
 import Search from "@/components/pages/job/Search";
 import { Typography } from "antd";
+import { useTableParams } from "@/hooks/useTableParams";
 
 const { Text } = Typography;
 
 export const JobManagementContext = createContext({});
 
 const JobManagement = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [queryParams, setQueryParams] = useState();
+  const {
+    isInit,
+    needResetPage,
+    searchParams,
+    queryParams,
+    resetPageParams,
+    onChangeTableParams,
+    setQueryParams,
+    setIsInit,
+  } = useTableParams();
+  
   const { data: jobs, isLoading, isFetching } = useGetAllJobs(queryParams);
-  const [isInit, setIsInit] = useState(false);
-
-  useEffect(() => {
-    if (isInit) {
-      setSearchParams(queryParams as any);
-    }
-  }, [queryParams, isInit]);
 
   return (
     <JobManagementContext.Provider
-      value={{ queryParams, isInit, setQueryParams, searchParams, setIsInit }}
+      value={{
+        queryParams,
+        isInit,
+        searchParams,
+        needResetPage,
+        resetPageParams,
+        onChangeTableParams,
+        setQueryParams,
+        setIsInit,
+      }}
     >
       <div className="job-management">
         <Text className="app-title">Jobs</Text>

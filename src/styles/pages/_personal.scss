@@ -1,0 +1,11 @@
+.personal-info {
+  background-color: var(--bs-white);
+  padding: 4rem;
+  border-radius: var(--common-border-radius);
+
+  > .google > .ant-space-item > .app-tag > .ant-tag {
+    height: 3.2rem;
+    display: flex;
+    align-items: center;
+  }
+}

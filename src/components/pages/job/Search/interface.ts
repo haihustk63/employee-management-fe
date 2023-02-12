@@ -1,7 +1,6 @@
-
 export interface ISearchJobProps {
-  title?: string;
-  typeOfJob?: string;
-  level?: string;
-  positionId?: string;
+  keyword?: string;
+  typeOfJob?: string | number;
+  level?: string | number;
+  position?: string | number;
 }

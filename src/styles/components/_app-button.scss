@@ -4,6 +4,7 @@
   border-radius: var(--common-border-radius);
   background: transparent;
   outline: none !important;
+  font-weight: bold;
 
   &.-danger {
     color: var(--color-primary-red);
@@ -12,6 +13,16 @@
 
   &.-danger:hover {
     background: var(--color-primary-red);
+  }
+
+  &.-google {
+    background-color: var(--bs-white) !important;
+    > .wrapper {
+      display: flex;
+      gap: 1rem;;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   &:hover {

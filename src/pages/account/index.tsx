@@ -1,23 +1,33 @@
 import AppButton from "@/components/AppButton";
 import appNotification from "@/components/AppNotification";
+import AppSearchKeyword from "@/components/AppSearchKeyword";
 import ModalCreateAccountForm from "@/components/pages/account/FormCreate";
 import ListAccount from "@/components/pages/account/List";
+import ModalAssignAccount from "@/components/pages/account/ModalAssign";
 import { useCreateAccount, useGetAccounts } from "@/hooks/account";
 import useModal from "@/hooks/useModal";
-import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { createContext, useState } from "react";
-import { Typography } from "antd";
-import ModalAssignAccount from "@/components/pages/account/ModalAssign";
 import { useTableParams } from "@/hooks/useTableParams";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { Typography } from "antd";
+import { createContext, useState } from "react";
 
 const { Text } = Typography;
 
 export const AccountManagementContext = createContext({});
 
 const AccountManagement = () => {
-  const { onChangeTableParams, queryParams } = useTableParams();
   const {
-    data: accounts = [],
+    queryParams,
+    isInit,
+    needResetPage,
+    searchParams,
+    onChangeTableParams,
+    resetPageParams,
+    setIsInit,
+    setQueryParams,
+  } = useTableParams();
+  const {
+    data: accounts = {},
     isLoading,
     isFetching,
   } = useGetAccounts(queryParams);
@@ -49,7 +59,7 @@ const AccountManagement = () => {
 
   const onSubmitForm = (values: any) => {
     const { employeeId, candidateId, email, password } = values;
-    const account = accounts.find((acc: any) => acc.email === email);
+    const account = accounts.data?.find((acc: any) => acc.email === email);
     if (account) {
       appNotification({
         description: "This account has been existed",
@@ -62,7 +72,7 @@ const AccountManagement = () => {
     let formData;
 
     if (switchOn) {
-      const hasAccount = accounts?.findIndex(
+      const hasAccount = accounts.data?.findIndex(
         (account: any) => account.employeeId === employeeId
       );
 
@@ -77,7 +87,7 @@ const AccountManagement = () => {
 
       formData = { employeeId, email, password };
     } else {
-      const hasAccount = accounts?.findIndex(
+      const hasAccount = accounts.data?.findIndex(
         (account: any) => account.candidateId === candidateId
       );
 
@@ -125,6 +135,14 @@ const AccountManagement = () => {
             onClick={handleClickCreate}
           />
         </div>
+        <AppSearchKeyword
+          isInit={isInit}
+          queryParams={queryParams}
+          searchParams={searchParams}
+          resetPageParams={resetPageParams}
+          setIsInit={setIsInit}
+          setQueryParams={setQueryParams}
+        />
         <ListAccount dataSource={accounts} loading={isLoading || isFetching} />
         <ModalCreateAccountForm />
         <ModalAssignAccount />

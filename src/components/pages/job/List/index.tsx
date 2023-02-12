@@ -1,19 +1,26 @@
 import AppTable from "@/components/AppTable";
 import { jobsTableColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
-import React, { FC, useMemo } from "react";
+import { JobManagementContext } from "@/pages/jobs";
+import { FC, useContext, useMemo } from "react";
 
-const ListJob: FC<ITableDataProps> = ({
-  currentPage = 0,
-  dataSource,
-  loading,
-}) => {
+const ListJob: FC<ITableDataProps> = ({ dataSource, loading }) => {
+  const { needResetPage, onChangeTableParams } = useContext(
+    JobManagementContext
+  ) as any;
   const colums = useMemo(() => {
-    return jobsTableColumns(currentPage);
-  }, [currentPage]);
+    return jobsTableColumns(dataSource?.page || 1);
+  }, [dataSource]);
 
   return (
-    <AppTable dataSource={dataSource} loading={loading} columns={colums} />
+    <AppTable
+      dataSource={dataSource?.data}
+      total={dataSource?.total}
+      loading={loading}
+      columns={colums}
+      onChangeParams={onChangeTableParams}
+      needResetPage={needResetPage}
+    />
   );
 };
 

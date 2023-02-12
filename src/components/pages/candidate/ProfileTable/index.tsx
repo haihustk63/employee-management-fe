@@ -5,19 +5,22 @@ import { candidateProfileTableColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
 import { CandidateProfileContext } from "@/pages/candidate";
 
-const ProfileTable: FC<ITableDataProps> = ({
-  dataSource,
-  loading,
-  currentPage = 0,
-}) => {
+const ProfileTable: FC<ITableDataProps> = ({ dataSource, loading }) => {
+  const { needResetPage, onChangeParams } = useContext(
+    CandidateProfileContext
+  ) as any;
+
   const columns = useMemo(() => {
-    return candidateProfileTableColumns(currentPage);
-  }, [currentPage]);
+    return candidateProfileTableColumns(dataSource?.page || 1);
+  }, [dataSource]);
   return (
     <AppTable
-      dataSource={dataSource}
+      dataSource={dataSource?.data}
+      total={dataSource?.total}
       columns={columns}
       loading={loading}
+      onChangeParams={onChangeParams}
+      needResetPage={needResetPage}
       tableName="Candidate profile"
     />
   );

@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 export interface IAppButton {
-  buttonTitle: string;
+  buttonTitle: string | ReactNode;
   onClick?: any;
   htmlType?: "button" | "submit" | "reset" | undefined;
   className?: string;

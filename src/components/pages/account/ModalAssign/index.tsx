@@ -17,15 +17,15 @@ const initialValues = {
 };
 
 const ModalAssignAccount = () => {
-  const { data: candidates = [] } = useGetCandidateProfile();
+  const { data: candidates = {} } = useGetCandidateProfile(undefined) as any;
   const { account, showAssignModal, toggleAssignModal } = useContext(
     AccountManagementContext
   ) as any;
 
   const candidateOptions = useMemo(() => {
     return dataToOptions(
-      candidates
-        .filter((candidate: any) => !candidate.employeeAccount)
+      candidates.data
+        ?.filter((candidate: any) => !candidate.employeeAccount)
         .map((candidate: any) => ({
           value: candidate.id,
           label: `${candidate.name} (${candidate.email})`,
