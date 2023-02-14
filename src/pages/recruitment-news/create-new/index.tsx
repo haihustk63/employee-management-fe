@@ -1,6 +1,4 @@
 import TextEditor from "@/components/AppTextEditor";
-import { useState } from "react";
-import purify from "dompurify";
 
 /*
 const [content, setContent] = useState("");
@@ -12,9 +10,7 @@ const [content, setContent] = useState("");
 const CreateNewRecruitmentNews = () => {
   return (
     <div>
-      <TextEditor
-        onClickSave={() => {}}
-      />
+      <TextEditor />
     </div>
   );
 };

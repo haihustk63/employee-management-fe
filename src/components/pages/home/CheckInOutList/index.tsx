@@ -15,7 +15,7 @@ const CheckInOutList: FC<ITableDataProps> = ({
     <div className="home-check-in-out-list">
       <AppTable
         columns={columns}
-        dataSource={dataSource}
+        dataSource={dataSource?.data}
         loading={loading}
         tableName="Check in/out List"
       />

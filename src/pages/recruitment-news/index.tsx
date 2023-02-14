@@ -46,7 +46,6 @@ const RecruitmentNewsManagement = () => {
               horizontal
               key={key}
               title={item.title}
-              excerpt={item.excerpt}
               imageUrl="https://demos.themeselection.com/sneat-bootstrap-html-admin-template-free/assets/img/elements/18.jpg"
               onClick={handleClickCard(item.id)}
               hasBoxShadow

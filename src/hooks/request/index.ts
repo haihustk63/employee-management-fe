@@ -3,7 +3,7 @@ import { addKeyToData } from "@/utils";
 import useAppMutation from "../useAppMutation";
 import useFetch from "../useFetch";
 
-export const useGetRequests = (params: any) => {
+export const useGetRequests = (params?: any) => {
   return useFetch({
     url: API_ROUTES.REQUESTS,
     config: {

@@ -24,8 +24,11 @@ export const useGetCheckInOutList = () => {
   return useFetch({
     url: API_ROUTES.CHECK_IN_OUT_LIST,
     config: {
-      select: (data: any) => {
-        return addKeyToData(data);
+      select: (results: any) => {
+        return {
+          ...results,
+          data: addKeyToData(results?.data),
+        };
       },
     },
   });

@@ -41,7 +41,7 @@ const UpdateRecruitmentNews = () => {
 
   return (
     <div className="update-recruitment-news">
-      <TextEditor onClickSave={() => {}} initialValue={initialValue} />
+      <TextEditor initialValue={initialValue} />
     </div>
   );
 };

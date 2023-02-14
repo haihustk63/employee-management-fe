@@ -5,7 +5,7 @@ import { addKeyToData } from "@/utils";
 import useAppMutation from "../useAppMutation";
 
 //profile
-export const useGetCandidateProfile = (params: any) => {
+export const useGetCandidateProfile = (params?: any) => {
   return useFetch<ICandidateProfile[]>({
     url: API_ROUTES.CANDIDATE_PROFILE,
     config: {

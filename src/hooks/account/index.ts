@@ -10,7 +10,7 @@ export const useCreateAccount = () => {
   });
 };
 
-export const useGetAccounts = (params: any) => {
+export const useGetAccounts = (params?: any) => {
   return useFetch({
     url: API_ROUTES.ACCOUNTS,
     config: {
