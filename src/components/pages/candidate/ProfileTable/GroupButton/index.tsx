@@ -4,10 +4,17 @@ import AppButton from "@/components/AppButton";
 import { useDeleteCandidateProfile } from "@/hooks/candidate";
 import { CandidateProfileContext } from "@/pages/candidate";
 import { Space } from "antd";
+import { showDeleteConfirm } from "@/components/AppConfirm";
 
 const GroupButton = ({ record }: any) => {
   const { handleSetCandidateId } = useContext(CandidateProfileContext) as any;
-  const { mutate: onDeleteCandidate } = useDeleteCandidateProfile(record.id);
+  const { mutate: onDelete } = useDeleteCandidateProfile(record.id);
+
+  const deleteCandidate = () => {
+    showDeleteConfirm({
+      onDelete,
+    });
+  };
 
   return (
     <Space>
@@ -20,7 +27,7 @@ const GroupButton = ({ record }: any) => {
         buttonTitle="Delete"
         size="small"
         className="-danger"
-        onClick={onDeleteCandidate}
+        onClick={deleteCandidate}
       />
     </Space>
   );

@@ -50,30 +50,24 @@ export const REQUEST_TYPES = {
   },
   OVERTIME: {
     value: 9,
-    label: "Overtime",
+    label: "Working Overtime",
   },
   REMOTE: {
     value: 10,
-    label: "Remote",
+    label: "Working Remote",
     timeLeaving: 3,
   },
   REMOTE_MORNING: {
     value: 11,
-    label: "Remote morning",
+    label: "Working Remote",
     timeLeaving: 1,
   },
   REMOTE_AFTERNOON: {
     value: 12,
-    label: "Remote afternoon",
+    label: "Working Remote",
     timeLeaving: 2,
   },
 };
-
-// export const LEAVING_TIME = {
-//   MORNING: "MORNING",
-//   AFTERNOON: "AFTERNOON",
-//   ALLDAY: "ALLDAY",
-// };
 
 export const LEAVING_TIME = {
   MORNING: {

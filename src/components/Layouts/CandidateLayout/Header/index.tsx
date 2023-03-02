@@ -1,11 +1,11 @@
-import React from "react";
-import { Menu, Layout } from "antd";
-import { useNavigate } from "react-router-dom";
-import { HEADER_CANDIDATE_ITEMS } from "@/constants/common";
-import { useSetRecoilState } from "recoil";
-import { currentUserAtom } from "@/modules/currentUser";
 import AppButton from "@/components/AppButton";
+import { HEADER_CANDIDATE_ITEMS } from "@/constants/common";
+import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useLogoutEmployee } from "@/hooks/login";
+import { currentUserAtom } from "@/modules/currentUser";
+import { Image, Layout, Menu } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 
 const { Header } = Layout;
 
@@ -24,14 +24,18 @@ const CandidateLayoutHeader = () => {
     logout("");
   };
 
+  const navigateToChangePassword = () => {
+    navigate(APP_PAGE_NAME_ROUTES.CHANGE_PASSWORD_CANDIDATE);
+  };
+
+  const navigateSkillTest = () => {
+    navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
+  };
+
   return (
     <Header className="candidate-layout-header">
-      <div className="logo">
-        <img
-          src="https://www.logodesign.net/logo/abstract-hr-person-inside-location-pin-742ld.png?nwm=1&nws=1&industry=employment-hr&sf="
-          alt="Logo"
-          className="image"
-        />
+      <div className="logo" onClick={navigateSkillTest}>
+        <Image src="/logo-tran-blue.png" alt="Logo" preview={false} />
       </div>
       <Menu
         theme="dark"
@@ -39,6 +43,10 @@ const CandidateLayoutHeader = () => {
         className="menu"
         onClick={handleClickHeaderItem}
         items={HEADER_CANDIDATE_ITEMS}
+      />
+      <AppButton
+        buttonTitle="Change password"
+        onClick={navigateToChangePassword}
       />
       <AppButton buttonTitle="Logout" onClick={handleLogout} />
     </Header>

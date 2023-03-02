@@ -39,6 +39,7 @@ export interface IFormItemProps {
     value: number,
     info: { offset: number; type: "up" | "down" }
   ) => void;
+  onSearch?: any;
 }
 
 export interface IFieldProps {

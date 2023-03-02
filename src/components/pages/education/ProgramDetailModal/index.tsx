@@ -15,13 +15,16 @@ import { Tabs, Typography } from "antd";
 const { Text } = Typography;
 
 const ProgramDetailModal = () => {
-  const { showProgramDetailModal, toggleProgramDetailModal, selectProgramId } =
-    useContext(EducationProgramContext) as any;
+  const {
+    selectProgramId,
+    allPrograms,
+    showProgramDetailModal,
+    toggleProgramDetailModal,
+  } = useContext(EducationProgramContext) as any;
   const [activeKey, setActiveKey] = useState("content");
 
   const { employee: currentEmployee } = useRecoilValue(currentUserAtom);
 
-  const { data: programs = [] } = useGetAllEducationPrograms();
   const {
     mutate: onRate,
     isError,
@@ -37,8 +40,8 @@ const ProgramDetailModal = () => {
   });
 
   const program = useMemo(() => {
-    return programs.find((p: any) => p.id === selectProgramId);
-  }, [programs, selectProgramId]);
+    return allPrograms?.find((p: any) => p.id === selectProgramId);
+  }, [allPrograms, selectProgramId]);
 
   const joinInfo = useMemo(() => {
     if (program) {

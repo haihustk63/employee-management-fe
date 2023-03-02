@@ -1,5 +1,4 @@
 .candidate-skill-test {
-
   > .content {
     flex-grow: 1;
     margin-left: 3rem;
@@ -16,7 +15,12 @@
 
 .candidate-skill-do-test {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  gap: 8rem;
+
+  > .content {
+    flex-grow: 1;
+  }
 }
 
 .skill-test-card {
@@ -133,5 +137,15 @@
 
   > .content > .answers {
     margin-top: 2rem;
+  }
+}
+
+@media screen and (max-width: $screen-xl-max) {
+  .skill-test-sumary {
+    display: none;
+  }
+
+  .skill-test-session-info > .name {
+    font-size: 3rem;
   }
 }

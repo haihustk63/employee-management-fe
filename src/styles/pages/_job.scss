@@ -43,3 +43,18 @@
     flex: 0 0 calc((100% - 6rem) / 4);
   }
 }
+
+.job-detail-modal {
+  > .ant-modal {
+    width: 60vw !important;
+  }
+  > .ant-modal > .ant-modal-content > .ant-modal-body > .detail {
+    display: block;
+    margin-top: 2rem;
+    background: var(--color-secondary-blue);
+    padding: 1rem;
+    border-radius: var(--common-border-radius);
+    max-height: 55vh;
+    overflow: auto;
+  }
+}

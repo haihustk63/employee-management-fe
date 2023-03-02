@@ -128,7 +128,7 @@ const AccountManagement = () => {
     >
       <div className="account-management">
         <div className="title">
-          <Text className="app-title">Accounts</Text>
+          <Text className="app-title">Account Management</Text>
           <AppButton
             buttonTitle="Create account"
             size="small"
@@ -142,6 +142,7 @@ const AccountManagement = () => {
           resetPageParams={resetPageParams}
           setIsInit={setIsInit}
           setQueryParams={setQueryParams}
+          placeholder="Search by email, name"
         />
         <ListAccount dataSource={accounts} loading={isLoading || isFetching} />
         <ModalCreateAccountForm />

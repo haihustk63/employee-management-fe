@@ -7,10 +7,17 @@ import {
   mergeName,
 } from "@/utils";
 import AppInfoItem from "@/components/AppInfoItem";
+import UploadAvatarModal from "../UploadAvatarModal";
+import useModal from "@/hooks/useModal";
 
 const { Text } = Typography;
 
-const EmployeeProfile: FC<{ employee: any }> = ({ employee }) => {
+const EmployeeProfile: FC<{ employee: any; callbackUploadSuccess?: any }> = ({
+  employee,
+  callbackUploadSuccess,
+}) => {
+  const { showModal, handleToggleModal } = useModal();
+
   const deliveryValue = useMemo(() => {
     const delivery = employee?.deliveryEmployee?.delivery;
     const isManager = employee?.deliveryEmployee?.isManager;
@@ -23,8 +30,12 @@ const EmployeeProfile: FC<{ employee: any }> = ({ employee }) => {
     if (employee?.avatar) {
       return employee.avatar;
     }
-    return "https://i0.wp.com/www.mobiflip.de/wp-content/uploads/2022/12/avatar-2-film-detail.jpg?fit=1200%2C960&ssl=1";
+    return "/add-avatar.svg";
   }, [employee]);
+
+  const changeAvatar = () => {
+    handleToggleModal();
+  };
 
   return (
     <div className="employee-profile">
@@ -35,6 +46,7 @@ const EmployeeProfile: FC<{ employee: any }> = ({ employee }) => {
           className="avatar"
           preview={false}
           loading="lazy"
+          onClick={changeAvatar}
         />
         <Text>{mergeName(employee)}</Text>
         {employee?.position && <Text>{employee?.position?.name}</Text>}
@@ -58,6 +70,12 @@ const EmployeeProfile: FC<{ employee: any }> = ({ employee }) => {
           value={employee?.paidLeaveCount}
         />
       </div>
+      <UploadAvatarModal
+        employee={employee}
+        showModal={showModal}
+        toggleModal={handleToggleModal}
+        callbackUploadSuccess={callbackUploadSuccess}
+      />
     </div>
   );
 };

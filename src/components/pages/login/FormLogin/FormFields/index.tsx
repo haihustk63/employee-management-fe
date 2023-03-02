@@ -7,11 +7,12 @@ import { FORM_ITEM_TYPES } from "@/constants/common";
 import { LoginContext } from "@/pages/login";
 import { Space, Typography } from "antd";
 import GoogleIcon from "@/components/Icons/GoogleIcon";
+import appNotification from "@/components/AppNotification";
 
 const { TEXT, PASSWORD } = FORM_ITEM_TYPES;
 
 const FormFields: FC = () => {
-  const { loginWithGoogle } = useContext(LoginContext) as any;
+  const { loginWithGoogle, onForgotPassword } = useContext(LoginContext) as any;
   const { values, handleChange, handleSubmit } = useFormikContext() as any;
 
   const buttonLoginGoogleTitle = (
@@ -20,6 +21,19 @@ const FormFields: FC = () => {
       <Typography.Text>Login with google</Typography.Text>
     </div>
   );
+
+  const handleForgotPassword = () => {
+    if (!values.email) {
+      appNotification({
+        message: "Forgot Password",
+        description: "Please enter your email",
+        type: "error",
+      });
+      return;
+    }
+
+    onForgotPassword({ email: values.email });
+  };
 
   return (
     <Form onSubmit={handleSubmit} className="form">
@@ -46,6 +60,11 @@ const FormFields: FC = () => {
         onClick={loginWithGoogle}
         className="-google"
       />
+      {/* <AppButton
+        buttonTitle="Forgot password?"
+        className="-danger"
+        onClick={handleForgotPassword}
+      /> */}
     </Form>
   );
 };

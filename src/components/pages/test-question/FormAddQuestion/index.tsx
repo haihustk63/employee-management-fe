@@ -177,7 +177,7 @@ const FormAddQuestion = () => {
     >
       <div className="form-add-question">
         <AppForm<IFormAddQuestionProps>
-          title={questionId ? "Update Question" : "Add New Question"}
+          title={questionId ? "Update Question" : "New Question"}
           initialValues={initialValues}
           handleSubmitForm={handleSubmitForm}
           validationSchema={addTestQuestionValidateSchema}

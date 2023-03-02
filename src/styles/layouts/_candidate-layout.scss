@@ -23,8 +23,12 @@
     height: 100%;
   }
 
-  > .logo > .image {
+  > .logo > .ant-image {
     height: 100%;
+  }
+
+  > .logo > .ant-image > .ant-image-img {
+    height: 80%;
   }
 
   > .menu {
@@ -33,12 +37,21 @@
     text-transform: uppercase;
   }
 
-  >.menu >.ant-menu-item {
+  > .menu > .ant-menu-item {
     color: var(--bs-black) !important;
     font-weight: 700;
   }
 
-  >.app-button {
+  > .app-button {
     align-self: center;
+    margin-right: 1rem;
+  }
+}
+
+@media screen and (max-width: $screen-xl-max) {
+  .candidate-layout {
+    > .content {
+      width: 90%;
+    }
   }
 }

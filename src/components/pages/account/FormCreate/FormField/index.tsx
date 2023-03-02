@@ -8,7 +8,7 @@ import { dataToOptions, mergeName } from "@/utils";
 import { useContext, useMemo, useState } from "react";
 import { AccountManagementContext } from "@/pages/account";
 import { useGetCandidateProfile } from "@/hooks/candidate";
-import { Switch, Typography } from "antd";
+import { Alert, Switch, Typography } from "antd";
 
 const { Text } = Typography;
 
@@ -18,13 +18,13 @@ const FormFields = () => {
   const { values, handleSubmit, handleChange, resetForm } =
     useFormikContext() as any;
 
-  const { data: employees = [] } = useGetEmployees();
-  const { data: candidates = [] } = useGetCandidateProfile();
+  const { data: employees = {} } = useGetEmployees() as any;
+  const { data: candidates = {} } = useGetCandidateProfile() as any;
 
   const candidateOptions = useMemo(() => {
     return dataToOptions(
-      candidates
-        .filter((candidate: any) => !candidate.employeeAccount)
+      candidates.data
+        ?.filter((candidate: any) => !candidate.employeeAccount)
         .map((candidate: any) => ({
           value: candidate.id,
           label: `${candidate.name} (${candidate.email})`,
@@ -34,8 +34,8 @@ const FormFields = () => {
 
   const employeeOptions = useMemo(() => {
     return dataToOptions(
-      employees
-        .filter((employee: any) => !employee.employeeAccount)
+      employees.data
+        ?.filter((employee: any) => !employee.employeeAccount)
         .map((employee: any) => ({
           value: employee.id,
           label: mergeName(employee),
@@ -93,9 +93,10 @@ const FormFields = () => {
         />
       ) : (
         <>
-          <Typography.Text>
-            Select candidate so that we can send he/she an email
-          </Typography.Text>
+          <Alert
+            message="Assign this account to a candidate"
+            description="Select a candidate so that we can send he/she an email."
+          />
           <FormItem
             name="candidateId"
             label="Candidate"

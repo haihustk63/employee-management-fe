@@ -18,12 +18,17 @@ const CandidateSkillTestManagement = () => {
     navigate(DYNAMIC_APP_PAGE_ROUTES.DO_TEST(id));
   };
 
+  const viewResult = (id: number) => () => {
+    navigate(DYNAMIC_APP_PAGE_ROUTES.SKILL_TEST_RESULT(id));
+  };
+
   return (
     <div className="candidate-skill-test">
       <Text className="app-title">Your Skill Tests</Text>
       <div className="list">
         {skillTests?.map(({ id, test, status }: any) => {
           const notCreated = status !== TEST_STATUS.created.value;
+          const notDone = status !== TEST_STATUS.done.value;
           return (
             <AppPrimaryCard
               title={test.title}
@@ -43,6 +48,11 @@ const CandidateSkillTestManagement = () => {
                   buttonTitle="Do test"
                   disabled={notCreated}
                   onClick={doTest(id)}
+                />
+                <AppButton
+                  buttonTitle="View result"
+                  disabled={notDone}
+                  onClick={viewResult(id)}
                 />
               </div>
             </AppPrimaryCard>

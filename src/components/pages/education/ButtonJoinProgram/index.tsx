@@ -60,9 +60,9 @@ const ButtonJoinProgram: FC<{ program: any }> = ({ program }) => {
 
   const handleClickToggleJoin = useCallback(() => {
     if (joiningInfo) {
-      onUnJoin({ programId: program.id });
+      onUnJoin({ programId: program?.id });
     } else {
-      onJoin({ programId: program.id });
+      onJoin({ programId: program?.id });
     }
   }, [joiningInfo, program]);
 

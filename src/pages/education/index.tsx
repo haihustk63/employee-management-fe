@@ -20,10 +20,11 @@ import {
 import useModal from "@/hooks/useModal";
 import { currentUserAtom } from "@/modules/currentUser";
 import { mergeName } from "@/utils";
-import { createContext, useMemo, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useTableParams } from "@/hooks/useTableParams";
 import AppSearchKeyword from "@/components/AppSearchKeyword";
+import AppPagination from "@/components/AppPagination";
 
 const { Title, Text } = Typography;
 
@@ -53,14 +54,18 @@ const EducationProgramManagement = () => {
     resetPageParams,
   } = useTableParams();
 
+  useEffect(() => {
+    setQueryParams({ page: 1 });
+  }, []);
+
   const { data: allPrograms = [] } = useGetAllEducationPrograms(queryParams);
   const { data: myPrograms = [] } = useGetMyEducationPrograms(queryParams);
 
   const programs = useMemo(() => {
     if (isShowMyProgram) {
-      return myPrograms;
+      return myPrograms.data;
     }
-    return allPrograms;
+    return allPrograms.data;
   }, [isShowMyProgram, myPrograms, allPrograms]);
 
   const navigateUpdateProgram = (programId: number) => () => {
@@ -92,6 +97,17 @@ const EducationProgramManagement = () => {
     );
   };
 
+  const totalPrograms = useMemo(() => {
+    if (isShowMyProgram) {
+      return myPrograms.total;
+    }
+    return allPrograms.total;
+  }, [isShowMyProgram, allPrograms, myPrograms]);
+
+  const changePage = (page: number) => {
+    setQueryParams({ page });
+  };
+
   return (
     <EducationProgramContext.Provider
       value={{
@@ -101,6 +117,7 @@ const EducationProgramManagement = () => {
         isInit,
         queryParams,
         searchParams,
+        allPrograms: allPrograms.data,
         toggleListAttendancesModal,
         toggleProgramDetailModal,
         setQueryParams,
@@ -110,8 +127,8 @@ const EducationProgramManagement = () => {
     >
       <div className="education-program-management">
         <div className="title">
-          <Text className="app-title">Education Programs</Text>
-          <AppTooltip title="Click here to view your programs">
+          <Text className="app-title">Education Program Management</Text>
+          <AppTooltip title="Click here to view the programs you joined">
             <Switch checked={isShowMyProgram} onChange={toggleSwitch} />
           </AppTooltip>
         </div>
@@ -119,12 +136,13 @@ const EducationProgramManagement = () => {
           isInit={isInit}
           queryParams={queryParams}
           searchParams={searchParams}
+          placeholder="Search by program title"
           resetPageParams={resetPageParams}
           setIsInit={setIsInit}
           setQueryParams={setQueryParams}
         />
         <div className="list">
-          {programs.map((item: any) => {
+          {programs?.map((item: any) => {
             return (
               <AppPrimaryCard
                 key={item.id}
@@ -132,14 +150,14 @@ const EducationProgramManagement = () => {
                 hasBoxShadow
               >
                 <div className="description">
-                  <AppTag color="success">
-                    {item.tutor ? mergeName(item.tutor) : "WIP"}
+                  <AppTag color="#1e5ac7">
+                    Tutor: {item.tutor ? mergeName(item.tutor) : "WIP"}
                   </AppTag>
                   <div className="time">
                     <AppTag color="success">
                       {dayjs(item.time).format("DD-MM-YYYY")}
                     </AppTag>
-                    <AppTag color="success">
+                    <AppTag color="warning">
                       {`${dayjs(item.time).format("HH:mm")}-${dayjs(
                         item.endTime
                       ).format("HH:mm")}`}
@@ -171,6 +189,12 @@ const EducationProgramManagement = () => {
               </AppPrimaryCard>
             );
           })}
+
+          <AppPagination
+            total={totalPrograms}
+            onChangePagination={changePage}
+            current={queryParams?.page}
+          />
         </div>
         <ListAttendancesModal />
         <ProgramDetailModal />

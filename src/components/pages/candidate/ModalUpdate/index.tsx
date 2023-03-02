@@ -1,8 +1,7 @@
 import AppForm from "@/components/AppForm";
 import AppModal from "@/components/AppModal";
 import {
-  useGetCandidateProfile,
-  useUpdateCandidateProfile,
+  useUpdateCandidateProfile
 } from "@/hooks/candidate";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { CandidateProfileContext } from "@/pages/candidate";

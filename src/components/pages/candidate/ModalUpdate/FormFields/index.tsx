@@ -35,7 +35,7 @@ const FormFields = () => {
         label="Interviewer"
         value={values.interviewerId}
         type={SELECT}
-        options={dataToOptions(employees)}
+        options={dataToOptions(employees.data)}
         placeholder="Choose interviewer"
       />
       <FormItem

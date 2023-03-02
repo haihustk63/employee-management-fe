@@ -72,7 +72,7 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
   return (
     <div className="employee-form">
       <AppForm<IEmployeeFormProps>
-        title="Employee Form"
+        title="New Employee"
         handleSubmitForm={onSubmit}
         initialValues={initialValues}
         innerRef={formRef}

@@ -21,7 +21,7 @@ const ProfileTable: FC<ITableDataProps> = ({ dataSource, loading }) => {
       loading={loading}
       onChangeParams={onChangeParams}
       needResetPage={needResetPage}
-      tableName="Candidate profile"
+      tableName="Candidate management"
     />
   );
 };

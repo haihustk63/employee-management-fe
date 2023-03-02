@@ -10,6 +10,7 @@ import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { firebaseAuth } from "@/config/firebase";
 import { useLoginWithFirebase } from "@/hooks/firebase";
 import { createContext } from "react";
+import { useForgotPassword } from "@/hooks/account";
 
 const { signInWithPopup, getAuth, deleteUser, GoogleAuthProvider } =
   firebaseAuth;
@@ -40,6 +41,12 @@ const LoginEmployee = () => {
     data: dataLoginGoogle,
   } = useLoginWithFirebase();
 
+  const {
+    mutate: onForgotPassword,
+    isError: isErrorForgotPassword,
+    isSuccess: isSuccessForgotPassword,
+  } = useForgotPassword();
+
   const setCurrentUser = useSetRecoilState(currentUserAtom);
 
   const afterSuccessLogin = (data: any) => () => {
@@ -63,18 +70,27 @@ const LoginEmployee = () => {
   useTriggerNoti({
     isError,
     isSuccess,
-    callbackSuccess: afterSuccessLogin(dataLogin),
     messageSuccess: "You logged in successfully",
     error,
+    showMessageSuccess: false,
+    callbackSuccess: afterSuccessLogin(dataLogin),
   });
 
   useTriggerNoti({
     isError: isErrorLoginGoogle,
     isSuccess: isSuccessLoginGoogle,
-    callbackSuccess: afterSuccessLogin(dataLoginGoogle),
-    callbackError: loginGoogleFail,
     messageSuccess: "You logged in successfully",
     error: errorLoginGoogle,
+    showMessageSuccess: false,
+    callbackSuccess: afterSuccessLogin(dataLoginGoogle),
+    callbackError: loginGoogleFail,
+  });
+
+  useTriggerNoti({
+    isError: isErrorForgotPassword,
+    isSuccess: isSuccessForgotPassword,
+    messageSuccess:
+      "We've sent you an email. Please check your inbox to continue",
   });
 
   const handleLogin = (values: any) => {
@@ -92,7 +108,7 @@ const LoginEmployee = () => {
   };
 
   return (
-    <LoginContext.Provider value={{ loginWithGoogle }}>
+    <LoginContext.Provider value={{ loginWithGoogle, onForgotPassword }}>
       <div className="login-page">
         <FormLogin
           initialValue={initialValueForm}

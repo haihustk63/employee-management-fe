@@ -1,10 +1,8 @@
-import AppButton from "@/components/AppButton";
 import AppPrimaryCard from "@/components/AppCard/Primary";
-import AppTable from "@/components/AppTable";
 import AppTag from "@/components/AppTag";
 import { TestsContext } from "@/pages/tests";
 import { Typography } from "antd";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import TestListAction from "../TestListAction";
 
 const { Text } = Typography;
@@ -14,7 +12,7 @@ const TestList = () => {
 
   return (
     <div className="test-list">
-      <Text className="app-title">Tests</Text>
+      <Text className="app-title">Skill Test Management</Text>
       <div className="list">
         {tests?.map((item: any) => {
           return (

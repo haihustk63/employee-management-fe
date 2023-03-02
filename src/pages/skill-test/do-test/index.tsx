@@ -14,9 +14,9 @@ import {
   useSubmitAnswer,
   useUpdateContestantTest,
 } from "@/hooks/tests";
-import { useNavigate, useParams } from "react-router-dom";
-import appNotification from "@/components/AppNotification";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { useNavigate, useParams } from "react-router-dom";
+import { Spin } from "antd";
 
 const { attempting, created, done } = TEST_STATUS;
 const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
@@ -36,12 +36,13 @@ const DoSkillTest = () => {
     mutate: onSubmitAnswer,
     isError: submitError,
     isSuccess: submitSuccess,
+    isLoading: isProcessingSubmitAnswer,
   } = useSubmitAnswer(testId);
 
   useTriggerNoti({
     isError: submitError,
     isSuccess: submitSuccess,
-    messageSuccess: "The test is submited successfully",
+    showMessageSuccess: false,
   });
 
   const test = useMemo(() => {
@@ -183,20 +184,27 @@ const DoSkillTest = () => {
       }}
     >
       {info?.status === created.value && <ConfirmAttempt />}
-      {info?.status === attempting.value && test && (
-        <div className="candidate-skill-do-test">
-          <Sumary />
-          <div className="content">
-            <SessionInfo />
-            <SkillTestContent />
-          </div>
-          {/* <AppTour
+      {info?.status === attempting.value &&
+        test &&
+        !isProcessingSubmitAnswer && (
+          <div className="candidate-skill-do-test">
+            <Sumary />
+            <div className="content">
+              <SessionInfo />
+              <SkillTestContent />
+            </div>
+            {/* <AppTour
             initialStep={0}
             steps={SKILL_TEST_INTRO_STEPS}
             enabled={true}
             onExit={onEndTour}
           /> */}
-        </div>
+          </div>
+        )}
+      {isProcessingSubmitAnswer && (
+        <Spin tip="Processing...">
+          <div className="content" />
+        </Spin>
       )}
     </CandidateSkillTestContext.Provider>
   );

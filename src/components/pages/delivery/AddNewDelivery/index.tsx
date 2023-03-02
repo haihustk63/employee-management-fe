@@ -1,13 +1,12 @@
-import { FC } from "react";
+import { FC, useContext, useEffect, useMemo, useRef } from "react";
 
 import AppForm from "@/components/AppForm";
 import AppModal from "@/components/AppModal";
 import { IModalControlProps } from "@/constants/interface";
+import { DeliveryManagementContext } from "@/pages/delivery";
 import { addDeliveryValidateSchema } from "@/schemas";
 import FormFields from "./FormFields";
 import { IAddNewDeliveryProps } from "./interface";
-import { useCreateDelivery } from "@/hooks/delivery";
-import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 
 const initialValues: IAddNewDeliveryProps = {
   name: "",
@@ -19,30 +18,53 @@ const AddNewDeliveryModal: FC<IModalControlProps> = ({
   showModal,
   onToggleModal,
 }) => {
-  const { mutate: createDelivery, isError, isSuccess } = useCreateDelivery();
+  const { deliveryUpdateInfo, createDelivery, updateDelivery } = useContext(
+    DeliveryManagementContext
+  ) as any;
 
-  useTriggerNoti({
-    isSuccess,
-    isError,
-    messageSuccess: "Delivery added successfully",
+  const formRef = useRef(null) as any;
+
+  useEffect(() => {
+    if (deliveryUpdateInfo) {
+      formRef.current?.setFieldValue("name", deliveryUpdateInfo.name);
+      formRef.current?.setFieldValue(
+        "description",
+        deliveryUpdateInfo.description
+      );
+      formRef.current?.setFieldValue(
+        "managerId",
+        deliveryUpdateInfo.deliveryEmployee?.[0]?.employeeId
+      );
+    } else {
+      formRef.current?.resetForm();
+    }
   });
 
+  const appFormTitle = useMemo(() => {
+    if (deliveryUpdateInfo) {
+      return "Update Delivery";
+    } else {
+      return "New Delivery";
+    }
+  }, [deliveryUpdateInfo]);
+
   const handleSubmitForm = (values: any) => {
-    createDelivery(values);
+    if (deliveryUpdateInfo) {
+      updateDelivery(values);
+    } else {
+      createDelivery(values);
+    }
   };
 
   return (
-    <AppModal
-      title="Add New Delivery"
-      open={showModal}
-      onCancel={onToggleModal}
-    >
+    <AppModal open={showModal} onCancel={onToggleModal}>
       <div className="add-new-delivery">
         <AppForm<IAddNewDeliveryProps>
-          // title="Add New Delivery"
           initialValues={initialValues}
+          innerRef={formRef}
           handleSubmitForm={handleSubmitForm}
           validationSchema={addDeliveryValidateSchema}
+          title={appFormTitle}
         >
           <FormFields />
         </AppForm>

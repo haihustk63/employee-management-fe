@@ -70,7 +70,7 @@ const FormLeave: FC = () => {
 
   return (
     <AppForm<typeof initialValues>
-      title="Leave Application"
+      title="New request"
       handleSubmitForm={handleSubmitForm}
       initialValues={initialValues}
       validationSchema={schemaValidation}

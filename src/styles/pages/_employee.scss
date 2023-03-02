@@ -16,7 +16,7 @@
     right: 0.5rem;
   }
   > .ant-modal-content > .ant-modal-body {
-    height: 34rem;
+    height: 42rem;
   }
 }
 
@@ -41,10 +41,12 @@
     background-color: var(--bs-white);
   }
 
-  > .left > .avatar {
+  > .left > .ant-image > .avatar {
     width: 100%;
     height: auto;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border-radius: var(--common-border-radius);
   }
 
   > .right {

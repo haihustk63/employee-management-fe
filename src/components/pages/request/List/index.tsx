@@ -14,7 +14,11 @@ const RequestList: FC<ITableDataProps> = ({ dataSource, loading }) => {
   ) as any;
 
   const columns = useMemo(() => {
-    return requestsTableColumns(dataSource?.page || 1, employee?.role);
+    return requestsTableColumns(
+      dataSource?.page || 1,
+      employee?.role,
+      employee?.id
+    );
   }, [dataSource, employee]);
 
   return (

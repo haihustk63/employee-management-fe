@@ -58,7 +58,7 @@ const AddNewTopicModal: FC = () => {
     if (topicUpdateId !== undefined) {
       return "Update Topic";
     } else {
-      return "Create Topic";
+      return "New Topic";
     }
   }, [topicUpdateId]);
 
@@ -72,16 +72,14 @@ const AddNewTopicModal: FC = () => {
 
   return (
     <AppModal open={showModal} onCancel={handleToggleModal}>
-      <div className="add-new-topic">
-        <AppForm<IAddNewTopicProps>
-          title={appFormTitle}
-          initialValues={initialValues}
-          handleSubmitForm={handleSubmitForm}
-          innerRef={formRef}
-        >
-          <FormFields />
-        </AppForm>
-      </div>
+      <AppForm<IAddNewTopicProps>
+        title={appFormTitle}
+        initialValues={initialValues}
+        handleSubmitForm={handleSubmitForm}
+        innerRef={formRef}
+      >
+        <FormFields />
+      </AppForm>
     </AppModal>
   );
 };

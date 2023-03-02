@@ -48,22 +48,14 @@ const AppTextEditor: FC<IAppTextEditor> = ({
                 { indent: "-1" },
                 { indent: "+1" },
               ],
-              ["link", "image", "video"],
-              ["clean"],
+              ["link"],
             ],
             clipboard: {
-              // toggle to add extra line breaks when pasting HTML:
               matchVisual: false,
             },
           }}
-          // className="react-quill-editor"
         />
       </div>
-      {/* <AppButton
-        buttonTitle="Save"
-        htmlType="button"
-        onClick={onClickSave(content)}
-      /> */}
     </div>
   );
 };

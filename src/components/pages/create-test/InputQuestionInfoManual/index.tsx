@@ -11,6 +11,7 @@ const InputQuestionInfoManual: FC = () => {
     setSelectedRowKeys,
     setQuestionInfoManual,
   } = useContext(CreateTestContext) as any;
+
   const { data: questions, isLoading, isFetching } = useGetAllTestQuestions();
 
   useEffect(() => {

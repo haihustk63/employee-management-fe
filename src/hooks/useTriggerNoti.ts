@@ -7,6 +7,8 @@ interface ITriggerNoti {
   isError?: boolean;
   messageSuccess?: string;
   messageError?: string;
+  showMessageSuccess?: boolean;
+  showMessageError?: boolean;
   callbackSuccess?: () => void;
   callbackError?: () => void;
 }
@@ -17,8 +19,10 @@ export const useTriggerNoti = ({
   isError,
   messageSuccess,
   messageError,
-  callbackError,
+  showMessageError = true,
+  showMessageSuccess = true,
   callbackSuccess,
+  callbackError,
 }: ITriggerNoti) => {
   const errorMessage = useMemo(() => {
     if (messageError) {
@@ -33,23 +37,25 @@ export const useTriggerNoti = ({
   }, [error]);
   useEffect(() => {
     if (isSuccess) {
-      appNotification({
-        type: "success",
-        message: "Success",
-        description: messageSuccess || "Action is successful",
-      });
+      if (showMessageSuccess)
+        appNotification({
+          type: "success",
+          message: "Success",
+          description: messageSuccess || "Action is successful",
+        });
       callbackSuccess?.();
     }
-  }, [isSuccess]);
+  }, [isSuccess, showMessageSuccess]);
 
   useEffect(() => {
     if (isError) {
-      appNotification({
-        type: "error",
-        message: "Error",
-        description: errorMessage || "Something went wrong",
-      });
+      if (showMessageError)
+        appNotification({
+          type: "error",
+          message: "Error",
+          description: errorMessage || "Something went wrong",
+        });
       callbackError?.();
     }
-  }, [isError]);
+  }, [isError, showMessageError]);
 };

@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import ContestantListModal from "@/components/pages/test/ContestantList";
 import TestList from "@/components/pages/test/TestList";
 import { useAssignTest, useGetAllTests } from "@/hooks/tests";
@@ -10,6 +10,7 @@ import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { useRecoilValue } from "recoil";
 import { currentUserAtom } from "@/modules/currentUser";
 import { APP_ROLES } from "@/constants/common";
+import ShowTestModal from "@/components/pages/create-test/ShowTest";
 
 export const TestsContext = createContext({});
 
@@ -27,11 +28,17 @@ export const TestsManagement = () => {
   } = useModal();
   const { handleToggleModal: toggleAssignModal, showModal: showAssignModal } =
     useModal();
+  const {
+    showModal: showTestDetailModal,
+    handleToggleModal: toggleTestDetailModal,
+  } = useModal();
 
   const [assignment, setAssignment] = useState({
     testId: "",
     email: undefined,
   });
+
+  const [testId, setTestId] = useState();
 
   useTriggerNoti({
     error,
@@ -49,6 +56,16 @@ export const TestsManagement = () => {
     }
     return false;
   }, [employee]);
+
+  const currentTest = useMemo(() => {
+    return tests
+      .find((test) => test.id === testId)
+      ?.testQuestionSkillTest?.map((item: any) => item.question);
+  }, [testId]);
+
+  useEffect(() => {
+    if (testId) toggleTestDetailModal();
+  }, [testId]);
 
   const showContestants = (id: number) => () => {
     const contestants = tests.find((test: any) => test.id === id);
@@ -69,6 +86,11 @@ export const TestsManagement = () => {
     onAssign(assignment);
   };
 
+  const onToggleTestDetailModal = () => {
+    toggleTestDetailModal();
+    setTestId(undefined);
+  };
+
   return (
     <TestsContext.Provider
       value={{
@@ -85,12 +107,18 @@ export const TestsManagement = () => {
         toggleContestantModal,
         setAssignment,
         assignTest,
+        setTestId,
       }}
     >
       <div className="test-management">
         <TestList />
         <ContestantListModal />
         {isAdmin && <AssignTestModal />}
+        <ShowTestModal
+          test={currentTest}
+          isOpenModal={showTestDetailModal}
+          toggleModal={onToggleTestDetailModal}
+        />
       </div>
     </TestsContext.Provider>
   );

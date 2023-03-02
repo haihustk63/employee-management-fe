@@ -45,3 +45,10 @@ export const useUpdatePassword = () => {
     method: "patch",
   });
 };
+
+export const useForgotPassword = () => {
+  return useAppMutation({
+    method: "post",
+    url: API_ROUTES.FORGOT_PASSWORD,
+  });
+};

@@ -9,6 +9,8 @@ import {
 import {
   APP_ROLES,
   COMMON_TYPE_QUESTION,
+  JOB_LEVELS,
+  JOB_TYPES,
   QUESTION_LEVELS,
   SIDER_ITEMS,
   SORT_ORDER,
@@ -31,7 +33,7 @@ const addKeyToData = (data: any[] = [], createKey?: any) => {
   }));
 };
 
-const dataToOptions = (data: any[] = []) => {
+const dataToOptions = (data: any = []) => {
   return data.map((item: any) => ({
     key: item.key ?? item.id,
     value: item.value ?? item.id,
@@ -71,16 +73,18 @@ export const getDaysInMonth = () => {
   return dayjs(Date.now()).daysInMonth();
 };
 
-export const getRowsTimesheet = (data: any = []) => {
-  const days = getDaysInMonth();
-  const currentMonth = new Date().getMonth() + 1;
+export const getRowsTimesheet = (data: any = [], params: any = {}) => {
+  const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
+  const { month = currentMonth, year = currentYear } = params;
+  const time = dayjs().set("month", month).set("year", year);
+  const days = time.daysInMonth();
 
   let rows: any[] = [];
   for (let day in [...Array(days)]) {
-    const dateFormat = dayjs(
-      `${currentYear}-${currentMonth}-${Number(day) + 1}`
-    ).format("D dddd");
+    const dateFormat = dayjs(`${year}-${month + 1}-${Number(day) + 1}`).format(
+      "D dddd"
+    );
     rows = [
       ...rows,
       {
@@ -151,20 +155,6 @@ const getRequestRows = (requests: any[] = []) => {
     const duration = getDuration(request);
 
     return { ...request, duration };
-  });
-};
-
-const createRequestOptions = () => {
-  return Object.values(REQUEST_TYPES).map((type: any) => {
-    let typeLabel = type.label;
-    const { timeLeaving = "" } = type;
-    if (timeLeaving) {
-      typeLabel += " " + getTimeLeavingLabel(timeLeaving)?.toLocaleLowerCase();
-    }
-    return {
-      ...type,
-      label: typeLabel,
-    };
   });
 };
 
@@ -263,6 +253,14 @@ const isEmptyObject = (obj: object = {}) => {
   return !Object.keys(obj).length;
 };
 
+const getJobTypeLabel = (value: number) => {
+  return JOB_TYPES.find((type) => type.value === value)?.label;
+};
+
+const getJobLevelLabel = (value: number) => {
+  return JOB_LEVELS.find((level) => level.value === value)?.label;
+};
+
 export {
   isEmptyObject,
   purityContent,
@@ -275,9 +273,9 @@ export {
   getDateFormat,
   getRequestRows,
   getRequestTypeLabel,
-  createRequestOptions,
   getRequestStatus,
   getRequestTypeValues,
+  getTimeLeavingLabel,
   getRoleLabel,
   getWorkingStatusLabel,
   getSiderByRoles,
@@ -287,4 +285,6 @@ export {
   disabledDateBeforeToday,
   dataWithHeader,
   formatTableParams,
+  getJobTypeLabel,
+  getJobLevelLabel
 };

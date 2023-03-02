@@ -16,6 +16,7 @@ const AppSearchKeyword: FC<IAppSearchKeywordProps> = ({
   setIsInit,
   setQueryParams,
   resetPageParams,
+  placeholder,
 }) => {
   const formRef = useRef() as any;
 
@@ -45,6 +46,7 @@ const AppSearchKeyword: FC<IAppSearchKeywordProps> = ({
           queryParams={queryParams}
           resetPageParams={resetPageParams}
           setQueryParams={setQueryParams}
+          placeholder={placeholder}
         />
       </AppForm>
     </div>

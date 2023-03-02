@@ -2,28 +2,28 @@ import { Form, useFormikContext } from "formik";
 
 import AppButton from "@/components/AppButton";
 import FormItem from "@/components/FormItem";
-import {
-  APP_ROLES,
-  FORM_ITEM_TYPES,
-  MANAGER_EXAMPLE,
-} from "@/constants/common";
-import { useGetEmployees } from "@/hooks/employee";
+import { APP_MAX_LIMIT, FORM_ITEM_TYPES } from "@/constants/common";
+import { useGetEmployeeById, useGetEmployees } from "@/hooks/employee";
+import { DeliveryManagementContext } from "@/pages/delivery";
 import { dataToOptions } from "@/utils";
-import { useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 
 const { TEXT, TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 
 const FormFields = () => {
   const { values, handleSubmit, handleChange } = useFormikContext() as any;
+  const { deliveryUpdateId } = useContext(DeliveryManagementContext) as any;
 
-  const { data: employees = {} } = useGetEmployees();
+  const { data: employees = {} } = useGetEmployees({ limit: APP_MAX_LIMIT });
 
-  const suitableEmployees = useMemo(() => {
-    const roleEmployee = employees.data?.filter(
-      (em: any) => em.role === APP_ROLES.EMPLOYEE.value
-    );
-    return dataToOptions(roleEmployee);
+  const employeeOptions = useMemo(() => {
+    return dataToOptions(employees.data);
   }, [employees]);
+
+  const buttonTitle = useMemo(() => {
+    if (deliveryUpdateId) return "Update";
+    return "Create";
+  }, [deliveryUpdateId]);
 
   return (
     <Form onSubmit={handleSubmit} className="form">
@@ -48,10 +48,10 @@ const FormFields = () => {
         label="Manager"
         value={values.managerId}
         type={SELECT}
-        options={suitableEmployees}
+        options={employeeOptions}
         placeholder="Select manager"
       />
-      <AppButton buttonTitle="Add" htmlType="submit" />
+      <AppButton buttonTitle={buttonTitle} htmlType="submit" />
     </Form>
   );
 };

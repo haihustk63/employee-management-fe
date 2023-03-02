@@ -34,7 +34,7 @@ const FormFields = () => {
           label="Keyword"
           value={values.keyword}
           type={TEXT}
-          placeholder="Keywords: name, email, phone"
+          placeholder="Enter keyword"
           onChange={handleChangeKeyword}
         />
         <FormItem

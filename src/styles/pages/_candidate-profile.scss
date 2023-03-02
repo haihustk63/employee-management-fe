@@ -1,0 +1,9 @@
+.candidate-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  > .app-primary-card {
+    width: 45%;
+  }
+}

@@ -11,11 +11,12 @@ const FormFields: FC<{
   queryParams?: any;
   setQueryParams?: any;
   resetPageParams?: any;
-}> = ({ queryParams, setQueryParams, resetPageParams }) => {
+  placeholder?: string;
+}> = ({ queryParams, placeholder, setQueryParams, resetPageParams }) => {
   const { values, handleSubmit, handleChange, setFieldValue } =
     useFormikContext() as any;
 
-  const { handleChangeKeyword, handleChangeOtherValue } = useSearchForm({
+  const { handleChangeKeyword } = useSearchForm({
     queryParams,
     values,
     setQueryParams,
@@ -31,7 +32,7 @@ const FormFields: FC<{
         label="Keyword"
         value={values.keyword}
         type={TEXT}
-        placeholder="Keywords: name, email, phone"
+        placeholder={placeholder ?? "Keywords: name, email, phone"}
         onChange={handleChangeKeyword}
       />
     </Form>

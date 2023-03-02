@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 
 export const useTableParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [queryParams, setQueryParams] = useState();
+  const [queryParams, setQueryParams] = useState<any>();
   const [needResetPage, setNeedResetPage] = useState(false);
   const [isInit, setIsInit] = useState(false);
 

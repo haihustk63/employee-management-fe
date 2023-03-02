@@ -75,6 +75,11 @@ const CreateTestPage: FC = () => {
       setQuestionInfoManual(newQuestionManual);
       setTitle(currentTest.title);
       setDuration(currentTest.duration);
+    } else {
+      setQuestionInfoManual([]);
+      setTitle("");
+      setDuration(0);
+      setSelectedRowKeys([]);
     }
   }, [currentTest]);
 
@@ -139,13 +144,6 @@ const CreateTestPage: FC = () => {
       (item: any) => item.status !== created.value
     );
   }, [currentTest]);
-
-  const isDisabledSaveButton = useMemo(() => {
-    return (
-      isPublished ||
-      (mode === CREATE_TEST_MODE.random.value && !randomTest.length)
-    );
-  }, [mode, randomTest, isPublished]);
 
   const renderPreviewAndSave = useMemo(() => {
     return (
@@ -260,7 +258,11 @@ const CreateTestPage: FC = () => {
       <div className="create-test-page">
         <TestInfoForm />
         {renderModeContent}
-        <ShowTestModal />
+        <ShowTestModal
+          test={randomTest}
+          isOpenModal={showTestModal}
+          toggleModal={toggleShowTestModal}
+        />
       </div>
     </CreateTestContext.Provider>
   );

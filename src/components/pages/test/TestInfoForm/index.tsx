@@ -14,7 +14,7 @@ const TestInfoForm = () => {
   const { testId } = useParams();
 
   const formTitle = useMemo(() => {
-    return testId ? "Update test" : "Create test";
+    return testId ? "Update test" : "New test";
   }, [testId]);
 
   return (

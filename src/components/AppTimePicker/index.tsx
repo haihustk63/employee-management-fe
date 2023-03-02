@@ -12,6 +12,7 @@ const AppTimePicker: FC<IAppTimePicker> = ({
   error,
   label,
   name,
+  touched,
 }) => {
   return (
     <div className="app-time-picker">
@@ -21,12 +22,13 @@ const AppTimePicker: FC<IAppTimePicker> = ({
       <TimePicker
         name={name}
         format={format}
-        onChange={onChange}
-        onBlur={onBlur}
         placeholder={placeholder}
         value={value}
+        onBlur={onBlur}
+        onChange={onChange}
+        allowClear={false}
       />
-      {error && <AppFormErrorMessage message={error} />}
+      {error && touched && <AppFormErrorMessage message={error} />}
     </div>
   );
 };

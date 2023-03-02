@@ -14,6 +14,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
   value,
   pickerLabel,
   showTime = false,
+  picker,
   error,
   ...props
 }) => {
@@ -33,6 +34,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
         placement={placement}
         value={value}
         showTime={showTime}
+        picker={picker}
         {...props}
       />
       {error ? <AppFormErrorMessage message={error} /> : null}

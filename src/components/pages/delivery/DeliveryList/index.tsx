@@ -12,7 +12,7 @@ const DeliveryList: FC<IDeliveryListProps> = ({ data, onToggleModal }) => {
   return (
     <div className="delivery-list">
       <div className="title">
-        <Text className="app-title">Deliveries</Text>
+        <Text className="app-title">Delivery Management</Text>
         <AppButton
           buttonTitle="Add delivery"
           size="small"

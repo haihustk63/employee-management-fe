@@ -3,7 +3,7 @@ import { addKeyToData } from "@/utils";
 import useAppMutation from "../useAppMutation";
 import useFetch from "../useFetch";
 
-const { DELIVERY, DELIVERY_ID } = API_ROUTES;
+const { DELIVERY } = API_ROUTES;
 
 export const useGetAllDeliveries = () => {
   return useFetch({
@@ -23,6 +23,14 @@ export const useCreateDelivery = () => {
 export const useDeleteDelivery = (deliveryId: number) => {
   return useAppMutation({
     method: "delete",
+    url: DELIVERY,
+    itemId: deliveryId,
+  });
+};
+
+export const useUpdateDelivery = (deliveryId: number) => {
+  return useAppMutation({
+    method: "patch",
     url: DELIVERY,
     itemId: deliveryId,
   });

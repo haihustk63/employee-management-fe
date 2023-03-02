@@ -15,7 +15,7 @@ const TopicList: FC = () => {
   return (
     <div className="topic-list">
       <div className="title">
-        <Text className="app-title">Topics</Text>
+        <Text className="app-title">Skill Test Topic Management</Text>
         <AppButton
           buttonTitle="Add topic"
           size="small"

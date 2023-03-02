@@ -1,5 +1,5 @@
-import { Typography } from "antd";
-import { useContext } from "react";
+import { Alert, Typography } from "antd";
+import { FC, useContext } from "react";
 
 import { CreateTestContext } from "@/pages/tests/create-test";
 import ShowQuestion from "./ShowQuestion";
@@ -7,22 +7,21 @@ import AppModal from "@/components/AppModal";
 
 const { Text } = Typography;
 
-const ShowTestModal = () => {
-  const {
-    randomTest = [],
-    showTestModal,
-    toggleShowTestModal,
-  } = useContext(CreateTestContext) as any;
+const ShowTestModal: FC<{
+  test?: any[];
+  isOpenModal?: boolean;
+  toggleModal?: any;
+}> = ({ isOpenModal, test, toggleModal }) => {
   return (
     <AppModal
-      open={showTestModal}
-      onCancel={toggleShowTestModal}
+      open={isOpenModal}
+      onCancel={toggleModal}
       wrapClassName="show-test"
     >
-      {randomTest.length === 0 && (
-        <Text>The random test will be displayed here</Text>
+      {!test?.length && (
+        <Alert description="This test has no question" message="No question" />
       )}
-      {randomTest.map(({ answer, ...restOfQuestion }: any, index: number) => (
+      {test?.map(({ answer, ...restOfQuestion }: any, index: number) => (
         <ShowQuestion
           key={restOfQuestion.id}
           idx={index + 1}

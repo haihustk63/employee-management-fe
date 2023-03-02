@@ -37,8 +37,8 @@ const FormFields: FC = () => {
 
   const accountOptions = useMemo(() => {
     return dataToOptions(
-      accounts
-        .filter(
+      accounts?.data
+        ?.filter(
           (acc: any) =>
             acc.employeeId === null || acc.employeeId === Number(employeeId)
         )

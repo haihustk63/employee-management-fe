@@ -30,8 +30,11 @@
     height: 100%;
   }
 
-  > .logo > .image {
+  > .logo > .ant-image {
     height: 100%;
+  }
+  > .logo > .ant-image > .ant-image-img {
+    height: 80%;
   }
 
   > .menu {
@@ -41,14 +44,30 @@
   > .personal {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 2.8rem;
   }
 
-  > .personal > .name {
-    text-transform: uppercase;
-    font-weight: 700;
+  > .personal > .namerole {
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
   }
-  > .personal > .ant-dropdown-trigger > .svg-icon {
+  > .personal > .namerole > .name {
+    text-transform: uppercase;
+  }
+  > .personal > .namerole > .role {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  > .personal .bell > .anticon-bell > svg {
+    font-size: 2.4rem;
+    cursor: pointer;
+  }
+  > .personal .bell > .anticon-bell > svg > path {
+    color: var(--color-primary-blue);
+  }
+  > .personal > .ant-dropdown-trigger > .svg-icon,
+  > .personal > .ant-dropdown-trigger > .ant-avatar {
     width: 4.8rem;
     height: 4.8rem;
     cursor: pointer;
@@ -62,5 +81,59 @@
 
   > .ant-layout-sider-children {
     overflow-y: scroll;
+  }
+
+  > .ant-layout-sider-trigger {
+    background: var(--color-primary-blue);
+  }
+}
+
+.ant-menu-item > .ant-menu-item-icon > svg,
+.ant-menu-submenu > .ant-menu-submenu-title > .ant-menu-item-icon > svg {
+  font-size: 1.8rem;
+  color: var(--color-primary-blue);
+}
+
+.ant-menu-item > svg,
+.ant-menu-submenu > .ant-menu-submenu-title > svg {
+  width: 1.8rem;
+  height: 1.8rem;
+
+  path {
+    fill: var(--color-primary-blue);
+  }
+}
+
+.ant-menu-item > .ant-menu-title-content,
+.ant-menu-submenu > .ant-menu-submenu-title > .ant-menu-title-content {
+  margin-left: 1.8rem !important;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.ant-menu > .ant-menu-item.ant-menu-item-selected {
+  background-color: var(--color-secondary-blue);
+}
+
+.ant-menu-inline-collapsed {
+  > .ant-menu-item > .svg-icon + span {
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), margin 0.3s,
+      color 0.3s;
+  }
+}
+
+.ant-menu-submenu.ant-menu-submenu-vertical {
+  > .ant-menu-submenu-title > .svg-icon + span {
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), margin 0.3s,
+      color 0.3s;
+  }
+}
+
+.personal-menu > .ant-dropdown-menu > .ant-dropdown-menu-item {
+  > .svg-icon > path {
+    fill: var(--color-primary-blue);
   }
 }

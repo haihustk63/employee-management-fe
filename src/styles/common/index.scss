@@ -1,3 +1,5 @@
+@import "./font.scss";
+
 .app-title {
   text-align: center;
   display: block;
@@ -32,4 +34,28 @@
   overflow: hidden;
   white-space: nowrap;
   display: block;
+}
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-max: 576px;
+
+// Small tablets (portrait view)
+$screen-md-max: 768px;
+
+// Tablets and small desktops
+$screen-lg-max: 992px;
+
+// Large tablets and desktops
+$screen-xl-max: 1200px;
+
+@media print {
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  @page {
+    margin: 2rem 0;
+  }
 }

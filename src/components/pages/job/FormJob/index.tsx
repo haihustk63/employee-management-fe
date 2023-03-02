@@ -29,7 +29,7 @@ const FormJob: FC<{ onSubmit: any }> = ({ onSubmit }) => {
     if (jobId) {
       return "Update Job";
     } else {
-      return "Create Job";
+      return "New Job";
     }
   }, [jobId]);
 

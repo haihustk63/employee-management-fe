@@ -15,16 +15,15 @@ const { Title } = Typography;
 
 const ListAttendancesModal = () => {
   const {
+    allPrograms,
     showListAttendancesModal,
     toggleListAttendancesModal,
     selectProgramId,
   } = useContext(EducationProgramContext) as any;
 
-  const { data: programs = [] } = useGetAllEducationPrograms();
-
   const program = useMemo(() => {
-    return programs.find((p: any) => p.id === selectProgramId);
-  }, [programs, selectProgramId]);
+    return allPrograms?.find((p: any) => p.id === selectProgramId);
+  }, [allPrograms, selectProgramId]);
 
   const dataItems = useMemo(() => {
     if (program) {

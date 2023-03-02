@@ -103,3 +103,11 @@ export const useUpdateTest = (testId: number | string) => {
     method: "patch",
   });
 };
+
+export const useDeleteTest = (testId: number | string) => {
+  return useAppMutation({
+    url: API_ROUTES.TEST_ID(testId),
+    method: "delete",
+    extraQueryKey: API_ROUTES.TEST,
+  });
+};

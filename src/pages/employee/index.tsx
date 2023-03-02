@@ -5,7 +5,7 @@ import Search from "@/components/pages/employee/Search";
 import { useGetEmployees } from "@/hooks/employee";
 import { createContext, useMemo, useState } from "react";
 import useModal from "@/hooks/useModal";
-import EmployeeProfileModal from "@/components/pages/employee/EmployeeProfile";
+import EmployeeProfileModal from "@/components/pages/employee/EmployeeProfileModal";
 import { Typography } from "antd";
 import { useTableParams } from "@/hooks/useTableParams";
 
@@ -65,7 +65,7 @@ const EmployeeManagement = () => {
       }}
     >
       <div className="employee-management">
-        <Text className="app-title">Employees</Text>
+        <Text className="app-title">Employee Management</Text>
         <Search />
         <EmployeeList
           loading={isLoading || isFetching}

@@ -12,7 +12,7 @@ import { useState } from "react";
 
 const AppTable: FC<IAppTableProps> = ({
   columns,
-  dataSource,
+  dataSource = [],
   title,
   tableName,
   bordered,
@@ -25,6 +25,7 @@ const AppTable: FC<IAppTableProps> = ({
   total,
   pageSize,
   needResetPage,
+  pagination,
   onGoBack,
 }) => {
   const [tableParams, setTableParams] = useState<TableParams>({
@@ -88,7 +89,7 @@ const AppTable: FC<IAppTableProps> = ({
         dataSource={dataSource}
         loading={loading}
         title={title}
-        pagination={tableParams.pagination}
+        pagination={pagination ?? tableParams.pagination}
         onChange={handleTableChange as any}
         bordered={bordered}
         sortDirections={sortDirections}

@@ -87,8 +87,10 @@ export const addCommonRequestSchema = object({
 export const addOvertimeRequestSchema = object({
   type: number().required("Type is required"),
   date: date().typeError("Invalid date").required("Date is required"),
-  startTime: date().typeError("Invalid date").required("Time is required"),
-  endTime: date().typeError("Invalid date").required("Time is required"),
+  startTime: date()
+    .typeError("Invalid date")
+    .required("Start time is required"),
+  endTime: date().typeError("Invalid date").required("End time is required"),
   reason: string().required("Reason is required"),
 });
 

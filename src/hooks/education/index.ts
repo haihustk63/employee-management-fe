@@ -7,8 +7,11 @@ export const useGetAllEducationPrograms = (params?: any) => {
   return useFetch({
     url: API_ROUTES.EDUCATION_PROGRAM,
     config: {
-      select: (data: any) => {
-        return addKeyToData(data?.allPrograms);
+      select: (result: any) => {
+        return {
+          ...result,
+          data: addKeyToData(result?.data),
+        };
       },
     },
     params,
@@ -19,8 +22,11 @@ export const useGetMyEducationPrograms = (params?: any) => {
   return useFetch({
     url: API_ROUTES.MY_EDUCATION_PROGRAM,
     config: {
-      select: (data: any) => {
-        return addKeyToData(data?.allPrograms);
+      select: (result: any) => {
+        return {
+          ...result,
+          data: addKeyToData(result?.data),
+        };
       },
     },
     params,

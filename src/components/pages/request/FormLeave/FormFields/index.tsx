@@ -1,12 +1,12 @@
-import { useContext, useEffect, useMemo } from "react";
 import { Form, useFormikContext } from "formik";
+import { useContext, useEffect, useMemo } from "react";
 
 import AppButton from "@/components/AppButton";
-import FormItem from "@/components/FormItem";
-import { LEAVING_TIME, REQUEST_TYPES } from "@/constants/request";
-import { FORM_ITEM_TYPES } from "@/constants/common";
 import AppDatePicker from "@/components/AppDatePicker";
-import { TimePicker } from "antd";
+import AppTimePicker from "@/components/AppTimePicker";
+import FormItem from "@/components/FormItem";
+import { FORM_ITEM_TYPES } from "@/constants/common";
+import { REQUEST_TYPES } from "@/constants/request";
 import { CreateRequestContext } from "@/pages/request/create-request";
 import {
   addCheckInRequestSchema,
@@ -14,9 +14,7 @@ import {
   addCommonRequestSchema,
   addOvertimeRequestSchema,
 } from "@/schemas";
-import AppFormErrorMessage from "@/components/AppFormErrorMessage";
-import { createRequestOptions } from "@/utils";
-import AppTimePicker from "@/components/AppTimePicker";
+import { getTimeLeavingLabel } from "@/utils";
 
 const { TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 
@@ -34,6 +32,21 @@ const FormFields = () => {
   } = useFormikContext() as any;
 
   const { setSchemaValidation } = useContext(CreateRequestContext) as any;
+
+  const requestOptions = useMemo(() => {
+    return Object.values(REQUEST_TYPES).map((type: any) => {
+      let typeLabel = type.label;
+      const { timeLeaving = "" } = type;
+      if (timeLeaving) {
+        typeLabel +=
+          " " + getTimeLeavingLabel(timeLeaving)?.toLocaleLowerCase();
+      }
+      return {
+        ...type,
+        label: typeLabel,
+      };
+    });
+  }, []);
 
   useEffect(() => {
     let newSchema;
@@ -60,60 +73,56 @@ const FormFields = () => {
 
   const handleChangeTimePicker =
     (field: string) => (time: any, timeString: string) => {
-      // if (time) {
-      //   setFieldTouched(field, false);
-      // }
       setFieldValue(field, time);
     };
+
+  const startTimeComponent = useMemo(() => {
+    return (
+      <AppTimePicker
+        onChange={handleChangeTimePicker("startTime")}
+        value={values.startTime}
+        name="startTime"
+        label="Time"
+        error={errors.startTime}
+        touched={touched.startTime}
+        onBlur={() => setFieldTouched("startTime", true)}
+      />
+    );
+  }, [values, errors, touched]);
+
+  const endTimeComponent = useMemo(() => {
+    return (
+      <AppTimePicker
+        onChange={handleChangeTimePicker("endTime")}
+        value={values.endTime}
+        label="Time"
+        name="endTime"
+        error={errors.endTime}
+        touched={touched.endTime}
+        onBlur={() => setFieldTouched("endTime", true)}
+      />
+    );
+  }, [values, errors, touched]);
 
   const TimeComponent = useMemo(() => {
     switch (values.type) {
       case MODIFY_CHECKIN.value:
-        return (
-          <AppTimePicker
-            onChange={handleChangeTimePicker("startTime")}
-            value={values.startTime}
-            name="startTime"
-            label="Time"
-            error={errors.startTime}
-            // onBlur={() => setFieldTouched("startTime", true)}
-          />
-        );
+        return startTimeComponent;
 
       case MODIFY_CHECKOUT.value:
-        return (
-          <AppTimePicker
-            onChange={handleChangeTimePicker("endTime")}
-            value={values.endTime}
-            label="Time"
-            name="endTime"
-            error={errors.endTime}
-          />
-        );
+        return endTimeComponent;
 
       case OVERTIME.value:
         return (
           <div className="grouptime">
-            <AppTimePicker
-              onChange={handleChangeTimePicker("startTime")}
-              value={values.startTime}
-              label="From"
-              name="startTime"
-              error={errors.startTime}
-            />
-            <AppTimePicker
-              onChange={handleChangeTimePicker("endTime")}
-              value={values.endTime}
-              label="To"
-              name="endTime"
-              error={errors.endTime}
-            />
+            {startTimeComponent}
+            {endTimeComponent}
           </div>
         );
       default:
         return null;
     }
-  }, [values, errors, touched]);
+  }, [startTimeComponent, endTimeComponent]);
 
   const handleDatePickerChange = (newDate: any) => {
     setFieldValue("date", newDate);
@@ -126,7 +135,7 @@ const FormFields = () => {
         label="Request Type"
         value={values.type}
         type={SELECT}
-        options={Object.values(createRequestOptions())}
+        options={requestOptions}
         placeholder="Select request type"
       />
 

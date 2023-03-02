@@ -5,4 +5,5 @@ export interface IAppSearchKeywordProps {
   setIsInit?: any;
   setQueryParams?: any;
   resetPageParams?: any;
+  placeholder?: string;
 }

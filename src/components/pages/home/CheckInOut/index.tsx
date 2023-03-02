@@ -10,6 +10,7 @@ import { useCheckInOut, useGetCheckInOutInfo } from "@/hooks/check-in-out";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { currentUserAtom } from "@/modules/currentUser";
 import { getDateNow, getTime, mergeName } from "@/utils";
+import AppTag from "@/components/AppTag";
 
 const { Title, Text } = Typography;
 
@@ -67,22 +68,22 @@ const CheckInOut = () => {
   return (
     <div className="home-check-in-out">
       <div className="user">
-        <Title level={2}>Hello {mergeName(employee)}</Title>
-        <Text>Today is: {getDateNow()}</Text>
+        <Text className="app-title">Hello {mergeName(employee)}</Text>
+        <AppTag color="#1e5ac7">Today is: {getDateNow()}</AppTag>
       </div>
       <div className="cards">
         <AppPrimaryCard title="Checkin" borderColor="blue" borderType="dashed">
           {!!checkedIn.time ? (
             <Text className="time">{getTime(checkedIn.time)}</Text>
           ) : (
-            <Text>You have not checked in</Text>
+            <Text className="time -notime">You have not checked in</Text>
           )}
         </AppPrimaryCard>
         <AppPrimaryCard title="Checkout" borderColor="blue" borderType="dashed">
           {checkedOut.time ? (
             <Text className="time">{getTime(checkedOut.time)}</Text>
           ) : (
-            <Text>You have not checked out</Text>
+            <Text className="time -notime">You have not checked out</Text>
           )}
         </AppPrimaryCard>
       </div>

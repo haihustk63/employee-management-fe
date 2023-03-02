@@ -1,7 +1,7 @@
 import AppButton from "@/components/AppButton";
 import { showAppCommonConfirm } from "@/components/AppConfirm";
 import AppTag from "@/components/AppTag";
-import EmployeeProfile from "@/components/pages/employee/EmployeeProfile/Profile";
+import EmployeeProfile from "@/components/pages/employee/EmployeeProfileModal/Profile";
 import { firebaseAuth } from "@/config/firebase";
 import { useLinkFirebase, useUnlinkFirebase } from "@/hooks/firebase";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
@@ -86,7 +86,10 @@ const PersonalInfoDetail = () => {
 
   return (
     <div className="personal-info">
-      <EmployeeProfile employee={currentUser.employee} />
+      <EmployeeProfile
+        employee={currentUser.employee}
+        callbackUploadSuccess={afterSuccess}
+      />
       <Space className="google">
         <AppButton
           onClick={uid ? confirmUnlinkFirebase : onLinkFirebase}

@@ -15,7 +15,7 @@ const PositionList: FC = () => {
   return (
     <div className="position-list">
       <div className="title">
-        <Text className="app-title">Positions</Text>
+        <Text className="app-title">Position Management</Text>
         <AppButton
           buttonTitle="Add position"
           size="small"

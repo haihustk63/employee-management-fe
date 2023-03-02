@@ -9,4 +9,5 @@ export interface IAppTimePicker {
   label?: string;
   error?: string;
   name?: string;
+  touched?: boolean;
 }

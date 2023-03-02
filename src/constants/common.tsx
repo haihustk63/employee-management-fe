@@ -1,18 +1,20 @@
+import CandidateIcon from "@/components/Icons/CandidateIcon";
+import EmployeeIcon from "@/components/Icons/EmployeeIcon";
+import EssayIcon from "@/components/Icons/EssayIcon";
+import JobIcon from "@/components/Icons/JobIcon";
+import PositionIcon from "@/components/Icons/PositionIcon";
+import SkillTestIcon from "@/components/Icons/SkillTestIcon";
+import TopicIcon from "@/components/Icons/TopicIcon";
 import {
-  HomeOutlined,
-  SendOutlined,
-  PlusCircleOutlined,
-  TableOutlined,
-  BookOutlined,
-  GoldOutlined,
-  TeamOutlined,
-  SolutionOutlined,
-  SmileOutlined,
-  UsergroupAddOutlined,
-  BlockOutlined,
-  SoundOutlined,
-  AimOutlined,
-  CalculatorOutlined,
+  AppstoreFilled,
+  BookFilled,
+  CalendarFilled,
+  EditFilled,
+  HomeFilled,
+  IdcardFilled,
+  PieChartFilled,
+  PlusCircleFilled,
+  ProfileFilled,
 } from "@ant-design/icons";
 import { Step } from "intro.js-react";
 
@@ -29,6 +31,10 @@ export const HEADER_CANDIDATE_ITEMS = [
     key: "/skill-test",
     label: "Home",
   },
+  {
+    key: "/candidate-info",
+    label: "Profile",
+  },
 ];
 
 // Translation
@@ -36,6 +42,7 @@ const APP_PAGE_NAME_ROUTES = {
   ACCOUNT: "/accounts",
   APPLY_PROCESS: "/apply-process",
   CANDIDATE: "/candidates",
+  CANDIDATE_INFO: "/candidate-info",
   DELIVERY: "/deliveries",
   DASHBOARD: "/dashboard",
   EDUCATION_PROGRAMS: "/education-programs",
@@ -109,7 +116,6 @@ export const APP_ROLES = {
 };
 
 const {
-  CANDIDATE: { value: roleCandidate },
   EMPLOYEE: { value: roleEmployee },
   DIVISION_MANAGER: { value: roleDivisionManager },
   ADMIN: { value: roleAdmin },
@@ -120,175 +126,157 @@ export const SIDER_ITEMS = [
   {
     key: APP_PAGE_NAME_ROUTES.DASHBOARD,
     label: "Dashboard",
-    icon: <HomeOutlined />,
+    icon: <PieChartFilled />,
     roles: [roleAdmin, roleSuperAdmin],
   },
   {
     key: APP_PAGE_NAME_ROUTES.HOME,
     label: "Home",
-    icon: <HomeOutlined />,
-    roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
-  },
-  {
-    key: APP_PAGE_NAME_ROUTES.TIMESHEET,
-    label: "Timesheet",
-    icon: <HomeOutlined />,
+    icon: <HomeFilled />,
     roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
   },
   {
     key: APP_PAGE_NAME_ROUTES.REQUEST,
     label: "Request",
-    icon: <SendOutlined />,
+    icon: <EditFilled />,
     roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
     children: [
       {
         key: APP_PAGE_NAME_ROUTES.REQUEST_CREATE,
-        label: "Create Request",
-        icon: <PlusCircleOutlined />,
+        label: "New Request",
+        icon: <PlusCircleFilled />,
       },
       {
         key: APP_PAGE_NAME_ROUTES.REQUEST_LIST,
-        label: "Requests List",
-        icon: <TableOutlined />,
+        label: "Request List",
+        icon: <ProfileFilled />,
       },
     ],
   },
   {
-    key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS,
-    label: "Education",
-    icon: <BookOutlined />,
-    children: [
-      {
-        key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_CREATE,
-        label: "Create Education Program",
-        icon: <SmileOutlined />,
-        roles: [roleAdmin, roleSuperAdmin],
-      },
-      {
-        key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_LIST,
-        label: "List Education Programs",
-        icon: <SolutionOutlined />,
-        roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
-      },
-    ],
+    key: APP_PAGE_NAME_ROUTES.TIMESHEET,
+    label: "Timesheet",
+    icon: <CalendarFilled />,
+    roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
   },
   {
     key: APP_PAGE_NAME_ROUTES.ACCOUNT,
     label: "Account",
-    icon: <TeamOutlined />,
+    icon: <IdcardFilled />,
     roles: [roleAdmin, roleSuperAdmin],
   },
   {
     key: APP_PAGE_NAME_ROUTES.CANDIDATE,
     label: "Candidate",
-    icon: <TeamOutlined />,
+    icon: <CandidateIcon />,
     roles: [roleAdmin, roleSuperAdmin],
   },
   {
     key: APP_PAGE_NAME_ROUTES.EMPLOYEE,
     label: "Employee",
-    icon: <UsergroupAddOutlined />,
+    icon: <EmployeeIcon />,
     roles: [roleAdmin, roleSuperAdmin],
     children: [
       {
         key: APP_PAGE_NAME_ROUTES.EMPLOYEE_CREATE,
-        label: "Create Employee",
-        icon: <PlusCircleOutlined />,
+        label: "New Employee",
+        icon: <PlusCircleFilled />,
       },
       {
         key: APP_PAGE_NAME_ROUTES.EMPLOYEE_LIST,
         label: "Employee List",
-        icon: <TableOutlined />,
+        icon: <ProfileFilled />,
       },
     ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.DELIVERY,
     label: "Delivery",
-    icon: <BlockOutlined />,
+    icon: <AppstoreFilled />,
     roles: [roleAdmin, roleSuperAdmin],
   },
   {
     key: APP_PAGE_NAME_ROUTES.POSITION,
     label: "Position",
-    icon: <AimOutlined />,
+    icon: <PositionIcon />,
     roles: [roleAdmin, roleSuperAdmin],
   },
-  // {
-  //   key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS,
-  //   label: "Recruitment News",
-  //   icon: <SoundOutlined />,
-  //   roles: [roleAdmin, roleSuperAdmin],
-  //   children: [
-  //     {
-  //       key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_CREATE,
-  //       label: "Create Recruitment News",
-  //       icon: <PlusCircleOutlined />,
-  //     },
-  //     {
-  //       key: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_LIST,
-  //       label: "Recruitment News List",
-  //       icon: <TableOutlined />,
-  //     },
-  //   ],
-  // },
   {
-    key: APP_PAGE_NAME_ROUTES.TEST_TOPIC,
-    label: "Test Topics",
-    icon: <CalculatorOutlined />,
-    roles: [roleDivisionManager, roleAdmin, roleSuperAdmin],
-  },
-  {
-    key: APP_PAGE_NAME_ROUTES.TEST_QUESTION,
-    label: "Test Questions",
-    icon: <SoundOutlined />,
-    roles: [roleDivisionManager, roleAdmin, roleSuperAdmin],
+    key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS,
+    label: "Education Program",
+    icon: <BookFilled />,
     children: [
       {
-        key: APP_PAGE_NAME_ROUTES.TEST_QUESTION_CREATE,
-        label: "Create Test Questions",
-        icon: <PlusCircleOutlined />,
+        key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_CREATE,
+        label: "New Program",
+        icon: <PlusCircleFilled />,
+        roles: [roleAdmin, roleSuperAdmin],
       },
       {
-        key: APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST,
-        label: "Test Questions List",
-        icon: <TableOutlined />,
+        key: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_LIST,
+        label: "Program List",
+        icon: <ProfileFilled />,
+        roles: [roleEmployee, roleDivisionManager, roleAdmin, roleSuperAdmin],
       },
     ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.JOB,
-    label: "Jobs",
-    icon: <SoundOutlined />,
+    label: "Job",
+    icon: <JobIcon />,
     roles: [roleAdmin, roleSuperAdmin],
     children: [
       {
         key: APP_PAGE_NAME_ROUTES.JOB_CREATE,
-        label: "Create Jobs",
-        icon: <PlusCircleOutlined />,
+        label: "New Job",
+        icon: <PlusCircleFilled />,
       },
       {
         key: APP_PAGE_NAME_ROUTES.JOB_LIST,
-        label: "Jobs List",
-        icon: <TableOutlined />,
+        label: "Job List",
+        icon: <ProfileFilled />,
+      },
+    ],
+  },
+  {
+    key: APP_PAGE_NAME_ROUTES.TEST_TOPIC,
+    label: "Skill Test Topic",
+    icon: <TopicIcon />,
+    roles: [roleDivisionManager, roleAdmin, roleSuperAdmin],
+  },
+  {
+    key: APP_PAGE_NAME_ROUTES.TEST_QUESTION,
+    label: "Skill Test Question",
+    icon: <EssayIcon />,
+    roles: [roleDivisionManager, roleAdmin, roleSuperAdmin],
+    children: [
+      {
+        key: APP_PAGE_NAME_ROUTES.TEST_QUESTION_CREATE,
+        label: "New Question",
+        icon: <PlusCircleFilled />,
+      },
+      {
+        key: APP_PAGE_NAME_ROUTES.TEST_QUESTION_LIST,
+        label: "Question List",
+        icon: <ProfileFilled />,
       },
     ],
   },
   {
     key: APP_PAGE_NAME_ROUTES.TESTS,
-    label: "Tests",
-    icon: <SoundOutlined />,
+    label: "Skill Test",
+    icon: <SkillTestIcon />,
     roles: [roleDivisionManager, roleAdmin, roleSuperAdmin],
     children: [
       {
         key: APP_PAGE_NAME_ROUTES.TESTS_CREATE,
-        label: "Create Tests",
-        icon: <PlusCircleOutlined />,
+        label: "New Test",
+        icon: <PlusCircleFilled />,
       },
       {
         key: APP_PAGE_NAME_ROUTES.TESTS_LIST,
-        label: "Tests List",
-        icon: <TableOutlined />,
+        label: "Test List",
+        icon: <ProfileFilled />,
       },
     ],
   },
@@ -463,25 +451,25 @@ export const ASSESSMENT: { [key: string]: string | number }[] = [
     key: 1,
     value: 1,
     label: "Not good",
-    color: "blue",
+    color: "error",
   },
   {
     key: 2,
     value: 2,
     label: "Considering",
-    color: "success",
+    color: "warning",
   },
   {
     key: 3,
     value: 3,
     label: "Good",
-    color: "warning",
+    color: "#1e5ac7",
   },
   {
     key: 4,
     value: 4,
     label: "Passed",
-    color: "error",
+    color: "success",
   },
 ];
 
@@ -544,3 +532,7 @@ export const SORT_ORDER: { [key: string]: { value: number } } = {
     value: 2,
   },
 };
+
+export const DEFAULT_PAGE_SIZE = 10;
+
+export const APP_MAX_LIMIT = 999999;

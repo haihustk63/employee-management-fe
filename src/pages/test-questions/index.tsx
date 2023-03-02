@@ -42,7 +42,7 @@ const TestQuestionManagement = () => {
       }}
     >
       <div className="test-question-management">
-        <Text className="app-title">Test Questions</Text>
+        <Text className="app-title">Skill Test Question Management</Text>
         <Search />
         <TestQuestionList dataSource={data} loading={isLoading || isFetching} />
       </div>

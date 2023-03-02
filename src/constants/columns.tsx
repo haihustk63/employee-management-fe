@@ -6,8 +6,11 @@ import AppTag from "@/components/AppTag";
 import GroupButtonAccount from "@/components/pages/account/GroupButtonAccount";
 import GroupButton from "@/components/pages/candidate/ProfileTable/GroupButton";
 import RenderAction from "@/components/pages/create-test/InputQuestionInfo/Action";
+import EmployeeGroupButton from "@/components/pages/employee/EmployeeList/GroupButton";
 import JobListAction from "@/components/pages/job/JobListAction";
 import ListRequestActions from "@/components/pages/request/List/GroupActions";
+import QuestionActionGroup from "@/components/pages/test-question/QuestionActionGroup";
+import { dayjs } from "@/dayjs-config";
 import { ICandidateProfile } from "@/hooks/candidate/interface";
 import {
   getDateFormat,
@@ -22,18 +25,14 @@ import {
   mergeName,
 } from "@/utils";
 import {
+  APP_ROLES,
   ASSESSMENT,
   JOB_LEVELS,
   JOB_TYPES,
   OTHERS_CONSTANTS,
-  TEST_STATUS,
   QUESTION_LEVELS,
-  APP_ROLES,
 } from "./common";
-import { REQUEST_TYPES, WORKING_TIME } from "./request";
-import { dayjs } from "@/dayjs-config";
-import EmployeeGroupButton from "@/components/pages/employee/EmployeeList/GroupButton";
-import QuestionActionGroup from "@/components/pages/test-question/QuestionActionGroup";
+import { REQUEST_TYPES } from "./request";
 
 const { Text } = Typography;
 
@@ -557,14 +556,15 @@ export const jobsTableColumns = (
       render: (_value: any, record: any) => {
         return <JobListAction jobId={record.id} jobTitle={record.title} />;
       },
-      width: 200,
+      width: 240,
     },
   ];
 };
 
 export const requestsTableColumns = (
   currentPage: number,
-  role: number = APP_ROLES.EMPLOYEE.value
+  role: number = APP_ROLES.EMPLOYEE.value,
+  employeeId: number
 ): ColumnsType<ICandidateProfile> => {
   const employeeNameColumn =
     role === APP_ROLES.EMPLOYEE.value
@@ -578,7 +578,9 @@ export const requestsTableColumns = (
             fixed: true,
             width: 200,
             render: (value: any, record: any) => {
-              return mergeName(record.employee);
+              return employeeId === record.employeeId
+                ? "Me"
+                : mergeName(record.employee);
             },
           },
         ];
@@ -654,7 +656,7 @@ export const requestsTableColumns = (
 };
 
 export const checkInOutTableColumns = (
-  currentPage: number,
+  currentPage: number = 1,
   t?: any
 ): ColumnsType<ICandidateProfile> => {
   return [
@@ -693,19 +695,15 @@ export const checkInOutTableColumns = (
   ];
 };
 
-export const timesheetTableColumns = (
-  currentPage: number,
-  t?: any
-): ColumnsType<ICandidateProfile> => {
+export const timesheetTableColumns = (): ColumnsType<ICandidateProfile> => {
   return [
     {
       key: "date",
       title: "Date",
       dataIndex: ["date"],
-      fixed: true,
       width: "15%",
       render: (value: string) => {
-        const [day, dayName] = value.split(" ");
+        const [day, dayName] = value?.split(" ");
         return (
           <Space direction="horizontal" size="small">
             <AppTag color="green">{day}</AppTag>

@@ -1,0 +1,12 @@
+.timesheet-page {
+  > .time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  > .time > .app-date-picker {
+    width: 20rem;
+  }
+}

@@ -34,16 +34,17 @@ export const useGetCheckInOutList = () => {
   });
 };
 
-export const useGetCheckInOutTimesheet = () => {
+export const useGetCheckInOutTimesheet = (params?: any) => {
   return useFetch({
     url: API_ROUTES.CHECK_IN_OUT_TIMESHEET,
     config: {
       select: (results: any) => {
         return {
           ...results,
-          data: addKeyToData(getRowsTimesheet(results.data)),
+          data: addKeyToData(getRowsTimesheet(results.data, params)),
         };
       },
     },
+    params,
   });
 };

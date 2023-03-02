@@ -12,7 +12,7 @@ const CreateNewEducationProgram = () => {
   });
 
   const handleSubmit = (values: any) => {
-    const { materials = [], _deleteMaterialList, ...rest } = values;
+    const { materials = [], deleteMaterialList, ...rest } = values;
 
     const formData = new FormData();
     materials.map((item: any) => {

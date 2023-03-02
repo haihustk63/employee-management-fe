@@ -40,6 +40,7 @@ export const API_ROUTES = {
   // login
   LOGIN_EMPLOYEE: `${API_URL}/login`,
   LOGOUT_EMPLOYEE: `${API_URL}/logout`,
+  FORGOT_PASSWORD: `${API_URL}/forgot-password`,
 
   // tests
   CREATE_TEST_RANDOM: `${API_URL}/tests/create/random`,

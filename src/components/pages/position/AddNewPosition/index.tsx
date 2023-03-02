@@ -1,8 +1,6 @@
 import AppForm from "@/components/AppForm";
 import AppModal from "@/components/AppModal";
-import {
-  useCreatePosition, useUpdatePosition
-} from "@/hooks/position";
+import { useCreatePosition, useUpdatePosition } from "@/hooks/position";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { PositionManagementContext } from "@/pages/position";
 import { FC, useContext, useEffect, useMemo, useRef } from "react";
@@ -58,7 +56,7 @@ const AddNewPositionModal: FC = () => {
     if (positionUpdateId !== undefined) {
       return "Update Position";
     } else {
-      return "Create Position";
+      return "New Position";
     }
   }, [positionUpdateId]);
 
