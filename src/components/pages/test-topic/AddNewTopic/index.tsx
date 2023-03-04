@@ -1,9 +1,7 @@
 import AppForm from "@/components/AppForm";
 import AppModal from "@/components/AppModal";
 import {
-  useCreateTopic,
-  useGetAllTestTopics,
-  useUpdateTopic,
+  useCreateTopic, useUpdateTopic
 } from "@/hooks/test-topic";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { TopicManagementContext } from "@/pages/test-topics";

@@ -3,7 +3,7 @@ import DeliveryList from "@/components/pages/delivery/DeliveryList";
 import {
   useCreateDelivery,
   useGetAllDeliveries,
-  useUpdateDelivery,
+  useUpdateDelivery
 } from "@/hooks/delivery";
 import useModal from "@/hooks/useModal";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";

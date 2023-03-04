@@ -77,6 +77,8 @@ export const API_ROUTES = {
     `${API_URL}/requests/${requestId}`,
 
   APPLICATION_STATISTICS: `${API_URL}/statistics/applications`,
+  EDUCATION_PROGRAM_STATISTICS: `${API_URL}/statistics/education-programs`,
+  TOPS: `${API_URL}/tops`,
 
   // firebase
   FIREBASE_ACCOUNT: `${API_URL}/firebase-account`,

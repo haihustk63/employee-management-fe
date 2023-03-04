@@ -1,10 +1,9 @@
 import AppInfoItem from "@/components/AppInfoItem";
 import AppModal from "@/components/AppModal";
-import { JOB_TYPES } from "@/constants/common";
 import { JobManagementContext } from "@/pages/jobs";
 import { getJobTypeLabel, purityContent } from "@/utils";
 import { Typography } from "antd";
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 const { Text } = Typography;
 

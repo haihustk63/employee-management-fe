@@ -66,36 +66,36 @@ const CommonHeader = () => {
   };
 
   return (
-    <NovuProvider
-      subscriberId={currentUser?.employee?.id?.toString()}
-      applicationIdentifier={import.meta.env.VITE_NOVU_APP_ID}
-    >
-      <Header className="common-header">
-        <div className="logo">
-          <Image src="/logo-tran-blue.png" alt="Logo" preview={false} />
-        </div>
+    <Header className="common-header">
+      <div className="logo">
+        <Image src="/logo-tran-blue.png" alt="Logo" preview={false} />
+      </div>
 
-        <div className="personal">
-          <Dropdown
-            menu={{ items: personalMenu }}
-            trigger={["click"]}
-            placement="bottomRight"
-            overlayClassName="personal-menu"
-          >
-            <div>
-              {currentUser.employee?.avatar ? (
-                <Avatar src={currentUser.employee.avatar} alt="Avatar" />
-              ) : (
-                <UserIcon />
-              )}
-            </div>
-          </Dropdown>
-          <div className="namerole">
-            <Text className="name">{mergeName(currentUser?.employee)}</Text>
-            <Text className="role">
-              {getRoleLabel(currentUser.employee?.role)}
-            </Text>
+      <div className="personal">
+        <Dropdown
+          menu={{ items: personalMenu }}
+          trigger={["click"]}
+          placement="bottomRight"
+          overlayClassName="personal-menu"
+        >
+          <div>
+            {currentUser.employee?.avatar ? (
+              <Avatar src={currentUser.employee.avatar} alt="Avatar" />
+            ) : (
+              <UserIcon />
+            )}
           </div>
+        </Dropdown>
+        <div className="namerole">
+          <Text className="name">{mergeName(currentUser?.employee)}</Text>
+          <Text className="role">
+            {getRoleLabel(currentUser.employee?.role)}
+          </Text>
+        </div>
+        <NovuProvider
+          subscriberId={currentUser?.employee?.id?.toString()}
+          applicationIdentifier={import.meta.env.VITE_NOVU_APP_ID}
+        >
           <PopoverNotificationCenter
             colorScheme="light"
             onNotificationClick={onClickNotification}
@@ -111,9 +111,9 @@ const CommonHeader = () => {
               </Badge>
             )}
           </PopoverNotificationCenter>
-        </div>
-      </Header>
-    </NovuProvider>
+        </NovuProvider>
+      </div>
+    </Header>
   );
 };
 

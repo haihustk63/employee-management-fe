@@ -1,5 +1,5 @@
-import React, { FC } from "react";
 import { Typography } from "antd";
+import { FC } from "react";
 const { Text } = Typography;
 
 const AppFormErrorMessage: FC<{ message: string }> = ({ message = "" }) => {

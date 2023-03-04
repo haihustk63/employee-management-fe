@@ -7,7 +7,7 @@ import App from "./App";
 import AppBackTop from "./components/AppBackTop";
 import "./index.css";
 import "./styles/index.scss";
-import 'intro.js/introjs.css';
+// import 'intro.js/introjs.css';
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

@@ -2,9 +2,9 @@ import { useContext, useMemo } from "react";
 
 import AppList from "@/components/AppList";
 import AppModal from "@/components/AppModal";
+import { TEST_STATUS } from "@/constants/common";
 import { TestsContext } from "@/pages/tests";
 import { getSkillTestStatusLabel } from "@/utils";
-import { TEST_STATUS } from "@/constants/common";
 const { done } = TEST_STATUS;
 
 const ContestantList = () => {

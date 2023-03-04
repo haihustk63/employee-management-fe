@@ -1,10 +1,10 @@
-import React, { FC } from "react";
+import { purityContent } from "@/utils";
 import { CloseCircleFilled, RightCircleFilled } from "@ant-design/icons";
+import { FC } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { IAppCodeBlockProps } from "./interface";
-import { purityContent } from "@/utils";
 import AppTooltip from "../AppTooltip";
+import { IAppCodeBlockProps } from "./interface";
 
 const AppCodeBlock: FC<IAppCodeBlockProps> = ({
   content,

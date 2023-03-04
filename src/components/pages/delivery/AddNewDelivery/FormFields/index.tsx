@@ -3,10 +3,10 @@ import { Form, useFormikContext } from "formik";
 import AppButton from "@/components/AppButton";
 import FormItem from "@/components/FormItem";
 import { APP_MAX_LIMIT, FORM_ITEM_TYPES } from "@/constants/common";
-import { useGetEmployeeById, useGetEmployees } from "@/hooks/employee";
+import { useGetEmployees } from "@/hooks/employee";
 import { DeliveryManagementContext } from "@/pages/delivery";
 import { dataToOptions } from "@/utils";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo } from "react";
 
 const { TEXT, TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 

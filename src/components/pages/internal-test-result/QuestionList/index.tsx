@@ -1,9 +1,8 @@
-import { FC, useMemo } from "react";
-import cx from "classnames";
 import AppCodeBlock from "@/components/AppCodeBlock";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
-import { AppInputTextArea } from "@/components/AppFormField";
-import { Space, Typography } from "antd";
+import { Typography } from "antd";
+import cx from "classnames";
+import { FC, useMemo } from "react";
 
 const { Text } = Typography;
 const { essays } = COMMON_TYPE_QUESTION;
@@ -14,13 +13,6 @@ const TestResultQuestionItem: FC<{
   questionIdx?: number;
   contestantAnswer?: any;
 }> = ({ questionId, question, questionIdx, contestantAnswer }: any) => {
-  const rightAnswers = useMemo(() => {
-    return question?.answer?.map((item: string) => {
-      return question?.options?.find((option: any) => option.id === item)
-        ?.choice;
-    });
-  }, [question?.answer]);
-
   const checkRightAnswer = (answerId: string) => {
     const right = question?.answer?.find((item: string) => item === answerId);
     const contestantChose = contestantAnswer?.includes(answerId);

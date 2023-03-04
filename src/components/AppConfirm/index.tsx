@@ -1,5 +1,5 @@
-import { Modal } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import { Modal } from "antd";
 
 const { confirm } = Modal;
 

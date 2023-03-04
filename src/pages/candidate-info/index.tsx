@@ -1,7 +1,7 @@
 import AppPrimaryCard from "@/components/AppCard/Primary";
 import AppInfoItem from "@/components/AppInfoItem";
 import { currentUserAtom } from "@/modules/currentUser";
-import { mergeName, getDateFormat } from "@/utils";
+import { getDateFormat, mergeName } from "@/utils";
 import { useRecoilValue } from "recoil";
 
 const CandidateInfo = () => {
@@ -11,6 +11,7 @@ const CandidateInfo = () => {
       CV Link
     </a>
   );
+
   return (
     <div className="candidate-profile">
       <AppPrimaryCard title="Profile">

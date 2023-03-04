@@ -1,7 +1,7 @@
-import { Rate } from "antd";
-import React, { FC } from "react";
-import { IAppRateProps } from "./interface";
 import { RATE_LEVELS } from "@/constants/common";
+import { Rate } from "antd";
+import { FC } from "react";
+import { IAppRateProps } from "./interface";
 
 const AppRate: FC<IAppRateProps> = ({
   allowClear = true,

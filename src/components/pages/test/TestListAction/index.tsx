@@ -1,7 +1,6 @@
 import AppButton from "@/components/AppButton";
 import { showDeleteConfirm } from "@/components/AppConfirm";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
-import { useDeleteJob } from "@/hooks/job";
 import { useDeleteTest } from "@/hooks/tests";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { TestsContext } from "@/pages/tests";

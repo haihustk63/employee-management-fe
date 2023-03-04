@@ -16,7 +16,7 @@
     right: 0.5rem;
   }
   > .ant-modal-content > .ant-modal-body {
-    height: 42rem;
+    height: 44rem;
   }
 }
 
@@ -28,6 +28,10 @@
   > .left {
     width: 30%;
     text-align: center;
+  }
+
+  > .left > .ant-typography:nth-child(2) {
+    font-size: 2.8rem;
   }
 
   > .left,

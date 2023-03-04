@@ -1,85 +1,123 @@
+import AppRate from "@/components/AppRate";
+import DashboardFilter from "@/components/pages/dashboard/FIlter";
 import { TIME_FILTER_TYPES } from "@/constants/common";
-import { useGetApplicationStatistics } from "@/hooks/statistics";
+import {
+  useGetApplicationStatistics,
+  useGetEducationProgramStatistics,
+  useGetTopsStatistics,
+} from "@/hooks/statistics";
+import { Typography } from "antd";
 import { useState } from "react";
 import {
   Bar,
   BarChart,
-  Legend,
-  ResponsiveContainer,
+  CartesianGrid,
+  Label,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
-const sample = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+const { Text } = Typography;
 
 const AdminDashboard = () => {
   const [params, setParams] = useState({
     timeType: TIME_FILTER_TYPES.month.value,
-    year: 2022,
+    year: 2023,
   });
-  const { data = [] } = useGetApplicationStatistics(params) as any;
+  const { data: applicationStatistics = [] } = useGetApplicationStatistics(
+    params
+  ) as any;
+  const { data: eProgramStatistics = [] } = useGetEducationProgramStatistics(
+    params
+  ) as any;
+  const { data: tops } = useGetTopsStatistics() as any;
+
+  const a = [
+    {
+      title: "Learn how to deploy",
+      averageRate: 5,
+    },
+    {
+      title: "How to become a good developer",
+      averageRate: 4,
+    },
+    {
+      title: "Be confident!",
+      averageRate: 4,
+    },
+    {
+      title: "Some interesting stuffs",
+      averageRate: 4,
+    },
+    {
+      title: "New technologies",
+      averageRate: 3,
+    },
+    {
+      title: "Pay attention to NextJS 13",
+      averageRate: 3,
+    },
+    {
+      title: "NodeJS and ExpressJS",
+      averageRate: 3,
+    },
+    {
+      title: "New blockchain tools",
+      averageRate: 3,
+    },
+    {
+      title: "OMG! Do not using this anymore",
+      averageRate: 3,
+    },
+    {
+      title: "Some useful javascript tips",
+      averageRate: 3,
+    },
+  ];
 
   return (
-    <div className="charts">
-      <BarChart width={730} height={250} data={data}>
-        <XAxis dataKey="month" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="count" fill="#8884d8" name="Count" />
-      </BarChart>
-      <BarChart width={730} height={250} data={sample}>
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="pv" fill="#8884d8" />
-        <Bar dataKey="uv" fill="#82ca9d" />
-      </BarChart>
+    <div className="admin-dashboard">
+      <div className="charts">
+        <Text className="title">Application</Text>
+        <DashboardFilter />
+        <BarChart width={730} height={250} data={applicationStatistics}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month">
+            <Label value="Month" offset={0} position="bottom" />
+          </XAxis>
+          <YAxis
+            label={{ value: "Count", angle: -90, position: "insideLeft" }}
+          />
+          <Tooltip />
+          <Bar dataKey="count" fill="#00a029" />
+        </BarChart>
+        <Text className="title">Education Programs</Text>
+        <DashboardFilter />
+        <BarChart width={730} height={250} data={eProgramStatistics}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month">
+            <Label value="Month" offset={0} position="bottom" />
+          </XAxis>
+          <YAxis
+            label={{ value: "Count", angle: -90, position: "insideLeft" }}
+          />
+          <Tooltip />
+          <Bar dataKey="count" fill="#00a029" />
+        </BarChart>
+      </div>
+      <div className="tops">
+        <Text className="title">Top Education Programs</Text>
+        <div className="list">
+          {/* tops?.topEducationPrograms */}
+          {a.map(({ id, title, averageRate }: any) => (
+            <div className="item" key={title}>
+              <div className="title">{title}</div>
+              <AppRate value={averageRate} />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

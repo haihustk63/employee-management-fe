@@ -7,16 +7,16 @@ import SkillTestContent from "@/components/pages/skill-test/Tests";
 import { COMMON_TYPE_QUESTION, TEST_STATUS } from "@/constants/common";
 import {
   APP_PAGE_NAME_ROUTES,
-  DYNAMIC_APP_PAGE_ROUTES,
+  DYNAMIC_APP_PAGE_ROUTES
 } from "@/constants/routes";
 import {
   useGetContestantTest,
   useSubmitAnswer,
-  useUpdateContestantTest,
+  useUpdateContestantTest
 } from "@/hooks/tests";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { useNavigate, useParams } from "react-router-dom";
 import { Spin } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 
 const { attempting, created, done } = TEST_STATUS;
 const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;

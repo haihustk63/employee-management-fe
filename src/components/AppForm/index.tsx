@@ -1,6 +1,6 @@
 import { Typography } from "antd";
-import { Formik } from "formik";
 import cx from "classnames";
+import { Formik } from "formik";
 
 import { IAppFormProps } from "./interface";
 

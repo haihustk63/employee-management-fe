@@ -1,4 +1,3 @@
-import React from "react";
 import FormAddQuestion from "@/components/pages/test-question/FormAddQuestion";
 
 const CreateTestQuestion = () => {

@@ -1,7 +1,7 @@
-import CheckInOutList from "@/components/pages/home/CheckInOutList";
 import CheckInOut from "@/components/pages/home/CheckInOut";
-import { Typography } from "antd";
+import CheckInOutList from "@/components/pages/home/CheckInOutList";
 import { useGetCheckInOutList } from "@/hooks/check-in-out";
+import { Typography } from "antd";
 
 const { Title } = Typography;
 

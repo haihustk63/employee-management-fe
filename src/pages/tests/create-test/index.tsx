@@ -9,7 +9,7 @@ import TestInfoForm from "@/components/pages/test/TestInfoForm";
 import {
   CREATE_TEST_MODE,
   QUESTION_LEVELS,
-  TEST_STATUS,
+  TEST_STATUS
 } from "@/constants/common";
 import { useGetTest, useSaveTest, useUpdateTest } from "@/hooks/tests";
 import useModal from "@/hooks/useModal";
@@ -62,7 +62,7 @@ const CreateTestPage: FC = () => {
   } = useUpdateTest(testId);
 
   useEffect(() => {
-    if (Object.keys(currentTest).length > 0) {
+    if (Object.keys(currentTest).length) {
       const newQuestionManual = currentTest.testQuestionSkillTest.map(
         ({ question, questionId }: any) => ({
           questionId: questionId,
@@ -75,13 +75,17 @@ const CreateTestPage: FC = () => {
       setQuestionInfoManual(newQuestionManual);
       setTitle(currentTest.title);
       setDuration(currentTest.duration);
-    } else {
+    }
+  }, [currentTest]);
+
+  useEffect(() => {
+    if (!testId) {
       setQuestionInfoManual([]);
       setTitle("");
       setDuration(0);
       setSelectedRowKeys([]);
     }
-  }, [currentTest]);
+  }, [testId]);
 
   useTriggerNoti({
     isError,

@@ -5,12 +5,12 @@ import { useRecoilValue } from "recoil";
 import AppButton from "@/components/AppButton";
 import AppPrimaryCard from "@/components/AppCard/Primary";
 import appNotification from "@/components/AppNotification";
+import AppTag from "@/components/AppTag";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useCheckInOut, useGetCheckInOutInfo } from "@/hooks/check-in-out";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { currentUserAtom } from "@/modules/currentUser";
 import { getDateNow, getTime, mergeName } from "@/utils";
-import AppTag from "@/components/AppTag";
 
 const { Title, Text } = Typography;
 

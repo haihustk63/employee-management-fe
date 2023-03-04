@@ -13,6 +13,7 @@ const ProfileTable: FC<ITableDataProps> = ({ dataSource, loading }) => {
   const columns = useMemo(() => {
     return candidateProfileTableColumns(dataSource?.page || 1);
   }, [dataSource]);
+
   return (
     <AppTable
       dataSource={dataSource?.data}

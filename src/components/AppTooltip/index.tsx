@@ -1,5 +1,5 @@
 import { Tooltip } from "antd";
-import React, { FC } from "react";
+import { FC } from "react";
 import { IAppTooltip } from "./interface";
 
 const AppTooltip: FC<IAppTooltip> = ({

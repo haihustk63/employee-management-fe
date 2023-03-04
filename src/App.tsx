@@ -49,7 +49,7 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} fallbackElement={<Spin />} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </ErrorBoundary>
   );

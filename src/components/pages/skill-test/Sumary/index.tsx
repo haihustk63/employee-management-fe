@@ -1,4 +1,3 @@
-import AppButton from "@/components/AppButton";
 import { CandidateSkillTestContext } from "@/pages/skill-test/do-test";
 import { useContext } from "react";
 

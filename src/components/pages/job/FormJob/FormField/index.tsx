@@ -1,19 +1,19 @@
+import { Space, Typography } from "antd";
 import { Form, useFormikContext } from "formik";
 import { useEffect, useMemo } from "react";
-import { Space, Typography } from "antd";
 import { Link, useParams } from "react-router-dom";
 
 import AppButton from "@/components/AppButton";
-import FormItem from "@/components/FormItem";
-import AppTextEditor from "@/components/AppTextEditor";
-import { useGetAllPositions } from "@/hooks/position";
 import AppFormErrorMessage from "@/components/AppFormErrorMessage";
-import { useGetJobById } from "@/hooks/job";
-import { dataToOptions } from "@/utils";
+import AppTextEditor from "@/components/AppTextEditor";
+import AppTooltip from "@/components/AppTooltip";
+import FormItem from "@/components/FormItem";
+import AddIcon from "@/components/Icons/AddIcon";
 import { FORM_ITEM_TYPES, JOB_LEVELS, JOB_TYPES } from "@/constants/common";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
-import AppTooltip from "@/components/AppTooltip";
-import AddIcon from "@/components/Icons/AddIcon";
+import { useGetJobById } from "@/hooks/job";
+import { useGetAllPositions } from "@/hooks/position";
+import { dataToOptions } from "@/utils";
 
 const { TEXT, SELECT } = FORM_ITEM_TYPES;
 const { Text } = Typography;

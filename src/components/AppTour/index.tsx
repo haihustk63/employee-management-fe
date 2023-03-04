@@ -1,6 +1,6 @@
+import { Steps } from "intro.js-react";
 import { FC } from "react";
 import { IAppTourProps } from "./interface";
-import { Steps } from "intro.js-react";
 
 const AppTour: FC<IAppTourProps> = ({
   enabled,

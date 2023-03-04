@@ -4,7 +4,7 @@ import AppModal from "@/components/AppModal";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 import { useDeleteTestQuestion } from "@/hooks/test-question";
 import useModal from "@/hooks/useModal";
-import { Modal, Space } from "antd";
+import { Space } from "antd";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowQuestion from "../../create-test/ShowTest/ShowQuestion";

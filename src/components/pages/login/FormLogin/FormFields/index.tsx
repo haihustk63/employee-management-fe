@@ -2,12 +2,12 @@ import { Form, useFormikContext } from "formik";
 import { FC, useContext } from "react";
 
 import AppButton from "@/components/AppButton";
+import appNotification from "@/components/AppNotification";
 import FormItem from "@/components/FormItem";
+import GoogleIcon from "@/components/Icons/GoogleIcon";
 import { FORM_ITEM_TYPES } from "@/constants/common";
 import { LoginContext } from "@/pages/login";
-import { Space, Typography } from "antd";
-import GoogleIcon from "@/components/Icons/GoogleIcon";
-import appNotification from "@/components/AppNotification";
+import { Typography } from "antd";
 
 const { TEXT, PASSWORD } = FORM_ITEM_TYPES;
 

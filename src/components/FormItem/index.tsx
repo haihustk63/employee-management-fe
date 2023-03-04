@@ -1,10 +1,10 @@
-import { FC, ReactNode } from "react";
-import { ErrorMessage, Field } from "formik";
 import { Input, InputNumber, Select, Typography } from "antd";
+import { ErrorMessage, Field } from "formik";
+import { FC } from "react";
 
-import { IFieldProps, IFormItemProps } from "./interface";
 import { FORM_ITEM_TYPES } from "@/constants/common";
 import AppFormErrorMessage from "../AppFormErrorMessage";
+import { IFieldProps, IFormItemProps } from "./interface";
 
 const { TEXT, TEXTAREA, SELECT, PASSWORD, INPUT_NUMBER } = FORM_ITEM_TYPES;
 const { TextArea, Password } = Input;

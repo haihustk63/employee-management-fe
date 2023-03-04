@@ -1,5 +1,5 @@
 import { Tag } from "antd";
-import React, { FC } from "react";
+import { FC } from "react";
 import { IAppTagProps } from "./interface";
 
 const AppTag: FC<IAppTagProps> = ({

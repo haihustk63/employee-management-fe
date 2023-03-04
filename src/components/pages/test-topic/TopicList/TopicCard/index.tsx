@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 import AppButton from "@/components/AppButton";
 import AppPrimaryCard from "@/components/AppCard/Primary";
+import { showDeleteConfirm } from "@/components/AppConfirm";
+import AppTooltip from "@/components/AppTooltip";
 import { useDeleteTopic } from "@/hooks/test-topic";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { TopicManagementContext } from "@/pages/test-topics";
-import { showDeleteConfirm } from "@/components/AppConfirm";
-import AppTooltip from "@/components/AppTooltip";
 
 const { Text } = Typography;
 

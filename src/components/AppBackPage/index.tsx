@@ -1,9 +1,9 @@
-import React, { FC } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { FC } from "react";
 
-import { IAppBackPageProps } from "./interface";
-import AppModal from "../AppModal";
 import useModal from "@/hooks/useModal";
+import AppModal from "../AppModal";
+import { IAppBackPageProps } from "./interface";
 
 const AppBackPage: FC<IAppBackPageProps> = ({ onBack }) => {
   const { showModal, handleToggleModal } = useModal();

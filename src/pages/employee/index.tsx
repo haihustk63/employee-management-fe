@@ -1,13 +1,12 @@
-import { useSearchParams } from "react-router-dom";
 
 import EmployeeList from "@/components/pages/employee/EmployeeList";
+import EmployeeProfileModal from "@/components/pages/employee/EmployeeProfileModal";
 import Search from "@/components/pages/employee/Search";
 import { useGetEmployees } from "@/hooks/employee";
-import { createContext, useMemo, useState } from "react";
 import useModal from "@/hooks/useModal";
-import EmployeeProfileModal from "@/components/pages/employee/EmployeeProfileModal";
-import { Typography } from "antd";
 import { useTableParams } from "@/hooks/useTableParams";
+import { Typography } from "antd";
+import { createContext, useMemo, useState } from "react";
 
 const { Text } = Typography;
 

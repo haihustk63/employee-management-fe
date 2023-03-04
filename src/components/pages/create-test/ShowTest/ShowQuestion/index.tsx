@@ -1,15 +1,15 @@
-import { FC, useMemo } from "react";
 import { Typography } from "antd";
+import { FC, useMemo } from "react";
 
 import AppPrimaryCard from "@/components/AppCard/Primary";
-import { IShowQuestionProps } from "./interface";
+import AppCodeBlock from "@/components/AppCodeBlock";
 import {
   AppCheckboxGroup,
   AppInputTextArea,
-  AppRadioGroup,
+  AppRadioGroup
 } from "@/components/AppFormField";
-import AppCodeBlock from "@/components/AppCodeBlock";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
+import { IShowQuestionProps } from "./interface";
 
 const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
 

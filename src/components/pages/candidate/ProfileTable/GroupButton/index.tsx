@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
 import AppButton from "@/components/AppButton";
+import { showDeleteConfirm } from "@/components/AppConfirm";
 import { useDeleteCandidateProfile } from "@/hooks/candidate";
 import { CandidateProfileContext } from "@/pages/candidate";
 import { Space } from "antd";
-import { showDeleteConfirm } from "@/components/AppConfirm";
 
 const GroupButton = ({ record }: any) => {
   const { handleSetCandidateId } = useContext(CandidateProfileContext) as any;

@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from "react";
 import { Typography } from "antd";
+import { useEffect, useMemo } from "react";
 import Countdown, { CountdownApi } from "react-countdown";
 
 const { Text } = Typography;

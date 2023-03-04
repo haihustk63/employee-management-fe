@@ -1,5 +1,4 @@
 import { FloatButton } from "antd";
-import React from "react";
 
 const AppBackTop = () => {
   return (

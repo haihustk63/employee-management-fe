@@ -1,5 +1,5 @@
-import { Avatar, List } from "antd";
-import React, { FC } from "react";
+import { List } from "antd";
+import { FC } from "react";
 import { IAppListProps } from "./interface";
 
 const AppList: FC<IAppListProps> = ({ dataSource, loading, onClickItem }) => {

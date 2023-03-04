@@ -1,7 +1,7 @@
 import AppButton from "@/components/AppButton";
 import {
   showAppCommonConfirm,
-  showDeleteConfirm,
+  showDeleteConfirm
 } from "@/components/AppConfirm";
 import MoreIcon from "@/components/Icons/MoreIcon";
 import { APP_ROLES } from "@/constants/common";

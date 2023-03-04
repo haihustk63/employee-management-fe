@@ -1,7 +1,7 @@
 import AppButton from "@/components/AppButton";
 import { showDeleteConfirm } from "@/components/AppConfirm";
 import { APP_ROLES } from "@/constants/common";
-import { useDeleteAccount, useUpdateAccount } from "@/hooks/account";
+import { useDeleteAccount } from "@/hooks/account";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { currentUserAtom } from "@/modules/currentUser";
 import { AccountManagementContext } from "@/pages/account";

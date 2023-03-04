@@ -2,8 +2,8 @@ import { Typography } from "antd";
 import { FC, useContext } from "react";
 
 import AppButton from "@/components/AppButton";
-import PositionCard from "./PositionCard";
 import { PositionManagementContext } from "@/pages/position";
+import PositionCard from "./PositionCard";
 
 const { Text } = Typography;
 

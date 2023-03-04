@@ -2,7 +2,7 @@ import AppForm from "@/components/AppForm";
 import AppModal from "@/components/AppModal";
 import { AccountManagementContext } from "@/pages/account";
 import { createAccountSchema, updateAccountSchema } from "@/schemas";
-import { useContext, useEffect, useMemo, useRef } from "react";
+import { useContext, useMemo, useRef } from "react";
 import FormFields from "./FormField";
 
 export interface IAddNewAccount {

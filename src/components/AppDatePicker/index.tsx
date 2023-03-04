@@ -16,6 +16,7 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
   showTime = false,
   picker,
   error,
+  showPickerLabel = true,
   ...props
 }) => {
   const handleOnChangeDatePicker = (date: any) => {
@@ -24,7 +25,9 @@ const AppDatePicker: FC<IAppDatePickerProps> = ({
 
   return (
     <div className="app-date-picker">
-      <label className="form-label">{pickerLabel ?? "Date"}</label>
+      {showPickerLabel && (
+        <label className="form-label">{pickerLabel ?? "Date"}</label>
+      )}
       <DatePicker
         allowClear={allowClear}
         bordered={bordered}

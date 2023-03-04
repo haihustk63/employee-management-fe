@@ -1,9 +1,8 @@
 import { Alert, Typography } from "antd";
-import { FC, useContext } from "react";
+import { FC } from "react";
 
-import { CreateTestContext } from "@/pages/tests/create-test";
-import ShowQuestion from "./ShowQuestion";
 import AppModal from "@/components/AppModal";
+import ShowQuestion from "./ShowQuestion";
 
 const { Text } = Typography;
 

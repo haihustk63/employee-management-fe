@@ -9,7 +9,7 @@ import AddIcon from "@/components/Icons/AddIcon";
 import {
   COMMON_TYPE_QUESTION,
   FORM_ITEM_TYPES,
-  QUESTION_LEVELS,
+  QUESTION_LEVELS
 } from "@/constants/common";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useGetAllTestTopics } from "@/hooks/test-topic";

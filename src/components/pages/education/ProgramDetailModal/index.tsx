@@ -1,16 +1,15 @@
-import { useCallback, useContext, useMemo, useState } from "react";
 import AppModal from "@/components/AppModal";
+import AppRate from "@/components/AppRate";
 import {
-  useGetAllEducationPrograms,
-  useRateEducationProgram,
+  useRateEducationProgram
 } from "@/hooks/education";
+import { useTriggerNoti } from "@/hooks/useTriggerNoti";
+import { currentUserAtom } from "@/modules/currentUser";
 import { EducationProgramContext } from "@/pages/education";
 import { purityContent } from "@/utils";
-import AppRate from "@/components/AppRate";
-import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { useRecoilValue } from "recoil";
-import { currentUserAtom } from "@/modules/currentUser";
 import { Tabs, Typography } from "antd";
+import { useCallback, useContext, useMemo, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 const { Text } = Typography;
 

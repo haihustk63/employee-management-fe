@@ -1,13 +1,11 @@
-import { FC, useContext, useEffect } from "react";
 import { Alert, Space, Typography } from "antd";
+import { FC, useContext, useEffect } from "react";
 
-import AppPrimaryCard from "@/components/AppCard/Primary";
-import { createUniqueId } from "@/helpers";
-import { CreateTestContext } from "@/pages/tests/create-test";
-import { useGetAllTestTopics } from "@/hooks/test-topic";
-import AppTag from "@/components/AppTag";
 import AppButton from "@/components/AppButton";
+import AppPrimaryCard from "@/components/AppCard/Primary";
+import AppTag from "@/components/AppTag";
 import { useCreateTest } from "@/hooks/tests";
+import { CreateTestContext } from "@/pages/tests/create-test";
 import { getQuestionLevel, getQuestionType } from "@/utils";
 
 const { Text } = Typography;

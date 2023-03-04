@@ -1,5 +1,5 @@
-import React, { FC, ReactNode } from "react";
-import { Space, Typography } from "antd";
+import { Typography } from "antd";
+import { FC, ReactNode } from "react";
 const { Text } = Typography;
 
 const AppInfoItem: FC<{

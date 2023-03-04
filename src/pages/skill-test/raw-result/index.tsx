@@ -1,9 +1,8 @@
 import AppInfoItem from "@/components/AppInfoItem";
-import AppTag from "@/components/AppTag";
 import HiringFlow from "@/components/pages/skill-test/HiringFlow";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useGetContestantTest } from "@/hooks/tests";
-import { Space, Typography } from "antd";
+import { Typography } from "antd";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 

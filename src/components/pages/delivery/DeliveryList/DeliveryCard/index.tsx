@@ -1,14 +1,14 @@
 import { Typography } from "antd";
-import { useNavigate } from "react-router-dom";
 import { FC, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AppButton from "@/components/AppButton";
 import AppPrimaryCard from "@/components/AppCard/Primary";
+import { showDeleteConfirm } from "@/components/AppConfirm";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useDeleteDelivery } from "@/hooks/delivery";
-import { mergeName } from "@/utils";
-import { showDeleteConfirm } from "@/components/AppConfirm";
 import { DeliveryManagementContext } from "@/pages/delivery";
+import { mergeName } from "@/utils";
 
 const { Text } = Typography;
 

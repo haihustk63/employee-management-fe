@@ -5,9 +5,7 @@ import AppDatePicker from "@/components/AppDatePicker";
 import FormItem from "@/components/FormItem";
 import { ASSESSMENT, FORM_ITEM_TYPES } from "@/constants/common";
 import { useGetEmployees } from "@/hooks/employee";
-import { CandidateProfileContext } from "@/pages/candidate";
 import { dataToOptions } from "@/utils";
-import { useContext } from "react";
 
 const { SELECT } = FORM_ITEM_TYPES;
 

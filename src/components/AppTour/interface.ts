@@ -1,4 +1,3 @@
-import { TourStepProps } from "antd";
 import { Step } from "intro.js-react";
 
 export interface IAppTourProps {

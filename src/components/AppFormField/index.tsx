@@ -1,7 +1,5 @@
 import { Checkbox, Input, InputNumber, Radio, Select } from "antd";
 import { FC } from "react";
-import AppButton from "../AppButton";
-import AppTooltip from "../AppTooltip";
 
 import { IFormItemProps } from "../FormItem/interface";
 import DeleteIcon from "../Icons/DeleteIcon";

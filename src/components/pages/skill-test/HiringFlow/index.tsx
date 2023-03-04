@@ -4,7 +4,7 @@ import {
   LoadingOutlined,
   SmileOutlined,
   SolutionOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 
 const { Text } = Typography;

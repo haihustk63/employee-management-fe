@@ -1,5 +1,5 @@
 import { useGetAllTestQuestions } from "@/hooks/test-question";
-import { FC, useContext, useEffect, useMemo, useState } from "react";
+import { FC, useContext, useEffect, useMemo } from "react";
 
 import TestQuestionList from "@/components/pages/test-question/TestQuestionList";
 import { CreateTestContext } from "@/pages/tests/create-test";

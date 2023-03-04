@@ -2,11 +2,10 @@ import { FC, useContext, useEffect, useRef } from "react";
 
 import AppForm from "@/components/AppForm";
 import { EmployeeManagementContext } from "@/pages/employee";
+import { makeCleanObject } from "@/utils";
 import FormFields from "./FormFields";
 import { ISearchEmployeeProps } from "./interface";
-import { makeCleanObject } from "@/utils";
 
-import { dayjs } from "@/dayjs-config";
 
 const initialValues: ISearchEmployeeProps = {
   keyword: "",

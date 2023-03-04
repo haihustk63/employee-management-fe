@@ -1,17 +1,15 @@
 import { Typography } from "antd";
-import { useNavigate } from "react-router-dom";
 import { FC, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AppButton from "@/components/AppButton";
 import AppPrimaryCard from "@/components/AppCard/Primary";
+import { showDeleteConfirm } from "@/components/AppConfirm";
+import AppTooltip from "@/components/AppTooltip";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
-import { useDeleteDelivery } from "@/hooks/delivery";
-import { mergeName } from "@/utils";
 import { useDeletePosition } from "@/hooks/position";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { PositionManagementContext } from "@/pages/position";
-import { showDeleteConfirm } from "@/components/AppConfirm";
-import AppTooltip from "@/components/AppTooltip";
 
 const { Text } = Typography;
 

@@ -1,14 +1,15 @@
-import React, { FC, useMemo } from "react";
-import { Image, Typography } from "antd";
+import AppInfoItem from "@/components/AppInfoItem";
+import AppTag from "@/components/AppTag";
+import useModal from "@/hooks/useModal";
 import {
   getDateFormat,
   getRoleLabel,
   getWorkingStatusLabel,
-  mergeName,
+  mergeName
 } from "@/utils";
-import AppInfoItem from "@/components/AppInfoItem";
+import { Image, Typography } from "antd";
+import { FC, useMemo } from "react";
 import UploadAvatarModal from "../UploadAvatarModal";
-import useModal from "@/hooks/useModal";
 
 const { Text } = Typography;
 
@@ -19,11 +20,13 @@ const EmployeeProfile: FC<{ employee: any; callbackUploadSuccess?: any }> = ({
   const { showModal, handleToggleModal } = useModal();
 
   const deliveryValue = useMemo(() => {
-    const delivery = employee?.deliveryEmployee?.delivery;
-    const isManager = employee?.deliveryEmployee?.isManager;
-    if (delivery && isManager) {
-      return `${delivery?.name} (Manager)`;
-    } else return delivery?.name;
+    const deliveryName =
+      employee?.deliveryEmployee?.delivery?.name || employee?.deliveryName;
+    const isManager =
+      employee?.deliveryEmployee?.isManager || employee?.isManager;
+    if (deliveryName && isManager) {
+      return `${deliveryName} (Manager)`;
+    } else return deliveryName;
   }, [employee]);
 
   const avatarUrl = useMemo(() => {
@@ -50,11 +53,16 @@ const EmployeeProfile: FC<{ employee: any; callbackUploadSuccess?: any }> = ({
         />
         <Text>{mergeName(employee)}</Text>
         {employee?.position && <Text>{employee?.position?.name}</Text>}
-        <Text>{getWorkingStatusLabel(employee?.workingStatus)}</Text>
+        <AppTag color="#1e5ac7">
+          {getWorkingStatusLabel(employee?.workingStatus)}
+        </AppTag>
       </div>
       <div className="right">
         <AppInfoItem label="Phone" value={employee?.phoneNumber} />
-        <AppInfoItem label="Email" value={employee?.employeeAccount?.email} />
+        <AppInfoItem
+          label="Email"
+          value={employee?.employeeAccount?.email || employee?.email}
+        />
         <AppInfoItem
           label="Date of birth"
           value={getDateFormat(employee?.dateOfBirth)}

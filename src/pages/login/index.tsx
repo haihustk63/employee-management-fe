@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
 import FormLogin from "@/components/pages/login/FormLogin";
+import { firebaseAuth } from "@/config/firebase";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
-import { loginSchema } from "@/schemas";
-import { useSetRecoilState } from "recoil";
-import { currentUserAtom } from "@/modules/currentUser";
+import { useForgotPassword } from "@/hooks/account";
+import { useLoginWithFirebase } from "@/hooks/firebase";
 import { useLoginEmployee } from "@/hooks/login";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { firebaseAuth } from "@/config/firebase";
-import { useLoginWithFirebase } from "@/hooks/firebase";
+import { currentUserAtom } from "@/modules/currentUser";
+import { loginSchema } from "@/schemas";
 import { createContext } from "react";
-import { useForgotPassword } from "@/hooks/account";
+import { useSetRecoilState } from "recoil";
 
 const { signInWithPopup, getAuth, deleteUser, GoogleAuthProvider } =
   firebaseAuth;

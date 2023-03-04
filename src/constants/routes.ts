@@ -20,9 +20,6 @@ import PersonalInfo from "@/pages/personal-info/detail";
 import PersonalInfoAccount from "@/pages/personal-info/account";
 import PersonalInfoDetail from "@/pages/personal-info/detail";
 import PositionManagement from "@/pages/position";
-import RecruitmentNewsManagement from "@/pages/recruitment-news";
-import CreateNewRecruitmentNews from "@/pages/recruitment-news/create-new";
-import UpdateRecruitmentNews from "@/pages/recruitment-news/update";
 import RequestManagement from "@/pages/request";
 import CreateRequest from "@/pages/request/create-request";
 import CandidateSkillTestManagement from "@/pages/skill-test";
@@ -274,34 +271,6 @@ export const APP_ROUTES = [
     name: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_UPDATE,
     path: APP_PAGE_NAME_ROUTES.EDUCATION_PROGRAMS_UPDATE,
     element: UpdateEducationProgram,
-    layout: CommonLayout,
-    roles: [roleAdmin, roleSuperAdmin],
-  },
-  {
-    name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS,
-    path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS,
-    element: RecruitmentNewsManagement,
-    layout: CommonLayout,
-    roles: [roleAdmin, roleSuperAdmin],
-  },
-  {
-    name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_LIST,
-    path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_LIST,
-    element: RecruitmentNewsManagement,
-    layout: CommonLayout,
-    roles: [roleAdmin, roleSuperAdmin],
-  },
-  {
-    name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_CREATE,
-    path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_CREATE,
-    element: CreateNewRecruitmentNews,
-    layout: CommonLayout,
-    roles: [roleAdmin, roleSuperAdmin],
-  },
-  {
-    name: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_UPDATE,
-    path: APP_PAGE_NAME_ROUTES.RECRUITMENT_NEWS_UPDATE,
-    element: UpdateRecruitmentNews,
     layout: CommonLayout,
     roles: [roleAdmin, roleSuperAdmin],
   },

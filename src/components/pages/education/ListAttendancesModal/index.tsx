@@ -1,15 +1,11 @@
-import { useContext, useEffect, useMemo } from "react";
 import { Typography } from "antd";
+import { useContext, useMemo } from "react";
 
 import AppList from "@/components/AppList";
 import AppModal from "@/components/AppModal";
-import {
-  useGetAllEducationPrograms,
-  useGetEducationProgramById,
-} from "@/hooks/education";
+import AppRate from "@/components/AppRate";
 import { EducationProgramContext } from "@/pages/education";
 import { mergeName } from "@/utils";
-import AppRate from "@/components/AppRate";
 
 const { Title } = Typography;
 
