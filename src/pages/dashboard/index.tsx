@@ -33,49 +33,6 @@ const AdminDashboard = () => {
   ) as any;
   const { data: tops } = useGetTopsStatistics() as any;
 
-  const a = [
-    {
-      title: "Learn how to deploy",
-      averageRate: 5,
-    },
-    {
-      title: "How to become a good developer",
-      averageRate: 4,
-    },
-    {
-      title: "Be confident!",
-      averageRate: 4,
-    },
-    {
-      title: "Some interesting stuffs",
-      averageRate: 4,
-    },
-    {
-      title: "New technologies",
-      averageRate: 3,
-    },
-    {
-      title: "Pay attention to NextJS 13",
-      averageRate: 3,
-    },
-    {
-      title: "NodeJS and ExpressJS",
-      averageRate: 3,
-    },
-    {
-      title: "New blockchain tools",
-      averageRate: 3,
-    },
-    {
-      title: "OMG! Do not using this anymore",
-      averageRate: 3,
-    },
-    {
-      title: "Some useful javascript tips",
-      averageRate: 3,
-    },
-  ];
-
   return (
     <div className="admin-dashboard">
       <div className="charts">
@@ -110,12 +67,14 @@ const AdminDashboard = () => {
         <Text className="title">Top Education Programs</Text>
         <div className="list">
           {/* tops?.topEducationPrograms */}
-          {a.map(({ id, title, averageRate }: any) => (
-            <div className="item" key={title}>
-              <div className="title">{title}</div>
-              <AppRate value={averageRate} />
-            </div>
-          ))}
+          {tops?.topEducationPrograms?.map(
+            ({ id, title, averageRate }: any) => (
+              <div className="item" key={title}>
+                <div className="title">{title}</div>
+                <AppRate value={averageRate} />
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>
