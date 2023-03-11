@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useMemo, useRef } from "react";
 
 import AppForm from "@/components/AppForm";
 import { BASIC_ROLES, WORKING_STATUS } from "@/constants/common";
@@ -69,10 +69,14 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
     }
   }, [employee]);
 
+  const formTitle = useMemo(() => {
+    return employeeId ? "Update Employee" : "New Employee";
+  }, [employeeId]);
+
   return (
     <div className="employee-form">
       <AppForm<IEmployeeFormProps>
-        title="New Employee"
+        title={formTitle}
         handleSubmitForm={onSubmit}
         initialValues={initialValues}
         innerRef={formRef}
