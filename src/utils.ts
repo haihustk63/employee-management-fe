@@ -65,8 +65,8 @@ const getDateFormat = (date: string) => {
 };
 
 const mergeName = (value: any) => {
-  const { firstName = "", middleName = "", lastName = "" } = value || {};
-  return firstName + " " + middleName + " " + lastName;
+  const { firstName, middleName, lastName } = value || {};
+  return [firstName, middleName, lastName].join(" ").trim();
 };
 
 export const getDaysInMonth = () => {
@@ -297,5 +297,5 @@ export {
   formatTableParams,
   getJobTypeLabel,
   getJobLevelLabel,
-  getDistinctRecords
+  getDistinctRecords,
 };
