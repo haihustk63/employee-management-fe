@@ -35,6 +35,7 @@ import TimeSheet from "@/pages/timesheet";
 import { APP_ROLES } from "./common";
 import ChangePassword from "@/pages/change-password";
 import CandidateInfo from "@/pages/candidate-info";
+import SettingPage from "@/pages/setting";
 
 const {
   CANDIDATE: { value: roleCandidate },
@@ -81,6 +82,7 @@ export const APP_PAGE_NAME_ROUTES = {
   REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
+  SETTING_PAGE: "/settings",
   DO_SKILL_TEST: "/skill-test/:testId",
   SKILL_TEST_RESULT: "/skill-test/:testId/result",
   TEST_TOPIC: "/test-topics",
@@ -392,5 +394,12 @@ export const APP_ROUTES = [
     element: CandidateInfo,
     layout: CandidateLayout,
     roles: [roleCandidate],
+  },
+  {
+    name: APP_PAGE_NAME_ROUTES.SETTING_PAGE,
+    path: APP_PAGE_NAME_ROUTES.SETTING_PAGE,
+    element: SettingPage,
+    layout: CommonLayout,
+    roles: [roleSuperAdmin],
   },
 ];

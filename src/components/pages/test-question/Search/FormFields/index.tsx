@@ -1,11 +1,11 @@
 import { Form, useFormikContext } from "formik";
-import { useContext } from "react";
+import { FC, useContext } from "react";
 
 import FormItem from "@/components/FormItem";
 import {
   COMMON_TYPE_QUESTION,
   FORM_ITEM_TYPES,
-  QUESTION_LEVELS
+  QUESTION_LEVELS,
 } from "@/constants/common";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
 import { useSearchForm } from "@/hooks/useSearchForm";
@@ -14,12 +14,12 @@ import { dataToOptions } from "@/utils";
 
 const { TEXT, SELECT } = FORM_ITEM_TYPES;
 
-const FormFields = () => {
+const FormFields: FC<{
+  queryParams: any;
+  setQueryParams: any;
+  resetPageParams: any;
+}> = ({ queryParams, resetPageParams, setQueryParams }) => {
   const { data: testTopics = [] } = useGetAllTestTopics();
-
-  const { queryParams, setQueryParams, resetPageParams } = useContext(
-    TestQuestionConText
-  ) as any;
 
   const { values, handleSubmit, handleChange, setFieldValue } =
     useFormikContext() as any;

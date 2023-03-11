@@ -72,6 +72,8 @@ const AppSelect: FC<IFormItemProps> = ({
   options,
   allowClear,
   showSearch = true,
+  mode,
+  defaultValue,
 }) => {
   const filterOption = (input: string, option: any) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
@@ -87,6 +89,8 @@ const AppSelect: FC<IFormItemProps> = ({
       showSearch={showSearch}
       optionFilterProp="label"
       filterOption={filterOption}
+      mode={mode}
+      defaultValue={defaultValue}
     />
   );
 };

@@ -8,4 +8,5 @@ export interface IAppButton {
   size?: "large" | "middle" | "small";
   disabled?: boolean;
   id?: string;
+  loading?: boolean;
 }

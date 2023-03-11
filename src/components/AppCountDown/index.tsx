@@ -1,3 +1,4 @@
+import { ZERO_VALUE } from "@/constants/common";
 import { Typography } from "antd";
 import { useEffect, useMemo } from "react";
 import Countdown, { CountdownApi } from "react-countdown";
@@ -29,6 +30,7 @@ const AppCountDown = ({
     formatted: { hours, minutes, seconds },
   }: any) => {
     if (completed) {
+      callback(ZERO_VALUE);
       return <Text>Done!</Text>;
     } else {
       callback(currentSeconds + currentMinutes * 60 + currentHours * 3600);

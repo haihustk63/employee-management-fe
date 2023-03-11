@@ -7,6 +7,11 @@
     background: var(--bs-white);
     padding: 2rem;
   }
+
+  > .charts > .dashboard-filter {
+    margin-bottom: 2rem;
+  }
+
   > .charts > .recharts-wrapper {
     width: 100% !important;
   }
@@ -62,4 +67,9 @@
   display: flex;
   gap: 1rem;
   margin-top: 0.6rem;
+
+  > .app-radio-group {
+    display: flex;
+    flex-direction: row;
+  }
 }

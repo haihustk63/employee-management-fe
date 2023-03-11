@@ -1,3 +1,4 @@
+import AppSearchKeyword from "@/components/AppSearchKeyword";
 import ShowTestModal from "@/components/pages/create-test/ShowTest";
 import AssignTestModal from "@/components/pages/test/AssignTestModal";
 import ContestantListModal from "@/components/pages/test/ContestantList";
@@ -6,6 +7,7 @@ import { APP_ROLES } from "@/constants/common";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 import { useAssignTest, useGetAllTests } from "@/hooks/tests";
 import useModal from "@/hooks/useModal";
+import { useTableParams } from "@/hooks/useTableParams";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { currentUserAtom } from "@/modules/currentUser";
 import { createContext, useEffect, useMemo, useState } from "react";
@@ -18,9 +20,14 @@ export const TestsManagement = () => {
   const navigate = useNavigate();
   const { employee } = useRecoilValue(currentUserAtom);
 
-  const { data: tests = [], isLoading, isFetching } = useGetAllTests();
   const [contestantList, setContestantList] = useState([]);
-  const { mutate: onAssign, isError, isSuccess, error } = useAssignTest();
+  const {
+    mutate: onAssign,
+    isError,
+    isSuccess,
+    error,
+    isLoading: loadingAssingTest,
+  } = useAssignTest();
 
   const {
     handleToggleModal: toggleContestantModal,
@@ -32,6 +39,17 @@ export const TestsManagement = () => {
     showModal: showTestDetailModal,
     handleToggleModal: toggleTestDetailModal,
   } = useModal();
+
+  const {
+    isInit,
+    queryParams,
+    searchParams,
+    setQueryParams,
+    resetPageParams,
+    setIsInit,
+  } = useTableParams();
+
+  const { data: tests = {} } = useGetAllTests(queryParams) as any;
 
   const [assignment, setAssignment] = useState({
     testId: "",
@@ -58,8 +76,8 @@ export const TestsManagement = () => {
   }, [employee]);
 
   const currentTest = useMemo(() => {
-    return tests
-      .find((test) => test.id === testId)
+    return tests.data
+      ?.find((test: any) => test.id === testId)
       ?.testQuestionSkillTest?.map((item: any) => item.question);
   }, [testId]);
 
@@ -100,6 +118,13 @@ export const TestsManagement = () => {
         contestantList,
         assignment,
         isAdmin,
+        loadingAssingTest,
+        isInit,
+        queryParams,
+        searchParams,
+        setQueryParams,
+        resetPageParams,
+        setIsInit,
         handleCloseAssignModal,
         showContestants,
         navigateToTestResult,

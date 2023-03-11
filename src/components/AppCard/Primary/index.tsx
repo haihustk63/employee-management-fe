@@ -13,10 +13,12 @@ const AppPrimaryCard: FC<IAppCardPrimaryProps> = ({
   hasBoxShadow,
   className,
   children,
+  id,
 }) => {
   return (
     <div
       className={cx("app-primary-card", className)}
+      id={id}
       style={
         {
           border: `1px ${borderType} var(--color-primary-${borderColor})`,

@@ -12,6 +12,7 @@ export interface IAppCardPrimaryProps {
   onClick?: any;
   onDelete?: any;
   className?: string;
+  id?: any;
 }
 
 export interface IAppCardWithCoverProps {

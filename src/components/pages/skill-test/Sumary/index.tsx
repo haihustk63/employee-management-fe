@@ -1,7 +1,9 @@
 import { CandidateSkillTestContext } from "@/pages/skill-test/do-test";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Sumary = () => {
+  const navigate = useNavigate();
   const { answers, test = [] } = useContext(CandidateSkillTestContext) as any;
 
   const setBackgroundColor = (index: number) => {
@@ -13,12 +15,20 @@ const Sumary = () => {
     }
   };
 
+  const scrollToQuestion = (id: string) => () => {
+    const element = document.querySelector(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <div className="skill-test-sumary">
       <div className="sumary">
         {test?.map((_item: any, index: number) => {
           return (
-            <div
+            <a
+              onClick={scrollToQuestion(`#skill-test-question-${index + 1}`)}
               key={index + 1}
               className="number"
               style={{
@@ -28,7 +38,7 @@ const Sumary = () => {
               }}
             >
               {index + 1}
-            </div>
+            </a>
           );
         })}
       </div>

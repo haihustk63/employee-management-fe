@@ -7,12 +7,12 @@ import SkillTestContent from "@/components/pages/skill-test/Tests";
 import { COMMON_TYPE_QUESTION, TEST_STATUS } from "@/constants/common";
 import {
   APP_PAGE_NAME_ROUTES,
-  DYNAMIC_APP_PAGE_ROUTES
+  DYNAMIC_APP_PAGE_ROUTES,
 } from "@/constants/routes";
 import {
   useGetContestantTest,
   useSubmitAnswer,
-  useUpdateContestantTest
+  useUpdateContestantTest,
 } from "@/hooks/tests";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { Spin } from "antd";
@@ -25,10 +25,12 @@ export const CandidateSkillTestContext = createContext({});
 
 const DoSkillTest = () => {
   const navigate = useNavigate();
-  const { testId = "" } = useParams();
+  const { testId: id = "" } = useParams();
+  const testId = +id;
 
   const [answers, setAnswers] = useState<any[]>([]);
   const [duration, setDuration] = useState(0);
+  const [autoSubmit, setAutoSubmit] = useState(false);
 
   const { mutate: onUpdate } = useUpdateContestantTest(testId);
   const { data: info, isError } = useGetContestantTest(testId) as any;
@@ -53,54 +55,61 @@ const DoSkillTest = () => {
 
   useEffect(() => {
     if (isError) {
-      navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
+      navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST, { replace: true });
     }
   }, [isError]);
 
   useEffect(() => {
     if (info?.status === done.value) {
-      return navigate(DYNAMIC_APP_PAGE_ROUTES.SKILL_TEST_RESULT(testId));
+      return navigate(DYNAMIC_APP_PAGE_ROUTES.SKILL_TEST_RESULT(testId), {
+        replace: true,
+      });
     }
   }, [info]);
 
   useEffect(() => {
     if (test) {
-      let initAnswers: any[] = [];
-      test.map(({ question, questionId }: any) => {
-        const type = question.type;
-        if (type === multipleChoice.value) {
-          initAnswers.push({ questionId, answer: [] });
-        } else {
-          initAnswers.push({ questionId, answer: "" });
-        }
-      });
-      setAnswers(initAnswers);
+      const currentAnswers = JSON.parse(
+        localStorage.getItem("candidate-test-answers") || "[]"
+      );
+      if (currentAnswers?.length) {
+        setAnswers(currentAnswers);
+      } else {
+        let initAnswers: any[] = [];
+        test.map(({ question, questionId }: any) => {
+          const type = question.type;
+          if (type === multipleChoice.value) {
+            initAnswers.push({ questionId, answer: [] });
+          } else {
+            initAnswers.push({ questionId, answer: "" });
+          }
+        });
+        setAnswers(initAnswers);
+      }
     }
-  }, [test]);
+  }, [test, testId]);
 
   useEffect(() => {
     if (info?.test?.duration) {
       const durationInSecond = info?.test?.duration * 60;
-      const currentDuration = JSON.parse(
-        localStorage.getItem("candidate-test-duration") || "[]"
-      );
-      const currentTest = currentDuration?.find(
-        (item: any) => item.testId === testId
-      );
-      if (!currentTest) {
+      const currentDuration = localStorage.getItem("candidate-test-duration");
+      if (!currentDuration) {
         localStorage.setItem(
           "candidate-test-duration",
-          JSON.stringify([
-            ...currentDuration,
-            { testId, duration: durationInSecond },
-          ])
+          durationInSecond.toString()
         );
         setDuration(durationInSecond);
       } else {
-        setDuration(currentTest.duration);
+        setDuration(+currentDuration);
       }
     }
   }, [info?.test?.duration]);
+
+  useEffect(() => {
+    if (answers?.length) {
+      localStorage.setItem("candidate-test-answers", JSON.stringify(answers));
+    }
+  }, [answers]);
 
   const isAllEmpty = useMemo(() => {
     return answers?.every((item: any) => !item?.answer?.length);
@@ -111,32 +120,11 @@ const DoSkillTest = () => {
   };
 
   const handleSetCurrentDuration = (seconds: number) => {
-    const currentDuration = JSON.parse(
-      localStorage.getItem("candidate-test-duration") || "[]"
-    );
-    const currentTestIndex = currentDuration?.findIndex(
-      (item: any) => item.testId === testId
-    );
-
-    if (currentTestIndex >= 0) {
-      localStorage.setItem(
-        "candidate-test-duration",
-        JSON.stringify([
-          ...currentDuration.slice(0, currentTestIndex),
-          { testId, duration: seconds },
-          ...currentDuration.slice(
-            currentTestIndex + 1,
-            currentDuration.length
-          ),
-        ])
-      );
-    }
-
+    localStorage.setItem("candidate-test-duration", seconds.toString());
     if (!seconds) {
-      if (isAllEmpty) {
-        navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
-      } else {
-        handleSubmit();
+      if (isAllEmpty) navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
+      else {
+        !autoSubmit && setAutoSubmit(true);
       }
     }
   };
@@ -158,6 +146,19 @@ const DoSkillTest = () => {
     onSubmitAnswer({ testId: sessionId, answers: sendAnswers });
   };
 
+  useEffect(() => {
+    if (autoSubmit) {
+      handleSubmit();
+    }
+  }, [autoSubmit]);
+
+  useEffect(() => {
+    if (isProcessingSubmitAnswer) {
+      localStorage.removeItem("candidate-test-duration");
+      localStorage.removeItem("candidate-test-answers");
+    }
+  }, [isProcessingSubmitAnswer]);
+
   const transformAnswer = (answer: any, index: number) => {
     const questionType = test[index]?.question?.type;
     if (questionType === oneChoice.value) {
@@ -175,7 +176,7 @@ const DoSkillTest = () => {
         answers,
         test,
         duration,
-        testId: Number(testId),
+        testId,
         isAllEmpty,
         setAnswers,
         confirmAttempt,
@@ -188,11 +189,11 @@ const DoSkillTest = () => {
         test &&
         !isProcessingSubmitAnswer && (
           <div className="candidate-skill-do-test">
-            <Sumary />
-            <div className="content">
+            <div className="session">
+              <Sumary />
               <SessionInfo />
-              <SkillTestContent />
             </div>
+            <SkillTestContent />
             {/* <AppTour
             initialStep={0}
             steps={SKILL_TEST_INTRO_STEPS}

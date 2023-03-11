@@ -261,6 +261,16 @@ const getJobLevelLabel = (value: number) => {
   return JOB_LEVELS.find((level) => level.value === value)?.label;
 };
 
+const getDistinctRecords = (records: any[], distinctField: string) => {
+  const recordMap = new Map();
+  records.forEach((record: any) => {
+    if (!recordMap.get(record[distinctField])) {
+      recordMap.set(record[distinctField], record);
+    }
+  });
+  return [...recordMap.values()];
+};
+
 export {
   isEmptyObject,
   purityContent,
@@ -286,5 +296,6 @@ export {
   dataWithHeader,
   formatTableParams,
   getJobTypeLabel,
-  getJobLevelLabel
+  getJobLevelLabel,
+  getDistinctRecords
 };

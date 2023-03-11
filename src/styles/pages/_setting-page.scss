@@ -1,0 +1,43 @@
+.setting-page {
+  > .notification {
+    padding: 4rem;
+    border-radius: var(--common-border-radius);
+    background-color: var(--bs-white);
+  }
+  > .notification > .title {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+    display: block;
+  }
+  > .notification > .topics {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  > .notification > .topics > .topic {
+    display: flex;
+    flex-direction: column;
+    border: 0.1rem dotted var(--color-primary-blue);
+    padding: 2rem;
+    border-radius: var(--common-border-radius);
+  }
+
+  > .notification > .topics > .topic > .actions {
+    display: flex;
+    margin-top: 1rem;
+    gap: 1rem;
+    align-items: center;
+  }
+  > .notification > .topics > .topic > .actions > .app-select {
+    flex-grow: 1;
+  }
+  > .notification
+    > .topics
+    > .topic
+    > .actions
+    > .app-select
+    > .ant-select-selector {
+    flex-grow: 1;
+    height: 3.2rem !important;
+  }
+}

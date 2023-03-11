@@ -1,20 +1,45 @@
 import AppPrimaryCard from "@/components/AppCard/Primary";
+import AppPagination from "@/components/AppPagination";
+import AppSearchKeyword from "@/components/AppSearchKeyword";
 import AppTag from "@/components/AppTag";
 import { TestsContext } from "@/pages/tests";
 import { Typography } from "antd";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import TestListAction from "../TestListAction";
 
 const { Text } = Typography;
 
 const TestList = () => {
-  const { tests } = useContext(TestsContext) as any;
+  const {
+    tests,
+    isInit,
+    queryParams,
+    searchParams,
+    setQueryParams,
+    resetPageParams,
+    setIsInit,
+  } = useContext(TestsContext) as any;
+
+  const totalTests = useMemo(() => tests?.total, [tests]);
+
+  const changePage = (page: number) => {
+    setQueryParams({ page });
+  };
 
   return (
     <div className="test-list">
       <Text className="app-title">Skill Test Management</Text>
+      <AppSearchKeyword
+        isInit={isInit}
+        queryParams={queryParams}
+        searchParams={searchParams}
+        placeholder="Search by skill test title"
+        resetPageParams={resetPageParams}
+        setIsInit={setIsInit}
+        setQueryParams={setQueryParams}
+      />
       <div className="list">
-        {tests?.map((item: any) => {
+        {tests.data?.map((item: any) => {
           return (
             <AppPrimaryCard
               className="test-card"
@@ -29,6 +54,11 @@ const TestList = () => {
           );
         })}
       </div>
+      <AppPagination
+        total={totalTests}
+        onChangePagination={changePage}
+        current={queryParams?.page}
+      />
     </div>
   );
 };

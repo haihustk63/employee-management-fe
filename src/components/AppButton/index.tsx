@@ -11,6 +11,7 @@ const AppButton: FC<IAppButton> = ({
   size,
   disabled,
   id,
+  loading,
 }) => {
   const handleClick = (e: any) => {
     e.stopPropagation();
@@ -25,6 +26,7 @@ const AppButton: FC<IAppButton> = ({
       size={size}
       disabled={disabled}
       id={id}
+      loading={loading}
     >
       {buttonTitle}
     </Button>

@@ -15,6 +15,7 @@ import {
   PieChartFilled,
   PlusCircleFilled,
   ProfileFilled,
+  SettingFilled,
 } from "@ant-design/icons";
 import { Step } from "intro.js-react";
 
@@ -73,6 +74,7 @@ const APP_PAGE_NAME_ROUTES = {
   REQUEST_CREATE: "/requests/create",
   REQUEST_LIST: "/requests/list",
   SKILL_TEST: "/skill-test",
+  SETTING_PAGE: "/settings",
   TEST_TOPIC: "/test-topics",
   TEST_TOPIC_CREATE: "/test-topics/create",
   TEST_TOPIC_UPDATE: "/test-topics/:topicId/update",
@@ -279,6 +281,12 @@ export const SIDER_ITEMS = [
         icon: <ProfileFilled />,
       },
     ],
+  },
+  {
+    key: APP_PAGE_NAME_ROUTES.SETTING_PAGE,
+    label: "Settings",
+    icon: <SettingFilled />,
+    roles: [roleSuperAdmin],
   },
 ];
 
@@ -536,3 +544,5 @@ export const SORT_ORDER: { [key: string]: { value: number } } = {
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const APP_MAX_LIMIT = 999999;
+
+export const ZERO_VALUE = 0;

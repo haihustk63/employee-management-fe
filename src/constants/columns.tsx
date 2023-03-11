@@ -61,6 +61,8 @@ const leavingAfternoon = getRequestTypeValues([
   UNPAID_LEAVE,
 ]);
 
+const WIP = "WIP";
+
 const indexColumn = (currentPage: number, fixed: boolean = true) => ({
   key: "#",
   title: "#",
@@ -136,7 +138,7 @@ export const candidateProfileTableColumns = (
       dataIndex: ["interviewer"],
       render: (value) => {
         if (!value) {
-          return "";
+          return WIP;
         }
         return mergeName(value);
       },
@@ -148,7 +150,7 @@ export const candidateProfileTableColumns = (
       dataIndex: ["appointmentTime"],
       render: (value) => {
         if (!value) {
-          return "";
+          return WIP;
         }
         return dayjs(value).format("DD/MM/YYYY");
       },
@@ -160,7 +162,7 @@ export const candidateProfileTableColumns = (
       dataIndex: ["assessment"],
       render: (value) => {
         if (value === undefined) {
-          return "";
+          return WIP;
         }
         return (
           <AppTag color={ASSESSMENT[value].color as string}>
@@ -439,7 +441,7 @@ const getMaxConfig = (classifiedData: any, record: any, level: number) => {
 };
 
 export const createTestColumns = ({
-  currentPage = 0,
+  currentPage = 1,
   t,
   classifiedData,
 }: any) => {

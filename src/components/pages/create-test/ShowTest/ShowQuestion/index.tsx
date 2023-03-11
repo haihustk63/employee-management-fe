@@ -6,12 +6,12 @@ import AppCodeBlock from "@/components/AppCodeBlock";
 import {
   AppCheckboxGroup,
   AppInputTextArea,
-  AppRadioGroup
+  AppRadioGroup,
 } from "@/components/AppFormField";
 import { COMMON_TYPE_QUESTION } from "@/constants/common";
 import { IShowQuestionProps } from "./interface";
 
-const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
+const { multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
 
 const { Text } = Typography;
 
@@ -35,7 +35,10 @@ const ShowQuestion: FC<IShowQuestionProps> = ({
   }, [type]);
 
   return (
-    <AppPrimaryCard className="skill-test-question-card">
+    <AppPrimaryCard
+      className="skill-test-question-card"
+      id={`skill-test-question-${idx}`}
+    >
       {idx && <Text className="index">Question {idx}</Text>}
       <Text className="text">{questionText}</Text>
       {questionSource.length > 0 && (

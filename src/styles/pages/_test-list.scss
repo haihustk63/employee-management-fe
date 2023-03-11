@@ -18,3 +18,9 @@
     margin-bottom: 1rem;
   }
 }
+
+.assign-test-modal {
+  .ant-modal-body > .ant-select {
+    width: 100%;
+  }
+}

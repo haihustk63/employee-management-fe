@@ -1,20 +1,17 @@
-import { FC, useContext, useMemo } from "react";
+import { FC, useMemo } from "react";
 
 import AppTable from "@/components/AppTable";
 import { testQuestionListColumns } from "@/constants/columns";
 import { ITableDataProps } from "@/constants/interface";
-import { TestQuestionConText } from "@/pages/test-questions";
 
 const TestQuestionList: FC<ITableDataProps> = ({
   dataSource,
   loading,
   rowSelection,
   allowDelete = true,
+  needResetPage,
+  onChangeTableParams,
 }) => {
-  const { needResetPage, onChangeTableParams } = useContext(
-    TestQuestionConText
-  ) as any;
-
   const columns = useMemo(() => {
     return testQuestionListColumns({
       currentPage: dataSource?.page,

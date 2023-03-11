@@ -3,7 +3,19 @@
     margin-bottom: 2rem;
   }
 
-  > .app-form > .form > .app-button {
+  > .app-form > .form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  > .app-form > .form > .input,
+  > .app-form > .form > .actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  > .app-form > .form > .actions > .app-button {
     flex-grow: 0;
     background-color: var(--color-primary-blue);
     color: var(--bs-white);
@@ -24,15 +36,20 @@
   > .random > .info > .list-question-info {
     margin-bottom: 1rem;
   }
+
+  > .manual > .info > .save,
+  > .random > .info > .save {
+    margin-top: 1rem;
+  }
 }
 
-.create-test-page > .app-form > .form > .form-item {
+.create-test-page > .app-form > .form > .input > .form-item {
   &:first-child {
     flex: 0 0 80%;
   }
 
   &:nth-child(2) {
-    width: 10%;
+    flex-grow: 1;
   }
 
   > .inputnumber {
@@ -70,6 +87,10 @@
 
 .test-info-drawer {
   .info > .app-button {
+    margin-top: 1rem;
+  }
+
+  .info > .alert {
     margin-top: 1rem;
   }
 }

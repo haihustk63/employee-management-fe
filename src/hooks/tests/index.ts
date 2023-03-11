@@ -45,14 +45,18 @@ export const useGetTest = (testId: number | string, enabled: boolean) => {
 //   });
 // };
 
-export const useGetAllTests = () => {
+export const useGetAllTests = (params: any) => {
   return useFetch({
     url: API_ROUTES.TEST,
     config: {
-      select: (data: any) => {
-        return addKeyToData(data?.tests);
+      select: (result: any) => {
+        return {
+          ...result,
+          data: addKeyToData(result?.data),
+        };
       },
     },
+    params,
   });
 };
 

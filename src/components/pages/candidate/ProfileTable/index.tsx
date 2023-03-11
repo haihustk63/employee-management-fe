@@ -6,7 +6,7 @@ import { ITableDataProps } from "@/constants/interface";
 import { CandidateProfileContext } from "@/pages/candidate";
 
 const ProfileTable: FC<ITableDataProps> = ({ dataSource, loading }) => {
-  const { needResetPage, onChangeParams } = useContext(
+  const { needResetPage, onChangeTableParams } = useContext(
     CandidateProfileContext
   ) as any;
 
@@ -20,7 +20,7 @@ const ProfileTable: FC<ITableDataProps> = ({ dataSource, loading }) => {
       total={dataSource?.total}
       columns={columns}
       loading={loading}
-      onChangeParams={onChangeParams}
+      onChangeParams={onChangeTableParams}
       needResetPage={needResetPage}
       tableName="Candidate management"
     />

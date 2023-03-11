@@ -46,7 +46,7 @@ const CandidateSkillTestManagement = () => {
               <div className="actions">
                 <AppButton
                   buttonTitle="Do test"
-                  disabled={notCreated}
+                  disabled={!notDone}
                   onClick={doTest(id)}
                 />
                 <AppButton

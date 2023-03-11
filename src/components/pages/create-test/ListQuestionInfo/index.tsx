@@ -54,7 +54,7 @@ const ListQuestionInfo: FC = () => {
               title={item.type}
             >
               <Space>
-                <AppTag color="blue">
+                <AppTag color="#1e5ac7">
                   {topics.find((topic: any) => topic.id === item.topicId)?.name}
                 </AppTag>
                 <AppTag color="success">{item[easy.value]} Easy</AppTag>

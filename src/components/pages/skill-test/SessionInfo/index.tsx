@@ -6,7 +6,7 @@ import { Typography } from "antd";
 import { useContext } from "react";
 import { useRecoilValue } from "recoil";
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const SessionInfo = () => {
   const user = useRecoilValue(currentUserAtom);

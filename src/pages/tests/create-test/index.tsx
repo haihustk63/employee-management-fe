@@ -9,19 +9,19 @@ import TestInfoForm from "@/components/pages/test/TestInfoForm";
 import {
   CREATE_TEST_MODE,
   QUESTION_LEVELS,
-  TEST_STATUS
+  TEST_STATUS,
 } from "@/constants/common";
 import { useGetTest, useSaveTest, useUpdateTest } from "@/hooks/tests";
 import useModal from "@/hooks/useModal";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
-import { Drawer, Typography } from "antd";
+import { Alert, Drawer, Typography } from "antd";
 import { createContext, FC, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const { Text } = Typography;
 
 const { easy, hard, medium } = QUESTION_LEVELS;
-const { created } = TEST_STATUS;
+const { created, attempting } = TEST_STATUS;
 
 export const CreateTestContext = createContext({}) as any;
 
@@ -137,6 +137,7 @@ const CreateTestPage: FC = () => {
 
   const changeMode = (e: any) => {
     setMode(e.target.value);
+    setQuestionInfo([]);
   };
 
   const toggleDrawer = () => {
@@ -149,19 +150,38 @@ const CreateTestPage: FC = () => {
     );
   }, [currentTest]);
 
+  const isCandidateAttempting = useMemo(() => {
+    return currentTest?.skillTestAccount?.some(
+      (item: any) => item.status === attempting.value
+    );
+  }, [currentTest]);
+
   const renderPreviewAndSave = useMemo(() => {
     return (
       <>
-        <AppButton buttonTitle="Save test" onClick={saveTest} />
-        {isPublished && (
-          <Text>
-            Be careful when modify this test because some comtestants have
-            completed it
-          </Text>
-        )}
+        <AppButton
+          className="save"
+          buttonTitle="Save test"
+          onClick={saveTest}
+          disabled={isCandidateAttempting}
+        />
+        {isCandidateAttempting ? (
+          <Alert
+            className="alert"
+            type="error"
+            description="You can not update this test because someone is attempting it"
+          />
+        ) : isPublished ? (
+          <Alert
+            className="alert"
+            type="error"
+            description="Be careful when modify this test because some contestants have
+        completed it"
+          />
+        ) : null}
       </>
     );
-  }, [saveTest]);
+  }, [isPublished, isCandidateAttempting, saveTest]);
 
   const renderModeContent = useMemo(() => {
     if (mode === CREATE_TEST_MODE.random.value) {
@@ -170,6 +190,12 @@ const CreateTestPage: FC = () => {
           <InputQuestionInfo />
           <div className="info">
             <ListQuestionInfo />
+            <Alert
+              message="IMPORTANT!"
+              type="warning"
+              description="You need to click button above before click save button. 
+              If not, the test questions can be those which are not as expected"
+            />
             {renderPreviewAndSave}
           </div>
         </div>
@@ -212,9 +238,9 @@ const CreateTestPage: FC = () => {
       const questionAtIndex = newQuestionInfo[questionInfoIndex] as any;
       questionAtIndex[level] = amount;
       if (
-        questionAtIndex[easy.value] === 0 &&
-        questionAtIndex[medium.value] === 0 &&
-        questionAtIndex[hard.value] === 0
+        !questionAtIndex[easy.value] &&
+        !questionAtIndex[medium.value] &&
+        !questionAtIndex[hard.value]
       ) {
         newQuestionInfo = newQuestionInfo.filter(
           (q: any) => q.topicId !== topicId

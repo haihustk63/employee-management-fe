@@ -13,15 +13,21 @@ const initialValues: ISearchQuestionProps = {
   level: undefined,
 };
 
-const Search: FC = () => {
-  const {
-    searchParams,
-    queryParams = {},
-    isInit,
-    setIsInit,
-    setQueryParams,
-  } = useContext(TestQuestionConText) as any;
-
+const Search: FC<{
+  searchParams?: any;
+  queryParams?: any;
+  isInit?: boolean;
+  setIsInit?: any;
+  setQueryParams?: any;
+  resetPageParams?: any;
+}> = ({
+  searchParams,
+  queryParams = {},
+  isInit,
+  setIsInit,
+  setQueryParams,
+  resetPageParams,
+}) => {
   const formRef = useRef() as any;
 
   useEffect(() => {
@@ -50,7 +56,11 @@ const Search: FC = () => {
         className="-horizontal"
         innerRef={formRef}
       >
-        <FormFields />
+        <FormFields
+          queryParams={queryParams}
+          resetPageParams={resetPageParams}
+          setQueryParams={setQueryParams}
+        />
       </AppForm>
     </div>
   );

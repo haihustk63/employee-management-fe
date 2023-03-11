@@ -10,10 +10,19 @@ const ConfirmAttempt = () => {
 
   return (
     <div className="confirm-attempt">
-      <AppButton buttonTitle="Confirm Attempt" onClick={confirmAttempt} />
       <Text className="text">
-        After clicking this button, you can try this test just only one time!
+        After clicking below button, you can try this test just only one time!
       </Text>
+      <ul className="notes">
+        <li>Do not logout!</li>
+        <li>Avoid to reload window</li>
+        <li>
+          You should send your answers before time's up or we will handle it
+          automatically
+        </li>
+      </ul>
+      <Text className="text">Good luck!</Text>
+      <AppButton buttonTitle="Confirm Attempt" onClick={confirmAttempt} />
     </div>
   );
 };

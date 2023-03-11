@@ -7,16 +7,18 @@ import ShowQuestion from "./ShowQuestion";
 const { Text } = Typography;
 
 const ShowTestModal: FC<{
+  testTitle?: string;
   test?: any[];
   isOpenModal?: boolean;
   toggleModal?: any;
-}> = ({ isOpenModal, test, toggleModal }) => {
+}> = ({ isOpenModal, test, toggleModal, testTitle }) => {
   return (
     <AppModal
       open={isOpenModal}
       onCancel={toggleModal}
       wrapClassName="show-test"
     >
+      {testTitle && <Text className="title">{testTitle}</Text>}
       {!test?.length && (
         <Alert description="This test has no question" message="No question" />
       )}

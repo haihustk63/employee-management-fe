@@ -8,6 +8,7 @@ export interface ITableDataProps {
   rowSelection?: object;
   allowDelete?: boolean;
   needResetPage?: boolean;
+  [key: string]: any;
 }
 
 export interface IModalControlProps {

@@ -43,8 +43,20 @@ const TestQuestionManagement = () => {
     >
       <div className="test-question-management">
         <Text className="app-title">Skill Test Question Management</Text>
-        <Search />
-        <TestQuestionList dataSource={data} loading={isLoading || isFetching} />
+        <Search
+          isInit={isInit}
+          queryParams={queryParams}
+          searchParams={searchParams}
+          setIsInit={setIsInit}
+          setQueryParams={setQueryParams}
+          resetPageParams={resetPageParams}
+        />
+        <TestQuestionList
+          dataSource={data}
+          loading={isLoading || isFetching}
+          needResetPage={needResetPage}
+          onChangeTableParams={onChangeTableParams}
+        />
       </div>
     </TestQuestionConText.Provider>
   );

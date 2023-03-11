@@ -12,7 +12,6 @@ const { Text } = Typography;
 
 const ListQuestionInfoManual: FC = () => {
   const {
-    testId,
     selectedRowKeys,
     toggleShowTestModal,
     questionInfoManual = [],

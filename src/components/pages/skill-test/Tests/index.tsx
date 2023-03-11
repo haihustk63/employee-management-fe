@@ -12,7 +12,6 @@ const SkillTestContent = () => {
     answers = [],
     setAnswers,
     test = [],
-    testId,
     handleSubmit,
   } = useContext(CandidateSkillTestContext) as any;
 
@@ -28,11 +27,15 @@ const SkillTestContent = () => {
       newData = { questionId, answer: e.target.value };
     }
 
-    setAnswers?.([
-      ...answers.slice(0, questionIdx),
-      newData,
-      ...answers.slice(questionIdx + 1, answers.length),
-    ]);
+    if (questionIdx >= 0) {
+      setAnswers?.([
+        ...answers.slice(0, questionIdx),
+        newData,
+        ...answers.slice(questionIdx + 1, answers.length),
+      ]);
+    } else {
+      setAnswers?.([...answers, newData]);
+    }
   };
 
   return (

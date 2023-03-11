@@ -17,7 +17,7 @@ export interface IFormItemProps {
   onClear?: any;
   clearIcon?: ReactNode;
   options?: { label: string; value: any }[];
-  defaultValue?: string | string[];
+  defaultValue?: any;
   popupClassName?: string;
   dropdownMatchSelectWidth?: boolean | number;
   showSearch?: boolean;

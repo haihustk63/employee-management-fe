@@ -1,5 +1,6 @@
 import AppInfoItem from "@/components/AppInfoItem";
 import HiringFlow from "@/components/pages/skill-test/HiringFlow";
+import { TEST_STATUS } from "@/constants/common";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useGetContestantTest } from "@/hooks/tests";
 import { Typography } from "antd";
@@ -15,10 +16,10 @@ const SkillTestRawResult = () => {
   const { questionCount, essayCount, score, email } = data || {};
 
   useEffect(() => {
-    if (isError) {
+    if (isError || (data && data?.status !== TEST_STATUS.done.value)) {
       navigate(APP_PAGE_NAME_ROUTES.SKILL_TEST);
     }
-  }, [isError]);
+  }, [isError, data]);
 
   return (
     <div className="skill-test-result">

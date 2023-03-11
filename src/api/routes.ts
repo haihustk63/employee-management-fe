@@ -83,4 +83,8 @@ export const API_ROUTES = {
   // firebase
   FIREBASE_ACCOUNT: `${API_URL}/firebase-account`,
   FIREBASE_ACCOUNT_LOGIN: `${API_URL}/firebase-account/login`,
+
+  // notification
+  NOTIFICATION_TOPICS: `${API_URL}/notification-topics`,
+  NOTIFICATION_CONFIG: `${API_URL}/notification-topics/config`,
 };

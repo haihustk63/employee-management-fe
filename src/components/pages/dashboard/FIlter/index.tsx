@@ -1,31 +1,33 @@
 import AppDatePicker from "@/components/AppDatePicker";
-import { AppSelect } from "@/components/AppFormField";
-import { dayjs } from "@/dayjs-config";
+import { AppRadioGroup } from "@/components/AppFormField";
+import { TIME_FILTER_TYPES } from "@/constants/common";
+import { Dayjs } from "dayjs";
+import { FC } from "react";
 
-const quarterOptions = [
-  {
-    label: "Quarter 1",
-    value: 1,
-  },
-  {
-    label: "Quarter 2",
-    value: 2,
-  },
-  {
-    label: "Quarter 3",
-    value: 3,
-  },
-  {
-    label: "Quarter 4",
-    value: 4,
-  },
+const options = [
+  { choice: "Statistics by quarter", id: TIME_FILTER_TYPES.quarter.value },
+  { choice: "Statistics by month", id: TIME_FILTER_TYPES.month.value },
 ];
 
-const DashboardFilter = () => {
+const DashboardFilter: FC<{
+  onChangeYear: any;
+  onChangeTimeType: any;
+  timeType: number;
+  year: Dayjs;
+}> = ({ timeType, year, onChangeTimeType, onChangeYear }) => {
   return (
     <div className="dashboard-filter">
-      <AppDatePicker showPickerLabel={false} picker="year" value={dayjs()} />
-      <AppSelect options={quarterOptions} value={1} />
+      <AppDatePicker
+        showPickerLabel={false}
+        picker="year"
+        value={year}
+        onChange={onChangeYear}
+      />
+      <AppRadioGroup
+        options={options}
+        value={timeType}
+        onChange={onChangeTimeType}
+      />
     </div>
   );
 };

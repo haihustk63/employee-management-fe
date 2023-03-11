@@ -1,21 +1,20 @@
 import AppButton from "@/components/AppButton";
-import AppFormErrorMessage from "@/components/AppFormErrorMessage";
 import { AppSelect } from "@/components/AppFormField";
 import AppModal from "@/components/AppModal";
 import { useGetAccounts } from "@/hooks/account";
 import { TestsContext } from "@/pages/tests";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo } from "react";
 
 const AssignTestModal = () => {
   const {
     assignment,
+    loadingAssingTest,
     setAssignment,
     showAssignModal,
     handleCloseAssignModal,
     assignTest,
   } = useContext(TestsContext) as any;
   const { data: accounts = {} } = useGetAccounts(undefined);
-  const [error, setError] = useState(false);
 
   const accountOptions = useMemo(() => {
     return accounts.data
@@ -24,19 +23,21 @@ const AssignTestModal = () => {
   }, [accounts]);
 
   const changeEmail = (email: string) => {
-    setError(false);
     setAssignment((prev: any) => ({ ...prev, email }));
   };
 
   const handleAssign = () => {
-    if (assignment.email === undefined) {
-      setError(true);
-      return;
-    }
     assignTest();
   };
 
-  const Footer = <AppButton buttonTitle="Confirm" onClick={handleAssign} />;
+  const Footer = (
+    <AppButton
+      buttonTitle="Confirm"
+      onClick={handleAssign}
+      disabled={!assignment.email}
+      loading={loadingAssingTest}
+    />
+  );
 
   return (
     <AppModal
@@ -44,6 +45,7 @@ const AssignTestModal = () => {
       open={showAssignModal}
       onCancel={handleCloseAssignModal}
       footer={Footer}
+      wrapClassName="assign-test-modal"
     >
       <AppSelect
         placeholder="Choose email"
@@ -53,8 +55,6 @@ const AssignTestModal = () => {
         onChange={changeEmail}
         allowClear
       />
-
-      {error && <AppFormErrorMessage message="Email is required" />}
     </AppModal>
   );
 };

@@ -7,7 +7,7 @@ import { useGetAllTestTopics } from "@/hooks/test-topic";
 
 const InputQuestionInfo: FC = () => {
   const { data: classifiedData } = useClassifiedQuestion();
-  const { data, isLoading, isFetching } = useGetAllTestTopics();
+  const { data = [], isLoading, isFetching } = useGetAllTestTopics();
   const columns = useMemo(
     () => createTestColumns({ classifiedData }),
     [classifiedData]
@@ -19,6 +19,7 @@ const InputQuestionInfo: FC = () => {
         dataSource={data}
         loading={isLoading || isFetching}
         columns={columns}
+        pagination={false}
       />
     </div>
   );
