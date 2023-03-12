@@ -18,8 +18,6 @@ import { Alert, Drawer, Typography } from "antd";
 import { createContext, FC, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const { Text } = Typography;
-
 const { easy, hard, medium } = QUESTION_LEVELS;
 const { created, attempting } = TEST_STATUS;
 

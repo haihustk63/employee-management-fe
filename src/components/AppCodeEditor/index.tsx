@@ -1,5 +1,5 @@
 import CodeEditor from "@monaco-editor/react";
-import { Typography } from "antd";
+import { Alert, Typography } from "antd";
 import { FC, useEffect, useState } from "react";
 import AppButton from "../AppButton";
 import { AppSelect } from "../AppFormField";
@@ -7,20 +7,36 @@ import { IAppCodeEditorProps } from "./interface";
 
 const { Text } = Typography;
 
-const languages = [
-  {
+const languages = {
+  javascript: {
     label: "Javascript",
     value: "javascript",
   },
-  {
+  html: {
     label: "HTML",
     value: "html",
   },
-  {
+  css: {
     label: "CSS",
     value: "css",
   },
-];
+  typescript: {
+    label: "Typescript",
+    value: "typescript",
+  },
+  sql: {
+    label: "SQL",
+    value: "sql",
+  },
+  php: {
+    label: "PHP",
+    value: "php",
+  },
+  python: {
+    label: "Python",
+    value: "python",
+  },
+};
 
 const AppCodeEditor: FC<IAppCodeEditorProps> = ({
   onSubmitCodeBlock,
@@ -64,13 +80,24 @@ const AppCodeEditor: FC<IAppCodeEditorProps> = ({
   return (
     <div className="app-code-editor">
       <div className="form-item">
-        <Text className="form-label">Choose language</Text>
+        <Text className="form-label">Choose languages</Text>
         <AppSelect
-          options={languages}
+          options={Object.values(languages)}
           placeholder="Select language"
           onChange={handleChange}
           value={currentLanguage}
         />
+        {currentLanguage === languages.html.value && (
+          <Alert
+            description={
+              <Text>
+                Please do not use script tag! If needed, please use it on
+                question text box on the left-hand side!
+              </Text>
+            }
+            type="warning"
+          />
+        )}
       </div>
       <CodeEditor
         language={currentLanguage}

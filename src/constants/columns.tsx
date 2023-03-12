@@ -94,6 +94,12 @@ export const candidateProfileTableColumns = (
       width: 300,
     },
     {
+      key: "phone",
+      title: "Phone Number",
+      dataIndex: ["phone"],
+      width: 180,
+    },
+    {
       key: "account",
       title: "Account",
       dataIndex: ["employeeAccount", "email"],
@@ -244,7 +250,7 @@ export const employeeListColumns = ({ currentPage }: any) => {
       render: (_: any, record: any) => {
         return mergeName(record);
       },
-      width: 200,
+      width: 250,
     },
     {
       key: "email",

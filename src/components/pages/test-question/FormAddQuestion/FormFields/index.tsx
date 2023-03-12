@@ -9,24 +9,24 @@ import AddIcon from "@/components/Icons/AddIcon";
 import {
   COMMON_TYPE_QUESTION,
   FORM_ITEM_TYPES,
-  QUESTION_LEVELS
+  QUESTION_LEVELS,
 } from "@/constants/common";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useGetAllTestTopics } from "@/hooks/test-topic";
 import { addKeyToData, dataToOptions } from "@/utils";
 import { Space, Switch, Typography } from "antd";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FormAddQuestionContext } from "..";
 import FormAddChoices from "../FormAddChoices";
 import TypeGroup from "../TypeGroup";
+import { createUniqueId } from "@/helpers";
 
 const { TEXTAREA, SELECT } = FORM_ITEM_TYPES;
 const { Text } = Typography;
 
-const { essays, multipleChoice, oneChoice } = COMMON_TYPE_QUESTION;
+const { essays } = COMMON_TYPE_QUESTION;
 
 const FormFields = () => {
-  const navigate = useNavigate();
   const { questionId } = useParams();
   const { values, handleSubmit, handleChange, setFieldValue, resetForm } =
     useFormikContext() as any;
@@ -56,10 +56,6 @@ const FormFields = () => {
       return "Add";
     }
   }, [questionId]);
-
-  const navigateAddTopic = () => {
-    navigate(`${APP_PAGE_NAME_ROUTES.TEST_TOPIC}?modal=true`);
-  };
 
   const TopicLabel = useMemo(() => {
     return (
@@ -109,6 +105,24 @@ const FormFields = () => {
 
   const handleClearForm = () => {
     resetForm();
+    setFieldValue("options", [
+      {
+        id: createUniqueId(),
+        choice: "",
+      },
+      {
+        id: createUniqueId(),
+        choice: "",
+      },
+      {
+        id: createUniqueId(),
+        choice: "",
+      },
+      {
+        id: createUniqueId(),
+        choice: "",
+      },
+    ]);
     setQuestionSource([]);
   };
 
@@ -146,12 +160,8 @@ const FormFields = () => {
         placeholder="Enter question text"
       />
 
-      <TypeGroup handleChangeType={handleChangeType} type={values.type} />
-
-      {AddChoiceQuestionComponent && AddChoiceQuestionComponent}
-
       <div className="form-item switch">
-        <Text className="form-label">Add code block</Text>
+        <Text className="form-label">Add code blocks</Text>
         <Switch
           onChange={handleChangeSwitch}
           defaultChecked={isDisplayCodeEditor}
@@ -169,6 +179,11 @@ const FormFields = () => {
           />
         );
       })}
+
+      <TypeGroup handleChangeType={handleChangeType} type={values.type} />
+
+      {AddChoiceQuestionComponent && AddChoiceQuestionComponent}
+
       <div className="buttons">
         <AppButton buttonTitle={addButtonTitle} htmlType="submit" />
         <AppButton

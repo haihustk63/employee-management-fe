@@ -45,24 +45,34 @@ const InputQuestionInfoManual: FC = () => {
   const rowSelection = useMemo(
     () => ({
       type: "checkbox",
-      onChange: (currentSelectedRowKeys: React.Key[], selectedRows: any[]) => {
-        const newInfo = selectedRows.map((row: any) => ({
-          questionId: row.id,
-          topic: row.topicName,
-          level: row.level,
-          type: row.type,
-          questionText: row.questionText,
-        }));
-        setQuestionInfoManual(
-          getDistinctRecords([...questionInfoManual, ...newInfo], "questionId")
+      onSelect: (record: any, selected: boolean, selectedRows: any[]) => {
+        const newInfo = selectedRows
+          .filter((row) => row)
+          .map((row: any) => ({
+            questionId: row.id,
+            topic: row.topicName,
+            level: row.level,
+            type: row.type,
+            questionText: row.questionText,
+          }));
+
+        let distinctRecords = getDistinctRecords(
+          [...questionInfoManual, ...newInfo],
+          "questionId"
         );
-        setSelectedRowKeys(
-          Array.from(new Set([...selectedRowKeys, ...currentSelectedRowKeys]))
-        );
+
+        if (!selected)
+          distinctRecords = distinctRecords.filter(
+            ({ questionId }: any) => questionId !== record.id
+          );
+
+        setQuestionInfoManual(distinctRecords);
+        setSelectedRowKeys(distinctRecords.map((row: any) => row.questionId));
       },
+      hideSelectAll: true,
       selectedRowKeys: selectedRowKeys,
     }),
-    [selectedRowKeys]
+    [selectedRowKeys, questionInfoManual]
   );
 
   return (

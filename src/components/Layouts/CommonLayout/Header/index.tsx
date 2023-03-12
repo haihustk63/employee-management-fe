@@ -17,22 +17,10 @@ const { Header } = Layout;
 const { Text } = Typography;
 
 const CommonHeader = () => {
-  // const setBreadCrumb = useSetRecoilState(breadCrumbAtom);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom);
   const { mutate: logout } = useLogoutEmployee();
 
   const navigate = useNavigate();
-
-  // const handleClickHeaderItem = ({ keyPath, key }: any) => {
-  //   const newBreadCrumb = keyPath
-  //     ?.map((item: string) => {
-  //       if (item === "/") return "HOME";
-  //       return item.replaceAll(/[\/-]/g, " ").trim().toUpperCase();
-  //     })
-  //     .reverse();
-  //   setBreadCrumb(newBreadCrumb);
-  //   navigate(key);
-  // };
 
   const handleLogout = () => {
     localStorage.clear();
