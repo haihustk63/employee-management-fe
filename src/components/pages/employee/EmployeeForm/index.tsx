@@ -24,10 +24,11 @@ const initialValues: IEmployeeFormProps = {
   avatar: undefined,
 };
 
-const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
-  employeeId,
-  onSubmit,
-}) => {
+const EmployeeForm: FC<{
+  employeeId?: any;
+  onSubmit?: any;
+  loading?: boolean;
+}> = ({ employeeId, onSubmit, loading }) => {
   const formRef = useRef() as any;
   const { data: employee } = useGetEmployeeById(employeeId);
 
@@ -82,7 +83,7 @@ const EmployeeForm: FC<{ employeeId?: any; onSubmit?: any }> = ({
         innerRef={formRef}
         validationSchema={createEmployeeProfileSchema}
       >
-        <FormFields />
+        <FormFields loading={loading} />
       </AppForm>
     </div>
   );

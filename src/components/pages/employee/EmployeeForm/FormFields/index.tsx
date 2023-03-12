@@ -8,9 +8,10 @@ import AppUpload from "@/components/AppUpload";
 import FormItem from "@/components/FormItem";
 import AddIcon from "@/components/Icons/AddIcon";
 import {
+  ASSESSMENT_VALUES,
   BASIC_ROLES,
   FORM_ITEM_TYPES,
-  WORKING_STATUS
+  WORKING_STATUS,
 } from "@/constants/common";
 import { APP_PAGE_NAME_ROUTES } from "@/constants/routes";
 import { useGetAccounts } from "@/hooks/account";
@@ -24,8 +25,8 @@ import { Link, useParams } from "react-router-dom";
 const { TEXT, SELECT, INPUT_NUMBER } = FORM_ITEM_TYPES;
 const { Text } = Typography;
 
-const FormFields: FC = () => {
-  const { values, handleSubmit, handleChange, setFieldValue, errors } =
+const FormFields: FC<{ loading?: boolean }> = ({ loading }) => {
+  const { values, handleSubmit, handleChange, setFieldValue } =
     useFormikContext() as any;
 
   const { employeeId = "" } = useParams();
@@ -40,7 +41,9 @@ const FormFields: FC = () => {
       accounts?.data
         ?.filter(
           (acc: any) =>
-            acc.employeeId === null || acc.employeeId === Number(employeeId)
+            (acc.employeeId === null &&
+              acc.candidate?.assessment !== ASSESSMENT_VALUES.failed) ||
+            acc.employeeId === +employeeId
         )
         .map((acc: any) => ({ value: acc.email, label: acc.email }))
     );
@@ -219,7 +222,11 @@ const FormFields: FC = () => {
           loading="lazy"
         />
       )}
-      <AppButton buttonTitle={buttonTitle} htmlType="submit" />
+      <AppButton
+        buttonTitle={buttonTitle}
+        htmlType="submit"
+        loading={loading}
+      />
     </Form>
   );
 };

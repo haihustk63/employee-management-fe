@@ -1,4 +1,3 @@
-import AppSearchKeyword from "@/components/AppSearchKeyword";
 import ShowTestModal from "@/components/pages/create-test/ShowTest";
 import AssignTestModal from "@/components/pages/test/AssignTestModal";
 import ContestantListModal from "@/components/pages/test/ContestantList";
@@ -86,7 +85,7 @@ export const TestsManagement = () => {
   }, [testId]);
 
   const showContestants = (id: number) => () => {
-    const contestants = tests.find((test: any) => test.id === id);
+    const contestants = tests.data?.find((test: any) => test.id === id);
     setContestantList(contestants?.skillTestAccount);
     toggleContestantModal();
   };

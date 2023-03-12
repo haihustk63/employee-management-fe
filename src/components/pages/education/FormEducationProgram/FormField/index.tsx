@@ -10,7 +10,7 @@ import { dataToOptions, disabledDateBeforeToday } from "@/utils";
 import { Space, Typography } from "antd";
 import cx from "classnames";
 import { Form, useFormikContext } from "formik";
-import { useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 import AppUpload from "@/components/AppUpload";
@@ -20,7 +20,7 @@ const { Text } = Typography;
 
 const { TEXT, SELECT, INPUT_NUMBER } = FORM_ITEM_TYPES;
 
-const FormFields = () => {
+const FormFields: FC<{ loading?: boolean }> = ({ loading }) => {
   const { programId = "" } = useParams();
   const { values, errors, touched, handleSubmit, handleChange, setFieldValue } =
     useFormikContext() as any;
@@ -135,7 +135,7 @@ const FormFields = () => {
       {programId && !!currentMaterials.length && (
         <div className="materials">
           <Text>Current materials</Text>
-          <Space direction="vertical">
+          <div className="items">
             {currentMaterials.map((item: string) => {
               const isDeleted = values.deleteMaterialList.includes(item);
               return (
@@ -151,15 +151,20 @@ const FormFields = () => {
                   </a>
                   <AppButton
                     buttonTitle={isDeleted ? "Undo" : "Delete"}
+                    className="-danger"
                     onClick={toggleDeleteMaterial(item)}
                   />
                 </div>
               );
             })}
-          </Space>
+          </div>
         </div>
       )}
-      <AppButton buttonTitle={buttonTitle} htmlType="submit" />
+      <AppButton
+        buttonTitle={buttonTitle}
+        htmlType="submit"
+        loading={loading}
+      />
     </Form>
   );
 };

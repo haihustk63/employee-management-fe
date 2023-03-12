@@ -100,7 +100,7 @@ const FormFields = () => {
         />
         <FormItem
           name="upTo"
-          label="Upto"
+          label="Upto ($)"
           value={values.upTo}
           type={TEXT}
           onChange={handleChange}

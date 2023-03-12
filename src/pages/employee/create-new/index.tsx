@@ -7,7 +7,8 @@ const CreateNewEmployee = () => {
     mutate: onCreateProfile,
     isSuccess,
     isError,
-  } = useCreateEmployeeProfile() as any;
+    isLoading,
+  } = useCreateEmployeeProfile();
 
   useTriggerNoti({
     isSuccess,
@@ -30,7 +31,7 @@ const CreateNewEmployee = () => {
 
   return (
     <div className="create-new-employee">
-      <EmployeeForm onSubmit={onSubmit} />
+      <EmployeeForm onSubmit={onSubmit} loading={isLoading} />
     </div>
   );
 };

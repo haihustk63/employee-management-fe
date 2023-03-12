@@ -448,34 +448,42 @@ export const JOB_LEVELS: { [key: string]: string | number }[] = [
   },
 ];
 
+export const ASSESSMENT_VALUES = {
+  failed: 0,
+  notGood: 1,
+  considering: 2,
+  good: 3,
+  passed: 4,
+};
+
 export const ASSESSMENT: { [key: string]: string | number }[] = [
   {
     key: 0,
-    value: 0,
+    value: ASSESSMENT_VALUES.failed,
     label: "Failed",
     color: "black",
   },
   {
     key: 1,
-    value: 1,
+    value: ASSESSMENT_VALUES.notGood,
     label: "Not good",
     color: "error",
   },
   {
     key: 2,
-    value: 2,
+    value: ASSESSMENT_VALUES.considering,
     label: "Considering",
     color: "warning",
   },
   {
     key: 3,
-    value: 3,
+    value: ASSESSMENT_VALUES.good,
     label: "Good",
     color: "#1e5ac7",
   },
   {
     key: 4,
-    value: 4,
+    value: ASSESSMENT_VALUES.passed,
     label: "Passed",
     color: "success",
   },

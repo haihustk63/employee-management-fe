@@ -6,13 +6,11 @@ import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { JobManagementContext } from "@/pages/jobs";
 import { Space } from "antd";
 import { FC, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 const JobListAction: FC<{ jobId: string; jobTitle: string }> = ({
   jobId,
   jobTitle,
 }) => {
-  const navigate = useNavigate();
   const { setJobId } = useContext(JobManagementContext) as any;
   const { mutate: onDelete, isError, isSuccess } = useDeleteJob(jobId);
 
@@ -21,10 +19,6 @@ const JobListAction: FC<{ jobId: string; jobTitle: string }> = ({
     isSuccess,
     messageSuccess: `Delete job ${jobTitle} successfully`,
   });
-
-  const handleNavigateToUpdate = () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.JOB_UPDATE(jobId));
-  };
 
   const viewJobDetail = () => {
     setJobId(jobId);
@@ -36,11 +30,9 @@ const JobListAction: FC<{ jobId: string; jobTitle: string }> = ({
   return (
     <Space>
       <AppButton buttonTitle="Detail" size="small" onClick={viewJobDetail} />
-      <AppButton
-        buttonTitle="Update"
-        size="small"
-        onClick={handleNavigateToUpdate}
-      />
+      <a href={DYNAMIC_APP_PAGE_ROUTES.JOB_UPDATE(jobId)} target="_blank">
+        <AppButton buttonTitle="Update" size="small" />
+      </a>
       <AppButton
         buttonTitle="Delete"
         size="small"

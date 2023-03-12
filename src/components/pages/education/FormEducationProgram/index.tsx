@@ -27,7 +27,10 @@ const initialValues: IAddNewEducationProgram = {
   deleteMaterialList: [],
 };
 
-const FormEducationProgram: FC<{ onSubmit: any }> = ({ onSubmit }) => {
+const FormEducationProgram: FC<{ onSubmit: any; loading?: boolean }> = ({
+  onSubmit,
+  loading,
+}) => {
   const { programId } = useParams();
 
   return (
@@ -38,7 +41,7 @@ const FormEducationProgram: FC<{ onSubmit: any }> = ({ onSubmit }) => {
         validationSchema={createEducationProgramSchema}
         title={programId ? "Update program" : "Add new program"}
       >
-        <FormFields />
+        <FormFields loading={loading} />
       </AppForm>
     </div>
   );

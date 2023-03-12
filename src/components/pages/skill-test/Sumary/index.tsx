@@ -1,9 +1,7 @@
 import { CandidateSkillTestContext } from "@/pages/skill-test/do-test";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Sumary = () => {
-  const navigate = useNavigate();
   const { answers, test = [] } = useContext(CandidateSkillTestContext) as any;
 
   const setBackgroundColor = (index: number) => {

@@ -3,7 +3,12 @@ import { useCreateEducationProgram } from "@/hooks/education";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 
 const CreateNewEducationProgram = () => {
-  const { mutate: onCreate, isSuccess, isError } = useCreateEducationProgram();
+  const {
+    mutate: onCreate,
+    isSuccess,
+    isError,
+    isLoading,
+  } = useCreateEducationProgram();
 
   useTriggerNoti({
     isSuccess,
@@ -28,7 +33,7 @@ const CreateNewEducationProgram = () => {
     });
   };
 
-  return <FormEducationProgram onSubmit={handleSubmit} />;
+  return <FormEducationProgram onSubmit={handleSubmit} loading={isLoading} />;
 };
 
 export default CreateNewEducationProgram;

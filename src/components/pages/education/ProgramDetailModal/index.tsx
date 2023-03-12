@@ -1,13 +1,11 @@
 import AppModal from "@/components/AppModal";
 import AppRate from "@/components/AppRate";
-import {
-  useRateEducationProgram
-} from "@/hooks/education";
+import { useRateEducationProgram } from "@/hooks/education";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { currentUserAtom } from "@/modules/currentUser";
 import { EducationProgramContext } from "@/pages/education";
 import { purityContent } from "@/utils";
-import { Tabs, Typography } from "antd";
+import { Space, Tabs, Typography } from "antd";
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 
@@ -60,7 +58,12 @@ const ProgramDetailModal = () => {
 
   const footer = useMemo(() => {
     if (program && joinInfo) {
-      return <AppRate value={joinInfo?.rate || 0} onChange={rateProgram} />;
+      return (
+        <Space>
+          <Typography.Text>Rate:</Typography.Text>
+          <AppRate value={joinInfo?.rate || 0} onChange={rateProgram} />
+        </Space>
+      );
     }
   }, [program, rateProgram, joinInfo]);
 

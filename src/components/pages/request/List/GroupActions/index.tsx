@@ -1,7 +1,7 @@
 import AppButton from "@/components/AppButton";
 import {
   showAppCommonConfirm,
-  showDeleteConfirm
+  showDeleteConfirm,
 } from "@/components/AppConfirm";
 import MoreIcon from "@/components/Icons/MoreIcon";
 import { APP_ROLES } from "@/constants/common";
@@ -140,11 +140,13 @@ const ListRequestActions: FC<{ record: any }> = ({ record }) => {
 
   return (
     <div className="job-group-btn">
-      <Dropdown menu={{ items: dropdownItems }} trigger={["click"]}>
-        <div>
-          <MoreIcon />
-        </div>
-      </Dropdown>
+      {!!dropdownItems.length && (
+        <Dropdown menu={{ items: dropdownItems }} trigger={["click"]}>
+          <div>
+            <MoreIcon />
+          </div>
+        </Dropdown>
+      )}
     </div>
   );
 };

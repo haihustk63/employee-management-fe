@@ -175,10 +175,11 @@ export const candidateProfileTableColumns = (
     {
       key: "action",
       title: "Action",
+      fixed: "right",
       render: (_value: any, record: any) => {
         return <GroupButton record={record} />;
       },
-      width: 200,
+      width: 180,
     },
   ];
 };
@@ -318,11 +319,12 @@ export const employeeListColumns = ({ currentPage }: any) => {
     {
       key: "action",
       dataIndex: "action",
+      fixed: "right",
       title: "Action",
       render: (_: any, record: any) => {
         return <EmployeeGroupButton record={record} />;
       },
-      width: 300,
+      width: 260,
     },
   ];
 };
@@ -500,10 +502,7 @@ export const createTestColumns = ({
 
 // job
 
-export const jobsTableColumns = (
-  currentPage: number,
-  t?: any
-): ColumnsType<ICandidateProfile> => {
+export const jobsTableColumns = (currentPage: number, t?: any) => {
   return [
     indexColumn(currentPage),
 
@@ -528,7 +527,7 @@ export const jobsTableColumns = (
     },
     {
       key: "upTo",
-      title: "Upto",
+      title: "Upto ($)",
       dataIndex: ["upTo"],
       width: 100,
     },
@@ -567,7 +566,7 @@ export const requestsTableColumns = (
   currentPage: number,
   role: number = APP_ROLES.EMPLOYEE.value,
   employeeId: number
-): ColumnsType<ICandidateProfile> => {
+) => {
   const employeeNameColumn =
     role === APP_ROLES.EMPLOYEE.value
       ? []
@@ -649,6 +648,7 @@ export const requestsTableColumns = (
     {
       key: "actions",
       title: "Actions",
+      fixed: "right",
       render: (_value: any, record: any) => {
         return <ListRequestActions record={record} />;
       },
@@ -657,10 +657,7 @@ export const requestsTableColumns = (
   ];
 };
 
-export const checkInOutTableColumns = (
-  currentPage: number = 1,
-  t?: any
-): ColumnsType<ICandidateProfile> => {
+export const checkInOutTableColumns = (currentPage: number = 1, t?: any) => {
   return [
     indexColumn(currentPage, false),
     {
@@ -697,7 +694,7 @@ export const checkInOutTableColumns = (
   ];
 };
 
-export const timesheetTableColumns = (): ColumnsType<ICandidateProfile> => {
+export const timesheetTableColumns = () => {
   return [
     {
       key: "date",

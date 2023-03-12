@@ -6,14 +6,12 @@ import { useDeleteTestQuestion } from "@/hooks/test-question";
 import useModal from "@/hooks/useModal";
 import { Space } from "antd";
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 import ShowQuestion from "../../create-test/ShowTest/ShowQuestion";
 
 const QuestionActionGroup: FC<{ record: any; allowDelete?: boolean }> = ({
   record,
   allowDelete,
 }) => {
-  const navigate = useNavigate();
   const { mutate: onDelete } = useDeleteTestQuestion(record.id);
   const { showModal, handleToggleModal } = useModal();
 
@@ -21,16 +19,17 @@ const QuestionActionGroup: FC<{ record: any; allowDelete?: boolean }> = ({
     showDeleteConfirm({ onDelete });
   };
 
-  const navigateUpdateQuestion = () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_UPDATE(record.id));
-  };
-
   const viewQuestionDetail = () => {
     handleToggleModal();
   };
 
   const ModalFooter = (
-    <AppButton buttonTitle="Update" onClick={navigateUpdateQuestion} />
+    <a
+      href={DYNAMIC_APP_PAGE_ROUTES.TEST_QUESTION_UPDATE(record.id)}
+      target="_blank"
+    >
+      <AppButton buttonTitle="Update" />
+    </a>
   );
 
   return (

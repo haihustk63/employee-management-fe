@@ -7,7 +7,7 @@ const appNotification = ({
   className,
   icon,
   placement = "topRight",
-  duration = 5,
+  duration = 3,
   type = "open",
   ...props
 }: IAppNotificationProps) => {

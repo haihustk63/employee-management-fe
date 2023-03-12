@@ -1,5 +1,4 @@
 import { Switch, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
 
 import AppButton from "@/components/AppButton";
 import AppPrimaryCard from "@/components/AppCard/Primary";
@@ -31,7 +30,6 @@ const { Title, Text } = Typography;
 export const EducationProgramContext = createContext({});
 
 const EducationProgramManagement = () => {
-  const navigate = useNavigate();
   const { employee } = useRecoilValue(currentUserAtom);
   const [selectProgramId, setSelectProgramId] = useState();
   const [isShowMyProgram, setIsShowMyProgram] = useState(false);
@@ -67,10 +65,6 @@ const EducationProgramManagement = () => {
     }
     return allPrograms.data;
   }, [isShowMyProgram, myPrograms, allPrograms]);
-
-  const navigateUpdateProgram = (programId: number) => () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.EDUCATION_PROGRAM_UPDATE(programId));
-  };
 
   const showProgramDetail = (programId: any) => () => {
     setSelectProgramId(programId);
@@ -178,10 +172,14 @@ const EducationProgramManagement = () => {
                   {(employee?.role === APP_ROLES.ADMIN.value ||
                     employee?.role === APP_ROLES.SUPER_ADMIN.value) && (
                     <>
-                      <AppButton
-                        buttonTitle="Update"
-                        onClick={navigateUpdateProgram(item.id)}
-                      />
+                      <a
+                        href={DYNAMIC_APP_PAGE_ROUTES.EDUCATION_PROGRAM_UPDATE(
+                          item.id
+                        )}
+                        target="_blank"
+                      >
+                        <AppButton buttonTitle="Update" />
+                      </a>
                       <ButtonDeleteProgram programId={item.id} />
                     </>
                   )}

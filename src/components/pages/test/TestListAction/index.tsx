@@ -5,10 +5,8 @@ import { useDeleteTest } from "@/hooks/tests";
 import { useTriggerNoti } from "@/hooks/useTriggerNoti";
 import { TestsContext } from "@/pages/tests";
 import { FC, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 const TestListAction: FC<{ testId: number }> = ({ testId }) => {
-  const navigate = useNavigate();
   const { mutate: onDeleteTest, isError, isSuccess } = useDeleteTest(testId);
   const {
     isAdmin,
@@ -28,10 +26,6 @@ const TestListAction: FC<{ testId: number }> = ({ testId }) => {
     setTestId(testId);
   };
 
-  const navigateToUpdate = () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.TEST_UPDATE(testId));
-  };
-
   const handleDeleteTest = () => {
     showDeleteConfirm({ onDelete: onDeleteTest });
   };
@@ -44,7 +38,9 @@ const TestListAction: FC<{ testId: number }> = ({ testId }) => {
   return (
     <div className="actions">
       <AppButton buttonTitle="Detail" onClick={changeTestId} />
-      <AppButton buttonTitle="Update" onClick={navigateToUpdate} />
+      <a href={DYNAMIC_APP_PAGE_ROUTES.TEST_UPDATE(testId)} target="_blank">
+        <AppButton buttonTitle="Update" />
+      </a>
       <AppButton
         buttonTitle="View Contestants"
         onClick={showContestants(testId)}

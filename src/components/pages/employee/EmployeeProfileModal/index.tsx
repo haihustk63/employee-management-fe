@@ -3,11 +3,9 @@ import AppModal from "@/components/AppModal";
 import { DYNAMIC_APP_PAGE_ROUTES } from "@/constants/routes";
 import { EmployeeManagementContext } from "@/pages/employee";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import EmployeeProfile from "./Profile";
 
 const EmployeeProfileModal = () => {
-  const navigate = useNavigate();
 
   const {
     employee,
@@ -16,14 +14,15 @@ const EmployeeProfileModal = () => {
     showEmployeeProfileModal,
   } = useContext(EmployeeManagementContext) as any;
 
-  const navigateToUpdateEmployee = () => {
-    navigate(DYNAMIC_APP_PAGE_ROUTES.EMPLOYEE_UPDATE(employeeId));
-  };
-
   const Footer = (
-    <AppButton buttonTitle="Update" onClick={navigateToUpdateEmployee} />
+    <a
+      href={DYNAMIC_APP_PAGE_ROUTES.EMPLOYEE_UPDATE(employeeId)}
+      target="_blank"
+    >
+      <AppButton buttonTitle="Update" />
+    </a>
   );
-  
+
   return (
     <AppModal
       open={showEmployeeProfileModal}

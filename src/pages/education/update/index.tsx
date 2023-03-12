@@ -9,6 +9,7 @@ const UpdateNewEducationProgram = () => {
     mutate: onUpdate,
     isSuccess,
     isError,
+    isLoading
   } = useUpdateEducationProgram(programId);
 
   useTriggerNoti({
@@ -34,7 +35,7 @@ const UpdateNewEducationProgram = () => {
     });
   };
 
-  return <FormEducationProgram onSubmit={handleSubmit} />;
+  return <FormEducationProgram onSubmit={handleSubmit} loading={isLoading} />;
 };
 
 export default UpdateNewEducationProgram;

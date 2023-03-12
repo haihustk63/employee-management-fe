@@ -59,6 +59,15 @@
     flex-direction: column;
     gap: 2rem;
   }
+
+  .materials {
+    a {
+      display: block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
 }
 
 .form-education {
@@ -80,5 +89,25 @@
 
   > .app-form > .form > .part > .form-item:nth-child(2) > .inputnumber {
     width: 100%;
+  }
+
+  > .app-form > .form > .materials > .items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  > .app-form > .form > .materials > .items > .item {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  > .app-form > .form > .materials > .items > .item {
+    display: flex;
+    justify-content: space-between;
+
+    > a {
+      width: 80%;
+    }
   }
 }
