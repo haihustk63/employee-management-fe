@@ -32,6 +32,7 @@ const FormFields = () => {
       setFieldValue("upTo", job.upTo);
       setFieldValue("level", job.level);
       setFieldValue("positionId", job.positionId);
+      setFieldValue("jobDetail", job.jobDetail);
     }
   }, [job]);
 
