@@ -55,12 +55,17 @@ const AppTable: FC<IAppTableProps> = ({
 
   useEffect(() => {
     if (needResetPage) {
-      setTableParams((prev: TableParams) => ({
-        ...prev,
-        pagination: { ...prev.pagination, current: 1 },
-      }));
+      const newParams = {
+        pagination: {
+          current: 1,
+          limit: 10,
+          total,
+        },
+      };
+      setTableParams(newParams);
+      onChangeParams(newParams);
     }
-  }, [needResetPage]);
+  }, [needResetPage, total]);
 
   const handleTableChange = (
     pagination: TablePaginationConfig,

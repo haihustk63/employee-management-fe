@@ -21,6 +21,7 @@ export const useSearchForm = ({
   useEffect(() => {
     if (isKeywordChange) {
       handleSetQueryParams("keyword")(values.keyword);
+      resetPageParams();
       setIsKeywordChange(false);
     }
   }, [isKeywordChange]);
@@ -42,7 +43,6 @@ export const useSearchForm = ({
 
   const handleChangeKeyword = (e: any) => {
     handleChange(e);
-    resetPageParams();
     debounceSetKeywordParams();
   };
 

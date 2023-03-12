@@ -19,7 +19,6 @@ import {
 } from "./constants/common";
 import { Dayjs } from "dayjs";
 import { TableParams } from "./components/AppTable/interface";
-import { SorterResult } from "antd/es/table/interface";
 
 const purityContent = (content?: string) => {
   if (!content) return "";

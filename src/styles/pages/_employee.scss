@@ -112,3 +112,9 @@
     flex: 0 0 calc((100% - 4rem) / 3);
   }
 }
+
+.employee-search {
+  > .app-form > .form > .form-item:last-child {
+    flex: 0 0 30%;
+  }
+}

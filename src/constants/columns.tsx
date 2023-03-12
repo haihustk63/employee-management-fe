@@ -274,7 +274,7 @@ export const employeeListColumns = ({ currentPage }: any) => {
       key: "position",
       dataIndex: ["positionName"],
       title: "Position",
-      width: 150,
+      width: 200,
     },
 
     {
