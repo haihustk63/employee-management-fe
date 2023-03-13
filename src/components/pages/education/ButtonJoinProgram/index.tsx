@@ -39,7 +39,7 @@ const ButtonJoinProgram: FC<{ program: any }> = ({ program }) => {
 
   const joiningInfo = useMemo(() => {
     const employeeId = employee.id;
-    return program.employees.find(
+    return program.employees?.find(
       (item: any) => item.employee.id === employeeId
     );
   }, [employee, program]);
